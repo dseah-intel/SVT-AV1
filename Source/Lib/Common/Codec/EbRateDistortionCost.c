@@ -2422,11 +2422,7 @@ EbErrorType av1_tu_calc_cost(
 
         y_zero_coeff_rate = y_zero_coeff_luma_flag_bits_num;
 
-#if CBF_ZERO_OFF
         if (1) {
-#else
-        if (candidate_ptr->type == INTRA_MODE) {
-#endif
             y_zero_coeff_cost = 0xFFFFFFFFFFFFFFFFull;
 
         }
@@ -2515,11 +2511,7 @@ EbErrorType av1_tu_calc_cost_luma(
 
     yZeroCbfRate = yZeroCbfLumaFlagBitsNum;
 
-#if CBF_ZERO_OFF
     if (1) {
-#else
-    if (candidate_ptr->type == INTRA_MODE) {
-#endif
         yZeroCbfCost = 0xFFFFFFFFFFFFFFFFull;
 
     }
@@ -2753,7 +2745,7 @@ EbErrorType av1_encode_tu_calc_cost(
         TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
         if (txb_ptr->transform_type[PLANE_TYPE_Y] != DCT_DCT) {
 #else
-#if CBF_ZERO_OFF || TX_TYPE_FIX
+#if TX_TYPE_FIX
         if (1) {
 #else
         if (cu_ptr->prediction_mode_flag == INTRA_MODE) {
