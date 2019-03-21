@@ -959,7 +959,6 @@ EbErrorType signal_derivation_multi_processes_oq(
         cm->sg_filter_mode = 1;
 
 
-#if FAST_WN
     // WN Level                                     Settings
     // 0                                            OFF
     // 1                                            3-Tap luma/ 3-Tap chroma
@@ -981,7 +980,7 @@ EbErrorType signal_derivation_multi_processes_oq(
         cm->wn_filter_mode = 2;
     else
         cm->wn_filter_mode = 0;
-#endif
+
 
     // Tx_search Level                                Settings
     // 0                                              OFF
@@ -1145,26 +1144,6 @@ EbErrorType signal_derivation_multi_processes_oq(
 }
 
 
-#if !CHROMA_BLIND
-/***************************************************************************
-* Set the default chroma mode for each frame
-****************************************************************************/
-EbChromaMode PictureLevelChromaSettings(
-    uint8_t   input_resolution,
-    uint8_t   enc_mode,
-    uint8_t   slice_type,
-    uint8_t   temporal_layer_index,
-    EbBool is_used_as_reference_flag){
-
-    EbChromaMode chroma_mode = CHROMA_MODE_FULL;
-    UNUSED(input_resolution);
-    UNUSED(enc_mode);
-    UNUSED(slice_type);
-    UNUSED(temporal_layer_index);
-    UNUSED(is_used_as_reference_flag);
-    return chroma_mode;
-}
-#endif
 
 /*************************************************
 * AV1 Reference Picture Signalling:
@@ -2300,15 +2279,6 @@ void* picture_decision_kernel(void *input_ptr)
 
                             // Set the default settings of  subpel
                             picture_control_set_ptr->use_subpel_flag = 1;
-#if !CHROMA_BLIND
-                            // Set the default settings of  chroma
-                            picture_control_set_ptr->chroma_mode = PictureLevelChromaSettings(
-                                sequence_control_set_ptr->input_resolution,
-                                picture_control_set_ptr->enc_mode,
-                                picture_control_set_ptr->slice_type,
-                                picture_control_set_ptr->temporal_layer_index,
-                                picture_control_set_ptr->is_used_as_reference_flag);
-#endif
 
                             picture_control_set_ptr->use_src_ref = EB_FALSE;
                             picture_control_set_ptr->enable_in_loop_motion_estimation_flag = EB_FALSE;

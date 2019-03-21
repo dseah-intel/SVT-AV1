@@ -1260,9 +1260,8 @@ Input   : encoder mode and tune
 Output  : EncDec Kernel signal(s)
 ******************************************************/
 EbErrorType signal_derivation_enc_dec_kernel_oq(
-#if CHROMA_BLIND
     SequenceControlSet_t    *sequence_control_set_ptr,
-#endif
+
     PictureControlSet_t     *picture_control_set_ptr,
     ModeDecisionContext_t   *context_ptr) {
 
@@ -1329,7 +1328,6 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
 #if SCENE_CONTENT_SETTINGS
     }
 #endif
-#if CHROMA_BLIND
     // Set Chroma Mode
     // Level                Settings
     // CHROMA_MODE_0  0     Chroma @ MD
@@ -1341,7 +1339,6 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
         context_ptr->chroma_level = (sequence_control_set_ptr->encoder_bit_depth == EB_8BIT) ?
             CHROMA_MODE_1 :
             CHROMA_MODE_2 ;
-#endif
 
     
     // Set fast loop method
@@ -1549,9 +1546,7 @@ void* EncDecKernel(void *input_ptr)
         // EncDec Kernel Signal(s) derivation
 
         signal_derivation_enc_dec_kernel_oq(
-#if CHROMA_BLIND
             sequence_control_set_ptr,
-#endif
             picture_control_set_ptr,
             context_ptr->md_context);
 
