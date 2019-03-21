@@ -23,9 +23,12 @@
 #include "EbRestoration.h"
 #include "noise_model.h"
 
-#if CDEF_M
-#include "EbCdef.h"
+#if CABAC_UP
+#include "EbMdRateEstimation.h"
 #endif
+
+#include "EbCdef.h"
+
 
 #if ICOPY
 #include"av1me.h"
@@ -13745,7 +13748,6 @@ extern "C" {
         EbBool                                entropy_coding_pic_done;
         EbHandle                              intra_mutex;
         uint32_t                              intra_coded_area;
-#if CDEF_M
         uint32_t                              tot_seg_searched_cdef;
         EbHandle                              cdef_search_mutex;
 
@@ -13758,7 +13760,7 @@ extern "C" {
         uint16_t *src[3];        //dlfed recon in 16bit form
         uint16_t *ref_coeff[3];  //input video in 16bit form
 
-#endif
+
 #if REST_M
         uint32_t                              tot_seg_searched_rest;
         EbHandle                              rest_search_mutex;
