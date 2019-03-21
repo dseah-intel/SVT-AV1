@@ -933,7 +933,6 @@ EbErrorType signal_derivation_multi_processes_oq(
 
 #endif
 
-#if FAST_SG
     // SG Level                                    Settings
     // 0                                            OFF
     // 1                                            0 step refinement
@@ -958,7 +957,7 @@ EbErrorType signal_derivation_multi_processes_oq(
         cm->sg_filter_mode = 2;
     else
         cm->sg_filter_mode = 1;
-#endif
+
 
 #if FAST_WN
     // WN Level                                     Settings

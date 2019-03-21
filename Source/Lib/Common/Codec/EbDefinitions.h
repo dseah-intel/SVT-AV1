@@ -75,7 +75,6 @@ extern "C" {
 #define REST_REF_ONLY                                   0 //REST for ref frame only
 #define REDUCE_COPY_CDEF                                1
 
-#define FAST_SG                                         1
 #define FAST_WN                                         1
 #define CHROMA_BLIND                                    1 // Added the ability to switch between three chroma modes: 1. chroma @ MD, 2. chroma blind @ MD + CFL @ EP. 3. chroma blind @ MD + no CFL @ EP
 #define CONTENT_BASED_QPS                               1 // Adaptive QP Scaling (active for I only)
