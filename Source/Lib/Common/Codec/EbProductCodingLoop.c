@@ -632,7 +632,7 @@ void md_update_all_neighbour_arrays_multiple(
 // Based on the MDStage and the encodeMode
 // the NFL candidates numbers are set
 //*************************//
-#if ADAPTIVE_DEPTH_PARTITIONING
+
 void set_nfl(
     ModeDecisionContext_t     *context_ptr
 #if M8_ADP    
@@ -698,37 +698,7 @@ void set_nfl(
 #endif
     ASSERT(context_ptr->full_recon_search_count <= MAX_NFL);
 }
-#else
-void set_nfl(
-    ModeDecisionContext_t     *context_ptr,
-    PictureControlSet_t       *picture_control_set_ptr){
 
-    // Set NFL Candidates
-    // NFL Level MD         Settings
-    // 0                    MAX_NFL 12
-    // 1                    10
-    // 2                    8
-    // 3                    6
-    // 4                    4/3/2
-
-    if (context_ptr->nfl_level == 0)
-        context_ptr->full_recon_search_count = MAX_NFL;
-    else if (context_ptr->nfl_level == 1)
-        context_ptr->full_recon_search_count = 10;
-    else if (context_ptr->nfl_level == 2)
-        context_ptr->full_recon_search_count = 8;
-    else if (context_ptr->nfl_level == 3)
-        context_ptr->full_recon_search_count = 6;
-    else
-        context_ptr->full_recon_search_count =
-            (picture_control_set_ptr->slice_type == I_SLICE) ? 4 :
-            (context_ptr->blk_geom->bwidth == 32 && context_ptr->blk_geom->bheight == 32 && picture_control_set_ptr->parent_pcs_ptr->is_used_as_reference_flag) ? 3 : 2;
-
-        //if (picture_control_set_ptr->parent_pcs_ptr->pic_depth_mode == PIC_SB_SWITCH_DEPTH_MODE && picture_control_set_ptr->parent_pcs_ptr->sb_md_mode_array[sb_ptr->index] == LCU_PRED_OPEN_LOOP_1_NFL_DEPTH_MODE)
-        //    context_ptr->full_recon_search_count = 1;
-    ASSERT(context_ptr->full_recon_search_count <= MAX_NFL);
-}
-#endif
 //*************************//
 // SetNmm
 // Based on the MDStage and the encodeMode
@@ -3647,7 +3617,6 @@ void md_encode_block(
                                                   is_complete_sb,
                                                   lcuAddr);     
 #endif
-#if ADAPTIVE_DEPTH_PARTITIONING
         set_nfl(
             context_ptr
 #if M8_ADP
@@ -3657,11 +3626,7 @@ void md_encode_block(
             context_ptr->sb_ptr);
 #endif
 
-#else
-        set_nfl(
-            context_ptr,
-            picture_control_set_ptr);
-#endif
+
         ProductGenerateMdCandidatesCu(
             context_ptr->sb_ptr,
             context_ptr,
