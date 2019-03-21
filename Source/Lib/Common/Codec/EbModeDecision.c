@@ -1911,9 +1911,8 @@ void  inject_inter_candidates(
 #endif
 
     generate_av1_mvp_table(
-#if TILES
         &sb_ptr->tile_info,
-#endif
+
         context_ptr,
         context_ptr->cu_ptr,
         context_ptr->blk_geom,
@@ -2861,9 +2860,8 @@ void  intra_bc_search(
     const Av1Common *const cm = pcs->parent_pcs_ptr->av1_cm;
     MvReferenceFrame ref_frame = INTRA_FRAME;
     generate_av1_mvp_table(
-#if TILES
         &sb_ptr->tile_info,
-#endif
+
         context_ptr,
         context_ptr->cu_ptr,
         context_ptr->blk_geom,
