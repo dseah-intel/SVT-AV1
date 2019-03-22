@@ -132,7 +132,6 @@ extern "C" {
 
 #define IMPROVE_CHROMA_MODE                             1
 #define CHROMA_BLIND_IF_SEARCH                          1
-#define OIS_BASED_INTRA                                 1
 
 #define SHUT_FULL_DENOISE                               1
 
