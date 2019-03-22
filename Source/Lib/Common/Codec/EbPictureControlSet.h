@@ -14148,9 +14148,6 @@ extern "C" {
 #if M8_SKIP_BLK
         uint8_t                               skip_sub_blks;
 #endif
-#if TWO_FAST_LOOP
-        uint8_t                               enable_two_fast_loops;
-#endif
         //**********************************************************************************************************//
         FRAME_TYPE                            av1FrameType;
         Av1RpsNode_t                          av1RefSignal;
