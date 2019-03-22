@@ -235,10 +235,9 @@ extern "C" {
         int32_t                                 film_grain_denoise_strength;
         int32_t                                 film_grain_params_present;  // To turn on/off film grain (on a sequence basis)
 
-#if BASE_LAYER_REF
         int32_t                                 extra_frames_to_ref_islice;
         int32_t                                 max_frame_window_to_ref_islice;
-#endif
+
 
 #if ADP_STATS_PER_LAYER
         uint64_t                                total_count[5];
@@ -248,6 +247,7 @@ extern "C" {
         uint64_t                                pred_count[5];
         uint64_t                                pred1_nfl_count[5];
 #endif
+
     } SequenceControlSet_t;
 
     typedef struct EbSequenceControlSetInitData_s
