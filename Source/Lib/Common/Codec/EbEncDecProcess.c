@@ -1333,7 +1333,6 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
     else
         context_ptr->decoupled_fast_loop_search_method = FULL_SAD_SEARCH;
 #endif
-#if FULL_LOOP_ESCAPE
     // Set the full loop escape level
     // Level                Settings
     // 0                    Off
@@ -1344,7 +1343,7 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
     else
         context_ptr->full_loop_escape = 1;
 
-#endif
+
 #if SHUT_GLOBAL_MV
     // Set global MV injection
     // Level                Settings

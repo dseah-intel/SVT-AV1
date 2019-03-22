@@ -71,7 +71,6 @@ extern "C" {
 #define TEST5_DISABLE_NSQ_ME                            0
 
 
-#define FASTER_M8_ADP                                   1
 
 
 // M9 settings toward 4K 60 fps
@@ -115,7 +114,7 @@ extern "C" {
 #if M8_ADP
 #define FASTER_M8_ADP                                   1
 #endif
-#define FULL_LOOP_ESCAPE                                1
+
 #define SIMULATE_PF_N2                                  0
 #define PF_N2_32X32_TX_SEARCH                           0
 #define PF_N2_32X32                                     0
