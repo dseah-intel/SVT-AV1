@@ -71,6 +71,39 @@ extern "C" {
 #define TEST5_DISABLE_NSQ_ME                            0
 
 
+#define FASTER_M8_ADP                                   1
+
+
+// M9 settings toward 4K 60 fps
+#define M9_SETTINGS              0
+
+#if M9_SETTINGS
+// Adopted
+#define M9_FULL_LOOP_ESCAPE      0   // Enhanced full loop escape
+#define M9_HME                   0   // VP9 4K HME, HME (L0 only 48x32)
+#define M9_ME                    0   // VP9 4K ME, ME (16x9)
+#define M9_SUBPEL_SELECTION      0
+#define M9_CU_8x8                0
+    
+#define M9_INTRA                    0
+
+// Under testing
+#define M9_FRAC_ME_SEARCH_METHOD 0   // VP9 4K fractional search method; SUB_SAD_SEARCH vs. FULL_SAD_SEARCH 
+#define M9_FRAC_ME_SEARCH_64x64  0   // VP9 4K 64x64 search; OFF vs. ON
+#define M9_SUBPEL                0   // VP9 4K subpel settings; subpel ON base
+#define M9_NFL                   0   // VP9 4K NFL settings; NFL = 3 
+#define M9_PF                    0   // VP9 4K PF settings N2 is 32x32, and non-base
+#define M9_CDEF                  0   // CDEF off
+#define M9_TX_SEARCH             0   // Tx search off
+#define M9_CHROMA                0   // VP9 4K chroma settings; shut cfl @ ep
+#define M9_ADP                   0   // VP9 4K ADP budget;  (121,110,100 but different injection) (budget = f (layer index))      
+
+#define M9_NON_UNIFORM_NFL       0   // Non-uniform NFL
+
+#define OPT_LOSSLESS             0
+#define OPT_LOSSY                0
+#endif
+
 #define CDEF_REF_ONLY                                   0 //CDEF for ref frame only
 #define REST_REF_ONLY                                   0 //REST for ref frame only
 #define REDUCE_COPY_CDEF                                1
@@ -3021,13 +3054,8 @@ typedef enum EbPictureDepthMode {
 #define SB_SQ_BLOCKS_DEPTH_MODE             1
 #define SB_SQ_NON4_BLOCKS_DEPTH_MODE        2
 #define SB_OPEN_LOOP_DEPTH_MODE             3
-#if M8_ADP
 #define SB_FAST_OPEN_LOOP_DEPTH_MODE        4
 #define SB_PRED_OPEN_LOOP_DEPTH_MODE        5
-#else
-#define SB_PRED_OPEN_LOOP_DEPTH_MODE        4
-#define SB_PRED_OPEN_LOOP_1_NFL_DEPTH_MODE  5
-#endif
 
 typedef enum EB_INTRA4x4_SEARCH_METHOD {
     INTRA4x4_OFF = 0,
