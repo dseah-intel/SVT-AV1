@@ -133,11 +133,6 @@ extern "C" {
 #define IMPROVE_CHROMA_MODE                             1
 #define CHROMA_BLIND_IF_SEARCH                          1
 
-#define SHUT_FULL_DENOISE                               1
-
-
-#define AOM_SAD_PORTING 1
-
 #define ADD_CDEF_FILTER_LEVEL                           1
 
 #define SC_HME_ME  0//use sc detector for hme/me setting
