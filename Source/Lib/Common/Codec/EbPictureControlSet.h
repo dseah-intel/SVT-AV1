@@ -14289,9 +14289,7 @@ extern "C" {
         uint8_t                               nsq_search_level;
         uint8_t                               nsq_max_shapes_md; // max number of shapes to be tested in MD
         uint8_t                              sc_content_detected;
-#if IBC_MODES
         uint8_t                              ibc_mode;
-#endif
     } PictureParentControlSet_t;
 
 
