@@ -70,16 +70,13 @@ extern "C" {
 #define ENCDEC_TX_SEARCH                                1
 #define TEST5_DISABLE_NSQ_ME                            0
 
-#define DISABLE_DR_REFIN                                0
+
 #define CDEF_REF_ONLY                                   0 //CDEF for ref frame only
 #define REST_REF_ONLY                                   0 //REST for ref frame only
 #define REDUCE_COPY_CDEF                                1
 
 #define ADP_STATS_PER_LAYER                             0
 
-#define REST_FAST_RATE_EST                              1
-#define MDC_FIX_0                                       1
-#define MDC_FIX_1                                       1
 
 #define M8_ADP                                          1
 #if M8_ADP
