@@ -233,11 +233,7 @@ void* rest_kernel(void *input_ptr)
         Av1Common* cm = picture_control_set_ptr->parent_pcs_ptr->av1_cm;
 
 
-#if ICOPY
         if (sequence_control_set_ptr->enable_restoration && picture_control_set_ptr->parent_pcs_ptr->allow_intrabc == 0)
-#else
-        if (sequence_control_set_ptr->enable_restoration)
-#endif
         {
             get_own_recon(sequence_control_set_ptr, picture_control_set_ptr, context_ptr, is16bit);
 
@@ -271,23 +267,7 @@ void* rest_kernel(void *input_ptr)
         picture_control_set_ptr->tot_seg_searched_rest++;
         if (picture_control_set_ptr->tot_seg_searched_rest == picture_control_set_ptr->rest_segments_total_count)
         {
-
-
-
-
-
-#if REST_REF_ONLY
-            if (sequence_control_set_ptr->enable_restoration && picture_control_set_ptr->parent_pcs_ptr->is_used_as_reference_flag) {
-#else
-#if ICOPY
             if (sequence_control_set_ptr->enable_restoration && picture_control_set_ptr->parent_pcs_ptr->allow_intrabc == 0) {
-#else
-            if (sequence_control_set_ptr->enable_restoration) {
-#endif
-#endif
-
-
-
                 rest_finish_search(
                     picture_control_set_ptr->parent_pcs_ptr->av1x,
                     picture_control_set_ptr->parent_pcs_ptr->av1_cm);

@@ -14,9 +14,7 @@
 #include "EbPredictionUnit.h"
 #include "EbTransformUnit.h"
 #include "EbCabacContextModel.h"
-#if ICOPY
 #include "hash.h"
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -180,11 +178,7 @@ extern "C" {
         // Only for INTRA blocks
         UV_PredictionMode uv_mode;
         //PALETTE_MODE_INFO palette_mode_info;
-#if ICOPY
         uint8_t use_intrabc;
-#else
-        //uint8_t use_intrabc;
-#endif
         // Only for INTER blocks
         //InterpFilters interp_filters;
         MvReferenceFrame ref_frame[2];
@@ -241,7 +235,6 @@ extern "C" {
         int32_t tile_col;
     } TileInfo;
 
-#if ICOPY
     typedef struct macroblockd_plane {
 
         int subsampling_x;
@@ -276,7 +269,6 @@ extern "C" {
         const int16_t *dequant_QTX;
 #endif
     } MACROBLOCK_PLANE;
-#endif
 
     typedef struct MacroBlockD {
         // block dimension in the unit of mode_info.
@@ -298,13 +290,11 @@ extern "C" {
         int32_t mb_to_bottom_edge;
         uint8_t neighbors_ref_counts[TOTAL_REFS_PER_FRAME];
 
-#if ICOPY 
         uint8_t  use_intrabc;
         MbModeInfo *above_mbmi;
         MbModeInfo *left_mbmi;
         MbModeInfo *chroma_above_mbmi;
         MbModeInfo *chroma_left_mbmi;
-#endif
     } MacroBlockD;
 
     typedef struct Macroblock {
@@ -314,7 +304,6 @@ extern "C" {
         int32_t sgrproj_restore_cost[2];
     } Macroblock;
 
-#if ICOPY
     typedef struct IntraBcContext {
         int32_t rdmult;
         struct macroblockd_plane xdplane[MAX_MB_PLANE];
@@ -347,7 +336,6 @@ extern "C" {
 #endif
 
     } IntraBcContext;
-#endif
 
     typedef struct CodingUnit_s
     {

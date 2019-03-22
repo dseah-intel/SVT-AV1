@@ -830,7 +830,6 @@ EbErrorType signal_derivation_multi_processes_oq(
     // 2                                            LIGHT FRAME-BASED
     // 3                                            FULL FRAME-BASED
 
-#if ICOPY
     //for now only I frames are allowed to use sc tools.
     //TODO: we can force all frames in GOP with the same detection status of leading I frame.
     if (picture_control_set_ptr->slice_type == I_SLICE) {
@@ -852,9 +851,6 @@ EbErrorType signal_derivation_multi_processes_oq(
     }
 
     if (!picture_control_set_ptr->sequence_control_set_ptr->static_config.disable_dlf_flag && picture_control_set_ptr->allow_intrabc == 0) {
-#else
-    if (!picture_control_set_ptr->sequence_control_set_ptr->static_config.disable_dlf_flag) {
-#endif
         if (picture_control_set_ptr->enc_mode <= ENC_M3)
             picture_control_set_ptr->loop_filter_mode = 3;
         else if (picture_control_set_ptr->enc_mode <= ENC_M4)
@@ -875,11 +871,7 @@ EbErrorType signal_derivation_multi_processes_oq(
     SequenceControlSet_t                    *sequence_control_set_ptr;
     sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if ADD_CDEF_FILTER_LEVEL
-#if ICOPY 
     if (sequence_control_set_ptr->enable_cdef && picture_control_set_ptr->allow_intrabc == 0) {
-#else
-    if (sequence_control_set_ptr->enable_cdef) {
-#endif
         if (picture_control_set_ptr->enc_mode <= ENC_M5)
             picture_control_set_ptr->cdef_filter_mode = 4;
         else if (picture_control_set_ptr->enc_mode <= ENC_M7)
@@ -889,24 +881,7 @@ EbErrorType signal_derivation_multi_processes_oq(
     }
     else
         picture_control_set_ptr->cdef_filter_mode = 0;
-#else
-#if ICOPY 
-    if (sequence_control_set_ptr->enable_cdef && picture_control_set_ptr->allow_intrabc == 0) {
-#else
-    if (sequence_control_set_ptr->enable_cdef) {
 #endif
-        if (picture_control_set_ptr->enc_mode <= ENC_M3)
-            picture_control_set_ptr->cdef_filter_mode = 3;
-        else if (picture_control_set_ptr->enc_mode <= ENC_M7)
-            picture_control_set_ptr->cdef_filter_mode = 1;
-        else
-            picture_control_set_ptr->cdef_filter_mode = 1;
-    }
-    else
-        picture_control_set_ptr->cdef_filter_mode = 0;
-
-#endif
-
     // SG Level                                    Settings
     // 0                                            OFF
     // 1                                            0 step refinement

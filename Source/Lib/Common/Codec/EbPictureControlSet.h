@@ -30,10 +30,8 @@
 #include "EbCdef.h"
 
 
-#if ICOPY
 #include"av1me.h"
 #include "hash_motion.h"
-#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -13617,9 +13615,7 @@ extern "C" {
         int8_t  wn_filter_mode;
 
 
-#if ICOPY
         struct PictureControlSet_s               *pcs_ptr;
-#endif
     } Av1Common;
 
     /**************************************
@@ -13668,7 +13664,6 @@ extern "C" {
      **************************************/
     struct CodedTreeblock_s;
     struct LargestCodingUnit_s;
-#if ICOPY
 #define MAX_MESH_STEP 4
 
     typedef struct MESH_PATTERN {
@@ -13696,7 +13691,6 @@ extern "C" {
         MESH_PATTERN mesh_patterns[MAX_MESH_STEP];
 
     } SPEED_FEATURES;
-#endif
 
     typedef struct PictureControlSet_s
     {
@@ -13877,13 +13871,11 @@ extern "C" {
         int32_t                               cdef_preset[4];
         WienerInfo                            wiener_info[MAX_MB_PLANE];
         SgrprojInfo                           sgrproj_info[MAX_MB_PLANE];
-#if ICOPY
         SPEED_FEATURES sf;
         search_site_config ss_cfg;//CHKN this might be a seq based
         hash_table hash_table;
         CRC_CALCULATOR crc_calculator1;
         CRC_CALCULATOR crc_calculator2;
-#endif
 
     } PictureControlSet_t;
 
@@ -14296,9 +14288,7 @@ extern "C" {
         uint8_t                               interpolation_search_level;
         uint8_t                               nsq_search_level;
         uint8_t                               nsq_max_shapes_md; // max number of shapes to be tested in MD
-#if ICOPY
         uint8_t                              sc_content_detected;
-#endif
 #if IBC_MODES
         uint8_t                              ibc_mode;
 #endif
