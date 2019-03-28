@@ -1178,11 +1178,11 @@ void SendQpOnTheFly(
 /************************************/
 APPEXITCONDITIONTYPE ProcessInputBuffer(
     EbConfig_t             *config,
-    EbAppContext_t         *appCallBack)
+    EbAppContext         *appCallBack)
 {
     uint8_t                 is16bit = (uint8_t)(config->encoderBitDepth > 8);
-    EbBufferHeaderType     *headerPtr = appCallBack->inputBufferPool;
-    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
+    EbBufferHeaderType     *headerPtr = appCallBack->input_buffer_pool;
+    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
 
     APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
 
@@ -1349,12 +1349,12 @@ static void write_ivf_frame_header(EbConfig_t *config, uint32_t byte_count){
 
 APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
     EbConfig_t             *config,
-    EbAppContext_t         *appCallBack,
+    EbAppContext         *appCallBack,
     uint8_t                 pic_send_done)
 {
-    APPPORTACTIVETYPE      *portState       = &appCallBack->outputStreamPortActive;
+    APPPORTACTIVETYPE      *portState       = &appCallBack->output_stream_port_active;
     EbBufferHeaderType     *headerPtr;
-    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
+    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
     APPEXITCONDITIONTYPE    return_value    = APP_ExitConditionNone;
     EbErrorType             stream_status   = EB_ErrorNone;
     // Per channel variables
@@ -1381,7 +1381,7 @@ APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
         return APP_ExitConditionError;
     }
     else if (stream_status != EB_NoErrorEmptyQueue) {
-        EbBool   has_tiles                = (EbBool)(appCallBack->ebEncParameters.tile_columns || appCallBack->ebEncParameters.tile_rows);
+        EbBool   has_tiles                = (EbBool)(appCallBack->eb_enc_parameters.tile_columns || appCallBack->eb_enc_parameters.tile_rows);
         uint8_t  obu_frame_header_size    = has_tiles ? OBU_FRAME_HEADER_SIZE + 1 : OBU_FRAME_HEADER_SIZE;
         ++(config->performanceContext.frameCount);
         *totalLatency += (uint64_t)headerPtr->n_tick_count;
@@ -1501,10 +1501,10 @@ APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
 }
 APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
     EbConfig_t             *config,
-    EbAppContext_t         *appCallBack)
+    EbAppContext         *appCallBack)
 {
     EbBufferHeaderType    *headerPtr = appCallBack->recon_buffer; // needs to change for buffered input
-    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
+    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
     APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
     EbErrorType            recon_status = EB_ErrorNone;
     int32_t fseekReturnVal;

@@ -30,7 +30,7 @@ EbErrorType resource_coordination_context_ctor(
     uint32_t                         *compute_segments_total_count_array,
     uint32_t                          encode_instances_total_count)
 {
-    uint32_t instanceIndex;
+    uint32_t instance_index;
 
     ResourceCoordinationContext_t *context_ptr;
     EB_MALLOC(ResourceCoordinationContext_t*, context_ptr, sizeof(ResourceCoordinationContext_t), EB_N_PTR);
@@ -49,15 +49,15 @@ EbErrorType resource_coordination_context_ctor(
     // Allocate SequenceControlSetActiveArray
     EB_MALLOC(EbObjectWrapper_t**, context_ptr->sequenceControlSetActiveArray, sizeof(EbObjectWrapper_t*) * context_ptr->encode_instances_total_count, EB_N_PTR);
 
-    for (instanceIndex = 0; instanceIndex < context_ptr->encode_instances_total_count; ++instanceIndex) {
-        context_ptr->sequenceControlSetActiveArray[instanceIndex] = 0;
+    for (instance_index = 0; instance_index < context_ptr->encode_instances_total_count; ++instance_index) {
+        context_ptr->sequenceControlSetActiveArray[instance_index] = 0;
     }
 
     // Picture Stats
     EB_MALLOC(uint64_t*, context_ptr->pictureNumberArray, sizeof(uint64_t) * context_ptr->encode_instances_total_count, EB_N_PTR);
 
-    for (instanceIndex = 0; instanceIndex < context_ptr->encode_instances_total_count; ++instanceIndex) {
-        context_ptr->pictureNumberArray[instanceIndex] = 0;
+    for (instance_index = 0; instance_index < context_ptr->encode_instances_total_count; ++instance_index) {
+        context_ptr->pictureNumberArray[instance_index] = 0;
     }
 
     context_ptr->averageEncMod = 0;
@@ -414,7 +414,7 @@ void* resource_coordination_kernel(void *input_ptr)
     EbObjectWrapper_t               *input_picture_wrapper_ptr;
     EbObjectWrapper_t               *reference_picture_wrapper_ptr;
 
-    uint32_t                         instanceIndex;
+    uint32_t                         instance_index;
     EbBool                           end_of_sequence_flag = EB_FALSE;
     uint32_t                         aspectRatio;
 
@@ -423,63 +423,63 @@ void* resource_coordination_kernel(void *input_ptr)
     
     for (;;) {
 
-        // Tie instanceIndex to zero for now...
-        instanceIndex = 0;
+        // Tie instance_index to zero for now...
+        instance_index = 0;
 
         // Get the Next svt Input Buffer [BLOCKING]
         eb_get_full_object(
             context_ptr->input_buffer_fifo_ptr,
             &ebInputWrapperPtr);
         ebInputPtr = (EbBufferHeaderType*)ebInputWrapperPtr->object_ptr;
-        sequence_control_set_ptr = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr;
+        sequence_control_set_ptr = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr;
 
         // If config changes occured since the last picture began encoding, then
         //   prepare a new sequence_control_set_ptr containing the new changes and update the state
         //   of the previous Active SequenceControlSet
-        eb_block_on_mutex(context_ptr->sequence_control_set_instance_array[instanceIndex]->config_mutex);
-        if (context_ptr->sequence_control_set_instance_array[instanceIndex]->encode_context_ptr->initial_picture) {
+        eb_block_on_mutex(context_ptr->sequence_control_set_instance_array[instance_index]->config_mutex);
+        if (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) {
 
             // Update picture width, picture height, cropping right offset, cropping bottom offset, and conformance windows
-            if (context_ptr->sequence_control_set_instance_array[instanceIndex]->encode_context_ptr->initial_picture)
+            if (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture)
 
             {
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->luma_width = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_luma_width;
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->luma_height = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_luma_height;
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->chroma_width = (context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_luma_width >> 1);
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->chroma_height = (context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_luma_height >> 1);
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->luma_width = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_luma_width;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->luma_height = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_luma_height;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->chroma_width = (context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_luma_width >> 1);
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->chroma_height = (context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_luma_height >> 1);
 
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_right = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_pad_right;
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->cropping_right_offset = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_right;
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_bottom = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->max_input_pad_bottom;
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->cropping_bottom_offset = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_bottom;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_right = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_pad_right;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->cropping_right_offset = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_right;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_bottom = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_input_pad_bottom;
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->cropping_bottom_offset = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_bottom;
 
-                if (context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_right != 0 || context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->pad_bottom != 0) {
-                    context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->conformance_window_flag = 1;
+                if (context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_right != 0 || context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pad_bottom != 0) {
+                    context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->conformance_window_flag = 1;
                 }
                 else {
-                    context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->conformance_window_flag = 0;
+                    context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->conformance_window_flag = 0;
                 }
 
-                input_size = context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->luma_width * context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr->luma_height;
+                input_size = context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->luma_width * context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->luma_height;
             }
 
 
             // Copy previous Active SequenceControlSetPtr to a place holder
-            previousSequenceControlSetWrapperPtr = context_ptr->sequenceControlSetActiveArray[instanceIndex];
+            previousSequenceControlSetWrapperPtr = context_ptr->sequenceControlSetActiveArray[instance_index];
 
             // Get empty SequenceControlSet [BLOCKING]
             eb_get_empty_object(
                 context_ptr->sequence_control_set_empty_fifo_ptr,
-                &context_ptr->sequenceControlSetActiveArray[instanceIndex]);
+                &context_ptr->sequenceControlSetActiveArray[instance_index]);
 
             // Copy the contents of the active SequenceControlSet into the new empty SequenceControlSet
             copy_sequence_control_set(
-                (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instanceIndex]->object_ptr,
-                context_ptr->sequence_control_set_instance_array[instanceIndex]->sequence_control_set_ptr);
+                (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr,
+                context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr);
 
             // Disable releaseFlag of new SequenceControlSet
             eb_object_release_disable(
-                context_ptr->sequenceControlSetActiveArray[instanceIndex]);
+                context_ptr->sequenceControlSetActiveArray[instance_index]);
 
             if (previousSequenceControlSetWrapperPtr != EB_NULL) {
 
@@ -494,19 +494,19 @@ void* resource_coordination_kernel(void *input_ptr)
                 }
             }
         }
-        eb_release_mutex(context_ptr->sequence_control_set_instance_array[instanceIndex]->config_mutex);
+        eb_release_mutex(context_ptr->sequence_control_set_instance_array[instance_index]->config_mutex);
 
         // Sequence Control Set is released by Rate Control after passing through MDC->MD->ENCDEC->Packetization->RateControl
         //   and in the PictureManager
         eb_object_inc_live_count(
-            context_ptr->sequenceControlSetActiveArray[instanceIndex],
+            context_ptr->sequenceControlSetActiveArray[instance_index],
             2);
 
         // Set the current SequenceControlSet
-        sequence_control_set_ptr = (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instanceIndex]->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr;
 
         // Init SB Params
-        if (context_ptr->sequence_control_set_instance_array[instanceIndex]->encode_context_ptr->initial_picture) {
+        if (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) {
             derive_input_resolution(
                 sequence_control_set_ptr,
                 input_size);
@@ -520,7 +520,7 @@ void* resource_coordination_kernel(void *input_ptr)
                 PM_MODE_1;
 
             // Construct PM Trans Coeff Shaping
-            if (context_ptr->sequence_control_set_instance_array[instanceIndex]->encode_context_ptr->initial_picture) {
+            if (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) {
                 if (sequence_control_set_ptr->pm_mode == PM_MODE_0) {
                     construct_pm_trans_coeff_shaping(sequence_control_set_ptr);
                 }
@@ -534,7 +534,7 @@ void* resource_coordination_kernel(void *input_ptr)
 
         //Get a New ParentPCS where we will hold the new inputPicture
         eb_get_empty_object(
-            context_ptr->picture_control_set_fifo_ptr_array[instanceIndex],
+            context_ptr->picture_control_set_fifo_ptr_array[instance_index],
             &pictureControlSetWrapperPtr);
 
         // Parent PCS is released by the Rate Control after passing through MDC->MD->ENCDEC->Packetization
@@ -550,7 +550,7 @@ void* resource_coordination_kernel(void *input_ptr)
         picture_control_set_ptr->enc_mode = sequence_control_set_ptr->static_config.enc_mode;
 
         // Keep track of the previous input for the ZZ SADs computation
-        picture_control_set_ptr->previous_picture_control_set_wrapper_ptr = (context_ptr->sequence_control_set_instance_array[instanceIndex]->encode_context_ptr->initial_picture) ?
+        picture_control_set_ptr->previous_picture_control_set_wrapper_ptr = (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) ?
             pictureControlSetWrapperPtr :
             sequence_control_set_ptr->encode_context_ptr->previous_picture_control_set_wrapper_ptr;
 
@@ -564,7 +564,7 @@ void* resource_coordination_kernel(void *input_ptr)
         end_of_sequence_flag = (picture_control_set_ptr->input_ptr->flags & EB_BUFFERFLAG_EOS) ? EB_TRUE : EB_FALSE;
         EbStartTime(&picture_control_set_ptr->start_time_seconds, &picture_control_set_ptr->start_time_u_seconds);
         
-        picture_control_set_ptr->sequence_control_set_wrapper_ptr = context_ptr->sequenceControlSetActiveArray[instanceIndex];
+        picture_control_set_ptr->sequence_control_set_wrapper_ptr = context_ptr->sequenceControlSetActiveArray[instance_index];
         picture_control_set_ptr->sequence_control_set_ptr = sequence_control_set_ptr;
         picture_control_set_ptr->input_picture_wrapper_ptr = input_picture_wrapper_ptr;
         picture_control_set_ptr->end_of_sequence_flag = end_of_sequence_flag;
@@ -626,7 +626,7 @@ void* resource_coordination_kernel(void *input_ptr)
         }
 
         // Picture Stats
-        picture_control_set_ptr->picture_number = context_ptr->pictureNumberArray[instanceIndex]++;
+        picture_control_set_ptr->picture_number = context_ptr->pictureNumberArray[instance_index]++;
         ResetPcsAv1(picture_control_set_ptr);
 
         sequence_control_set_ptr->encode_context_ptr->initial_picture = EB_FALSE;

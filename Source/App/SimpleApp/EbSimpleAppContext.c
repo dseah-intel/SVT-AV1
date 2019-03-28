@@ -77,7 +77,7 @@ EbErrorType AllocateFrameBuffer(
  * AppContext Constructor
  ***********************************/
 EbErrorType EbAppContextCtor(
-    EbAppContext_t *contextPtr,
+    EbAppContext *contextPtr,
     EbConfig_t     *config)
 {
     EbErrorType   return_error = EB_ErrorInsufficientResources;
@@ -139,7 +139,7 @@ EbErrorType EbAppContextCtor(
  * AppContext Destructor
  ***********************************/
 void EbAppContextDtor(
-    EbAppContext_t *contextPtr)
+    EbAppContext *contextPtr)
 {
     EbSvtIOFormat *inputPtr = (EbSvtIOFormat*)contextPtr->inputPictureBuffer->p_buffer;
     free(inputPtr->luma);
@@ -163,21 +163,21 @@ void EbAppContextDtor(
 ***********************************************/
 EbErrorType CopyConfigurationParameters(
     EbConfig_t                *config,
-    EbAppContext_t            *callbackData,
-    uint32_t                 instanceIdx)
+    EbAppContext            *callback_data,
+    uint32_t                 instance_idx)
 {
     EbErrorType   return_error = EB_ErrorNone;
 
     // Assign Instance index to the library
-    callbackData->instanceIdx = (uint8_t)instanceIdx;
+    callback_data->instance_idx = (uint8_t)instance_idx;
 
     // Initialize Port Activity Flags
-    callbackData->ebEncParameters.source_width       = config->sourceWidth;
-    callbackData->ebEncParameters.source_height      = config->sourceHeight;
-    callbackData->ebEncParameters.encoder_bit_depth   = config->encoderBitDepth;
-    //callbackData->ebEncParameters.code_vps_sps_pps     = 1;
-    //callbackData->ebEncParameters.code_eos_nal        = 1;
-    callbackData->ebEncParameters.recon_enabled      = config->reconFile ? 1 : 0;
+    callback_data->eb_enc_parameters.source_width       = config->sourceWidth;
+    callback_data->eb_enc_parameters.source_height      = config->sourceHeight;
+    callback_data->eb_enc_parameters.encoder_bit_depth   = config->encoderBitDepth;
+    //callback_data->eb_enc_parameters.code_vps_sps_pps     = 1;
+    //callback_data->eb_enc_parameters.code_eos_nal        = 1;
+    callback_data->eb_enc_parameters.recon_enabled      = config->reconFile ? 1 : 0;
 
     return return_error;
 
@@ -186,32 +186,32 @@ EbErrorType CopyConfigurationParameters(
 /***********************************
  * Initialize Core & Component
  ***********************************/
-EbErrorType InitEncoder(
+EbErrorType init_encoder(
     EbConfig_t                *config,
-    EbAppContext_t            *callbackData,
-    uint32_t                 instanceIdx)
+    EbAppContext            *callback_data,
+    uint32_t                 instance_idx)
 {
     EbErrorType        return_error = EB_ErrorNone;
 
     ///************************* LIBRARY INIT [START] *********************///
     // STEP 1: Call the library to construct a Component Handle
-    return_error = eb_init_handle(&callbackData->svtEncoderHandle, callbackData, &callbackData->ebEncParameters);
+    return_error = eb_init_handle(&callback_data->svt_encoder_handle, callback_data, &callback_data->eb_enc_parameters);
     if (return_error != EB_ErrorNone) {return return_error;}
 
     // STEP 3: Copy all configuration parameters into the callback structure
-    return_error = CopyConfigurationParameters(config,callbackData,instanceIdx);
+    return_error = CopyConfigurationParameters(config,callback_data,instance_idx);
     if (return_error != EB_ErrorNone) { return return_error; }
 
     // STEP 4: Send over all configuration parameters
-    return_error = eb_svt_enc_set_parameter(callbackData->svtEncoderHandle,&callbackData->ebEncParameters);
+    return_error = eb_svt_enc_set_parameter(callback_data->svt_encoder_handle,&callback_data->eb_enc_parameters);
     if (return_error != EB_ErrorNone) { return return_error; }
 
     // STEP 5: Init Encoder
-    return_error = eb_init_encoder(callbackData->svtEncoderHandle);
+    return_error = eb_init_encoder(callback_data->svt_encoder_handle);
     // Get ivf header
     if (config->bitstreamFile) {
         EbBufferHeaderType *outputStreamBuffer;
-        return_error = eb_svt_enc_stream_header(callbackData->svtEncoderHandle, &outputStreamBuffer);
+        return_error = eb_svt_enc_stream_header(callback_data->svt_encoder_handle, &outputStreamBuffer);
         if (return_error != EB_ErrorNone) {
             return return_error;
         }
@@ -224,22 +224,22 @@ EbErrorType InitEncoder(
 /***********************************
  * Deinit Components
  ***********************************/
-EbErrorType DeInitEncoder(
-    EbAppContext_t *callbackDataPtr,
-    uint32_t        instanceIndex)
+EbErrorType de_init_encoder(
+    EbAppContext *callback_data_ptr,
+    uint32_t        instance_index)
 {
-    (void)instanceIndex;
+    (void)instance_index;
     EbErrorType return_error = EB_ErrorNone;
 
-    if (((EbComponentType*)(callbackDataPtr->svtEncoderHandle)) != NULL) {
-            return_error = eb_deinit_encoder(callbackDataPtr->svtEncoderHandle);
+    if (((EbComponentType*)(callback_data_ptr->svt_encoder_handle)) != NULL) {
+            return_error = eb_deinit_encoder(callback_data_ptr->svt_encoder_handle);
     }
 
     // Destruct the buffer memory pool
     if (return_error != EB_ErrorNone) { return return_error; }
 
     // Destruct the component
-    eb_deinit_handle(callbackDataPtr->svtEncoderHandle);
+    eb_deinit_handle(callback_data_ptr->svt_encoder_handle);
 
     return return_error;
 }

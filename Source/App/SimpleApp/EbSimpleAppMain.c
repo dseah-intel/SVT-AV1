@@ -95,10 +95,10 @@ static void EbConfigDtor(EbConfig_t *config_ptr)
 
 APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
     EbConfig_t             *config,
-    EbAppContext_t         *appCallBack)
+    EbAppContext         *appCallBack)
 {
     EbBufferHeaderType    *headerPtr = appCallBack->recon_buffer; // needs to change for buffered input
-    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
+    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
     APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
     EbErrorType            recon_status = EB_ErrorNone;
     int32_t fseekReturnVal;
@@ -132,12 +132,12 @@ APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
 }
 APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
     EbConfig_t             *config,
-    EbAppContext_t         *appCallback,
+    EbAppContext         *appCallback,
     uint8_t           pic_send_done
 )
 {
     EbBufferHeaderType    *headerPtr;
-    EbComponentType       *componentHandle = (EbComponentType*)appCallback->svtEncoderHandle;
+    EbComponentType       *componentHandle = (EbComponentType*)appCallback->svt_encoder_handle;
     APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
     EbErrorType            stream_status = EB_ErrorNone;
     // System performance variables
@@ -256,11 +256,11 @@ void ReadInputFrames(
 #define  TEST_IDR 0
 APPEXITCONDITIONTYPE ProcessInputBuffer(
     EbConfig_t                  *config,
-    EbAppContext_t              *appCallBack)
+    EbAppContext              *appCallBack)
 {
     uint8_t            is16bit = (uint8_t)(config->encoderBitDepth > 8);
     EbBufferHeaderType     *headerPtr = appCallBack->inputPictureBuffer; // needs to change for buffered input
-    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
+    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
     APPEXITCONDITIONTYPE     return_value = APP_ExitConditionNone;
     static int32_t               frameCount = 0;
 
@@ -311,7 +311,7 @@ int32_t main(int32_t argc, char* argv[])
     EbErrorType            return_error = EB_ErrorNone;            // Error Handling
     APPEXITCONDITIONTYPE    exitConditionOutput = APP_ExitConditionNone , exitConditionInput = APP_ExitConditionNone , exitConditionRecon = APP_ExitConditionNone;    // Processing loop exit condition
     EbConfig_t             *config;        // Encoder Configuration
-    EbAppContext_t         *appCallback;   // Instances App callback data
+    EbAppContext         *appCallback;   // Instances App callback data
 
     // Print Encoder Info
     printf("-------------------------------------\n");
@@ -395,11 +395,11 @@ int32_t main(int32_t argc, char* argv[])
         if (return_error == EB_ErrorNone && (config != NULL)) {
 
             // Initialize appCallback
-            appCallback = (EbAppContext_t*)malloc(sizeof(EbAppContext_t));
+            appCallback = (EbAppContext*)malloc(sizeof(EbAppContext));
             if (appCallback){
                 EbAppContextCtor(appCallback,config);
 
-                return_error = InitEncoder(config, appCallback, 0);
+                return_error = init_encoder(config, appCallback, 0);
 
                 printf("Encoding          ");
                 fflush(stdout);
@@ -414,7 +414,7 @@ int32_t main(int32_t argc, char* argv[])
                     }
                     exitConditionOutput = ProcessOutputStreamBuffer(config, appCallback, (exitConditionInput == APP_ExitConditionNone || (exitConditionRecon == APP_ExitConditionNone && config->reconFile) ? 0 : 1));
                 }
-                return_error = DeInitEncoder(appCallback, 0);
+                return_error = de_init_encoder(appCallback, 0);
                 // Destruct the App memory variables
                 EbAppContextDtor(appCallback);
                 free(appCallback);

@@ -716,7 +716,7 @@ static int32_t FindToken(
 static int32_t ReadConfigFile(
     EbConfig_t  *config,
     char        *configPath,
-    uint32_t     instanceIdx)
+    uint32_t     instance_idx)
 {
     int32_t return_error = 0;
 
@@ -733,11 +733,11 @@ static int32_t ReadConfigFile(
             if (resultSize == configFileSize) {
                 ParseConfigFile(config, configFileBuffer, configFileSize);
             } else {
-                printf("Error channel %u: File Read Failed\n",instanceIdx+1);
+                printf("Error channel %u: File Read Failed\n",instance_idx+1);
                 return_error = -1;
             }
         } else {
-            printf("Error channel %u: Memory Allocation Failed\n",instanceIdx+1);
+            printf("Error channel %u: Memory Allocation Failed\n",instance_idx+1);
             return_error = -1;
         }
 
@@ -745,7 +745,7 @@ static int32_t ReadConfigFile(
         fclose(config->configFile);
         config->configFile = (FILE*) NULL;
     } else {
-        printf("Error channel %u: Couldn't open Config File: %s\n", instanceIdx+1,configPath);
+        printf("Error channel %u: Couldn't open Config File: %s\n", instance_idx+1,configPath);
         return_error = -1;
     }
 

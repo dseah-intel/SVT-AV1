@@ -165,28 +165,28 @@ typedef struct EbConfig_s
 /***************************************
  * App Callback data struct
  ***************************************/
-typedef struct EbAppContext_s {
-    EbSvtAv1EncConfiguration              ebEncParameters;
+typedef struct EbAppContext {
+    EbSvtAv1EncConfiguration              eb_enc_parameters;
 
     // Component Handle
-    EbComponentType*                   svtEncoderHandle;
+    EbComponentType*                   svt_encoder_handle;
 
     // Buffer Pools
     EbBufferHeaderType                 *inputPictureBuffer;
     EbBufferHeaderType                 *outputStreamBuffer;
     EbBufferHeaderType                 *recon_buffer;
 
-    uint32_t instanceIdx;
+    uint32_t instance_idx;
 
-} EbAppContext_t;
+} EbAppContext;
 
 
 /********************************
  * External Function
  ********************************/
-extern EbErrorType EbAppContextCtor(EbAppContext_t *contextPtr, EbConfig_t *config);
-extern void EbAppContextDtor(EbAppContext_t *contextPtr);
-extern EbErrorType InitEncoder(EbConfig_t *config, EbAppContext_t *callbackData, uint32_t instanceIdx);
-extern EbErrorType DeInitEncoder(EbAppContext_t *callbackDataPtr, uint32_t instanceIndex);
+extern EbErrorType EbAppContextCtor(EbAppContext *contextPtr, EbConfig_t *config);
+extern void EbAppContextDtor(EbAppContext *contextPtr);
+extern EbErrorType init_encoder(EbConfig_t *config, EbAppContext *callback_data, uint32_t instance_idx);
+extern EbErrorType de_init_encoder(EbAppContext *callback_data_ptr, uint32_t instance_index);
 
 #endif // EbAppContext_h
