@@ -14401,7 +14401,7 @@ extern "C" {
         //    int64_t first_time_stamp_ever;
         //
         //    RATE_CONTROL rc;
-        //    double framerate;
+        //    double frame_rate;
         //
         //    // NOTE(zoeliu): Any inter frame allows maximum of REF_FRAMES inter
         //    // references; Plus the currently coded frame itself, it is needed to allocate

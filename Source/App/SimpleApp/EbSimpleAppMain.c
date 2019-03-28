@@ -33,14 +33,14 @@
 #include <errno.h>
 #endif
 
-/** The APPEXITCONDITIONTYPE type is used to define the App main loop exit
+/** The AppExitConditionType type is used to define the App main loop exit
 conditions.
 */
-typedef enum APPEXITCONDITIONTYPE {
+typedef enum AppExitConditionType {
     APP_ExitConditionNone = 0,
     APP_ExitConditionFinished,
     APP_ExitConditionError
-} APPEXITCONDITIONTYPE;
+} AppExitConditionType;
 
 /****************************************
 * Padding
@@ -53,18 +53,18 @@ typedef enum APPEXITCONDITIONTYPE {
  /**********************************
  * Constructor
  **********************************/
-static void EbConfigCtor(EbConfig_t *config_ptr)
+static void eb_config_ctor(EbConfig *config_ptr)
 {
-    config_ptr->inputFile = NULL;
-    config_ptr->bitstreamFile = NULL;
-    config_ptr->reconFile = NULL;
-    config_ptr->encoderBitDepth = 8;
-    config_ptr->compressedTenBitFormat = 0;
-    config_ptr->sourceWidth = 0;
-    config_ptr->sourceHeight = 0;
+    config_ptr->input_file = NULL;
+    config_ptr->bitstream_file = NULL;
+    config_ptr->recon_file = NULL;
+    config_ptr->encoder_bit_depth = 8;
+    config_ptr->compressed_ten_bit_format = 0;
+    config_ptr->source_width = 0;
+    config_ptr->source_height = 0;
     config_ptr->frames_to_be_encoded = 0;
     config_ptr->channel_id = 0;
-    config_ptr->stopEncoder = 0;
+    config_ptr->stop_encoder = 0;
 
     return;
 }
@@ -72,34 +72,34 @@ static void EbConfigCtor(EbConfig_t *config_ptr)
 /**********************************
 * Destructor
 **********************************/
-static void EbConfigDtor(EbConfig_t *config_ptr)
+static void eb_config_dtor(EbConfig *config_ptr)
 {
 
-    if (config_ptr->inputFile) {
-        fclose(config_ptr->inputFile);
-        config_ptr->inputFile = (FILE *)NULL;
+    if (config_ptr->input_file) {
+        fclose(config_ptr->input_file);
+        config_ptr->input_file = (FILE *)NULL;
     }
 
-    if (config_ptr->reconFile) {
-        fclose(config_ptr->reconFile);
-        config_ptr->reconFile = (FILE *)NULL;
+    if (config_ptr->recon_file) {
+        fclose(config_ptr->recon_file);
+        config_ptr->recon_file = (FILE *)NULL;
     }
 
-    if (config_ptr->bitstreamFile) {
-        fclose(config_ptr->bitstreamFile);
-        config_ptr->bitstreamFile = (FILE *)NULL;
+    if (config_ptr->bitstream_file) {
+        fclose(config_ptr->bitstream_file);
+        config_ptr->bitstream_file = (FILE *)NULL;
     }
 
     return;
 }
 
-APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
-    EbConfig_t             *config,
-    EbAppContext_t         *appCallBack)
+AppExitConditionType ProcessOutputReconBuffer(
+    EbConfig             *config,
+    EbAppContext         *appCallBack)
 {
     EbBufferHeaderType    *headerPtr = appCallBack->recon_buffer; // needs to change for buffered input
-    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
-    APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
+    EbComponentType       *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
+    AppExitConditionType    return_value = APP_ExitConditionNone;
     EbErrorType            recon_status = EB_ErrorNone;
     int32_t fseekReturnVal;
     // non-blocking call until all input frames are sent
@@ -111,10 +111,10 @@ APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
     }
     else if (recon_status != EB_NoErrorEmptyQueue) {
         //Sets the File position to the beginning of the file.
-        rewind(config->reconFile);
+        rewind(config->recon_file);
         uint64_t frameNum = headerPtr->pts;
         while (frameNum>0) {
-            fseekReturnVal = fseeko64(config->reconFile, headerPtr->n_filled_len, SEEK_CUR);
+            fseekReturnVal = fseeko64(config->recon_file, headerPtr->n_filled_len, SEEK_CUR);
 
             if (fseekReturnVal != 0) {
                 printf("Error in fseeko64  returnVal %i\n", fseekReturnVal);
@@ -123,25 +123,25 @@ APPEXITCONDITIONTYPE ProcessOutputReconBuffer(
             frameNum = frameNum - 1;
         }
 
-        fwrite(headerPtr->p_buffer, 1, headerPtr->n_filled_len, config->reconFile);
+        fwrite(headerPtr->p_buffer, 1, headerPtr->n_filled_len, config->recon_file);
 
         // Update Output Port Activity State
         return_value = (headerPtr->flags & EB_BUFFERFLAG_EOS) ? APP_ExitConditionFinished : APP_ExitConditionNone;
     }
     return return_value;
 }
-APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
-    EbConfig_t             *config,
-    EbAppContext_t         *appCallback,
+AppExitConditionType ProcessOutputStreamBuffer(
+    EbConfig             *config,
+    EbAppContext         *appCallback,
     uint8_t           pic_send_done
 )
 {
     EbBufferHeaderType    *headerPtr;
-    EbComponentType       *componentHandle = (EbComponentType*)appCallback->svtEncoderHandle;
-    APPEXITCONDITIONTYPE    return_value = APP_ExitConditionNone;
+    EbComponentType       *componentHandle = (EbComponentType*)appCallback->svt_encoder_handle;
+    AppExitConditionType    return_value = APP_ExitConditionNone;
     EbErrorType            stream_status = EB_ErrorNone;
     // System performance variables
-    static int64_t          frameCount = 0;
+    static int64_t          frame_count = 0;
 
     // non-blocking call
     stream_status = eb_svt_get_packet(componentHandle, &headerPtr, pic_send_done);
@@ -150,12 +150,12 @@ APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
         printf("\nError while encoding, code 0x%x\n", headerPtr->flags);
         return APP_ExitConditionError;
     }else if (stream_status != EB_NoErrorEmptyQueue) {
-        fwrite(headerPtr->p_buffer, 1, headerPtr->n_filled_len, config->bitstreamFile);
+        fwrite(headerPtr->p_buffer, 1, headerPtr->n_filled_len, config->bitstream_file);
 
         // Update Output Port Activity State
         return_value = (headerPtr->flags & EB_BUFFERFLAG_EOS) ? APP_ExitConditionFinished : APP_ExitConditionNone;
-        //printf("\b\b\b\b\b\b\b\b\b%9d", ++frameCount);
-        printf("\nDecode Order:\t%ld\tdts:\t%ld\tpts:\t%ld\tSliceType:\t%d", (long int)frameCount++, (long int)headerPtr->dts , (long int)headerPtr->pts, (int)headerPtr->pic_type);
+        //printf("\b\b\b\b\b\b\b\b\b%9d", ++frame_count);
+        printf("\nDecode Order:\t%ld\tdts:\t%ld\tpts:\t%ld\tSliceType:\t%d", (long int)frame_count++, (long int)headerPtr->dts , (long int)headerPtr->pts, (int)headerPtr->pic_type);
 
         fflush(stdout);
 
@@ -167,120 +167,120 @@ APPEXITCONDITIONTYPE ProcessOutputStreamBuffer(
 
 #define SIZE_OF_ONE_FRAME_IN_BYTES(width, height,is16bit) ( ( ((width)*(height)*3)>>1 )<<is16bit)
 void ReadInputFrames(
-    EbConfig_t                  *config,
+    EbConfig                  *config,
     uint8_t                      is16bit,
     EbBufferHeaderType         *headerPtr)
 {
 
     uint64_t  readSize;
-    uint32_t  inputPaddedWidth = config->inputPaddedWidth;
-    uint32_t  inputPaddedHeight = config->inputPaddedHeight;
-    FILE   *inputFile = config->inputFile;
+    uint32_t  input_padded_width = config->input_padded_width;
+    uint32_t  input_padded_height = config->input_padded_height;
+    FILE   *input_file = config->input_file;
     uint8_t  *ebInputPtr;
     EbSvtIOFormat* inputPtr = (EbSvtIOFormat*)headerPtr->p_buffer;
-    inputPtr->yStride  = inputPaddedWidth;
-    inputPtr->cbStride = inputPaddedWidth >> 1;
-    inputPtr->crStride = inputPaddedWidth >> 1;
+    inputPtr->y_stride  = input_padded_width;
+    inputPtr->cb_stride = input_padded_width >> 1;
+    inputPtr->cr_stride = input_padded_width >> 1;
     {
-        if (is16bit == 0 || (is16bit == 1 && config->compressedTenBitFormat == 0)) {
+        if (is16bit == 0 || (is16bit == 1 && config->compressed_ten_bit_format == 0)) {
 
-            readSize = (uint64_t)SIZE_OF_ONE_FRAME_IN_BYTES(inputPaddedWidth, inputPaddedHeight, is16bit);
+            readSize = (uint64_t)SIZE_OF_ONE_FRAME_IN_BYTES(input_padded_width, input_padded_height, is16bit);
 
             headerPtr->n_filled_len = 0;
 
             {
-                uint64_t lumaReadSize = (uint64_t)inputPaddedWidth*inputPaddedHeight << is16bit;
+                uint64_t lumaReadSize = (uint64_t)input_padded_width*input_padded_height << is16bit;
                 ebInputPtr = inputPtr->luma;
-                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize, inputFile);
+                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize, input_file);
                 ebInputPtr = inputPtr->cb;
-                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, inputFile);
+                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, input_file);
                 ebInputPtr = inputPtr->cr;
-                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, inputFile);
-                inputPtr->luma = inputPtr->luma + ((config->inputPaddedWidth*TOP_INPUT_PADDING + LEFT_INPUT_PADDING) << is16bit);
-                inputPtr->cb = inputPtr->cb + (((config->inputPaddedWidth >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1)) << is16bit);
-                inputPtr->cr = inputPtr->cr + (((config->inputPaddedWidth >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1)) << is16bit);
+                headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, input_file);
+                inputPtr->luma = inputPtr->luma + ((config->input_padded_width*TOP_INPUT_PADDING + LEFT_INPUT_PADDING) << is16bit);
+                inputPtr->cb = inputPtr->cb + (((config->input_padded_width >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1)) << is16bit);
+                inputPtr->cr = inputPtr->cr + (((config->input_padded_width >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1)) << is16bit);
 
                  if (readSize != headerPtr->n_filled_len) {
-                    config->stopEncoder = 1;
+                    config->stop_encoder = 1;
                  }
             }
         }
         // 10-bit Compressed Unpacked Mode
-        else if (is16bit == 1 && config->compressedTenBitFormat == 1) {
+        else if (is16bit == 1 && config->compressed_ten_bit_format == 1) {
 
             // Fill the buffer with a complete frame
             headerPtr->n_filled_len = 0;
 
-            uint64_t lumaReadSize = (uint64_t)inputPaddedWidth*inputPaddedHeight;
-            uint64_t nbitlumaReadSize = (uint64_t)(inputPaddedWidth / 4)*inputPaddedHeight;
+            uint64_t lumaReadSize = (uint64_t)input_padded_width*input_padded_height;
+            uint64_t nbitlumaReadSize = (uint64_t)(input_padded_width / 4)*input_padded_height;
 
             ebInputPtr = inputPtr->luma;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize, inputFile);
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize, input_file);
             ebInputPtr = inputPtr->cb;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, inputFile);
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, input_file);
             ebInputPtr = inputPtr->cr;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, inputFile);
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, lumaReadSize >> 2, input_file);
 
-            inputPtr->luma = inputPtr->luma + config->inputPaddedWidth*TOP_INPUT_PADDING + LEFT_INPUT_PADDING;
-            inputPtr->cb = inputPtr->cb + (config->inputPaddedWidth >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1);
-            inputPtr->cr = inputPtr->cr + (config->inputPaddedWidth >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1);
+            inputPtr->luma = inputPtr->luma + config->input_padded_width*TOP_INPUT_PADDING + LEFT_INPUT_PADDING;
+            inputPtr->cb = inputPtr->cb + (config->input_padded_width >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1);
+            inputPtr->cr = inputPtr->cr + (config->input_padded_width >> 1)*(TOP_INPUT_PADDING >> 1) + (LEFT_INPUT_PADDING >> 1);
 
 
-            ebInputPtr = inputPtr->lumaExt;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize, inputFile);
-            ebInputPtr = inputPtr->cbExt;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize >> 2, inputFile);
-            ebInputPtr = inputPtr->crExt;
-            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize >> 2, inputFile);
+            ebInputPtr = inputPtr->luma_ext;
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize, input_file);
+            ebInputPtr = inputPtr->cb_ext;
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize >> 2, input_file);
+            ebInputPtr = inputPtr->cr_ext;
+            headerPtr->n_filled_len += (uint32_t)fread(ebInputPtr, 1, nbitlumaReadSize >> 2, input_file);
 
-            inputPtr->lumaExt = inputPtr->lumaExt + ((config->inputPaddedWidth >> 2)*TOP_INPUT_PADDING + (LEFT_INPUT_PADDING >> 2));
-            inputPtr->cbExt = inputPtr->cbExt + (((config->inputPaddedWidth >> 1) >> 2)*(TOP_INPUT_PADDING >> 1) + ((LEFT_INPUT_PADDING >> 1) >> 2));
-            inputPtr->crExt = inputPtr->crExt + (((config->inputPaddedWidth >> 1) >> 2)*(TOP_INPUT_PADDING >> 1) + ((LEFT_INPUT_PADDING >> 1) >> 2));
+            inputPtr->luma_ext = inputPtr->luma_ext + ((config->input_padded_width >> 2)*TOP_INPUT_PADDING + (LEFT_INPUT_PADDING >> 2));
+            inputPtr->cb_ext = inputPtr->cb_ext + (((config->input_padded_width >> 1) >> 2)*(TOP_INPUT_PADDING >> 1) + ((LEFT_INPUT_PADDING >> 1) >> 2));
+            inputPtr->cr_ext = inputPtr->cr_ext + (((config->input_padded_width >> 1) >> 2)*(TOP_INPUT_PADDING >> 1) + ((LEFT_INPUT_PADDING >> 1) >> 2));
 
             readSize = ((lumaReadSize * 3) >> 1) + ((nbitlumaReadSize * 3) >> 1);
 
             if (readSize != headerPtr->n_filled_len) {
-                config->stopEncoder = 1;
+                config->stop_encoder = 1;
             }
 
         }
     }
     // If we reached the end of file, loop over again
-    if (feof(inputFile) != 0) {
-        //fseek(inputFile, 0, SEEK_SET);
-        config->stopEncoder = 1;
+    if (feof(input_file) != 0) {
+        //fseek(input_file, 0, SEEK_SET);
+        config->stop_encoder = 1;
     }
 
     return;
 }
 #define  TEST_IDR 0
-APPEXITCONDITIONTYPE ProcessInputBuffer(
-    EbConfig_t                  *config,
-    EbAppContext_t              *appCallBack)
+AppExitConditionType ProcessInputBuffer(
+    EbConfig                  *config,
+    EbAppContext              *appCallBack)
 {
-    uint8_t            is16bit = (uint8_t)(config->encoderBitDepth > 8);
+    uint8_t            is16bit = (uint8_t)(config->encoder_bit_depth > 8);
     EbBufferHeaderType     *headerPtr = appCallBack->inputPictureBuffer; // needs to change for buffered input
-    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svtEncoderHandle;
-    APPEXITCONDITIONTYPE     return_value = APP_ExitConditionNone;
-    static int32_t               frameCount = 0;
+    EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
+    AppExitConditionType     return_value = APP_ExitConditionNone;
+    static int32_t               frame_count = 0;
 
-    if (config->stopEncoder == 0) {
+    if (config->stop_encoder == 0) {
         ReadInputFrames(
             config,
             is16bit,
             headerPtr);
 
-        if (config->stopEncoder == 0) {
-            //printf ("DISP: %d", frameCount);
+        if (config->stop_encoder == 0) {
+            //printf ("DISP: %d", frame_count);
             // Fill in Buffers Header control data
             headerPtr->flags = 0;
             headerPtr->p_app_private = NULL;
-            headerPtr->pts         = frameCount++;
+            headerPtr->pts         = frame_count++;
             headerPtr->pic_type   = EB_AV1_INVALID_PICTURE;
 #if TEST_IDR
-            if (frameCount == 200)
+            if (frame_count == 200)
                 headerPtr->pic_type = IDR_SLICE;
-            if (frameCount == 150)
+            if (frame_count == 150)
                 headerPtr->pic_type = I_SLICE;
 #endif
             // Send the picture
@@ -309,9 +309,9 @@ APPEXITCONDITIONTYPE ProcessInputBuffer(
 int32_t main(int32_t argc, char* argv[])
 {
     EbErrorType            return_error = EB_ErrorNone;            // Error Handling
-    APPEXITCONDITIONTYPE    exitConditionOutput = APP_ExitConditionNone , exitConditionInput = APP_ExitConditionNone , exitConditionRecon = APP_ExitConditionNone;    // Processing loop exit condition
-    EbConfig_t             *config;        // Encoder Configuration
-    EbAppContext_t         *appCallback;   // Instances App callback data
+    AppExitConditionType    exitConditionOutput = APP_ExitConditionNone , exitConditionInput = APP_ExitConditionNone , exitConditionRecon = APP_ExitConditionNone;    // Processing loop exit condition
+    EbConfig             *config;        // Encoder Configuration
+    EbAppContext         *appCallback;   // Instances App callback data
 
     // Print Encoder Info
     printf("-------------------------------------\n");
@@ -333,9 +333,9 @@ int32_t main(int32_t argc, char* argv[])
     fflush(stdout);
     {
         // Initialize config
-        config = (EbConfig_t*)malloc(sizeof(EbConfig_t));
+        config = (EbConfig*)malloc(sizeof(EbConfig));
         if (config){
-            EbConfigCtor(config);
+            eb_config_ctor(config);
             if (argc != 6 && argc != 7) {
                 printf("Usage: ./SvtHevcEncSimpleApp in.yuv out.ivf width height bitdepth recon.yuv(optional)\n");
                 return_error = EB_ErrorBadParameter;
@@ -349,7 +349,7 @@ int32_t main(int32_t argc, char* argv[])
                     return_error = EB_ErrorBadParameter;
                 }
                 else
-                    config->inputFile = fin;
+                    config->input_file = fin;
 
                 FILE * fout;
                 FOPEN(fout,argv[2], "wb");
@@ -358,7 +358,7 @@ int32_t main(int32_t argc, char* argv[])
                     return_error = EB_ErrorBadParameter;
                 }
                 else
-                    config->bitstreamFile = fout;
+                    config->bitstream_file = fout;
 
                 uint32_t width = 0, height = 0;
 
@@ -369,15 +369,15 @@ int32_t main(int32_t argc, char* argv[])
                     return_error = EB_ErrorBadParameter;
                 }
 
-                config->inputPaddedWidth  = config->sourceWidth = width;
-                config->inputPaddedHeight = config->sourceHeight = height;
+                config->input_padded_width  = config->source_width = width;
+                config->input_padded_height = config->source_height = height;
 
                 uint32_t bdepth = width = strtoul(argv[5], NULL, 0);
                 if ((bdepth != 8) && (bdepth != 10)){
                     printf("Invalid bit depth\n");
                     return_error = EB_ErrorBadParameter;
                 }
-                config->encoderBitDepth = bdepth;
+                config->encoder_bit_depth = bdepth;
 
                 if (argc == 7) {
                     FILE * frec;
@@ -387,7 +387,7 @@ int32_t main(int32_t argc, char* argv[])
                         return_error = EB_ErrorBadParameter;
                     }
                     else
-                        config->reconFile = frec;
+                        config->recon_file = frec;
                 }
 
             }
@@ -395,11 +395,11 @@ int32_t main(int32_t argc, char* argv[])
         if (return_error == EB_ErrorNone && (config != NULL)) {
 
             // Initialize appCallback
-            appCallback = (EbAppContext_t*)malloc(sizeof(EbAppContext_t));
+            appCallback = (EbAppContext*)malloc(sizeof(EbAppContext));
             if (appCallback){
                 EbAppContextCtor(appCallback,config);
 
-                return_error = InitEncoder(config, appCallback, 0);
+                return_error = init_encoder(config, appCallback, 0);
 
                 printf("Encoding          ");
                 fflush(stdout);
@@ -409,12 +409,12 @@ int32_t main(int32_t argc, char* argv[])
                 exitConditionRecon = APP_ExitConditionNone;
                 while (exitConditionOutput == APP_ExitConditionNone) {
                     exitConditionInput = ProcessInputBuffer(config, appCallback);
-                    if (config->reconFile) {
+                    if (config->recon_file) {
                         exitConditionRecon = ProcessOutputReconBuffer(config, appCallback);
                     }
-                    exitConditionOutput = ProcessOutputStreamBuffer(config, appCallback, (exitConditionInput == APP_ExitConditionNone || (exitConditionRecon == APP_ExitConditionNone && config->reconFile) ? 0 : 1));
+                    exitConditionOutput = ProcessOutputStreamBuffer(config, appCallback, (exitConditionInput == APP_ExitConditionNone || (exitConditionRecon == APP_ExitConditionNone && config->recon_file) ? 0 : 1));
                 }
-                return_error = DeInitEncoder(appCallback, 0);
+                return_error = de_init_encoder(appCallback, 0);
                 // Destruct the App memory variables
                 EbAppContextDtor(appCallback);
                 free(appCallback);
@@ -431,7 +431,7 @@ int32_t main(int32_t argc, char* argv[])
         }
 
         if (config){
-            EbConfigDtor(config);
+            eb_config_dtor(config);
             free(config);
         }
     }
