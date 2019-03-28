@@ -253,9 +253,9 @@ static EbErrorType AllocateFrameBuffer(
 
     // Determine
     EbSvtIOFormat* inputPtr = (EbSvtIOFormat*)p_buffer;
-    inputPtr->yStride = config->inputPaddedWidth;
-    inputPtr->crStride = config->inputPaddedWidth >> 1;
-    inputPtr->cbStride = config->inputPaddedWidth >> 1;
+    inputPtr->y_stride = config->inputPaddedWidth;
+    inputPtr->cr_stride = config->inputPaddedWidth >> 1;
+    inputPtr->cb_stride = config->inputPaddedWidth >> 1;
     if (luma8bitSize) {
         EB_APP_MALLOC(uint8_t*, inputPtr->luma, luma8bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
     }
@@ -277,25 +277,25 @@ static EbErrorType AllocateFrameBuffer(
     }
 
     if (luma10bitSize) {
-        EB_APP_MALLOC(uint8_t*, inputPtr->lumaExt, luma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
+        EB_APP_MALLOC(uint8_t*, inputPtr->luma_ext, luma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
     }
     else {
-        inputPtr->lumaExt = 0;
+        inputPtr->luma_ext = 0;
     }
 
     if (chroma10bitSize) {
-        EB_APP_MALLOC(uint8_t*, inputPtr->cbExt, chroma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
+        EB_APP_MALLOC(uint8_t*, inputPtr->cb_ext, chroma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
     }
     else {
-        inputPtr->cbExt = 0;
+        inputPtr->cb_ext = 0;
     }
 
     if (chroma10bitSize) {
-        EB_APP_MALLOC(uint8_t*, inputPtr->crExt, chroma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
+        EB_APP_MALLOC(uint8_t*, inputPtr->cr_ext, chroma10bitSize, EB_N_PTR, EB_ErrorInsufficientResources);
 
     }
     else {
-        inputPtr->crExt = 0;
+        inputPtr->cr_ext = 0;
     }
 
     return return_error;

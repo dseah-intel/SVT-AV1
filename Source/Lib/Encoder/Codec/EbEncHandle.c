@@ -894,7 +894,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 {
     if(svt_enc_component == NULL)
         return EB_ErrorBadParameter;
-    EbEncHandle_t *encHandlePtr = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t *encHandlePtr = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbErrorType return_error = EB_ErrorNone;
     uint32_t instanceIndex;
     uint32_t processIndex;
@@ -1889,7 +1889,7 @@ EB_API EbErrorType eb_deinit_encoder(EbComponentType *svt_enc_component)
 {
     if(svt_enc_component == NULL)
         return EB_ErrorBadParameter;
-    EbEncHandle_t *encHandlePtr = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t *encHandlePtr = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbErrorType return_error = EB_ErrorNone;
     int32_t              ptrIndex = 0;
     EbMemoryMapEntry*   memoryEntry = (EbMemoryMapEntry*)EB_NULL;
@@ -1962,7 +1962,7 @@ EB_API EbErrorType eb_init_handle(
         return_error = init_svt_av1_encoder_handle(*p_handle);
 
         if (return_error == EB_ErrorNone) {
-            ((EbComponentType*)(*p_handle))->pApplicationPrivate = p_app_data;
+            ((EbComponentType*)(*p_handle))->p_application_private = p_app_data;
 
         }
         else if (return_error == EB_ErrorInsufficientResources) {
@@ -1989,8 +1989,8 @@ EbErrorType eb_h265_enc_component_de_init(EbComponentType  *svt_enc_component)
 {
     EbErrorType       return_error = EB_ErrorNone;
 
-    if (svt_enc_component->pComponentPrivate) {
-        free((EbEncHandle_t *)svt_enc_component->pComponentPrivate);
+    if (svt_enc_component->p_component_private) {
+        free((EbEncHandle_t *)svt_enc_component->p_component_private);
     }
     else {
         return_error = EB_ErrorUndefined;
@@ -2867,7 +2867,7 @@ EB_API EbErrorType eb_svt_enc_set_parameter(
         return EB_ErrorBadParameter;
 
     EbErrorType           return_error  = EB_ErrorNone;
-    EbEncHandle_t        *pEncCompData  = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t        *pEncCompData  = (EbEncHandle_t*)svt_enc_component->p_component_private;
     uint32_t              instanceIndex = 0;
 
     // Acquire Config Mutex
@@ -2973,9 +2973,9 @@ static EbErrorType CopyFrameBuffer(
         uint16_t     chromaWidth = (lumaWidth >> 1) << is16BitInput;
         uint16_t     lumaHeight = (uint16_t)(input_picture_ptr->height - sequence_control_set_ptr->max_input_pad_bottom);
 
-        uint16_t     sourceLumaStride = (uint16_t)(inputPtr->yStride);
-        uint16_t     sourceCrStride = (uint16_t)(inputPtr->crStride);
-        uint16_t     sourceCbStride = (uint16_t)(inputPtr->cbStride);
+        uint16_t     sourceLumaStride = (uint16_t)(inputPtr->y_stride);
+        uint16_t     sourceCrStride = (uint16_t)(inputPtr->cr_stride);
+        uint16_t     sourceCbStride = (uint16_t)(inputPtr->cb_stride);
 
         //uint16_t     lumaHeight  = input_picture_ptr->maxHeight;
         // Y
@@ -3012,9 +3012,9 @@ static EbErrorType CopyFrameBuffer(
             uint16_t  chromaWidth = (lumaWidth >> 1);
             uint16_t  lumaHeight = (uint16_t)(input_picture_ptr->height - sequence_control_set_ptr->max_input_pad_bottom);
 
-            uint16_t  sourceLumaStride = (uint16_t)(inputPtr->yStride);
-            uint16_t  sourceCrStride = (uint16_t)(inputPtr->crStride);
-            uint16_t  sourceCbStride = (uint16_t)(inputPtr->cbStride);
+            uint16_t  sourceLumaStride = (uint16_t)(inputPtr->y_stride);
+            uint16_t  sourceCrStride = (uint16_t)(inputPtr->cr_stride);
+            uint16_t  sourceCbStride = (uint16_t)(inputPtr->cb_stride);
 
             // Y 8bit
             for (inputRowIndex = 0; inputRowIndex < lumaHeight; inputRowIndex++) {
@@ -3050,13 +3050,13 @@ static EbErrorType CopyFrameBuffer(
                 uint16_t sourceChroma2BitStride = sourceLuma2BitStride >> 1;
 
                 for (inputRowIndex = 0; inputRowIndex < lumaHeight; inputRowIndex++) {
-                    EB_MEMCPY(input_picture_ptr->bufferBitIncY + luma2BitWidth * inputRowIndex, inputPtr->lumaExt + sourceLuma2BitStride * inputRowIndex, luma2BitWidth);
+                    EB_MEMCPY(input_picture_ptr->bufferBitIncY + luma2BitWidth * inputRowIndex, inputPtr->luma_ext + sourceLuma2BitStride * inputRowIndex, luma2BitWidth);
                 }
                 for (inputRowIndex = 0; inputRowIndex < lumaHeight >> 1; inputRowIndex++) {
-                    EB_MEMCPY(input_picture_ptr->bufferBitIncCb + (luma2BitWidth >> 1)*inputRowIndex, inputPtr->cbExt + sourceChroma2BitStride * inputRowIndex, luma2BitWidth >> 1);
+                    EB_MEMCPY(input_picture_ptr->bufferBitIncCb + (luma2BitWidth >> 1)*inputRowIndex, inputPtr->cb_ext + sourceChroma2BitStride * inputRowIndex, luma2BitWidth >> 1);
                 }
                 for (inputRowIndex = 0; inputRowIndex < lumaHeight >> 1; inputRowIndex++) {
-                    EB_MEMCPY(input_picture_ptr->bufferBitIncCr + (luma2BitWidth >> 1)*inputRowIndex, inputPtr->crExt + sourceChroma2BitStride * inputRowIndex, luma2BitWidth >> 1);
+                    EB_MEMCPY(input_picture_ptr->bufferBitIncCr + (luma2BitWidth >> 1)*inputRowIndex, inputPtr->cr_ext + sourceChroma2BitStride * inputRowIndex, luma2BitWidth >> 1);
                 }
             }
 
@@ -3072,9 +3072,9 @@ static EbErrorType CopyFrameBuffer(
         uint16_t chromaWidth = (lumaWidth >> 1);
         uint16_t lumaHeight = (uint16_t)(input_picture_ptr->height - sequence_control_set_ptr->max_input_pad_bottom);
 
-        uint16_t sourceLumaStride = (uint16_t)(inputPtr->yStride);
-        uint16_t sourceCrStride = (uint16_t)(inputPtr->crStride);
-        uint16_t sourceCbStride = (uint16_t)(inputPtr->cbStride);
+        uint16_t sourceLumaStride = (uint16_t)(inputPtr->y_stride);
+        uint16_t sourceCrStride = (uint16_t)(inputPtr->cr_stride);
+        uint16_t sourceCbStride = (uint16_t)(inputPtr->cb_stride);
 
         un_pack2d(
             (uint16_t*)(inputPtr->luma + lumaOffset),
@@ -3142,7 +3142,7 @@ EB_API EbErrorType eb_svt_enc_send_picture(
     EbComponentType      *svt_enc_component,
     EbBufferHeaderType   *p_buffer)
 {
-    EbEncHandle_t          *encHandlePtr = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t          *encHandlePtr = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbObjectWrapper_t      *ebWrapperPtr;
 
     // Take the buffer and put it into our internal queue structure
@@ -3194,7 +3194,7 @@ EB_API EbErrorType eb_svt_get_packet(
     unsigned char          pic_send_done)
 {
     EbErrorType             return_error = EB_ErrorNone;
-    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbObjectWrapper_t      *ebWrapperPtr = NULL;
     EbBufferHeaderType    *packet;
     if (pic_send_done)
@@ -3257,7 +3257,7 @@ EB_API EbErrorType eb_svt_get_recon(
     EbBufferHeaderType   *p_buffer)
 {
     EbErrorType           return_error = EB_ErrorNone;
-    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbObjectWrapper_t      *ebWrapperPtr = NULL;
 
     if (pEncCompData->sequence_control_set_instance_array[0]->sequence_control_set_ptr->static_config.recon_enabled) {
@@ -3297,7 +3297,7 @@ void lib_svt_encoder_send_error_exit(
     uint32_t                 errorCode)
 {
     EbComponentType      *svt_enc_component = (EbComponentType*)hComponent;
-    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->pComponentPrivate;
+    EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->p_component_private;
     EbObjectWrapper_t      *ebWrapperPtr = NULL;
     EbBufferHeaderType    *outputPacket;
 
@@ -3343,7 +3343,7 @@ EbErrorType init_svt_av1_encoder_handle(
 
     // Encoder Private Handle Ctor
     return_error = (EbErrorType)eb_enc_handle_ctor(
-        (EbEncHandle_t**) &(svt_enc_component->pComponentPrivate),
+        (EbEncHandle_t**) &(svt_enc_component->p_component_private),
         svt_enc_component);
 
     return return_error;

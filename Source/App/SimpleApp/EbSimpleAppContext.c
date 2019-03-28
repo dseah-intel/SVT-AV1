@@ -51,25 +51,25 @@ EbErrorType AllocateFrameBuffer(
         inputPtr->cr = 0;
     }
     if (luma10bitSize) {
-        inputPtr->lumaExt = (uint8_t*)malloc(luma10bitSize);
-        if (!inputPtr->lumaExt) return EB_ErrorInsufficientResources;
+        inputPtr->luma_ext = (uint8_t*)malloc(luma10bitSize);
+        if (!inputPtr->luma_ext) return EB_ErrorInsufficientResources;
     }
     else {
-        inputPtr->lumaExt = 0;
+        inputPtr->luma_ext = 0;
     }
     if (chroma10bitSize) {
-        inputPtr->cbExt = (uint8_t*)malloc(chroma10bitSize);
-        if (!inputPtr->cbExt) return EB_ErrorInsufficientResources;
+        inputPtr->cb_ext = (uint8_t*)malloc(chroma10bitSize);
+        if (!inputPtr->cb_ext) return EB_ErrorInsufficientResources;
     }
     else {
-        inputPtr->cbExt = 0;
+        inputPtr->cb_ext = 0;
     }
     if (chroma10bitSize) {
-        inputPtr->crExt = (uint8_t*)malloc(chroma10bitSize);
-        if (!inputPtr->crExt) return EB_ErrorInsufficientResources;
+        inputPtr->cr_ext = (uint8_t*)malloc(chroma10bitSize);
+        if (!inputPtr->cr_ext) return EB_ErrorInsufficientResources;
     }
     else {
-        inputPtr->crExt = 0;
+        inputPtr->cr_ext = 0;
     }
     return return_error;
 }
@@ -145,9 +145,9 @@ void EbAppContextDtor(
     free(inputPtr->luma);
     free(inputPtr->cb);
     free(inputPtr->cr);
-    free(inputPtr->lumaExt);
-    free(inputPtr->cbExt);
-    free(inputPtr->crExt);
+    free(inputPtr->luma_ext);
+    free(inputPtr->cb_ext);
+    free(inputPtr->cr_ext);
     free(contextPtr->inputPictureBuffer->p_buffer);
     free(contextPtr->outputStreamBuffer->p_buffer);
     free(contextPtr->inputPictureBuffer);
