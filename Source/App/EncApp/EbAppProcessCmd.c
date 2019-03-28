@@ -816,7 +816,7 @@ void ReadInputFrames(
 
                 /* if input is a y4m file, read next line which contains "FRAME" */
                 if(config->y4mInput==EB_TRUE) {
-                    readY4mFrameDelimiter(config);
+                    read_y4m_frame_delimiter(config);
                 }
 
                 uint64_t lumaReadSize = (uint64_t)inputPaddedWidth*inputPaddedHeight << is16bit;

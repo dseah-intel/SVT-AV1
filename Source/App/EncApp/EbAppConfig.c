@@ -125,7 +125,7 @@ static void SetCfgInputFile                     (const char *value, EbConfig_t *
 
     /* if input is a YUV4MPEG2 (y4m) file, read header and parse parameters */
     if(cfg->inputFile!=NULL){
-        if(checkIfY4m(cfg) == EB_TRUE) {
+        if(check_if_y4m(cfg) == EB_TRUE) {
             cfg->y4mInput = EB_TRUE;
         }
         else
@@ -1063,7 +1063,7 @@ EbErrorType ReadCommandLine(
 
     for (index = 0; index < numChannels; ++index) {
         if ((configs[index])->y4mInput == EB_TRUE){
-            ret_y4m = readY4mHeader(configs[index]);
+            ret_y4m = read_y4m_header(configs[index]);
             if(ret_y4m == EB_ErrorBadParameter){
                 printf("Error found when reading the y4m file parameters.\n");
                 return EB_ErrorBadParameter;
