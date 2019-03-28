@@ -1899,7 +1899,7 @@ EB_API EbErrorType eb_deinit_encoder(EbComponentType *svt_enc_component)
             // Loop through the ptr table and free all malloc'd pointers per channel
             for (ptrIndex = (encHandlePtr->memory_map_index) - 1; ptrIndex >= 0; --ptrIndex) {
                 memoryEntry = &encHandlePtr->memory_map[ptrIndex];
-                switch (memoryEntry->ptrType) {
+                switch (memoryEntry->ptr_type) {
                 case EB_N_PTR:
                     free(memoryEntry->ptr);
                     break;
@@ -2338,14 +2338,14 @@ void CopyApiFromApp(
 ******************************************/
 #define PowerOfTwoCheck(x) (((x) != 0) && (((x) & (~(x) + 1)) == (x)))
 
-static int VerifyHmeDimention(unsigned int index, unsigned int HmeLevel0SearchAreaInWidth, uint32_t NumberHmeSearchRegionInWidth[EB_HME_SEARCH_AREA_ROW_MAX_COUNT], unsigned int numberHmeSearchRegionInWidth)
+static int VerifyHmeDimention(unsigned int index, unsigned int HmeLevel0SearchAreaInWidth, uint32_t number_hme_search_region_in_width_array[EB_HME_SEARCH_AREA_ROW_MAX_COUNT], unsigned int number_hme_search_region_in_width)
 {
     int           return_error = 0;
     uint32_t        i;
     uint32_t        total_search_width = 0;
 
-    for (i = 0; i < numberHmeSearchRegionInWidth; i++) {
-        total_search_width += NumberHmeSearchRegionInWidth[i];
+    for (i = 0; i < number_hme_search_region_in_width; i++) {
+        total_search_width += number_hme_search_region_in_width_array[i];
     }
     if ((total_search_width) != (HmeLevel0SearchAreaInWidth)) {
         SVT_LOG("Error Instance %u: Invalid  HME Total Search Area. \n", index);
@@ -2355,14 +2355,14 @@ static int VerifyHmeDimention(unsigned int index, unsigned int HmeLevel0SearchAr
 
     return return_error;
 }
-static int VerifyHmeDimentionL1L2(unsigned int index, uint32_t NumberHmeSearchRegionInWidth[EB_HME_SEARCH_AREA_ROW_MAX_COUNT], unsigned int numberHmeSearchRegionInWidth)
+static int VerifyHmeDimentionL1L2(unsigned int index, uint32_t number_hme_search_region_in_width_array[EB_HME_SEARCH_AREA_ROW_MAX_COUNT], unsigned int number_hme_search_region_in_width)
 {
     int             return_error = 0;
     uint32_t        i;
     uint32_t        total_search_width = 0;
 
-    for (i = 0; i < numberHmeSearchRegionInWidth; i++) {
-        total_search_width += NumberHmeSearchRegionInWidth[i];
+    for (i = 0; i < number_hme_search_region_in_width; i++) {
+        total_search_width += number_hme_search_region_in_width_array[i];
     }
     if ((total_search_width > 256) || (total_search_width == 0)) {
         SVT_LOG("Error Instance %u: Invalid  HME Total Search Area. Must be [1 - 256].\n", index);
@@ -2494,12 +2494,12 @@ static EbErrorType VerifySettings(
     }
 
     if ((config->search_area_width > 256) || (config->search_area_width == 0)) {
-        SVT_LOG("Error Instance %u: Invalid SearchAreaWidth. SearchAreaWidth must be [1 - 256]\n", channelNumber + 1);
+        SVT_LOG("Error Instance %u: Invalid search_area_width. search_area_width must be [1 - 256]\n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
 
     if ((config->search_area_height > 256) || (config->search_area_height == 0)) {
-        SVT_LOG("Error Instance %u: Invalid SearchAreaHeight. SearchAreaHeight must be [1 - 256]\n", channelNumber + 1);
+        SVT_LOG("Error Instance %u: Invalid search_area_height. search_area_height must be [1 - 256]\n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
 
@@ -2511,16 +2511,16 @@ static EbErrorType VerifySettings(
         }
 
         if ((config->number_hme_search_region_in_height > (uint32_t)EB_HME_SEARCH_AREA_ROW_MAX_COUNT) || (config->number_hme_search_region_in_height == 0)) {
-            SVT_LOG("Error Instance %u: Invalid NumberHmeSearchRegionInHeight. NumberHmeSearchRegionInHeight must be [1 - %d]\n", channelNumber + 1, EB_HME_SEARCH_AREA_ROW_MAX_COUNT);
+            SVT_LOG("Error Instance %u: Invalid number_hme_search_region_in_height. number_hme_search_region_in_height must be [1 - %d]\n", channelNumber + 1, EB_HME_SEARCH_AREA_ROW_MAX_COUNT);
             return_error = EB_ErrorBadParameter;
         }
 
         if ((config->hme_level0_total_search_area_height > 256) || (config->hme_level0_total_search_area_height == 0)) {
-            SVT_LOG("Error Instance %u: Invalid hmeLevel0TotalSearchAreaHeight. hmeLevel0TotalSearchAreaHeight must be [1 - 256]\n", channelNumber + 1);
+            SVT_LOG("Error Instance %u: Invalid hme_level0_total_search_area_height. hme_level0_total_search_area_height must be [1 - 256]\n", channelNumber + 1);
             return_error = EB_ErrorBadParameter;
         }
         if ((config->hme_level0_total_search_area_width > 256) || (config->hme_level0_total_search_area_width == 0)) {
-            SVT_LOG("Error Instance %u: Invalid hmeLevel0TotalSearchAreaWidth. hmeLevel0TotalSearchAreaWidth must be [1 - 256]\n", channelNumber + 1);
+            SVT_LOG("Error Instance %u: Invalid hme_level0_total_search_area_width. hme_level0_total_search_area_width must be [1 - 256]\n", channelNumber + 1);
             return_error = EB_ErrorBadParameter;
         }
         if (VerifyHmeDimention(channelNumber + 1, config->hme_level0_total_search_area_height, config->hme_level0_search_area_in_height_array, config->number_hme_search_region_in_height)) {
@@ -2554,7 +2554,7 @@ static EbErrorType VerifySettings(
         SVT_LOG("Error Instance %u: The maximum allowed frame rate is 240 fps\n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
-    // Check that the frameRate is non-zero
+    // Check that the frame_rate is non-zero
     if (config->frame_rate <= 0) {
         SVT_LOG("Error Instance %u: The frame rate should be greater than 0 fps \n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
@@ -2580,7 +2580,7 @@ static EbErrorType VerifySettings(
 #endif
 #if RC
     if ((config->rate_control_mode == 3|| config->rate_control_mode == 2) && config->look_ahead_distance != (uint32_t)config->intra_period_length) {
-        SVT_LOG("Error Instance %u: The rate control mode 2/3 LAD must be equal to IntraPeriod \n", channelNumber + 1);
+        SVT_LOG("Error Instance %u: The rate control mode 2/3 LAD must be equal to intra_period \n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
 #endif
@@ -2627,7 +2627,7 @@ static EbErrorType VerifySettings(
         SVT_LOG("Error instance %u: Encoder Bit Depth shall be only 8 or 10 \n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
-    // Check if the EncoderBitDepth is conformant with the Profile constraint
+    // Check if the encoder_bit_depth is conformant with the Profile constraint
     if (config->profile == 1 && config->encoder_bit_depth == 10) {
         SVT_LOG("Error instance %u: The encoder bit depth shall be equal to 8 for Main Profile\n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
@@ -2651,7 +2651,7 @@ static EbErrorType VerifySettings(
     }
 
     if (config->target_socket != -1 && config->target_socket != 0 && config->target_socket != 1) {
-        SVT_LOG("Error instance %u: Invalid TargetSocket. TargetSocket must be [-1 - 1] \n", channelNumber + 1);
+        SVT_LOG("Error instance %u: Invalid target_socket. target_socket must be [-1 - 1] \n", channelNumber + 1);
         return_error = EB_ErrorBadParameter;
     }
 
@@ -2750,7 +2750,7 @@ EbErrorType eb_svt_enc_init_parameter(
 
     config_ptr->sb_sz = 64;
     config_ptr->partition_depth = (uint8_t)EB_MAX_LCU_DEPTH;
-    //config_ptr->latencyMode = 0;
+    //config_ptr->latency_mode = 0;
     config_ptr->speed_control_flag = 0;
     config_ptr->film_grain_denoise_strength = 0;
 
@@ -2794,22 +2794,22 @@ static void PrintLibParams(
             SVT_LOG("Level %.1f\t", (float)(config->level / 10));
     }
     SVT_LOG("\nSVT [config]: EncoderMode \t\t\t\t\t\t\t: %d ", config->enc_mode);
-    SVT_LOG("\nSVT [config]: EncoderBitDepth / CompressedTenBitFormat\t\t\t\t: %d / %d ", config->encoder_bit_depth, config->compressed_ten_bit_format);
-    SVT_LOG("\nSVT [config]: SourceWidth / SourceHeight\t\t\t\t\t: %d / %d ", config->source_width, config->source_height);
+    SVT_LOG("\nSVT [config]: encoder_bit_depth / compressed_ten_bit_format\t\t\t\t: %d / %d ", config->encoder_bit_depth, config->compressed_ten_bit_format);
+    SVT_LOG("\nSVT [config]: source_width / source_height\t\t\t\t\t: %d / %d ", config->source_width, config->source_height);
     if (config->frame_rate_denominator != 0 && config->frame_rate_numerator != 0)
-        SVT_LOG("\nSVT [config]: Fps_Numerator / Fps_Denominator / Gop Size / IntraRefreshType \t: %d / %d / %d / %d", config->frame_rate_numerator > (1 << 16) ? config->frame_rate_numerator >> 16 : config->frame_rate_numerator,
+        SVT_LOG("\nSVT [config]: Fps_Numerator / Fps_Denominator / Gop Size / intra_refresh_type \t: %d / %d / %d / %d", config->frame_rate_numerator > (1 << 16) ? config->frame_rate_numerator >> 16 : config->frame_rate_numerator,
             config->frame_rate_denominator > (1 << 16) ? config->frame_rate_denominator >> 16 : config->frame_rate_denominator,
             config->intra_period_length + 1,
             config->intra_refresh_type);
     else
-        SVT_LOG("\nSVT [config]: FrameRate / Gop Size\t\t\t\t\t\t: %d / %d ", config->frame_rate > 1000 ? config->frame_rate >> 16 : config->frame_rate, config->intra_period_length + 1);
-    SVT_LOG("\nSVT [config]: HierarchicalLevels / BaseLayerSwitchMode / PredStructure\t\t: %d / %d / %d ", config->hierarchical_levels, config->base_layer_switch_mode, config->pred_structure);
+        SVT_LOG("\nSVT [config]: frame_rate / Gop Size\t\t\t\t\t\t: %d / %d ", config->frame_rate > 1000 ? config->frame_rate >> 16 : config->frame_rate, config->intra_period_length + 1);
+    SVT_LOG("\nSVT [config]: hierarchical_levels / BaseLayerSwitchMode / pred_structure\t\t: %d / %d / %d ", config->hierarchical_levels, config->base_layer_switch_mode, config->pred_structure);
     if (config->rate_control_mode == 1)
-        SVT_LOG("\nSVT [config]: RCMode / TargetBitrate / LookaheadDistance / SceneChange\t\t: VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
+        SVT_LOG("\nSVT [config]: RCMode / target_bit_rate / LookaheadDistance / SceneChange\t\t: VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
     else if (config->rate_control_mode == 2)
-        SVT_LOG("\nSVT [config]: RCMode / TargetBitrate / LookaheadDistance / SceneChange\t\t: VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
+        SVT_LOG("\nSVT [config]: RCMode / target_bit_rate / LookaheadDistance / SceneChange\t\t: VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
     else if (config->rate_control_mode == 3)
-        SVT_LOG("\nSVT [config]: RCMode / TargetBitrate / LookaheadDistance / SceneChange\t\t: Constraint VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
+        SVT_LOG("\nSVT [config]: RCMode / target_bit_rate / LookaheadDistance / SceneChange\t\t: Constraint VBR / %d / %d / %d ", config->target_bit_rate, config->look_ahead_distance, config->scene_change_detection);
     else
         SVT_LOG("\nSVT [config]: BRC Mode / QP  / LookaheadDistance / SceneChange\t\t\t: CQP / %d / %d / %d ", scs->qp, config->look_ahead_distance, config->scene_change_detection);
 #ifdef DEBUG_BUFFERS

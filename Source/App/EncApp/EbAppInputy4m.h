@@ -10,8 +10,8 @@
 
 #include "EbAppConfig.h"
 
-int32_t read_y4m_header(EbConfig_t *cfg);
+int32_t read_y4m_header(EbConfig *cfg);
 
-int32_t read_y4m_frame_delimiter(EbConfig_t *cfg);
+int32_t read_y4m_frame_delimiter(EbConfig *cfg);
 
-EbBool check_if_y4m(EbConfig_t *cfg);
+EbBool check_if_y4m(EbConfig *cfg);

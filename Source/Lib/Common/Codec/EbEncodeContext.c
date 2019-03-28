@@ -226,7 +226,7 @@ EbErrorType encode_context_ctor(
         return EB_ErrorInsufficientResources;
     }
     else {
-        memory_map[*(memory_map_index)].ptrType = EB_MUTEX;
+        memory_map[*(memory_map_index)].ptr_type = EB_MUTEX;
         memory_map[(*(memory_map_index))++].ptr = encode_context_ptr->shared_reference_mutex;
         *total_lib_memory += (sizeof(EbHandle));
     }

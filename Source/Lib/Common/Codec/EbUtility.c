@@ -523,7 +523,7 @@ EbLinkedListNode* splitEbLinkedList(EbLinkedListNode* input, EbLinkedListNode** 
 
 static const MiniGopStats_t MiniGopStatsArray[] = {
 
-    //    HierarchicalLevels    StartIndex    EndIndex    Lenght    miniGopIndex
+    //    hierarchical_levels    StartIndex    EndIndex    Lenght    miniGopIndex
     { 5,  0, 31, 32 },    // 0
     { 4,  0, 15, 16 },    // 1
     { 3,  0,  7,  8 },    // 2
