@@ -60,8 +60,8 @@ const uint8_t MaxDeltaQPdefault[3] = {
 ************************************************/
 EbErrorType source_based_operations_context_ctor(
     SourceBasedOperationsContext_t **context_dbl_ptr,
-    EbFifo_t                        *initialRateControlResultsInputFifoPtr,
-    EbFifo_t                        *picture_demux_results_output_fifo_ptr,
+    EbFifo                        *initialRateControlResultsInputFifoPtr,
+    EbFifo                        *picture_demux_results_output_fifo_ptr,
     SequenceControlSet_t            *sequence_control_set_ptr)
 {
     SourceBasedOperationsContext_t *context_ptr;
@@ -897,9 +897,9 @@ void* source_based_operations_kernel(void *input_ptr)
     SourceBasedOperationsContext_t    *context_ptr = (SourceBasedOperationsContext_t*)input_ptr;
     PictureParentControlSet_t       *picture_control_set_ptr;
     SequenceControlSet_t            *sequence_control_set_ptr;
-    EbObjectWrapper_t               *inputResultsWrapperPtr;
+    EbObjectWrapper               *inputResultsWrapperPtr;
     InitialRateControlResults_t        *inputResultsPtr;
-    EbObjectWrapper_t               *outputResultsWrapperPtr;
+    EbObjectWrapper               *outputResultsWrapperPtr;
     PictureDemuxResults_t           *outputResultsPtr;
 
     for (;;) {

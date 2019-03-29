@@ -181,8 +181,8 @@ typedef struct HighLevelRateControlContext
 
 typedef struct RateControlContext
 {
-    EbFifo_t                            *rate_control_input_tasks_fifo_ptr;
-    EbFifo_t                            *rate_control_output_results_fifo_ptr;
+    EbFifo                            *rate_control_input_tasks_fifo_ptr;
+    EbFifo                            *rate_control_output_results_fifo_ptr;
 
     HighLevelRateControlContext_t       *high_level_rate_control_ptr;
 
@@ -336,8 +336,8 @@ typedef struct HighLevelRateControlContext_s
 
 typedef struct RateControlContext_s
 {
-    EbFifo_t                    *rate_control_input_tasks_fifo_ptr;
-    EbFifo_t                    *rate_control_output_results_fifo_ptr;
+    EbFifo                    *rate_control_input_tasks_fifo_ptr;
+    EbFifo                    *rate_control_output_results_fifo_ptr;
 
     HighLevelRateControlContext_t *highLevelRateControlPtr;
 
@@ -403,8 +403,8 @@ extern EbErrorType rate_control_coded_frames_stats_context_ctor(
 
 extern EbErrorType rate_control_context_ctor(
     RateControlContext_t **context_dbl_ptr,
-    EbFifo_t              *rate_control_input_tasks_fifo_ptr,
-    EbFifo_t              *rate_control_output_results_fifo_ptr,
+    EbFifo              *rate_control_input_tasks_fifo_ptr,
+    EbFifo              *rate_control_output_results_fifo_ptr,
     int32_t                intra_period_length);
 
 extern void* rate_control_kernel(void *input_ptr);

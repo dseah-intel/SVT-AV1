@@ -31,8 +31,8 @@ void av1_loop_restoration_save_boundary_lines(const Yv12BufferConfig *frame, Av1
  ******************************************************/
 EbErrorType dlf_context_ctor(
     DlfContext_t **context_dbl_ptr,
-    EbFifo_t                *dlf_input_fifo_ptr,
-    EbFifo_t                *dlf_output_fifo_ptr ,
+    EbFifo                *dlf_input_fifo_ptr,
+    EbFifo                *dlf_output_fifo_ptr ,
     EbBool                  is16bit,
     uint32_t                max_input_luma_width,
     uint32_t                max_input_luma_height
@@ -91,11 +91,11 @@ void* dlf_kernel(void *input_ptr)
     SequenceControlSet_t                    *sequence_control_set_ptr;
 
     //// Input
-    EbObjectWrapper_t                       *enc_dec_results_wrapper_ptr;
+    EbObjectWrapper                       *enc_dec_results_wrapper_ptr;
     EncDecResults_t                         *enc_dec_results_ptr;
 
     //// Output
-    EbObjectWrapper_t                       *dlf_results_wrapper_ptr;
+    EbObjectWrapper                       *dlf_results_wrapper_ptr;
     struct DlfResults_s*                     dlf_results_ptr;
 
     // SB Loop variables

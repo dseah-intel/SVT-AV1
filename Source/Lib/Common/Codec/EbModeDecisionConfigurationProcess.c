@@ -725,9 +725,9 @@ void AdaptiveDlfParameterComputation(
  ******************************************************/
 EbErrorType ModeDecisionConfigurationContextCtor(
     ModeDecisionConfigurationContext_t **context_dbl_ptr,
-    EbFifo_t                            *rateControlInputFifoPtr,
+    EbFifo                            *rateControlInputFifoPtr,
 
-    EbFifo_t                            *modeDecisionConfigurationOutputFifoPtr,
+    EbFifo                            *modeDecisionConfigurationOutputFifoPtr,
     uint16_t                                 sb_total_count)
 
 {
@@ -2093,11 +2093,11 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
     SequenceControlSet_t                       *sequence_control_set_ptr;
 
     // Input
-    EbObjectWrapper_t                          *rateControlResultsWrapperPtr;
+    EbObjectWrapper                          *rateControlResultsWrapperPtr;
     RateControlResults_t                       *rateControlResultsPtr;
 
     // Output
-    EbObjectWrapper_t                          *encDecTasksWrapperPtr;
+    EbObjectWrapper                          *encDecTasksWrapperPtr;
     EncDecTasks_t                              *encDecTasksPtr;
 
     for (;;) {

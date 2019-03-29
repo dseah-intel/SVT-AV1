@@ -101,7 +101,7 @@ EbErrorType picture_control_set_ctor(
 
     *object_dbl_ptr = (EbPtr)object_ptr;
 
-    object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper_t *)EB_NULL;
+    object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
 
     object_ptr->recon_picture16bit_ptr = (EbPictureBufferDesc_t *)EB_NULL;
     object_ptr->recon_picture_ptr = (EbPictureBufferDesc_t *)EB_NULL;
@@ -913,9 +913,9 @@ EbErrorType picture_parent_control_set_ctor(
     EB_MALLOC(PictureParentControlSet_t*, object_ptr, sizeof(PictureParentControlSet_t), EB_N_PTR);
 
     *object_dbl_ptr = (EbPtr)object_ptr;
-    object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper_t *)EB_NULL;
-    object_ptr->input_picture_wrapper_ptr = (EbObjectWrapper_t *)EB_NULL;
-    object_ptr->reference_picture_wrapper_ptr = (EbObjectWrapper_t *)EB_NULL;
+    object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
+    object_ptr->input_picture_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
+    object_ptr->reference_picture_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
 
     object_ptr->enhanced_picture_ptr = (EbPictureBufferDesc_t *)EB_NULL;
 

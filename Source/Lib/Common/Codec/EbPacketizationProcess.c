@@ -36,8 +36,8 @@ static EbLinkedListNode* ExtractPassthroughData(EbLinkedListNode** llPtrPtr)
 
 EbErrorType packetization_context_ctor(
     PacketizationContext_t **context_dbl_ptr,
-    EbFifo_t                *entropy_coding_input_fifo_ptr,
-    EbFifo_t                *rate_control_tasks_output_fifo_ptr)
+    EbFifo                *entropy_coding_input_fifo_ptr,
+    EbFifo                *rate_control_tasks_output_fifo_ptr)
 {
     PacketizationContext_t *context_ptr;
     EB_MALLOC(PacketizationContext_t*, context_ptr, sizeof(PacketizationContext_t), EB_N_PTR);
@@ -251,13 +251,13 @@ void* PacketizationKernel(void *input_ptr)
     EncodeContext_t                *encode_context_ptr;
 
     // Input
-    EbObjectWrapper_t              *entropyCodingResultsWrapperPtr;
+    EbObjectWrapper              *entropyCodingResultsWrapperPtr;
     EntropyCodingResults_t         *entropyCodingResultsPtr;
 
     // Output
-    EbObjectWrapper_t              *output_stream_wrapper_ptr;
+    EbObjectWrapper              *output_stream_wrapper_ptr;
     EbBufferHeaderType             *output_stream_ptr;
-    EbObjectWrapper_t              *rateControlTasksWrapperPtr;
+    EbObjectWrapper              *rateControlTasksWrapperPtr;
     RateControlTasks_t             *rateControlTasksPtr;
     
     // Queue variables
@@ -578,10 +578,10 @@ void* PacketizationKernel(void *input_ptr)
 
             // Reset the Reorder Queue Entry
             queueEntryPtr->picture_number += PACKETIZATION_REORDER_QUEUE_MAX_DEPTH;
-            queueEntryPtr->output_stream_wrapper_ptr = (EbObjectWrapper_t *)EB_NULL;
+            queueEntryPtr->output_stream_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
 
             if (encode_context_ptr->statistics_port_active) {
-                queueEntryPtr->outputStatisticsWrapperPtr = (EbObjectWrapper_t *)EB_NULL;
+                queueEntryPtr->outputStatisticsWrapperPtr = (EbObjectWrapper *)EB_NULL;
             }
             // Increment the Reorder Queue head Ptr
             encode_context_ptr->packetization_reorder_queue_head_index =

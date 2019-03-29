@@ -14,7 +14,7 @@
  **************************************/
 typedef struct InitialRateControlResults_s
 {
-    EbObjectWrapper_t   *pictureControlSetWrapperPtr;
+    EbObjectWrapper   *pictureControlSetWrapperPtr;
 } InitialRateControlResults_t;
 
 typedef struct InitialRateControlResultInitData_s

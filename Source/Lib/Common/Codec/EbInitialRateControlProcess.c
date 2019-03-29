@@ -409,8 +409,8 @@ void DetectGlobalMotion(
 ************************************************/
 EbErrorType InitialRateControlContextCtor(
     InitialRateControlContext_t **context_dbl_ptr,
-    EbFifo_t                     *motionEstimationResultsInputFifoPtr,
-    EbFifo_t                     *initialrateControlResultsOutputFifoPtr)
+    EbFifo                     *motionEstimationResultsInputFifoPtr,
+    EbFifo                     *initialrateControlResultsOutputFifoPtr)
 {
     InitialRateControlContext_t *context_ptr;
     EB_MALLOC(InitialRateControlContext_t*, context_ptr, sizeof(InitialRateControlContext_t), EB_N_PTR);
@@ -1645,10 +1645,10 @@ void* InitialRateControlKernel(void *input_ptr)
     EncodeContext_t                   *encode_context_ptr;
     SequenceControlSet_t              *sequence_control_set_ptr;
 
-    EbObjectWrapper_t                 *inputResultsWrapperPtr;
+    EbObjectWrapper                 *inputResultsWrapperPtr;
     MotionEstimationResults_t         *inputResultsPtr;
 
-    EbObjectWrapper_t                 *outputResultsWrapperPtr;
+    EbObjectWrapper                 *outputResultsWrapperPtr;
     InitialRateControlResults_t       *outputResultsPtr;
 
     // Queue variables
@@ -1660,12 +1660,12 @@ void* InitialRateControlKernel(void *input_ptr)
     EbBool                            end_of_sequence_flag = EB_TRUE;
     uint8_t                               frames_in_sw;
     uint8_t                               temporal_layer_index;
-    EbObjectWrapper_t                  *reference_picture_wrapper_ptr;
+    EbObjectWrapper                  *reference_picture_wrapper_ptr;
 
     // Segments
     uint32_t                              segment_index;
 
-    EbObjectWrapper_t                *output_stream_wrapper_ptr;
+    EbObjectWrapper                *output_stream_wrapper_ptr;
 
     for (;;) {
 
@@ -1971,7 +1971,7 @@ void* InitialRateControlKernel(void *input_ptr)
                         &reference_picture_wrapper_ptr);
                     ((PictureParentControlSet_t*)(queueEntryPtr->parentPcsWrapperPtr->object_ptr))->reference_picture_wrapper_ptr = reference_picture_wrapper_ptr;
 
-                    // Give the new Reference a nominal liveCount of 1
+                    // Give the new Reference a nominal live_count of 1
                     eb_object_inc_live_count(
                         ((PictureParentControlSet_t*)(queueEntryPtr->parentPcsWrapperPtr->object_ptr))->reference_picture_wrapper_ptr,
                         1);
@@ -1996,7 +1996,7 @@ void* InitialRateControlKernel(void *input_ptr)
 
                     // Reset the Reorder Queue Entry
                     queueEntryPtr->picture_number += INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH;
-                    queueEntryPtr->parentPcsWrapperPtr = (EbObjectWrapper_t *)EB_NULL;
+                    queueEntryPtr->parentPcsWrapperPtr = (EbObjectWrapper *)EB_NULL;
 
                     // Increment the Reorder Queue head Ptr
                     encode_context_ptr->initial_rate_control_reorder_queue_head_index =

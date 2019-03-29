@@ -45,8 +45,8 @@ EbErrorType picture_analysis_context_ctor(
     EbPictureBufferDescInitData_t * input_picture_buffer_desc_init_data,
     EbBool                         denoise_flag,
     PictureAnalysisContext_t **context_dbl_ptr,
-    EbFifo_t *resource_coordination_results_input_fifo_ptr,
-    EbFifo_t *picture_analysis_results_output_fifo_ptr)
+    EbFifo *resource_coordination_results_input_fifo_ptr,
+    EbFifo *picture_analysis_results_output_fifo_ptr)
 {
     PictureAnalysisContext_t *context_ptr;
     EB_MALLOC(PictureAnalysisContext_t*, context_ptr, sizeof(PictureAnalysisContext_t), EB_N_PTR);
@@ -4924,9 +4924,9 @@ void* picture_analysis_kernel(void *input_ptr)
     PictureParentControlSet_t       *picture_control_set_ptr;
     SequenceControlSet_t            *sequence_control_set_ptr;
 
-    EbObjectWrapper_t               *inputResultsWrapperPtr;
+    EbObjectWrapper               *inputResultsWrapperPtr;
     ResourceCoordinationResults_t   *inputResultsPtr;
-    EbObjectWrapper_t               *outputResultsWrapperPtr;
+    EbObjectWrapper               *outputResultsWrapperPtr;
     PictureAnalysisResults_t        *outputResultsPtr;
     EbPaReferenceObject_t           *paReferenceObject;
 

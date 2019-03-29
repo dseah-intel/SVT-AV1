@@ -275,8 +275,8 @@ EbErrorType rate_control_coded_frames_stats_context_ctor(
 
 EbErrorType rate_control_context_ctor(
     RateControlContext_t **context_dbl_ptr,
-    EbFifo_t             *rate_control_input_tasks_fifo_ptr,
-    EbFifo_t             *rate_control_output_results_fifo_ptr,
+    EbFifo             *rate_control_input_tasks_fifo_ptr,
+    EbFifo             *rate_control_output_results_fifo_ptr,
     int32_t             intra_period)
 {
     uint32_t temporal_index;
@@ -3799,11 +3799,11 @@ void* rate_control_kernel(void *input_ptr)
     SequenceControlSet_t                *sequence_control_set_ptr;
 
     // Input
-    EbObjectWrapper_t                   *rate_control_tasks_wrapper_ptr;
+    EbObjectWrapper                   *rate_control_tasks_wrapper_ptr;
     RateControlTasks_t                  *rate_control_tasks_ptr;
 
     // Output
-    EbObjectWrapper_t                   *rate_control_results_wrapper_ptr;
+    EbObjectWrapper                   *rate_control_results_wrapper_ptr;
     RateControlResults_t                *rate_control_results_ptr;
 
     RateControlLayerContext_t           *rate_control_layer_ptr;

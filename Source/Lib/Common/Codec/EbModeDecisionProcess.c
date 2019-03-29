@@ -15,8 +15,8 @@
  ******************************************************/
 EbErrorType mode_decision_context_ctor(
     ModeDecisionContext_t  **context_dbl_ptr,
-    EbFifo_t                *mode_decision_configuration_input_fifo_ptr,
-    EbFifo_t                *mode_decision_output_fifo_ptr){
+    EbFifo                *mode_decision_configuration_input_fifo_ptr,
+    EbFifo                *mode_decision_output_fifo_ptr){
 
     uint32_t bufferIndex;
     uint32_t candidateIndex;

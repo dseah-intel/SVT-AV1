@@ -79,10 +79,10 @@ const int8_t  encMaxDeltaQpTab[4][MAX_TEMPORAL_LAYERS] = {
  ******************************************************/
 EbErrorType enc_dec_context_ctor(
     EncDecContext_t        **context_dbl_ptr,
-    EbFifo_t                *mode_decision_configuration_input_fifo_ptr,
-    EbFifo_t                *packetization_output_fifo_ptr,
-    EbFifo_t                *feedback_fifo_ptr,
-    EbFifo_t                *picture_demux_fifo_ptr,
+    EbFifo                *mode_decision_configuration_input_fifo_ptr,
+    EbFifo                *packetization_output_fifo_ptr,
+    EbFifo                *feedback_fifo_ptr,
+    EbFifo                *picture_demux_fifo_ptr,
     EbBool                  is16bit,
     uint32_t                max_input_luma_width,
     uint32_t                max_input_luma_height){
@@ -386,10 +386,10 @@ EbBool AssignEncDecSegments(
     EncDecSegments_t   *segmentPtr,
     uint16_t             *segmentInOutIndex,
     EncDecTasks_t      *taskPtr,
-    EbFifo_t           *srmFifoPtr)
+    EbFifo           *srmFifoPtr)
 {
     EbBool continueProcessingFlag = EB_FALSE;
-    EbObjectWrapper_t *wrapper_ptr;
+    EbObjectWrapper *wrapper_ptr;
     EncDecTasks_t *feedbackTaskPtr;
 
     uint32_t rowSegmentIndex = 0;
@@ -522,7 +522,7 @@ void ReconOutput(
     PictureControlSet_t    *picture_control_set_ptr,
     SequenceControlSet_t   *sequence_control_set_ptr) {
 
-    EbObjectWrapper_t             *outputReconWrapperPtr;
+    EbObjectWrapper             *outputReconWrapperPtr;
     EbBufferHeaderType           *outputReconPtr;
     EncodeContext_t               *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
     EbBool is16bit = (sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
@@ -1450,11 +1450,11 @@ void* EncDecKernel(void *input_ptr)
     SequenceControlSet_t                    *sequence_control_set_ptr;
 
     // Input
-    EbObjectWrapper_t                       *encDecTasksWrapperPtr;
+    EbObjectWrapper                       *encDecTasksWrapperPtr;
     EncDecTasks_t                           *encDecTasksPtr;
 
     // Output
-    EbObjectWrapper_t                       *encDecResultsWrapperPtr;
+    EbObjectWrapper                       *encDecResultsWrapperPtr;
     EncDecResults_t                         *encDecResultsPtr;
     // SB Loop variables
     LargestCodingUnit_t                     *sb_ptr;

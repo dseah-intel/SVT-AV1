@@ -18,12 +18,12 @@ extern "C" {
     typedef struct ResourceCoordinationContext_s
     {
 
-        EbFifo_t                            *input_buffer_fifo_ptr;
-        EbFifo_t                            *resource_coordination_results_output_fifo_ptr;
-        EbFifo_t                           **picture_control_set_fifo_ptr_array;
+        EbFifo                            *input_buffer_fifo_ptr;
+        EbFifo                            *resource_coordination_results_output_fifo_ptr;
+        EbFifo                           **picture_control_set_fifo_ptr_array;
         EbSequenceControlSetInstance_t     **sequence_control_set_instance_array;
-        EbObjectWrapper_t                  **sequenceControlSetActiveArray;
-        EbFifo_t                            *sequence_control_set_empty_fifo_ptr;
+        EbObjectWrapper                  **sequenceControlSetActiveArray;
+        EbFifo                            *sequence_control_set_empty_fifo_ptr;
         EbCallback_t                       **app_callback_ptr_array;
         
         // Compute Segments
@@ -64,11 +64,11 @@ extern "C" {
      ***************************************/
     extern EbErrorType resource_coordination_context_ctor(
         ResourceCoordinationContext_t  **context_dbl_ptr,
-        EbFifo_t                        *input_buffer_fifo_ptr,
-        EbFifo_t                        *resource_coordination_results_output_fifo_ptr,
-        EbFifo_t                       **picture_control_set_fifo_ptr_array,
+        EbFifo                        *input_buffer_fifo_ptr,
+        EbFifo                        *resource_coordination_results_output_fifo_ptr,
+        EbFifo                       **picture_control_set_fifo_ptr_array,
         EbSequenceControlSetInstance_t **sequence_control_set_instance_array,
-        EbFifo_t                        *sequence_control_set_empty_fifo_ptr,
+        EbFifo                        *sequence_control_set_empty_fifo_ptr,
         EbCallback_t                   **app_callback_ptr_array,
         uint32_t                        *compute_segments_total_count_array,
         uint32_t                         encode_instances_total_count);

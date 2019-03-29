@@ -17,7 +17,7 @@
  ************************************************/
 typedef struct PaReferenceQueueEntry_s 
 {
-    EbObjectWrapper_t              *inputObjectPtr;
+    EbObjectWrapper              *inputObjectPtr;
     uint64_t                          picture_number;
     uint32_t                          dependentCount;
     uint32_t                          referenceEntryIndex;

@@ -59,9 +59,9 @@ void rest_finish_search(Macroblock *x, Av1Common *const cm);
  ******************************************************/
 EbErrorType rest_context_ctor(
     RestContext_t **context_dbl_ptr,
-    EbFifo_t                *rest_input_fifo_ptr,
-    EbFifo_t                *rest_output_fifo_ptr ,
-    EbFifo_t                *picture_demux_fifo_ptr,
+    EbFifo                *rest_input_fifo_ptr,
+    EbFifo                *rest_output_fifo_ptr ,
+    EbFifo                *picture_demux_fifo_ptr,
     EbBool                  is16bit,
     uint32_t                max_input_luma_width,
     uint32_t                max_input_luma_height
@@ -207,13 +207,13 @@ void* rest_kernel(void *input_ptr)
     SequenceControlSet_t                    *sequence_control_set_ptr;
 
     //// Input
-    EbObjectWrapper_t                       *cdef_results_wrapper_ptr;
+    EbObjectWrapper                       *cdef_results_wrapper_ptr;
     CdefResults_t                         *cdef_results_ptr;
 
     //// Output
-    EbObjectWrapper_t                       *rest_results_wrapper_ptr;
+    EbObjectWrapper                       *rest_results_wrapper_ptr;
     RestResults_t*                          rest_results_ptr;
-    EbObjectWrapper_t                       *picture_demux_results_wrapper_ptr;
+    EbObjectWrapper                       *picture_demux_results_wrapper_ptr;
     PictureDemuxResults_t                   *picture_demux_results_rtr;
     // SB Loop variables
 

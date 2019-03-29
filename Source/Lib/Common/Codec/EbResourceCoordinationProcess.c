@@ -21,11 +21,11 @@
  ************************************************/
 EbErrorType resource_coordination_context_ctor(
     ResourceCoordinationContext_t  **context_dbl_ptr,
-    EbFifo_t                        *inputBufferFifoPtr,
-    EbFifo_t                        *resource_coordination_results_output_fifo_ptr,
-    EbFifo_t                        **picture_control_set_fifo_ptr_array,
+    EbFifo                        *inputBufferFifoPtr,
+    EbFifo                        *resource_coordination_results_output_fifo_ptr,
+    EbFifo                        **picture_control_set_fifo_ptr_array,
     EbSequenceControlSetInstance_t  **sequence_control_set_instance_array,
-    EbFifo_t                         *sequence_control_set_empty_fifo_ptr,
+    EbFifo                         *sequence_control_set_empty_fifo_ptr,
     EbCallback_t                    **app_callback_ptr_array,
     uint32_t                         *compute_segments_total_count_array,
     uint32_t                          encode_instances_total_count)
@@ -47,7 +47,7 @@ EbErrorType resource_coordination_context_ctor(
     context_ptr->encode_instances_total_count = encode_instances_total_count;
 
     // Allocate SequenceControlSetActiveArray
-    EB_MALLOC(EbObjectWrapper_t**, context_ptr->sequenceControlSetActiveArray, sizeof(EbObjectWrapper_t*) * context_ptr->encode_instances_total_count, EB_N_PTR);
+    EB_MALLOC(EbObjectWrapper**, context_ptr->sequenceControlSetActiveArray, sizeof(EbObjectWrapper*) * context_ptr->encode_instances_total_count, EB_N_PTR);
 
     for (instance_index = 0; instance_index < context_ptr->encode_instances_total_count; ++instance_index) {
         context_ptr->sequenceControlSetActiveArray[instance_index] = 0;
@@ -399,27 +399,27 @@ void* resource_coordination_kernel(void *input_ptr)
 {
     ResourceCoordinationContext_t   *context_ptr = (ResourceCoordinationContext_t*)input_ptr;
 
-    EbObjectWrapper_t               *pictureControlSetWrapperPtr;
+    EbObjectWrapper               *pictureControlSetWrapperPtr;
 
     PictureParentControlSet_t       *picture_control_set_ptr;
 
-    EbObjectWrapper_t               *previousSequenceControlSetWrapperPtr;
+    EbObjectWrapper               *previousSequenceControlSetWrapperPtr;
     SequenceControlSet_t            *sequence_control_set_ptr;
 
-    EbObjectWrapper_t               *ebInputWrapperPtr;
+    EbObjectWrapper               *ebInputWrapperPtr;
     EbBufferHeaderType              *ebInputPtr;
-    EbObjectWrapper_t               *outputWrapperPtr;
+    EbObjectWrapper               *outputWrapperPtr;
     ResourceCoordinationResults_t   *outputResultsPtr;
 
-    EbObjectWrapper_t               *input_picture_wrapper_ptr;
-    EbObjectWrapper_t               *reference_picture_wrapper_ptr;
+    EbObjectWrapper               *input_picture_wrapper_ptr;
+    EbObjectWrapper               *reference_picture_wrapper_ptr;
 
     uint32_t                         instance_index;
     EbBool                           end_of_sequence_flag = EB_FALSE;
     uint32_t                         aspectRatio;
 
     uint32_t                         input_size = 0;
-    EbObjectWrapper_t               *prevPictureControlSetWrapperPtr = 0;
+    EbObjectWrapper               *prevPictureControlSetWrapperPtr = 0;
     
     for (;;) {
 
@@ -488,7 +488,7 @@ void* resource_coordination_kernel(void *input_ptr)
                     previousSequenceControlSetWrapperPtr);
 
                 // Check to see if previous SequenceControlSet is already inactive, if TRUE then release the SequenceControlSet
-                if (previousSequenceControlSetWrapperPtr->liveCount == 0) {
+                if (previousSequenceControlSetWrapperPtr->live_count == 0) {
                     eb_release_object(
                         previousSequenceControlSetWrapperPtr);
                 }
@@ -638,7 +638,7 @@ void* resource_coordination_kernel(void *input_ptr)
 
         picture_control_set_ptr->pa_reference_picture_wrapper_ptr = reference_picture_wrapper_ptr;
 
-        // Give the new Reference a nominal liveCount of 1
+        // Give the new Reference a nominal live_count of 1
         eb_object_inc_live_count(
             picture_control_set_ptr->pa_reference_picture_wrapper_ptr,
             2);

@@ -83,8 +83,8 @@ extern "C" {
 
     typedef struct ModeDecisionContext_s
     {
-        EbFifo_t                       *mode_decision_configuration_input_fifo_ptr;
-        EbFifo_t                       *mode_decision_output_fifo_ptr;
+        EbFifo                       *mode_decision_configuration_input_fifo_ptr;
+        EbFifo                       *mode_decision_output_fifo_ptr;
         int16_t                        *transform_inner_array_ptr;
 
         ModeDecisionCandidate_t       **fast_candidate_ptr_array;
@@ -246,8 +246,8 @@ extern "C" {
      **************************************/
     extern EbErrorType mode_decision_context_ctor(
         ModeDecisionContext_t      **context_dbl_ptr,
-        EbFifo_t                    *mode_decision_configuration_input_fifo_ptr,
-        EbFifo_t                    *mode_decision_output_fifo_ptr);
+        EbFifo                    *mode_decision_configuration_input_fifo_ptr,
+        EbFifo                    *mode_decision_output_fifo_ptr);
 
     extern void reset_mode_decision_neighbor_arrays(
         PictureControlSet_t *picture_control_set_ptr);

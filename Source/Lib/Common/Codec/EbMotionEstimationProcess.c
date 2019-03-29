@@ -200,8 +200,8 @@ EbErrorType signal_derivation_me_kernel_oq(
 
 EbErrorType MotionEstimationContextCtor(
     MotionEstimationContext_t   **context_dbl_ptr,
-    EbFifo_t                     *pictureDecisionResultsInputFifoPtr,
-    EbFifo_t                     *motionEstimationResultsOutputFifoPtr) {
+    EbFifo                     *pictureDecisionResultsInputFifoPtr,
+    EbFifo                     *motionEstimationResultsOutputFifoPtr) {
 
     EbErrorType return_error = EB_ErrorNone;
     MotionEstimationContext_t *context_ptr;
@@ -378,10 +378,10 @@ void* MotionEstimationKernel(void *input_ptr)
     PictureParentControlSet_t   *picture_control_set_ptr;
     SequenceControlSet_t        *sequence_control_set_ptr;
 
-    EbObjectWrapper_t           *inputResultsWrapperPtr;
+    EbObjectWrapper           *inputResultsWrapperPtr;
     PictureDecisionResults_t    *inputResultsPtr;
 
-    EbObjectWrapper_t           *outputResultsWrapperPtr;
+    EbObjectWrapper           *outputResultsWrapperPtr;
     MotionEstimationResults_t   *outputResultsPtr;
 
     EbPictureBufferDesc_t       *input_picture_ptr;

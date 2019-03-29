@@ -32,9 +32,9 @@ void av1_tile_set_row(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int ro
  ******************************************************/
 EbErrorType entropy_coding_context_ctor(
     EntropyCodingContext_t **context_dbl_ptr,
-    EbFifo_t                *enc_dec_input_fifo_ptr,
-    EbFifo_t                *packetization_output_fifo_ptr,
-    EbFifo_t                *rate_control_output_fifo_ptr,
+    EbFifo                *enc_dec_input_fifo_ptr,
+    EbFifo                *packetization_output_fifo_ptr,
+    EbFifo                *rate_control_output_fifo_ptr,
     EbBool                  is16bit)
 {
     EntropyCodingContext_t *context_ptr;
@@ -510,11 +510,11 @@ void* EntropyCodingKernel(void *input_ptr)
     SequenceControlSet_t                    *sequence_control_set_ptr;
 
     // Input
-    EbObjectWrapper_t                       *encDecResultsWrapperPtr;
+    EbObjectWrapper                       *encDecResultsWrapperPtr;
     EncDecResults_t                         *encDecResultsPtr;
 
     // Output
-    EbObjectWrapper_t                       *entropyCodingResultsWrapperPtr;
+    EbObjectWrapper                       *entropyCodingResultsWrapperPtr;
     EntropyCodingResults_t                  *entropyCodingResultsPtr;
 
     // SB Loop variables
@@ -621,7 +621,7 @@ void* EntropyCodingKernel(void *input_ptr)
 
                 // At the end of each LCU-row, send the updated bit-count to Entropy Coding
                 {
-                    EbObjectWrapper_t *rateControlTaskWrapperPtr;
+                    EbObjectWrapper *rateControlTaskWrapperPtr;
                     RateControlTasks_t *rateControlTaskPtr;
 
                     // Get Empty EncDec Results
