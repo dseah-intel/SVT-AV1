@@ -175,7 +175,7 @@ extern "C" {
         },
         // AVX2
         {
-            /*0 4xM  */     CombinedAveraging4xMSAD_SSE2_INTRIN,
+            /*0 4xM  */     combined_averaging4x_msad_sse2_intrin,
             /*1 8xM  */     combined_averaging8x_msad_avx2_intrin,
             /*2 16xM */     combined_averaging16x_msad_avx2_intrin,
             /*3 24xM */     combined_averaging24x_msad_avx2_intrin,

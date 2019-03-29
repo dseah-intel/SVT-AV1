@@ -1113,7 +1113,7 @@ uint64_t spatial_full_distortion_kernel(
     uint32_t   area_width,
     uint32_t   area_height);
 
-uint64_t SpatialFullDistortionKernel8x8_SSSE3_INTRIN(
+uint64_t spatial_full_distortion_kernel8x8_ssse3_intrin(
     uint8_t   *input,
     uint32_t   input_stride,
     uint8_t   *recon,
@@ -1121,7 +1121,7 @@ uint64_t SpatialFullDistortionKernel8x8_SSSE3_INTRIN(
     uint32_t   area_width,
     uint32_t   area_height);
 
-uint64_t SpatialFullDistortionKernel16MxN_SSSE3_INTRIN(
+uint64_t spatial_full_distortion_kernel16_mx_n_ssse3_intrin(
     uint8_t   *input,
     uint32_t   input_stride,
     uint8_t   *recon,
