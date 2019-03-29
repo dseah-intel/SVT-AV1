@@ -132,7 +132,7 @@ typedef struct EbConfig
      * Optional Features
      ****************************************/
 
-    uint8_t                     bitRateReduction;
+    uint8_t                     bit_rate_reduction;
     uint8_t                     improve_sharpness;
     uint32_t                    video_usability_info;
     uint32_t                    high_dynamic_range_input;
@@ -172,8 +172,8 @@ typedef struct EbAppContext {
     EbComponentType*                   svt_encoder_handle;
 
     // Buffer Pools
-    EbBufferHeaderType                 *inputPictureBuffer;
-    EbBufferHeaderType                 *outputStreamBuffer;
+    EbBufferHeaderType                 *input_picture_buffer;
+    EbBufferHeaderType                 *output_stream_buffer;
     EbBufferHeaderType                 *recon_buffer;
 
     uint32_t instance_idx;
@@ -184,8 +184,8 @@ typedef struct EbAppContext {
 /********************************
  * External Function
  ********************************/
-extern EbErrorType EbAppContextCtor(EbAppContext *contextPtr, EbConfig *config);
-extern void EbAppContextDtor(EbAppContext *contextPtr);
+extern EbErrorType eb_app_context_ctor(EbAppContext *contextPtr, EbConfig *config);
+extern void eb_app_context_dtor(EbAppContext *contextPtr);
 extern EbErrorType init_encoder(EbConfig *config, EbAppContext *callback_data, uint32_t instance_idx);
 extern EbErrorType de_init_encoder(EbAppContext *callback_data_ptr, uint32_t instance_index);
 

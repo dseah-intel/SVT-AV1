@@ -259,7 +259,7 @@ AppExitConditionType ProcessInputBuffer(
     EbAppContext              *appCallBack)
 {
     uint8_t            is16bit = (uint8_t)(config->encoder_bit_depth > 8);
-    EbBufferHeaderType     *headerPtr = appCallBack->inputPictureBuffer; // needs to change for buffered input
+    EbBufferHeaderType     *headerPtr = appCallBack->input_picture_buffer; // needs to change for buffered input
     EbComponentType        *componentHandle = (EbComponentType*)appCallBack->svt_encoder_handle;
     AppExitConditionType     return_value = APP_ExitConditionNone;
     static int32_t               frame_count = 0;
@@ -397,7 +397,7 @@ int32_t main(int32_t argc, char* argv[])
             // Initialize appCallback
             appCallback = (EbAppContext*)malloc(sizeof(EbAppContext));
             if (appCallback){
-                EbAppContextCtor(appCallback,config);
+                eb_app_context_ctor(appCallback,config);
 
                 return_error = init_encoder(config, appCallback, 0);
 
@@ -416,7 +416,7 @@ int32_t main(int32_t argc, char* argv[])
                 }
                 return_error = de_init_encoder(appCallback, 0);
                 // Destruct the App memory variables
-                EbAppContextDtor(appCallback);
+                eb_app_context_dtor(appCallback);
                 free(appCallback);
 
             }else

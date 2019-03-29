@@ -76,38 +76,38 @@ EbErrorType AllocateFrameBuffer(
 /***********************************
  * AppContext Constructor
  ***********************************/
-EbErrorType EbAppContextCtor(
+EbErrorType eb_app_context_ctor(
     EbAppContext *contextPtr,
     EbConfig     *config)
 {
     EbErrorType   return_error = EB_ErrorInsufficientResources;
 
     // Input Buffer
-    contextPtr->inputPictureBuffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
-    if (!contextPtr->inputPictureBuffer) return return_error;
+    contextPtr->input_picture_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
+    if (!contextPtr->input_picture_buffer) return return_error;
 
-    contextPtr->inputPictureBuffer->p_buffer = (uint8_t*)malloc(sizeof(EbSvtIOFormat));
-    if (!contextPtr->inputPictureBuffer->p_buffer) return return_error;
+    contextPtr->input_picture_buffer->p_buffer = (uint8_t*)malloc(sizeof(EbSvtIOFormat));
+    if (!contextPtr->input_picture_buffer->p_buffer) return return_error;
 
-    contextPtr->inputPictureBuffer->size = sizeof(EbBufferHeaderType);
-    contextPtr->inputPictureBuffer->p_app_private = NULL;
-    contextPtr->inputPictureBuffer->pic_type = EB_AV1_INVALID_PICTURE;
+    contextPtr->input_picture_buffer->size = sizeof(EbBufferHeaderType);
+    contextPtr->input_picture_buffer->p_app_private = NULL;
+    contextPtr->input_picture_buffer->pic_type = EB_AV1_INVALID_PICTURE;
     // Allocate frame buffer for the p_buffer
     AllocateFrameBuffer(
         config,
-        contextPtr->inputPictureBuffer->p_buffer);
+        contextPtr->input_picture_buffer->p_buffer);
 
     // output buffer
-    contextPtr->outputStreamBuffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
-    if (!contextPtr->outputStreamBuffer) return return_error;
+    contextPtr->output_stream_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
+    if (!contextPtr->output_stream_buffer) return return_error;
 
-    contextPtr->outputStreamBuffer->p_buffer = (uint8_t*)malloc(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height));
-    if (!contextPtr->outputStreamBuffer->p_buffer) return return_error;
+    contextPtr->output_stream_buffer->p_buffer = (uint8_t*)malloc(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height));
+    if (!contextPtr->output_stream_buffer->p_buffer) return return_error;
 
-    contextPtr->outputStreamBuffer->size = sizeof(EbBufferHeaderType);
-    contextPtr->outputStreamBuffer->n_alloc_len = EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height);
-    contextPtr->outputStreamBuffer->p_app_private = NULL;
-    contextPtr->outputStreamBuffer->pic_type = EB_AV1_INVALID_PICTURE;
+    contextPtr->output_stream_buffer->size = sizeof(EbBufferHeaderType);
+    contextPtr->output_stream_buffer->n_alloc_len = EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height);
+    contextPtr->output_stream_buffer->p_app_private = NULL;
+    contextPtr->output_stream_buffer->pic_type = EB_AV1_INVALID_PICTURE;
 
     // recon buffer
     if (config->recon_file) {
@@ -138,20 +138,20 @@ EbErrorType EbAppContextCtor(
 /***********************************
  * AppContext Destructor
  ***********************************/
-void EbAppContextDtor(
+void eb_app_context_dtor(
     EbAppContext *contextPtr)
 {
-    EbSvtIOFormat *inputPtr = (EbSvtIOFormat*)contextPtr->inputPictureBuffer->p_buffer;
+    EbSvtIOFormat *inputPtr = (EbSvtIOFormat*)contextPtr->input_picture_buffer->p_buffer;
     free(inputPtr->luma);
     free(inputPtr->cb);
     free(inputPtr->cr);
     free(inputPtr->luma_ext);
     free(inputPtr->cb_ext);
     free(inputPtr->cr_ext);
-    free(contextPtr->inputPictureBuffer->p_buffer);
-    free(contextPtr->outputStreamBuffer->p_buffer);
-    free(contextPtr->inputPictureBuffer);
-    free(contextPtr->outputStreamBuffer);
+    free(contextPtr->input_picture_buffer->p_buffer);
+    free(contextPtr->output_stream_buffer->p_buffer);
+    free(contextPtr->input_picture_buffer);
+    free(contextPtr->output_stream_buffer);
     if(contextPtr->recon_buffer)
         free(contextPtr->recon_buffer);
 }
@@ -210,12 +210,12 @@ EbErrorType init_encoder(
     return_error = eb_init_encoder(callback_data->svt_encoder_handle);
     // Get ivf header
     if (config->bitstream_file) {
-        EbBufferHeaderType *outputStreamBuffer;
-        return_error = eb_svt_enc_stream_header(callback_data->svt_encoder_handle, &outputStreamBuffer);
+        EbBufferHeaderType *output_stream_buffer;
+        return_error = eb_svt_enc_stream_header(callback_data->svt_encoder_handle, &output_stream_buffer);
         if (return_error != EB_ErrorNone) {
             return return_error;
         }
-        fwrite(outputStreamBuffer->p_buffer, 1, outputStreamBuffer->n_filled_len, config->bitstream_file);
+        fwrite(output_stream_buffer->p_buffer, 1, output_stream_buffer->n_filled_len, config->bitstream_file);
     }
     ///************************* LIBRARY INIT [END] *********************///
     return return_error;
