@@ -20,7 +20,7 @@
  * Resource Coordination Context Constructor
  ************************************************/
 EbErrorType resource_coordination_context_ctor(
-    ResourceCoordinationContext_t  **context_dbl_ptr,
+    ResourceCoordinationContext  **context_dbl_ptr,
     EbFifo                        *inputBufferFifoPtr,
     EbFifo                        *resource_coordination_results_output_fifo_ptr,
     EbFifo                        **picture_control_set_fifo_ptr_array,
@@ -32,8 +32,8 @@ EbErrorType resource_coordination_context_ctor(
 {
     uint32_t instance_index;
 
-    ResourceCoordinationContext_t *context_ptr;
-    EB_MALLOC(ResourceCoordinationContext_t*, context_ptr, sizeof(ResourceCoordinationContext_t), EB_N_PTR);
+    ResourceCoordinationContext *context_ptr;
+    EB_MALLOC(ResourceCoordinationContext*, context_ptr, sizeof(ResourceCoordinationContext), EB_N_PTR);
 
     *context_dbl_ptr = context_ptr;
 
@@ -54,30 +54,30 @@ EbErrorType resource_coordination_context_ctor(
     }
 
     // Picture Stats
-    EB_MALLOC(uint64_t*, context_ptr->pictureNumberArray, sizeof(uint64_t) * context_ptr->encode_instances_total_count, EB_N_PTR);
+    EB_MALLOC(uint64_t*, context_ptr->picture_number_array, sizeof(uint64_t) * context_ptr->encode_instances_total_count, EB_N_PTR);
 
     for (instance_index = 0; instance_index < context_ptr->encode_instances_total_count; ++instance_index) {
-        context_ptr->pictureNumberArray[instance_index] = 0;
+        context_ptr->picture_number_array[instance_index] = 0;
     }
 
-    context_ptr->averageEncMod = 0;
-    context_ptr->prevEncMod = 0;
-    context_ptr->prevEncModeDelta = 0;
-    context_ptr->curSpeed = 0; // speed x 1000
-    context_ptr->previousModeChangeBuffer = 0;
-    context_ptr->firstInPicArrivedTimeSeconds = 0;
-    context_ptr->firstInPicArrivedTimeuSeconds = 0;
-    context_ptr->previousFrameInCheck1 = 0;
-    context_ptr->previousFrameInCheck2 = 0;
-    context_ptr->previousFrameInCheck3 = 0;
-    context_ptr->previousModeChangeFrameIn = 0;
-    context_ptr->prevsTimeSeconds = 0;
-    context_ptr->prevsTimeuSeconds = 0;
-    context_ptr->prevFrameOut = 0;
-    context_ptr->startFlag = EB_FALSE;
+    context_ptr->average_enc_mod = 0;
+    context_ptr->prev_enc_mod = 0;
+    context_ptr->prev_enc_mode_delta = 0;
+    context_ptr->cur_speed = 0; // speed x 1000
+    context_ptr->previous_mode_change_buffer = 0;
+    context_ptr->first_in_pic_arrived_time_seconds = 0;
+    context_ptr->first_in_pic_arrived_timeu_seconds = 0;
+    context_ptr->previous_frame_in_check1 = 0;
+    context_ptr->previous_frame_in_check2 = 0;
+    context_ptr->previous_frame_in_check3 = 0;
+    context_ptr->previous_mode_change_frame_in = 0;
+    context_ptr->prevs_time_seconds = 0;
+    context_ptr->prevs_timeu_seconds = 0;
+    context_ptr->prev_frame_out = 0;
+    context_ptr->start_flag = EB_FALSE;
 
-    context_ptr->previousBufferCheck1 = 0;
-    context_ptr->prevChangeCond = 0;
+    context_ptr->previous_buffer_check1 = 0;
+    context_ptr->prev_change_cond = 0;
 
     return EB_ErrorNone;
 }
@@ -121,7 +121,7 @@ EbErrorType signal_derivation_pre_analysis_oq(
 // Output: EncMod
 //******************************************************************************//
 void SpeedBufferControl(
-    ResourceCoordinationContext_t   *context_ptr,
+    ResourceCoordinationContext   *context_ptr,
     PictureParentControlSet_t       *picture_control_set_ptr,
     SequenceControlSet            *sequence_control_set_ptr)
 {
@@ -142,25 +142,25 @@ void SpeedBufferControl(
     eb_block_on_mutex(sequence_control_set_ptr->encode_context_ptr->sc_buffer_mutex);
 
     if (sequence_control_set_ptr->encode_context_ptr->sc_frame_in == 0) {
-        EbStartTime(&context_ptr->firstInPicArrivedTimeSeconds, &context_ptr->firstInPicArrivedTimeuSeconds);
+        EbStartTime(&context_ptr->first_in_pic_arrived_time_seconds, &context_ptr->first_in_pic_arrived_timeu_seconds);
     }
     else if (sequence_control_set_ptr->encode_context_ptr->sc_frame_in == SC_FRAMES_TO_IGNORE) {
-        context_ptr->startFlag = EB_TRUE;
+        context_ptr->start_flag = EB_TRUE;
     }
 
     // Compute duration since the start of the encode and since the previous checkpoint
     EbFinishTime(&cursTimeSeconds, &cursTimeuSeconds);
 
     EbComputeOverallElapsedTimeMs(
-        context_ptr->firstInPicArrivedTimeSeconds,
-        context_ptr->firstInPicArrivedTimeuSeconds,
+        context_ptr->first_in_pic_arrived_time_seconds,
+        context_ptr->first_in_pic_arrived_timeu_seconds,
         cursTimeSeconds,
         cursTimeuSeconds,
         &overallDuration);
 
     EbComputeOverallElapsedTimeMs(
-        context_ptr->prevsTimeSeconds,
-        context_ptr->prevsTimeuSeconds,
+        context_ptr->prevs_time_seconds,
+        context_ptr->prevs_timeu_seconds,
         cursTimeSeconds,
         cursTimeuSeconds,
         &instDuration);
@@ -170,26 +170,26 @@ void SpeedBufferControl(
 
     encoderModeDelta = 0;
 
-    // Check every bufferTsshold1 for the changes (previousFrameInCheck1 variable)
-    if ((sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousFrameInCheck1 + bufferTrshold1 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
+    // Check every bufferTsshold1 for the changes (previous_frame_in_check1 variable)
+    if ((sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_frame_in_check1 + bufferTrshold1 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
         // Go to a slower mode based on the fullness and changes of the buffer
-        if (sequence_control_set_ptr->encode_context_ptr->sc_buffer < targetFps && (context_ptr->prevEncModeDelta > -1 || (context_ptr->prevEncModeDelta < 0 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousModeChangeFrameIn + targetFps * 2))) {
-            if (context_ptr->previousBufferCheck1 > sequence_control_set_ptr->encode_context_ptr->sc_buffer + bufferTrshold1) {
+        if (sequence_control_set_ptr->encode_context_ptr->sc_buffer < targetFps && (context_ptr->prev_enc_mode_delta > -1 || (context_ptr->prev_enc_mode_delta < 0 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_mode_change_frame_in + targetFps * 2))) {
+            if (context_ptr->previous_buffer_check1 > sequence_control_set_ptr->encode_context_ptr->sc_buffer + bufferTrshold1) {
                 encoderModeDelta += -1;
                 changeCond = 2;
             }
-            else if (context_ptr->previousModeChangeBuffer > bufferTrshold1 + sequence_control_set_ptr->encode_context_ptr->sc_buffer && sequence_control_set_ptr->encode_context_ptr->sc_buffer < bufferTrshold1) {
+            else if (context_ptr->previous_mode_change_buffer > bufferTrshold1 + sequence_control_set_ptr->encode_context_ptr->sc_buffer && sequence_control_set_ptr->encode_context_ptr->sc_buffer < bufferTrshold1) {
                 encoderModeDelta += -1;
                 changeCond = 4;
             }
         }
 
         // Go to a faster mode based on the fullness and changes of the buffer
-        if (sequence_control_set_ptr->encode_context_ptr->sc_buffer > bufferTrshold1 + context_ptr->previousBufferCheck1) {
+        if (sequence_control_set_ptr->encode_context_ptr->sc_buffer > bufferTrshold1 + context_ptr->previous_buffer_check1) {
             encoderModeDelta += +1;
             changeCond = 1;
         }
-        else if (sequence_control_set_ptr->encode_context_ptr->sc_buffer > bufferTrshold1 + context_ptr->previousModeChangeBuffer) {
+        else if (sequence_control_set_ptr->encode_context_ptr->sc_buffer > bufferTrshold1 + context_ptr->previous_mode_change_buffer) {
             encoderModeDelta += +1;
             changeCond = 3;
         }
@@ -197,8 +197,8 @@ void SpeedBufferControl(
         // Update the encode mode based on the fullness of the buffer
         // If previous ChangeCond was the same, double the threshold2
         if (sequence_control_set_ptr->encode_context_ptr->sc_buffer > bufferTrshold3 &&
-            (context_ptr->prevChangeCond != 7 || sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousModeChangeFrameIn + bufferTrshold2 * 2) &&
-            sequence_control_set_ptr->encode_context_ptr->sc_buffer > context_ptr->previousModeChangeBuffer) {
+            (context_ptr->prev_change_cond != 7 || sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_mode_change_frame_in + bufferTrshold2 * 2) &&
+            sequence_control_set_ptr->encode_context_ptr->sc_buffer > context_ptr->previous_mode_change_buffer) {
             encoderModeDelta += 1;
             changeCond = 7;
         }
@@ -206,25 +206,25 @@ void SpeedBufferControl(
         sequence_control_set_ptr->encode_context_ptr->enc_mode = (EbEncMode)CLIP3(1, MAX_ENC_PRESET, (int8_t)sequence_control_set_ptr->encode_context_ptr->enc_mode + encoderModeDelta);
 
         // Update previous stats
-        context_ptr->previousFrameInCheck1 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
-        context_ptr->previousBufferCheck1 = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
+        context_ptr->previous_frame_in_check1 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
+        context_ptr->previous_buffer_check1 = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
 
         if (encoderModeDelta) {
-            context_ptr->previousModeChangeBuffer = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
-            context_ptr->previousModeChangeFrameIn = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
-            context_ptr->prevEncModeDelta = encoderModeDelta;
+            context_ptr->previous_mode_change_buffer = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
+            context_ptr->previous_mode_change_frame_in = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
+            context_ptr->prev_enc_mode_delta = encoderModeDelta;
         }
     }
 
-    // Check every bufferTrshold2 for the changes (previousFrameInCheck2 variable)
-    if ((sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousFrameInCheck2 + bufferTrshold2 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
+    // Check every bufferTrshold2 for the changes (previous_frame_in_check2 variable)
+    if ((sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_frame_in_check2 + bufferTrshold2 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
         encoderModeDelta = 0;
 
         // if no change in the encoder mode and buffer is low enough and level is not increasing, switch to a slower encoder mode
         // If previous ChangeCond was the same, double the threshold2
-        if (encoderModeDelta == 0 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousModeChangeFrameIn + bufferTrshold2 &&
-            (context_ptr->prevChangeCond != 8 || sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousModeChangeFrameIn + bufferTrshold2 * 2) &&
-            ((sequence_control_set_ptr->encode_context_ptr->sc_buffer - context_ptr->previousModeChangeBuffer < (targetFps / 3)) || context_ptr->previousModeChangeBuffer == 0) &&
+        if (encoderModeDelta == 0 && sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_mode_change_frame_in + bufferTrshold2 &&
+            (context_ptr->prev_change_cond != 8 || sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_mode_change_frame_in + bufferTrshold2 * 2) &&
+            ((sequence_control_set_ptr->encode_context_ptr->sc_buffer - context_ptr->previous_mode_change_buffer < (targetFps / 3)) || context_ptr->previous_mode_change_buffer == 0) &&
             sequence_control_set_ptr->encode_context_ptr->sc_buffer < bufferTrshold3) {
             encoderModeDelta = -1;
             changeCond = 8;
@@ -234,54 +234,54 @@ void SpeedBufferControl(
         sequence_control_set_ptr->encode_context_ptr->enc_mode = (EbEncMode)CLIP3(1, MAX_ENC_PRESET, (int8_t)sequence_control_set_ptr->encode_context_ptr->enc_mode + encoderModeDelta);
 
         // Update previous stats
-        context_ptr->previousFrameInCheck2 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
+        context_ptr->previous_frame_in_check2 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
 
         if (encoderModeDelta) {
-            context_ptr->previousModeChangeBuffer = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
-            context_ptr->previousModeChangeFrameIn = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
-            context_ptr->prevEncModeDelta = encoderModeDelta;
+            context_ptr->previous_mode_change_buffer = sequence_control_set_ptr->encode_context_ptr->sc_buffer;
+            context_ptr->previous_mode_change_frame_in = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
+            context_ptr->prev_enc_mode_delta = encoderModeDelta;
         }
 
     }
-    // Check every SC_FRAMES_INTERVAL_SPEED frames for the speed calculation (previousFrameInCheck3 variable)
-    if (context_ptr->startFlag || (sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previousFrameInCheck3 + SC_FRAMES_INTERVAL_SPEED && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
-        if (context_ptr->startFlag) {
-            context_ptr->curSpeed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - 0) * 1000 / (uint64_t)(overallDuration);
+    // Check every SC_FRAMES_INTERVAL_SPEED frames for the speed calculation (previous_frame_in_check3 variable)
+    if (context_ptr->start_flag || (sequence_control_set_ptr->encode_context_ptr->sc_frame_in > context_ptr->previous_frame_in_check3 + SC_FRAMES_INTERVAL_SPEED && sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE)) {
+        if (context_ptr->start_flag) {
+            context_ptr->cur_speed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - 0) * 1000 / (uint64_t)(overallDuration);
         }
         else {
 
             if (instDuration != 0)
-                context_ptr->curSpeed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - context_ptr->prevFrameOut) * 1000 / (uint64_t)(instDuration);
+                context_ptr->cur_speed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - context_ptr->prev_frame_out) * 1000 / (uint64_t)(instDuration);
         }
-        context_ptr->startFlag = EB_FALSE;
+        context_ptr->start_flag = EB_FALSE;
 
         // Update previous stats
-        context_ptr->previousFrameInCheck3 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
-        context_ptr->prevsTimeSeconds = cursTimeSeconds;
-        context_ptr->prevsTimeuSeconds = cursTimeuSeconds;
-        context_ptr->prevFrameOut = sequence_control_set_ptr->encode_context_ptr->sc_frame_out;
+        context_ptr->previous_frame_in_check3 = sequence_control_set_ptr->encode_context_ptr->sc_frame_in;
+        context_ptr->prevs_time_seconds = cursTimeSeconds;
+        context_ptr->prevs_timeu_seconds = cursTimeuSeconds;
+        context_ptr->prev_frame_out = sequence_control_set_ptr->encode_context_ptr->sc_frame_out;
 
     }
     else if (sequence_control_set_ptr->encode_context_ptr->sc_frame_in < SC_FRAMES_TO_IGNORE && (overallDuration != 0)) {
-        context_ptr->curSpeed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - 0) * 1000 / (uint64_t)(overallDuration);
+        context_ptr->cur_speed = (uint64_t)(sequence_control_set_ptr->encode_context_ptr->sc_frame_out - 0) * 1000 / (uint64_t)(overallDuration);
     }
 
     if (changeCond) {
-        context_ptr->prevChangeCond = changeCond;
+        context_ptr->prev_change_cond = changeCond;
     }
     sequence_control_set_ptr->encode_context_ptr->sc_frame_in++;
     if (sequence_control_set_ptr->encode_context_ptr->sc_frame_in >= SC_FRAMES_TO_IGNORE) {
-        context_ptr->averageEncMod += sequence_control_set_ptr->encode_context_ptr->enc_mode;
+        context_ptr->average_enc_mod += sequence_control_set_ptr->encode_context_ptr->enc_mode;
     }
     else {
-        context_ptr->averageEncMod = 0;
+        context_ptr->average_enc_mod = 0;
     }
 
     // Set the encoder level
     picture_control_set_ptr->enc_mode = sequence_control_set_ptr->encode_context_ptr->enc_mode;
 
     eb_release_mutex(sequence_control_set_ptr->encode_context_ptr->sc_buffer_mutex);
-    context_ptr->prevEncMod = sequence_control_set_ptr->encode_context_ptr->enc_mode;
+    context_ptr->prev_enc_mod = sequence_control_set_ptr->encode_context_ptr->enc_mode;
 }
 
 void ResetPcsAv1(
@@ -397,7 +397,7 @@ void ResetPcsAv1(
  ***************************************/
 void* resource_coordination_kernel(void *input_ptr)
 {
-    ResourceCoordinationContext_t   *context_ptr = (ResourceCoordinationContext_t*)input_ptr;
+    ResourceCoordinationContext   *context_ptr = (ResourceCoordinationContext*)input_ptr;
 
     EbObjectWrapper               *pictureControlSetWrapperPtr;
 
@@ -409,7 +409,7 @@ void* resource_coordination_kernel(void *input_ptr)
     EbObjectWrapper               *ebInputWrapperPtr;
     EbBufferHeaderType              *ebInputPtr;
     EbObjectWrapper               *outputWrapperPtr;
-    ResourceCoordinationResults_t   *outputResultsPtr;
+    ResourceCoordinationResults   *outputResultsPtr;
 
     EbObjectWrapper               *input_picture_wrapper_ptr;
     EbObjectWrapper               *reference_picture_wrapper_ptr;
@@ -626,7 +626,7 @@ void* resource_coordination_kernel(void *input_ptr)
         }
 
         // Picture Stats
-        picture_control_set_ptr->picture_number = context_ptr->pictureNumberArray[instance_index]++;
+        picture_control_set_ptr->picture_number = context_ptr->picture_number_array[instance_index]++;
         ResetPcsAv1(picture_control_set_ptr);
 
         sequence_control_set_ptr->encode_context_ptr->initial_picture = EB_FALSE;
@@ -655,7 +655,7 @@ void* resource_coordination_kernel(void *input_ptr)
             eb_get_empty_object(
                 context_ptr->resource_coordination_results_output_fifo_ptr,
                 &outputWrapperPtr);
-            outputResultsPtr = (ResourceCoordinationResults_t*)outputWrapperPtr->object_ptr;
+            outputResultsPtr = (ResourceCoordinationResults*)outputWrapperPtr->object_ptr;
             outputResultsPtr->pictureControlSetWrapperPtr = prevPictureControlSetWrapperPtr;
 
             // Post the finished Results Object

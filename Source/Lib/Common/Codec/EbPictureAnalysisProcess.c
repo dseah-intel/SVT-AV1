@@ -4925,7 +4925,7 @@ void* picture_analysis_kernel(void *input_ptr)
     SequenceControlSet            *sequence_control_set_ptr;
 
     EbObjectWrapper               *inputResultsWrapperPtr;
-    ResourceCoordinationResults_t   *inputResultsPtr;
+    ResourceCoordinationResults   *inputResultsPtr;
     EbObjectWrapper               *outputResultsWrapperPtr;
     PictureAnalysisResults_t        *outputResultsPtr;
     EbPaReferenceObject_t           *paReferenceObject;
@@ -4948,7 +4948,7 @@ void* picture_analysis_kernel(void *input_ptr)
             context_ptr->resource_coordination_results_input_fifo_ptr,
             &inputResultsWrapperPtr);
 
-        inputResultsPtr = (ResourceCoordinationResults_t*)inputResultsWrapperPtr->object_ptr;
+        inputResultsPtr = (ResourceCoordinationResults*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;

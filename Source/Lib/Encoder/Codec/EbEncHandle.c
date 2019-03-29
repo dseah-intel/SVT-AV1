@@ -1239,7 +1239,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Resource Coordination Results
     {
-        ResourceCoordinationResultInitData_t resourceCoordinationResultInitData;
+        ResourceCoordinationResultInitData resourceCoordinationResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->resourceCoordinationResultsResourcePtr,
@@ -1534,7 +1534,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Resource Coordination Context
     return_error = resource_coordination_context_ctor(
-        (ResourceCoordinationContext_t**)&encHandlePtr->resourceCoordinationContextPtr,
+        (ResourceCoordinationContext**)&encHandlePtr->resourceCoordinationContextPtr,
         encHandlePtr->input_buffer_consumer_fifo_ptr_array[0],
         encHandlePtr->resourceCoordinationResultsProducerFifoPtrArray[0],
         encHandlePtr->pictureParentControlSetPoolProducerFifoPtrDblArray[0],//ResourceCoordination works with ParentPCS
