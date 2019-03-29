@@ -1690,7 +1690,7 @@ void* picture_decision_kernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (PictureAnalysisResults_t*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
 #if BASE_LAYER_REF
@@ -1713,7 +1713,7 @@ void* picture_decision_kernel(void *input_ptr)
                 EB_ENC_PD_ERROR8);
         }
         else {
-            queueEntryPtr->parentPcsWrapperPtr = inputResultsPtr->pictureControlSetWrapperPtr;
+            queueEntryPtr->parentPcsWrapperPtr = inputResultsPtr->picture_control_set_wrapper_ptr;
             queueEntryPtr->picture_number = picture_control_set_ptr->picture_number;
         }
         // Process the head of the Picture Decision Reordering Queue (Entry N)
@@ -2541,7 +2541,7 @@ void* picture_decision_kernel(void *input_ptr)
 
                                     outputResultsPtr = (PictureDecisionResults_t*)outputResultsWrapperPtr->object_ptr;
 
-                                    outputResultsPtr->pictureControlSetWrapperPtr = encode_context_ptr->pre_assignment_buffer[pictureIndex];
+                                    outputResultsPtr->picture_control_set_wrapper_ptr = encode_context_ptr->pre_assignment_buffer[pictureIndex];
 
                                     outputResultsPtr->segment_index = segment_index;
 

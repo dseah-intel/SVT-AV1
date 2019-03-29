@@ -125,7 +125,7 @@ typedef struct EncodeContext_s
     MdRateEstimationContext_t                        *md_rate_estimation_array;
 
     // Rate Control Bit Tables
-    RateControlTables_t                              *rate_control_tables_array;
+    RateControlTables                              *rate_control_tables_array;
     EbBool                                            rate_control_tables_array_updated;
     EbHandle                                          rate_table_update_mutex;
                                                      

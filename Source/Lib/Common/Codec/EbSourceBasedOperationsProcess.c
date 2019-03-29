@@ -863,9 +863,9 @@ void DetectCu32x32CleanSparsePicture(
 
     int32_t  blockIndex, blockIndexX, blockIndexY;
     int32_t  blockIndexTemp, blockIndexXTemp, blockIndexYTemp;
-    uint32_t  rowNumber = picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_size / picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_stride;
+    uint32_t  row_number = picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_size / picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_stride;
 
-    for (blockIndexY = 1; blockIndexY < (int32_t)rowNumber - 1; ++blockIndexY) {
+    for (blockIndexY = 1; blockIndexY < (int32_t)row_number - 1; ++blockIndexY) {
         for (blockIndexX = 1; blockIndexX < picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_stride - 1; ++blockIndexX) {
             blockIndex = (blockIndexX)+(blockIndexY)* picture_control_set_ptr->cu32x32_clean_sparse_coeff_map_array_stride;
             uint8_t neighCount = 0;
@@ -910,7 +910,7 @@ void* source_based_operations_kernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (InitialRateControlResults_t*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
         picture_control_set_ptr->dark_back_groundlight_fore_ground = EB_FALSE;
@@ -1087,7 +1087,7 @@ void* source_based_operations_kernel(void *input_ptr)
             &outputResultsWrapperPtr);
 
         outputResultsPtr = (PictureDemuxResults_t*)outputResultsWrapperPtr->object_ptr;
-        outputResultsPtr->pictureControlSetWrapperPtr = inputResultsPtr->pictureControlSetWrapperPtr;
+        outputResultsPtr->picture_control_set_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
         outputResultsPtr->pictureType = EB_PIC_INPUT;
 
         // Release the Input Results

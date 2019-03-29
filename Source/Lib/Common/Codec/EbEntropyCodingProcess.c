@@ -539,7 +539,7 @@ void* EntropyCodingKernel(void *input_ptr)
             context_ptr->enc_dec_input_fifo_ptr,
             &encDecResultsWrapperPtr);
         encDecResultsPtr = (EncDecResults_t*)encDecResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)encDecResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet_t*)encDecResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if !RC 
         lastLcuFlag = EB_FALSE;
@@ -622,19 +622,19 @@ void* EntropyCodingKernel(void *input_ptr)
                 // At the end of each LCU-row, send the updated bit-count to Entropy Coding
                 {
                     EbObjectWrapper *rateControlTaskWrapperPtr;
-                    RateControlTasks_t *rateControlTaskPtr;
+                    RateControlTasks *rateControlTaskPtr;
 
                     // Get Empty EncDec Results
                     eb_get_empty_object(
                         context_ptr->rate_control_output_fifo_ptr,
                         &rateControlTaskWrapperPtr);
-                    rateControlTaskPtr = (RateControlTasks_t*)rateControlTaskWrapperPtr->object_ptr;
-                    rateControlTaskPtr->taskType = RC_ENTROPY_CODING_ROW_FEEDBACK_RESULT;
+                    rateControlTaskPtr = (RateControlTasks*)rateControlTaskWrapperPtr->object_ptr;
+                    rateControlTaskPtr->task_type = RC_ENTROPY_CODING_ROW_FEEDBACK_RESULT;
                     rateControlTaskPtr->picture_number = picture_control_set_ptr->picture_number;
-                    rateControlTaskPtr->rowNumber = yLcuIndex;
-                    rateControlTaskPtr->bitCount = rowTotalBits;
+                    rateControlTaskPtr->row_number = yLcuIndex;
+                    rateControlTaskPtr->bit_count = rowTotalBits;
 
-                    rateControlTaskPtr->pictureControlSetWrapperPtr = 0;
+                    rateControlTaskPtr->picture_control_set_wrapper_ptr = 0;
                     rateControlTaskPtr->segment_index = ~0u;
 
                     // Post EncDec Results
@@ -674,7 +674,7 @@ void* EntropyCodingKernel(void *input_ptr)
                             context_ptr->entropy_coding_output_fifo_ptr,
                             &entropyCodingResultsWrapperPtr);
                         entropyCodingResultsPtr = (EntropyCodingResults_t*)entropyCodingResultsWrapperPtr->object_ptr;
-                        entropyCodingResultsPtr->pictureControlSetWrapperPtr = encDecResultsPtr->pictureControlSetWrapperPtr;
+                        entropyCodingResultsPtr->picture_control_set_wrapper_ptr = encDecResultsPtr->picture_control_set_wrapper_ptr;
 
                         // Post EntropyCoding Results
                         eb_post_full_object(entropyCodingResultsWrapperPtr);
@@ -819,7 +819,7 @@ void* EntropyCodingKernel(void *input_ptr)
                      context_ptr->entropy_coding_output_fifo_ptr,
                      &entropyCodingResultsWrapperPtr);
                  entropyCodingResultsPtr = (EntropyCodingResults_t*)entropyCodingResultsWrapperPtr->object_ptr;
-                 entropyCodingResultsPtr->pictureControlSetWrapperPtr = encDecResultsPtr->pictureControlSetWrapperPtr;
+                 entropyCodingResultsPtr->picture_control_set_wrapper_ptr = encDecResultsPtr->picture_control_set_wrapper_ptr;
 
                  // Post EntropyCoding Results
                  eb_post_full_object(entropyCodingResultsWrapperPtr);

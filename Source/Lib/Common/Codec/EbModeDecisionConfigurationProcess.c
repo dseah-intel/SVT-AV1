@@ -2094,7 +2094,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
 
     // Input
     EbObjectWrapper                          *rateControlResultsWrapperPtr;
-    RateControlResults_t                       *rateControlResultsPtr;
+    RateControlResults                       *rateControlResultsPtr;
 
     // Output
     EbObjectWrapper                          *encDecTasksWrapperPtr;
@@ -2107,8 +2107,8 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
             context_ptr->rateControlInputFifoPtr,
             &rateControlResultsWrapperPtr);
 
-        rateControlResultsPtr = (RateControlResults_t*)rateControlResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)rateControlResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        rateControlResultsPtr = (RateControlResults*)rateControlResultsWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet_t*)rateControlResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
       
         // Mode Decision Configuration Kernel Signal(s) derivation
@@ -2459,7 +2459,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
             &encDecTasksWrapperPtr);
 
         encDecTasksPtr = (EncDecTasks_t*)encDecTasksWrapperPtr->object_ptr;
-        encDecTasksPtr->pictureControlSetWrapperPtr = rateControlResultsPtr->pictureControlSetWrapperPtr;
+        encDecTasksPtr->picture_control_set_wrapper_ptr = rateControlResultsPtr->picture_control_set_wrapper_ptr;
         encDecTasksPtr->inputType = ENCDEC_TASKS_MDC_INPUT;
 
         // Post the Full Results Object

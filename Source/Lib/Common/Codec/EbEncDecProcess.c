@@ -422,7 +422,7 @@ EbBool AssignEncDecSegments(
         continueProcessingFlag = EB_TRUE;
 
         //fprintf(trace, "Start  Pic: %u Seg: %u\n",
-        //    (unsigned) ((PictureControlSet_t*) taskPtr->pictureControlSetWrapperPtr->object_ptr)->picture_number,
+        //    (unsigned) ((PictureControlSet_t*) taskPtr->picture_control_set_wrapper_ptr->object_ptr)->picture_number,
         //    *segmentInOutIndex);
 
         break;
@@ -439,7 +439,7 @@ EbBool AssignEncDecSegments(
         continueProcessingFlag = EB_TRUE;
 
         //fprintf(trace, "Start  Pic: %u Seg: %u\n",
-        //    (unsigned) ((PictureControlSet_t*) taskPtr->pictureControlSetWrapperPtr->object_ptr)->picture_number,
+        //    (unsigned) ((PictureControlSet_t*) taskPtr->picture_control_set_wrapper_ptr->object_ptr)->picture_number,
         //    *segmentInOutIndex);
 
         break;
@@ -467,7 +467,7 @@ EbBool AssignEncDecSegments(
                 continueProcessingFlag = EB_TRUE;
 
                 //fprintf(trace, "Start  Pic: %u Seg: %u\n",
-                //    (unsigned) ((PictureControlSet_t*) taskPtr->pictureControlSetWrapperPtr->object_ptr)->picture_number,
+                //    (unsigned) ((PictureControlSet_t*) taskPtr->picture_control_set_wrapper_ptr->object_ptr)->picture_number,
                 //    *segmentInOutIndex);
             }
 
@@ -492,7 +492,7 @@ EbBool AssignEncDecSegments(
                     continueProcessingFlag = EB_TRUE;
 
                     //fprintf(trace, "Start  Pic: %u Seg: %u\n",
-                    //    (unsigned) ((PictureControlSet_t*) taskPtr->pictureControlSetWrapperPtr->object_ptr)->picture_number,
+                    //    (unsigned) ((PictureControlSet_t*) taskPtr->picture_control_set_wrapper_ptr->object_ptr)->picture_number,
                     //    *segmentInOutIndex);
                 }
             }
@@ -506,7 +506,7 @@ EbBool AssignEncDecSegments(
             feedbackTaskPtr = (EncDecTasks_t*)wrapper_ptr->object_ptr;
             feedbackTaskPtr->inputType = ENCDEC_TASKS_ENCDEC_INPUT;
             feedbackTaskPtr->enc_dec_segment_row = feedbackRowIndex;
-            feedbackTaskPtr->pictureControlSetWrapperPtr = taskPtr->pictureControlSetWrapperPtr;
+            feedbackTaskPtr->picture_control_set_wrapper_ptr = taskPtr->picture_control_set_wrapper_ptr;
             eb_post_full_object(wrapper_ptr);
         }
 
@@ -1495,7 +1495,7 @@ void* EncDecKernel(void *input_ptr)
             &encDecTasksWrapperPtr);
 
         encDecTasksPtr = (EncDecTasks_t*)encDecTasksWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)encDecTasksPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet_t*)encDecTasksPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         segmentsPtr = picture_control_set_ptr->enc_dec_segment_ctrl;
         lastLcuFlag = EB_FALSE;
@@ -1747,7 +1747,7 @@ void* EncDecKernel(void *input_ptr)
                 context_ptr->enc_dec_output_fifo_ptr,
                 &encDecResultsWrapperPtr);
             encDecResultsPtr = (EncDecResults_t*)encDecResultsWrapperPtr->object_ptr;
-            encDecResultsPtr->pictureControlSetWrapperPtr = encDecTasksPtr->pictureControlSetWrapperPtr;
+            encDecResultsPtr->picture_control_set_wrapper_ptr = encDecTasksPtr->picture_control_set_wrapper_ptr;
             //CHKN these are not needed for DLF
             encDecResultsPtr->completedLcuRowIndexStart = 0;
             encDecResultsPtr->completedLcuRowCount = ((sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_size_pix - 1) >> lcuSizeLog2);

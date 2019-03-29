@@ -16,7 +16,7 @@ extern "C" {
      **************************************/
     typedef struct EncDecResults_s
     {
-        EbObjectWrapper      *pictureControlSetWrapperPtr;
+        EbObjectWrapper      *picture_control_set_wrapper_ptr;
         uint32_t                  completedLcuRowIndexStart;
         uint32_t                  completedLcuRowCount;
 

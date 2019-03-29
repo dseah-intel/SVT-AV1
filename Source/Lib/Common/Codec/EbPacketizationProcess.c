@@ -258,7 +258,7 @@ void* PacketizationKernel(void *input_ptr)
     EbObjectWrapper              *output_stream_wrapper_ptr;
     EbBufferHeaderType             *output_stream_ptr;
     EbObjectWrapper              *rateControlTasksWrapperPtr;
-    RateControlTasks_t             *rateControlTasksPtr;
+    RateControlTasks             *rateControlTasksPtr;
     
     // Queue variables
     int32_t                         queueEntryIndex;
@@ -275,7 +275,7 @@ void* PacketizationKernel(void *input_ptr)
             context_ptr->entropy_coding_input_fifo_ptr,
             &entropyCodingResultsWrapperPtr);
         entropyCodingResultsPtr = (EntropyCodingResults_t*)entropyCodingResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)entropyCodingResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet_t*)entropyCodingResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
 
@@ -307,9 +307,9 @@ void* PacketizationKernel(void *input_ptr)
         eb_get_empty_object(
             context_ptr->rate_control_tasks_output_fifo_ptr,
             &rateControlTasksWrapperPtr);
-        rateControlTasksPtr = (RateControlTasks_t*)rateControlTasksWrapperPtr->object_ptr;
-        rateControlTasksPtr->pictureControlSetWrapperPtr = picture_control_set_ptr->picture_parent_control_set_wrapper_ptr;
-        rateControlTasksPtr->taskType = RC_PACKETIZATION_FEEDBACK_RESULT;
+        rateControlTasksPtr = (RateControlTasks*)rateControlTasksWrapperPtr->object_ptr;
+        rateControlTasksPtr->picture_control_set_wrapper_ptr = picture_control_set_ptr->picture_parent_control_set_wrapper_ptr;
+        rateControlTasksPtr->task_type = RC_PACKETIZATION_FEEDBACK_RESULT;
 
         // slice_type = picture_control_set_ptr->slice_type;
          // Reset the bitstream before writing to it
@@ -413,7 +413,7 @@ void* PacketizationKernel(void *input_ptr)
         eb_post_full_object(rateControlTasksWrapperPtr);
 
         //Release the Parent PCS then the Child PCS
-        eb_release_object(entropyCodingResultsPtr->pictureControlSetWrapperPtr);//Child
+        eb_release_object(entropyCodingResultsPtr->picture_control_set_wrapper_ptr);//Child
 
         // Release the Entropy Coding Result
         eb_release_object(entropyCodingResultsWrapperPtr);

@@ -502,7 +502,7 @@ void LogErrorOutput(
 
         // EB_ENC_RC_ERRORS:
     case EB_ENC_RC_ERROR1:
-        fprintf(error_log_file, "Error: RateControlProcess: Unknown input tasktype!\n");
+        fprintf(error_log_file, "Error: RateControlProcess: Unknown input task_type!\n");
         break;
 
     case EB_ENC_RC_ERROR2:

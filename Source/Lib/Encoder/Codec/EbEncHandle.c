@@ -589,7 +589,7 @@ EbErrorType LoadDefaultBufferConfigurationSettings(
 
 }
  // Rate Control
-static RateControlPorts_t rateControlPorts[] = {
+static RateControlPorts rateControlPorts[] = {
     {RATE_CONTROL_INPUT_PORT_PICTURE_MANAGER,       0},
     {RATE_CONTROL_INPUT_PORT_PACKETIZATION,         0},
     {RATE_CONTROL_INPUT_PORT_ENTROPY_CODING,        0},
@@ -597,7 +597,7 @@ static RateControlPorts_t rateControlPorts[] = {
 };
 // Rate Control
 static uint32_t RateControlPortLookup(
-    RATE_CONTROL_INPUT_PORT_TYPES           type,
+    RateControlInputPortTypes           type,
     uint32_t                                portTypeIndex){
     uint32_t portIndex = 0;
     uint32_t portCount = 0;
@@ -1356,7 +1356,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Rate Control Tasks
     {
-        RateControlTasksInitData_t rateControlTasksInitData;
+        RateControlTasksInitData rateControlTasksInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->rateControlTasksResourcePtr,
@@ -1375,7 +1375,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Rate Control Results
     {
-        RateControlResultsInitData_t rateControlResultInitData;
+        RateControlResultsInitData rateControlResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->rateControlResultsResourcePtr,
@@ -1642,7 +1642,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
     // Rate Control Context
     return_error = rate_control_context_ctor(
-        (RateControlContext_t**)&encHandlePtr->rateControlContextPtr,
+        (RateControlContext**)&encHandlePtr->rateControlContextPtr,
         encHandlePtr->rateControlTasksConsumerFifoPtrArray[0],
         encHandlePtr->rateControlResultsProducerFifoPtrArray[0],
         encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->intra_period_length);

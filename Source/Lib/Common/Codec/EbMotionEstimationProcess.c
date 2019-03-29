@@ -431,7 +431,7 @@ void* MotionEstimationKernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (PictureDecisionResults_t*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         paReferenceObject = (EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr;
         quarter_decimated_picture_ptr = (EbPictureBufferDesc_t*)paReferenceObject->quarter_decimated_picture_ptr;
@@ -743,7 +743,7 @@ void* MotionEstimationKernel(void *input_ptr)
             &outputResultsWrapperPtr);
 
         outputResultsPtr = (MotionEstimationResults_t*)outputResultsWrapperPtr->object_ptr;
-        outputResultsPtr->pictureControlSetWrapperPtr = inputResultsPtr->pictureControlSetWrapperPtr;
+        outputResultsPtr->picture_control_set_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
         outputResultsPtr->segment_index = segment_index;
 
         // Release the Input Results

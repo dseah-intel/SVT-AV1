@@ -399,7 +399,7 @@ void* resource_coordination_kernel(void *input_ptr)
 {
     ResourceCoordinationContext   *context_ptr = (ResourceCoordinationContext*)input_ptr;
 
-    EbObjectWrapper               *pictureControlSetWrapperPtr;
+    EbObjectWrapper               *picture_control_set_wrapper_ptr;
 
     PictureParentControlSet_t       *picture_control_set_ptr;
 
@@ -535,26 +535,26 @@ void* resource_coordination_kernel(void *input_ptr)
         //Get a New ParentPCS where we will hold the new inputPicture
         eb_get_empty_object(
             context_ptr->picture_control_set_fifo_ptr_array[instance_index],
-            &pictureControlSetWrapperPtr);
+            &picture_control_set_wrapper_ptr);
 
         // Parent PCS is released by the Rate Control after passing through MDC->MD->ENCDEC->Packetization
         eb_object_inc_live_count(
-            pictureControlSetWrapperPtr,
+            picture_control_set_wrapper_ptr,
             1);
 
-        picture_control_set_ptr = (PictureParentControlSet_t*)pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet_t*)picture_control_set_wrapper_ptr->object_ptr;
 
-        picture_control_set_ptr->p_pcs_wrapper_ptr = pictureControlSetWrapperPtr;
+        picture_control_set_ptr->p_pcs_wrapper_ptr = picture_control_set_wrapper_ptr;
 
         // Set the Encoder mode
         picture_control_set_ptr->enc_mode = sequence_control_set_ptr->static_config.enc_mode;
 
         // Keep track of the previous input for the ZZ SADs computation
         picture_control_set_ptr->previous_picture_control_set_wrapper_ptr = (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) ?
-            pictureControlSetWrapperPtr :
+            picture_control_set_wrapper_ptr :
             sequence_control_set_ptr->encode_context_ptr->previous_picture_control_set_wrapper_ptr;
 
-        sequence_control_set_ptr->encode_context_ptr->previous_picture_control_set_wrapper_ptr = pictureControlSetWrapperPtr;
+        sequence_control_set_ptr->encode_context_ptr->previous_picture_control_set_wrapper_ptr = picture_control_set_wrapper_ptr;
 
         // Copy data from the svt buffer to the input frame
         // *Note - Assumes 4:2:0 planar
@@ -644,7 +644,7 @@ void* resource_coordination_kernel(void *input_ptr)
             2);
 
         eb_object_inc_live_count(
-            pictureControlSetWrapperPtr,
+            picture_control_set_wrapper_ptr,
             2);
     
         ((EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->input_padded_picture_ptr->buffer_y = picture_control_set_ptr->enhanced_picture_ptr->buffer_y;
@@ -656,12 +656,12 @@ void* resource_coordination_kernel(void *input_ptr)
                 context_ptr->resource_coordination_results_output_fifo_ptr,
                 &outputWrapperPtr);
             outputResultsPtr = (ResourceCoordinationResults*)outputWrapperPtr->object_ptr;
-            outputResultsPtr->pictureControlSetWrapperPtr = prevPictureControlSetWrapperPtr;
+            outputResultsPtr->picture_control_set_wrapper_ptr = prevPictureControlSetWrapperPtr;
 
             // Post the finished Results Object
             eb_post_full_object(outputWrapperPtr);
         }
-        prevPictureControlSetWrapperPtr = pictureControlSetWrapperPtr;
+        prevPictureControlSetWrapperPtr = picture_control_set_wrapper_ptr;
     }
 
     return EB_NULL;

@@ -15,7 +15,7 @@ extern "C" {
      * Process Results
      **************************************/
     typedef struct ResourceCoordinationResults {
-        EbObjectWrapper *pictureControlSetWrapperPtr;
+        EbObjectWrapper *picture_control_set_wrapper_ptr;
     } ResourceCoordinationResults;
 
     typedef struct ResourceCoordinationResultInitData {

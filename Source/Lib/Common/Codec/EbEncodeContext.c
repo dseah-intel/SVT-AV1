@@ -199,7 +199,7 @@ EbErrorType encode_context_ctor(
     // Temporal Filter
 
     // Rate Control Bit Tables
-    EB_MALLOC(RateControlTables_t*, encode_context_ptr->rate_control_tables_array, sizeof(RateControlTables_t) * TOTAL_NUMBER_OF_INITIAL_RC_TABLES_ENTRY, EB_N_PTR);
+    EB_MALLOC(RateControlTables*, encode_context_ptr->rate_control_tables_array, sizeof(RateControlTables) * TOTAL_NUMBER_OF_INITIAL_RC_TABLES_ENTRY, EB_N_PTR);
 
     return_error = rate_control_tables_ctor(encode_context_ptr->rate_control_tables_array);
     if (return_error == EB_ErrorInsufficientResources) {

@@ -4949,7 +4949,7 @@ void* picture_analysis_kernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (ResourceCoordinationResults*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;
 
@@ -5037,7 +5037,7 @@ void* picture_analysis_kernel(void *input_ptr)
             &outputResultsWrapperPtr);
 
         outputResultsPtr = (PictureAnalysisResults_t*)outputResultsWrapperPtr->object_ptr;
-        outputResultsPtr->pictureControlSetWrapperPtr = inputResultsPtr->pictureControlSetWrapperPtr;
+        outputResultsPtr->picture_control_set_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
 
         // Release the Input Results
         eb_release_object(inputResultsWrapperPtr);
