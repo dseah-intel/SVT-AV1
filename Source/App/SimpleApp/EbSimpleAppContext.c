@@ -77,42 +77,42 @@ EbErrorType AllocateFrameBuffer(
  * AppContext Constructor
  ***********************************/
 EbErrorType eb_app_context_ctor(
-    EbAppContext *contextPtr,
+    EbAppContext *context_ptr,
     EbConfig     *config)
 {
     EbErrorType   return_error = EB_ErrorInsufficientResources;
 
     // Input Buffer
-    contextPtr->input_picture_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
-    if (!contextPtr->input_picture_buffer) return return_error;
+    context_ptr->input_picture_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
+    if (!context_ptr->input_picture_buffer) return return_error;
 
-    contextPtr->input_picture_buffer->p_buffer = (uint8_t*)malloc(sizeof(EbSvtIOFormat));
-    if (!contextPtr->input_picture_buffer->p_buffer) return return_error;
+    context_ptr->input_picture_buffer->p_buffer = (uint8_t*)malloc(sizeof(EbSvtIOFormat));
+    if (!context_ptr->input_picture_buffer->p_buffer) return return_error;
 
-    contextPtr->input_picture_buffer->size = sizeof(EbBufferHeaderType);
-    contextPtr->input_picture_buffer->p_app_private = NULL;
-    contextPtr->input_picture_buffer->pic_type = EB_AV1_INVALID_PICTURE;
+    context_ptr->input_picture_buffer->size = sizeof(EbBufferHeaderType);
+    context_ptr->input_picture_buffer->p_app_private = NULL;
+    context_ptr->input_picture_buffer->pic_type = EB_AV1_INVALID_PICTURE;
     // Allocate frame buffer for the p_buffer
     AllocateFrameBuffer(
         config,
-        contextPtr->input_picture_buffer->p_buffer);
+        context_ptr->input_picture_buffer->p_buffer);
 
     // output buffer
-    contextPtr->output_stream_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
-    if (!contextPtr->output_stream_buffer) return return_error;
+    context_ptr->output_stream_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
+    if (!context_ptr->output_stream_buffer) return return_error;
 
-    contextPtr->output_stream_buffer->p_buffer = (uint8_t*)malloc(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height));
-    if (!contextPtr->output_stream_buffer->p_buffer) return return_error;
+    context_ptr->output_stream_buffer->p_buffer = (uint8_t*)malloc(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height));
+    if (!context_ptr->output_stream_buffer->p_buffer) return return_error;
 
-    contextPtr->output_stream_buffer->size = sizeof(EbBufferHeaderType);
-    contextPtr->output_stream_buffer->n_alloc_len = EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height);
-    contextPtr->output_stream_buffer->p_app_private = NULL;
-    contextPtr->output_stream_buffer->pic_type = EB_AV1_INVALID_PICTURE;
+    context_ptr->output_stream_buffer->size = sizeof(EbBufferHeaderType);
+    context_ptr->output_stream_buffer->n_alloc_len = EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width*config->source_height);
+    context_ptr->output_stream_buffer->p_app_private = NULL;
+    context_ptr->output_stream_buffer->pic_type = EB_AV1_INVALID_PICTURE;
 
     // recon buffer
     if (config->recon_file) {
-        contextPtr->recon_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
-        if (!contextPtr->recon_buffer) return return_error;
+        context_ptr->recon_buffer = (EbBufferHeaderType*)malloc(sizeof(EbBufferHeaderType));
+        if (!context_ptr->recon_buffer) return return_error;
         const size_t lumaSize =
             config->input_padded_width    *
             config->input_padded_height;
@@ -122,16 +122,16 @@ EbErrorType eb_app_context_ctor(
         const size_t frameSize = (lumaSize + chromaSize) << tenBit;
 
         // Initialize Header
-        contextPtr->recon_buffer->size = sizeof(EbBufferHeaderType);
+        context_ptr->recon_buffer->size = sizeof(EbBufferHeaderType);
 
-        contextPtr->recon_buffer->p_buffer = (uint8_t*)malloc(frameSize);
-        if (!contextPtr->recon_buffer->p_buffer) return return_error;
+        context_ptr->recon_buffer->p_buffer = (uint8_t*)malloc(frameSize);
+        if (!context_ptr->recon_buffer->p_buffer) return return_error;
 
-        contextPtr->recon_buffer->n_alloc_len = (uint32_t)frameSize;
-        contextPtr->recon_buffer->p_app_private = NULL;
+        context_ptr->recon_buffer->n_alloc_len = (uint32_t)frameSize;
+        context_ptr->recon_buffer->p_app_private = NULL;
     }
     else
-        contextPtr->recon_buffer = NULL;
+        context_ptr->recon_buffer = NULL;
     return EB_ErrorNone;
 }
 
@@ -139,21 +139,21 @@ EbErrorType eb_app_context_ctor(
  * AppContext Destructor
  ***********************************/
 void eb_app_context_dtor(
-    EbAppContext *contextPtr)
+    EbAppContext *context_ptr)
 {
-    EbSvtIOFormat *inputPtr = (EbSvtIOFormat*)contextPtr->input_picture_buffer->p_buffer;
+    EbSvtIOFormat *inputPtr = (EbSvtIOFormat*)context_ptr->input_picture_buffer->p_buffer;
     free(inputPtr->luma);
     free(inputPtr->cb);
     free(inputPtr->cr);
     free(inputPtr->luma_ext);
     free(inputPtr->cb_ext);
     free(inputPtr->cr_ext);
-    free(contextPtr->input_picture_buffer->p_buffer);
-    free(contextPtr->output_stream_buffer->p_buffer);
-    free(contextPtr->input_picture_buffer);
-    free(contextPtr->output_stream_buffer);
-    if(contextPtr->recon_buffer)
-        free(contextPtr->recon_buffer);
+    free(context_ptr->input_picture_buffer->p_buffer);
+    free(context_ptr->output_stream_buffer->p_buffer);
+    free(context_ptr->input_picture_buffer);
+    free(context_ptr->output_stream_buffer);
+    if(context_ptr->recon_buffer)
+        free(context_ptr->recon_buffer);
 }
 
 /***********************************************

@@ -184,8 +184,8 @@ typedef struct EbAppContext {
 /********************************
  * External Function
  ********************************/
-extern EbErrorType eb_app_context_ctor(EbAppContext *contextPtr, EbConfig *config);
-extern void eb_app_context_dtor(EbAppContext *contextPtr);
+extern EbErrorType eb_app_context_ctor(EbAppContext *context_ptr, EbConfig *config);
+extern void eb_app_context_dtor(EbAppContext *context_ptr);
 extern EbErrorType init_encoder(EbConfig *config, EbAppContext *callback_data, uint32_t instance_idx);
 extern EbErrorType de_init_encoder(EbAppContext *callback_data_ptr, uint32_t instance_index);
 
