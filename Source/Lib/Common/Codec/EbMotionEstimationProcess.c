@@ -56,7 +56,7 @@ EbErrorType CheckZeroZeroCenter(
  * Set ME/HME Params from Config
  ************************************************/
 void* set_me_hme_params_from_config(
-    SequenceControlSet_t        *sequence_control_set_ptr,
+    SequenceControlSet        *sequence_control_set_ptr,
     MeContext_t                 *me_context_ptr)
 {
 
@@ -93,7 +93,7 @@ void* set_me_hme_params_from_config(
 void* set_me_hme_params_oq(
     MeContext_t                     *me_context_ptr,
     PictureParentControlSet_t       *picture_control_set_ptr,
-    SequenceControlSet_t            *sequence_control_set_ptr,
+    SequenceControlSet            *sequence_control_set_ptr,
     EbInputResolution                 input_resolution)
 {
     UNUSED(sequence_control_set_ptr);
@@ -163,7 +163,7 @@ void* set_me_hme_params_oq(
   Output  : ME Kernel signal(s)
 ******************************************************/
 EbErrorType signal_derivation_me_kernel_oq(
-    SequenceControlSet_t        *sequence_control_set_ptr,
+    SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet_t   *picture_control_set_ptr,
     MotionEstimationContext_t   *context_ptr) {
 
@@ -231,7 +231,7 @@ int non_moving_th_shift[4] = { 4, 2, 0, 0 };
 
 EbErrorType ComputeDecimatedZzSad(
     MotionEstimationContext_t   *context_ptr,
-    SequenceControlSet_t        *sequence_control_set_ptr,
+    SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet_t   *picture_control_set_ptr,
     EbPictureBufferDesc_t       *sixteenthDecimatedPicturePtr,
     uint32_t                         xLcuStartIndex,
@@ -376,7 +376,7 @@ void* MotionEstimationKernel(void *input_ptr)
     MotionEstimationContext_t   *context_ptr = (MotionEstimationContext_t*)input_ptr;
 
     PictureParentControlSet_t   *picture_control_set_ptr;
-    SequenceControlSet_t        *sequence_control_set_ptr;
+    SequenceControlSet        *sequence_control_set_ptr;
 
     EbObjectWrapper           *inputResultsWrapperPtr;
     PictureDecisionResults_t    *inputResultsPtr;
@@ -432,7 +432,7 @@ void* MotionEstimationKernel(void *input_ptr)
 
         inputResultsPtr = (PictureDecisionResults_t*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
-        sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         paReferenceObject = (EbPaReferenceObject_t*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr;
         quarterDecimatedPicturePtr = (EbPictureBufferDesc_t*)paReferenceObject->quarterDecimatedPicturePtr;
         sixteenthDecimatedPicturePtr = (EbPictureBufferDesc_t*)paReferenceObject->sixteenthDecimatedPicturePtr;

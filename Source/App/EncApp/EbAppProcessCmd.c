@@ -556,7 +556,7 @@ void LogErrorOutput(
         break;
         // EB_ENC_SCS_ERRORS:
     case EB_ENC_SCS_ERROR1:
-        fprintf(error_log_file, "Error: SequenceControlSetCopy: Not all SequenceControlSet_t members are being copied!\n");
+        fprintf(error_log_file, "Error: SequenceControlSetCopy: Not all SequenceControlSet members are being copied!\n");
         break;
 
         // EB_ENC_BITSTREAM_ERRORS:

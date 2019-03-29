@@ -40,7 +40,7 @@ typedef struct EbEncHandle_s
     // Config Set Pool & Active Array
     EbSystemResource                     *sequenceControlSetPoolPtr;
     EbFifo                              **sequenceControlSetPoolProducerFifoPtrArray;
-    EbSequenceControlSetInstance_t        **sequence_control_set_instance_array;
+    EbSequenceControlSetInstance        **sequence_control_set_instance_array;
 
     // Full Results
     EbSystemResource                    **pictureControlSetPoolPtrArray;

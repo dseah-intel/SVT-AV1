@@ -91,7 +91,7 @@ EbErrorType picture_decision_context_ctor(
 
 EbBool SceneTransitionDetector(
     PictureDecisionContext_t *context_ptr,
-    SequenceControlSet_t                 *sequence_control_set_ptr,
+    SequenceControlSet                 *sequence_control_set_ptr,
     PictureParentControlSet_t           **ParentPcsWindow,
     uint32_t                                windowWidthFuture)
 {
@@ -420,7 +420,7 @@ EbErrorType handle_incomplete_picture_window_map(
 EbErrorType update_base_layer_reference_queue_dependent_count(
     PictureDecisionContext_t        *context_ptr,
     EncodeContext_t                 *encode_context_ptr,
-    SequenceControlSet_t            *sequence_control_set_ptr,
+    SequenceControlSet            *sequence_control_set_ptr,
     uint32_t                         MiniGopIndex) {
 
     if (!context_ptr || !encode_context_ptr || !sequence_control_set_ptr)
@@ -866,8 +866,8 @@ EbErrorType signal_derivation_multi_processes_oq(
     // 3                                            8 step refinement
     // 4                                            16 step refinement
     // 5                                            64 step refinement
-    SequenceControlSet_t                    *sequence_control_set_ptr;
-    sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet                    *sequence_control_set_ptr;
+    sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     if (sequence_control_set_ptr->enable_cdef && picture_control_set_ptr->allow_intrabc == 0) {
         if (picture_control_set_ptr->enc_mode <= ENC_M5)
             picture_control_set_ptr->cdef_filter_mode = 4;
@@ -1636,7 +1636,7 @@ void* picture_decision_kernel(void *input_ptr)
     PictureParentControlSet_t       *picture_control_set_ptr;
 
     EncodeContext_t                 *encode_context_ptr;
-    SequenceControlSet_t            *sequence_control_set_ptr;
+    SequenceControlSet            *sequence_control_set_ptr;
 
     EbObjectWrapper               *inputResultsWrapperPtr;
     PictureAnalysisResults_t        *inputResultsPtr;
@@ -1691,7 +1691,7 @@ void* picture_decision_kernel(void *input_ptr)
 
         inputResultsPtr = (PictureAnalysisResults_t*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->pictureControlSetWrapperPtr->object_ptr;
-        sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
 #if BASE_LAYER_REF
         picture_control_set_ptr->last_islice_picture_number = 0;
@@ -1918,7 +1918,7 @@ void* picture_decision_kernel(void *input_ptr)
                         for (pictureIndex = context_ptr->miniGopStartIndex[miniGopIndex]; pictureIndex <= context_ptr->miniGopEndIndex[miniGopIndex]; ++pictureIndex) {
 
                             picture_control_set_ptr = (PictureParentControlSet_t*)encode_context_ptr->pre_assignment_buffer[pictureIndex]->object_ptr;
-                            sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+                            sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if BASE_LAYER_REF
                             picture_control_set_ptr->last_islice_picture_number = context_ptr->last_islice_picture_number;
 #endif

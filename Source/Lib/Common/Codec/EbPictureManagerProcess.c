@@ -35,7 +35,7 @@ void set_tile_info(PictureParentControlSet_t * pcsPtr);
   * Configure Picture edges
   ************************************************/
 static void ConfigurePictureEdges(
-    SequenceControlSet_t *scsPtr,
+    SequenceControlSet *scsPtr,
     PictureControlSet_t  *ppsPtr)
 {
     // Tiles Initialisation
@@ -108,7 +108,7 @@ void* picture_manager_kernel(void *input_ptr)
     EbObjectWrapper               *ChildPictureControlSetWrapperPtr;
     PictureControlSet_t             *ChildPictureControlSetPtr;
     PictureParentControlSet_t       *picture_control_set_ptr;
-    SequenceControlSet_t            *sequence_control_set_ptr;
+    SequenceControlSet            *sequence_control_set_ptr;
     EncodeContext_t                 *encode_context_ptr;
 
 
@@ -131,7 +131,7 @@ void* picture_manager_kernel(void *input_ptr)
     uint64_t                         depPoc;
     uint32_t                         depListCount;
     PictureParentControlSet_t       *entryPictureControlSetPtr;
-    SequenceControlSet_t            *entrySequenceControlSetPtr;
+    SequenceControlSet            *entrySequenceControlSetPtr;
 
     // Initialization
     uint8_t                          picture_width_in_sb;
@@ -160,7 +160,7 @@ void* picture_manager_kernel(void *input_ptr)
         case EB_PIC_INPUT:
 
             picture_control_set_ptr = (PictureParentControlSet_t*)inputPictureDemuxPtr->pictureControlSetWrapperPtr->object_ptr;
-            sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+            sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
             encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
             //printf("\nPicture Manager Process @ %d \n ", picture_control_set_ptr->picture_number);
@@ -512,7 +512,7 @@ void* picture_manager_kernel(void *input_ptr)
 
         case EB_PIC_REFERENCE:
 
-            sequence_control_set_ptr = (SequenceControlSet_t*)inputPictureDemuxPtr->sequence_control_set_wrapper_ptr->object_ptr;
+            sequence_control_set_ptr = (SequenceControlSet*)inputPictureDemuxPtr->sequence_control_set_wrapper_ptr->object_ptr;
             encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
             // Check if Reference Queue is full
@@ -556,7 +556,7 @@ void* picture_manager_kernel(void *input_ptr)
 
         default:
 
-            sequence_control_set_ptr = (SequenceControlSet_t*)inputPictureDemuxPtr->sequence_control_set_wrapper_ptr->object_ptr;
+            sequence_control_set_ptr = (SequenceControlSet*)inputPictureDemuxPtr->sequence_control_set_wrapper_ptr->object_ptr;
             encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
             CHECK_REPORT_ERROR_NC(
@@ -583,7 +583,7 @@ void* picture_manager_kernel(void *input_ptr)
                 if (inputEntryPtr->inputObjectPtr != EB_NULL) {
 
                     entryPictureControlSetPtr = (PictureParentControlSet_t*)inputEntryPtr->inputObjectPtr->object_ptr;
-                    entrySequenceControlSetPtr = (SequenceControlSet_t*)entryPictureControlSetPtr->sequence_control_set_wrapper_ptr->object_ptr;
+                    entrySequenceControlSetPtr = (SequenceControlSet*)entryPictureControlSetPtr->sequence_control_set_wrapper_ptr->object_ptr;
 
                     availabilityFlag = EB_TRUE;
 

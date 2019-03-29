@@ -24,7 +24,7 @@ EbErrorType resource_coordination_context_ctor(
     EbFifo                        *inputBufferFifoPtr,
     EbFifo                        *resource_coordination_results_output_fifo_ptr,
     EbFifo                        **picture_control_set_fifo_ptr_array,
-    EbSequenceControlSetInstance_t  **sequence_control_set_instance_array,
+    EbSequenceControlSetInstance  **sequence_control_set_instance_array,
     EbFifo                         *sequence_control_set_empty_fifo_ptr,
     EbCallback_t                    **app_callback_ptr_array,
     uint32_t                         *compute_segments_total_count_array,
@@ -88,7 +88,7 @@ Input   : encoder mode and tune
 Output  : Pre-Analysis signal(s)
 ******************************************************/
 EbErrorType signal_derivation_pre_analysis_oq(
-    SequenceControlSet_t       *sequence_control_set_ptr,
+    SequenceControlSet       *sequence_control_set_ptr,
     PictureParentControlSet_t  *picture_control_set_ptr) {
 
     EbErrorType return_error = EB_ErrorNone;
@@ -123,7 +123,7 @@ EbErrorType signal_derivation_pre_analysis_oq(
 void SpeedBufferControl(
     ResourceCoordinationContext_t   *context_ptr,
     PictureParentControlSet_t       *picture_control_set_ptr,
-    SequenceControlSet_t            *sequence_control_set_ptr)
+    SequenceControlSet            *sequence_control_set_ptr)
 {
 
     uint64_t cursTimeSeconds = 0;
@@ -404,7 +404,7 @@ void* resource_coordination_kernel(void *input_ptr)
     PictureParentControlSet_t       *picture_control_set_ptr;
 
     EbObjectWrapper               *previousSequenceControlSetWrapperPtr;
-    SequenceControlSet_t            *sequence_control_set_ptr;
+    SequenceControlSet            *sequence_control_set_ptr;
 
     EbObjectWrapper               *ebInputWrapperPtr;
     EbBufferHeaderType              *ebInputPtr;
@@ -474,7 +474,7 @@ void* resource_coordination_kernel(void *input_ptr)
 
             // Copy the contents of the active SequenceControlSet into the new empty SequenceControlSet
             copy_sequence_control_set(
-                (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr,
+                (SequenceControlSet*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr,
                 context_ptr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr);
 
             // Disable releaseFlag of new SequenceControlSet
@@ -503,7 +503,7 @@ void* resource_coordination_kernel(void *input_ptr)
             2);
 
         // Set the current SequenceControlSet
-        sequence_control_set_ptr = (SequenceControlSet_t*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet*)context_ptr->sequenceControlSetActiveArray[instance_index]->object_ptr;
 
         // Init SB Params
         if (context_ptr->sequence_control_set_instance_array[instance_index]->encode_context_ptr->initial_picture) {

@@ -136,7 +136,7 @@ extern "C" {
    ((D) * (1 << RDDIV_BITS)))
 
     extern EbErrorType av1_split_flag_rate(
-        SequenceControlSet_t      *sequence_control_set_ptr,
+        SequenceControlSet      *sequence_control_set_ptr,
         ModeDecisionContext_t     *context_ptr,
         CodingUnit_t              *cu_ptr,
         uint32_t                   leaf_index,

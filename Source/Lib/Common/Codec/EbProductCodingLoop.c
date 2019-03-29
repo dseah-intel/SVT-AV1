@@ -659,7 +659,7 @@ void set_nfl(
 //*************************//
 void Initialize_cu_data_structure(
     ModeDecisionContext_t   *context_ptr,
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
     LargestCodingUnit_t        *sb_ptr,
     const MdcLcuData_t        * const mdcResultTbPtr)
 {
@@ -1391,7 +1391,7 @@ void ProductConfigureChroma(
 }
 #if !PF_N2_32X32
 void ProductDerivePartialFrequencyN2Flag(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     ModeDecisionContext_t              *context_ptr){
 
@@ -2749,7 +2749,7 @@ PART get_partition_shape(
 void  order_nsq_table(
     PictureControlSet_t            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
-    const SequenceControlSet_t     *sequence_control_set_ptr,
+    const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
     NeighborArrayUnit_t            *leaf_partition_neighbor_array) {
     const uint32_t             lcuAddr = sb_ptr->index;
@@ -2945,7 +2945,7 @@ uint8_t check_skip_sub_blks(
 
 
 void md_encode_block(
-    SequenceControlSet_t             *sequence_control_set_ptr,
+    SequenceControlSet             *sequence_control_set_ptr,
     PictureControlSet_t              *picture_control_set_ptr,
     ModeDecisionContext_t            *context_ptr,
     SsMeContext_t                    *ss_mecontext,
@@ -3307,7 +3307,7 @@ void md_encode_block(
 
 
 EB_EXTERN EbErrorType mode_decision_sb(
-    SequenceControlSet_t                *sequence_control_set_ptr,
+    SequenceControlSet                *sequence_control_set_ptr,
     PictureControlSet_t                 *picture_control_set_ptr,
     const MdcLcuData_t * const           mdcResultTbPtr,
     LargestCodingUnit_t                 *sb_ptr,
@@ -4730,7 +4730,7 @@ static void in_loop_me_interpolate_search_region_avc_style(
 *   performs Half Pel refinement for one block
 ***************************************************************/
 static void in_loop_me_halfpel_refinement_block(
-    SequenceControlSet_t    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
+    SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
     SsMeContext_t           *context_ptr,                        // input parameter, ME context Ptr, used to get SB Ptr
     uint32_t                   block_index_in_sb_buffer,                  // input parameter, PU origin, used to point to source samples
     uint8_t                   *pos_b_buffer,                        // input parameter, position "b" interpolated search area Ptr
@@ -4933,7 +4933,7 @@ static void in_loop_me_halfpel_refinement_block(
 *   performs Half Pel refinement
 ***************************************************************/
 void in_loop_me_halfpel_search_sblock(
-    SequenceControlSet_t    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
+    SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
     SsMeContext_t           *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     uint8_t                   *pos_b_buffer,                        // input parameter, position "b" interpolated search area Ptr
     uint8_t                   *pos_h_buffer,                        // input parameter, position "h" interpolated search area Ptr
@@ -6933,13 +6933,13 @@ EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
 {
     EbErrorType return_error = EB_ErrorNone;
 
-    SequenceControlSet_t    *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet    *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     int16_t                  xTopLeftSearchRegion;
     int16_t                  yTopLeftSearchRegion;
     uint32_t                  searchRegionIndex;
-    int16_t                  picture_width = (int16_t)((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
-    int16_t                  picture_height = (int16_t)((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
+    int16_t                  picture_width = (int16_t)((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
+    int16_t                  picture_height = (int16_t)((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
 
     int16_t                  padWidth = (int16_t)BLOCK_SIZE_64 - 1;
     int16_t                  padHeight = (int16_t)BLOCK_SIZE_64 - 1;

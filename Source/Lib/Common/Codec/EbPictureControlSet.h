@@ -13944,7 +13944,7 @@ extern "C" {
         EbObjectWrapper                    *pa_reference_picture_wrapper_ptr;
         EbPictureBufferDesc_t                *enhanced_picture_ptr;
         PredictionStructure_t                *pred_struct_ptr;          // need to check
-        struct SequenceControlSet_s          *sequence_control_set_ptr;
+        struct SequenceControlSet          *sequence_control_set_ptr;
         struct PictureParentControlSet_s     *ref_pa_pcs_array[MAX_NUM_OF_REF_PIC_LIST];
         EbObjectWrapper                    *p_pcs_wrapper_ptr;
         EbObjectWrapper                    *previous_picture_control_set_wrapper_ptr;

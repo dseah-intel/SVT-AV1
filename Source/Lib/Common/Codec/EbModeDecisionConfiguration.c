@@ -289,7 +289,7 @@ uint8_t DeriveContouringClass(
 {
     uint8_t contouringClass = 0;
 
-    SequenceControlSet_t *sequence_control_set_ptr = (SequenceControlSet_t*)parentPcsPtr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet *sequence_control_set_ptr = (SequenceControlSet*)parentPcsPtr->sequence_control_set_wrapper_ptr->object_ptr;
 
     if (parentPcsPtr->is_sb_homogeneous_over_time[sb_index]) {
         if (leaf_index > 0) {
@@ -324,7 +324,7 @@ uint8_t DeriveContouringClass(
 
 
 void RefinementPredictionLoop(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
@@ -389,7 +389,7 @@ void RefinementPredictionLoop(
 
 
 void PrePredictionRefinement(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
@@ -449,7 +449,7 @@ void PrePredictionRefinement(
 
 
 void ForwardCuToModeDecision(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
 
     uint32_t                                  sb_index,
@@ -768,7 +768,7 @@ void MdcInterDepthDecision(
 }
 
 void PredictionPartitionLoop(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     uint32_t                                sb_index,
     uint32_t                                tbOriginX,
@@ -903,7 +903,7 @@ void PredictionPartitionLoop(
 }
 
 EbErrorType EarlyModeDecisionLcu(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,

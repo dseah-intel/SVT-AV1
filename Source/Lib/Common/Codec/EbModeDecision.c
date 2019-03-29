@@ -327,8 +327,8 @@ EbErrorType SetMvpClipMVs(
 {
     EbErrorType  return_error = EB_ErrorNone;
 
-    uint32_t        picture_width = ((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
-    uint32_t        picture_height = ((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
+    uint32_t        picture_width = ((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
+    uint32_t        picture_height = ((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
 
     candidate_ptr->motion_vector_pred_idx[REF_LIST_0] = 0;
     candidate_ptr->motion_vector_pred_x[REF_LIST_0] = 0;
@@ -402,7 +402,7 @@ void LimitMvOverBound(
     int16_t *mvx,
     int16_t *mvy,
     ModeDecisionContext_t     *ctxtPtr,
-    const SequenceControlSet_t      *sCSet)
+    const SequenceControlSet      *sCSet)
 {
     int32_t mvxF, mvyF;
 
@@ -1320,7 +1320,7 @@ void  inject_inter_candidates(
     PictureControlSet_t            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     SsMeContext_t                  *ss_mecontext,
-    const SequenceControlSet_t     *sequence_control_set_ptr,
+    const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
 #if M8_SKIP_BLK
     uint32_t                       *candidateTotalCnt){
@@ -2115,7 +2115,7 @@ void assert_release(int statement)
 void  intra_bc_search(
     PictureControlSet_t            *pcs,
     ModeDecisionContext_t          *context_ptr,
-    const SequenceControlSet_t     *scs,
+    const SequenceControlSet     *scs,
     LargestCodingUnit_t            *sb_ptr,
     CodingUnit_t                   *cu_ptr,
     MV                             *dv_cand,
@@ -2298,7 +2298,7 @@ void  intra_bc_search(
 void  inject_intra_bc_candidates(
     PictureControlSet_t            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
-    const SequenceControlSet_t     *sequence_control_set_ptr,
+    const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
     CodingUnit_t                   *cu_ptr,
     uint32_t                       *cand_cnt)
@@ -2361,7 +2361,7 @@ void  inject_intra_bc_candidates(
 void  inject_intra_candidates(
     PictureControlSet_t            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
-    const SequenceControlSet_t     *sequence_control_set_ptr,
+    const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
 #if M8_SKIP_BLK
     uint32_t                       *candidateTotalCnt){
@@ -2563,7 +2563,7 @@ EbErrorType ProductGenerateMdCandidatesCu(
 
     (void)lcuAddr;
     (void)interPredContextPtr;
-    const SequenceControlSet_t *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    const SequenceControlSet *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     const EB_SLICE slice_type = picture_control_set_ptr->slice_type;
     uint32_t       canTotalCnt;
 

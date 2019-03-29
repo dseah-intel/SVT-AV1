@@ -88,7 +88,7 @@ void* dlf_kernel(void *input_ptr)
     // Context & SCS & PCS
     DlfContext_t                            *context_ptr = (DlfContext_t*)input_ptr;
     PictureControlSet_t                     *picture_control_set_ptr;
-    SequenceControlSet_t                    *sequence_control_set_ptr;
+    SequenceControlSet                    *sequence_control_set_ptr;
 
     //// Input
     EbObjectWrapper                       *enc_dec_results_wrapper_ptr;
@@ -108,7 +108,7 @@ void* dlf_kernel(void *input_ptr)
 
         enc_dec_results_ptr         = (EncDecResults_t*)enc_dec_results_wrapper_ptr->object_ptr;
         picture_control_set_ptr     = (PictureControlSet_t*)enc_dec_results_ptr->pictureControlSetWrapperPtr->object_ptr;
-        sequence_control_set_ptr    = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+        sequence_control_set_ptr    = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
         EbBool is16bit       = (EbBool)(sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
         EbBool dlfEnableFlag = (EbBool)(picture_control_set_ptr->parent_pcs_ptr->loop_filter_mode &&

@@ -3542,7 +3542,7 @@ void InterpolateSearchRegionAVC(
 *   performs Half Pel refinement for one PU
 *******************************************/
 static void PU_HalfPelRefinement(
-    SequenceControlSet_t    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
+    SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
     MeContext_t             *context_ptr,                        // input parameter, ME context Ptr, used to get SB Ptr
     uint8_t                   *refBuffer,
     uint32_t                   ref_stride,
@@ -3827,7 +3827,7 @@ static void PU_HalfPelRefinement(
 *   performs Half Pel refinement for the 85 PUs
 *******************************************/
 void HalfPelSearch_LCU(
-    SequenceControlSet_t    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
+    SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
     PictureParentControlSet_t *picture_control_set_ptr,
     MeContext_t             *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     uint8_t                   *refBuffer,
@@ -7534,13 +7534,13 @@ EbErrorType MotionEstimateLcu(
 {
     EbErrorType return_error = EB_ErrorNone;
 
-    SequenceControlSet_t    *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet    *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     int16_t                  xTopLeftSearchRegion;
     int16_t                  yTopLeftSearchRegion;
     uint32_t                  searchRegionIndex;
-    int16_t                  picture_width = (int16_t)((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
-    int16_t                  picture_height = (int16_t)((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
+    int16_t                  picture_width = (int16_t)((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_width;
+    int16_t                  picture_height = (int16_t)((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr)->luma_height;
     uint32_t                  sb_width = (input_ptr->width - sb_origin_x) < BLOCK_SIZE_64 ? input_ptr->width - sb_origin_x : BLOCK_SIZE_64;
     uint32_t                  sb_height = (input_ptr->height - sb_origin_y) < BLOCK_SIZE_64 ? input_ptr->height - sb_origin_y : BLOCK_SIZE_64;
     int16_t                  padWidth = (int16_t)BLOCK_SIZE_64 - 1;
@@ -8699,7 +8699,7 @@ EbErrorType open_loop_intra_search_sb(
     EbAsm                        asm_type)
 {
     EbErrorType return_error = EB_ErrorNone;
-    SequenceControlSet_t    *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet    *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     uint32_t    cu_origin_x;
     uint32_t    cu_origin_y;

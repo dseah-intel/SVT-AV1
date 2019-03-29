@@ -26,24 +26,24 @@
 
 void av1_cdef_search(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr
 );
 
 void av1_cdef_frame(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *pCs
 );
 
 void av1_cdef_search16bit(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr
 );
 void av1_cdef_frame16bit(
     uint8_t is16bit,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *pCs
 );
 
@@ -244,7 +244,7 @@ static void ResetEncodePassNeighborArrays(PictureControlSet_t *picture_control_s
 static void ResetEncDec(
     EncDecContext_t         *context_ptr,
     PictureControlSet_t     *picture_control_set_ptr,
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
     uint32_t                   segment_index)
 {
     EB_SLICE                     slice_type;
@@ -312,7 +312,7 @@ static void EncDecConfigureLcu(
     EncDecContext_t         *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
     PictureControlSet_t     *picture_control_set_ptr,
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
     uint8_t                    picture_qp,
     uint8_t                    sb_qp)
 {
@@ -520,7 +520,7 @@ EbBool AssignEncDecSegments(
 }
 void ReconOutput(
     PictureControlSet_t    *picture_control_set_ptr,
-    SequenceControlSet_t   *sequence_control_set_ptr) {
+    SequenceControlSet   *sequence_control_set_ptr) {
 
     EbObjectWrapper             *outputReconWrapperPtr;
     EbBufferHeaderType           *outputReconPtr;
@@ -666,7 +666,7 @@ void ReconOutput(
 
 void PsnrCalculations(
     PictureControlSet_t    *picture_control_set_ptr,
-    SequenceControlSet_t   *sequence_control_set_ptr){
+    SequenceControlSet   *sequence_control_set_ptr){
 
     EbBool is16bit = (sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
 
@@ -1026,7 +1026,7 @@ void PsnrCalculations(
 
 void PadRefAndSetFlags(
     PictureControlSet_t    *picture_control_set_ptr,
-    SequenceControlSet_t   *sequence_control_set_ptr
+    SequenceControlSet   *sequence_control_set_ptr
 )
 {
 
@@ -1118,7 +1118,7 @@ void PadRefAndSetFlags(
 
 void CopyStatisticsToRefObject(
     PictureControlSet_t    *picture_control_set_ptr,
-    SequenceControlSet_t   *sequence_control_set_ptr
+    SequenceControlSet   *sequence_control_set_ptr
 )
 {
     picture_control_set_ptr->intra_coded_area = (100 * picture_control_set_ptr->intra_coded_area) / (sequence_control_set_ptr->luma_width * sequence_control_set_ptr->luma_height);
@@ -1224,7 +1224,7 @@ Input   : encoder mode and tune
 Output  : EncDec Kernel signal(s)
 ******************************************************/
 EbErrorType signal_derivation_enc_dec_kernel_oq(
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
 
     PictureControlSet_t     *picture_control_set_ptr,
     ModeDecisionContext_t   *context_ptr) {
@@ -1447,7 +1447,7 @@ void* EncDecKernel(void *input_ptr)
     // Context & SCS & PCS
     EncDecContext_t                         *context_ptr = (EncDecContext_t*)input_ptr;
     PictureControlSet_t                     *picture_control_set_ptr;
-    SequenceControlSet_t                    *sequence_control_set_ptr;
+    SequenceControlSet                    *sequence_control_set_ptr;
 
     // Input
     EbObjectWrapper                       *encDecTasksWrapperPtr;
@@ -1496,7 +1496,7 @@ void* EncDecKernel(void *input_ptr)
 
         encDecTasksPtr = (EncDecTasks_t*)encDecTasksWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureControlSet_t*)encDecTasksPtr->pictureControlSetWrapperPtr->object_ptr;
-        sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         segmentsPtr = picture_control_set_ptr->enc_dec_segment_ctrl;
         lastLcuFlag = EB_FALSE;
         is16bit = (EbBool)(sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);

@@ -9097,7 +9097,7 @@ uint8_t ConstructPmTransCoeffShapingKnob(const uint16_t *masking_matrix, uint8_t
     }
 }
 void construct_pm_trans_coeff_shaping(
-    SequenceControlSet_t  *sequence_control_set_ptr)
+    SequenceControlSet  *sequence_control_set_ptr)
 {
 
     uint8_t resolutionIndex;                     // 4K or 1080p Index

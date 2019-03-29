@@ -21,7 +21,7 @@ extern "C" {
         EbFifo                            *input_buffer_fifo_ptr;
         EbFifo                            *resource_coordination_results_output_fifo_ptr;
         EbFifo                           **picture_control_set_fifo_ptr_array;
-        EbSequenceControlSetInstance_t     **sequence_control_set_instance_array;
+        EbSequenceControlSetInstance     **sequence_control_set_instance_array;
         EbObjectWrapper                  **sequenceControlSetActiveArray;
         EbFifo                            *sequence_control_set_empty_fifo_ptr;
         EbCallback_t                       **app_callback_ptr_array;
@@ -67,7 +67,7 @@ extern "C" {
         EbFifo                        *input_buffer_fifo_ptr,
         EbFifo                        *resource_coordination_results_output_fifo_ptr,
         EbFifo                       **picture_control_set_fifo_ptr_array,
-        EbSequenceControlSetInstance_t **sequence_control_set_instance_array,
+        EbSequenceControlSetInstance **sequence_control_set_instance_array,
         EbFifo                        *sequence_control_set_empty_fifo_ptr,
         EbCallback_t                   **app_callback_ptr_array,
         uint32_t                        *compute_segments_total_count_array,

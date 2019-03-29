@@ -470,7 +470,7 @@ static INLINE void copy_rect(uint16_t *dst, int32_t dstride, const uint16_t *src
 
 void av1_cdef_frame(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *pCs
 )
 {
@@ -800,7 +800,7 @@ void av1_cdef_frame(
 
 void av1_cdef_frame16bit(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *pCs
 )
 {
@@ -1409,7 +1409,7 @@ uint64_t compute_cdef_dist(uint16_t *dst, int32_t dstride, uint16_t *src,
 }
 void finish_cdef_search(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr
     , int32_t                      selected_strength_cnt[64]
 )
@@ -1592,7 +1592,7 @@ void finish_cdef_search(
 
 void av1_cdef_search(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr
     //Yv12BufferConfig *frame,
     //const Yv12BufferConfig *ref,
@@ -1963,7 +1963,7 @@ void av1_cdef_search(
 
 void av1_cdef_search16bit(
     EncDecContext_t                *context_ptr,
-    SequenceControlSet_t           *sequence_control_set_ptr,
+    SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr
     //Yv12BufferConfig *frame,
     //const Yv12BufferConfig *ref,

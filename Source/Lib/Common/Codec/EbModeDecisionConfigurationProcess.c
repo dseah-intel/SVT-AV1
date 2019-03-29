@@ -676,7 +676,7 @@ void set_reference_cdef_strength(
 ******************************************************/
 void AdaptiveDlfParameterComputation(
     ModeDecisionConfigurationContext_t     *context_ptr,
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     EbBool                                    scene_transition_flag)
 {
@@ -760,7 +760,7 @@ EbErrorType ModeDecisionConfigurationContextCtor(
 ******************************************************/
 void PerformEarlyLcuPartitionning(
     ModeDecisionConfigurationContext_t     *context_ptr,
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
 
     LargestCodingUnit_t            *sb_ptr;
@@ -787,7 +787,7 @@ void PerformEarlyLcuPartitionning(
 }
 void PerformEarlyLcuPartitionningLcu(
     ModeDecisionConfigurationContext_t     *context_ptr,
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr,
     uint32_t                                    sb_index) {
 
@@ -808,7 +808,7 @@ void PerformEarlyLcuPartitionningLcu(
 }
 
 void Forward85CuToModeDecisionLCU(
-    SequenceControlSet_t  *sequence_control_set_ptr,
+    SequenceControlSet  *sequence_control_set_ptr,
     PictureControlSet_t   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
@@ -874,7 +874,7 @@ void Forward85CuToModeDecisionLCU(
 }
 
 void Forward84CuToModeDecisionLCU(
-    SequenceControlSet_t  *sequence_control_set_ptr,
+    SequenceControlSet  *sequence_control_set_ptr,
     PictureControlSet_t   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
@@ -939,7 +939,7 @@ void Forward84CuToModeDecisionLCU(
 }
 
 void forward_all_blocks_to_md(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr)
 {
 
@@ -1003,7 +1003,7 @@ void forward_all_blocks_to_md(
 }
 
 void forward_sq_blocks_to_md(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr)
 {
 
@@ -1071,7 +1071,7 @@ void forward_sq_blocks_to_md(
 
 
 void sb_forward_sq_blocks_to_md(
-    SequenceControlSet_t *sequence_control_set_ptr,
+    SequenceControlSet *sequence_control_set_ptr,
     PictureControlSet_t  *picture_control_set_ptr,
     uint32_t              sb_index)
 {
@@ -1109,7 +1109,7 @@ void sb_forward_sq_blocks_to_md(
 
 
 void Forward85CuToModeDecision(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
 
     const CodedUnitStats  *cuStatsPtr;
@@ -1170,7 +1170,7 @@ void Forward85CuToModeDecision(
 }
 
 void Forward84CuToModeDecision(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
 
     const CodedUnitStats  *cuStatsPtr;
@@ -1252,7 +1252,7 @@ void Forward84CuToModeDecision(
 * Derive MD parameters
 ******************************************************/
 void SetMdSettings(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
     // Initialize the homogeneous area threshold
     // Set the MD Open Loop Flag
@@ -1332,7 +1332,7 @@ EbAuraStatus AuraDetection64x64Gold(
 )
 {
 
-    SequenceControlSet_t  *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet  *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     int32_t                 picture_width_in_sb = (sequence_control_set_ptr->luma_width + BLOCK_SIZE_64 - 1) >> LOG2_64_SIZE;
     int32_t                 picture_height_in_sb = (sequence_control_set_ptr->luma_height + BLOCK_SIZE_64 - 1) >> LOG2_64_SIZE;
     uint32_t                 sb_index = yLcuIndex * picture_width_in_sb + xLcuIndex;
@@ -1455,7 +1455,7 @@ EbAuraStatus AuraDetection64x64Gold(
 * Aura detection
 ******************************************************/
 void AuraDetection(
-    SequenceControlSet_t         *sequence_control_set_ptr,
+    SequenceControlSet         *sequence_control_set_ptr,
     PictureControlSet_t            *picture_control_set_ptr,
     uint32_t                          picture_width_in_sb,
     uint32_t                          picture_height_in_sb)
@@ -1548,7 +1548,7 @@ void derive_search_method(
     }
 
 #if ADP_STATS_PER_LAYER
-    SequenceControlSet_t *sequence_control_set_ptr = (SequenceControlSet_t *)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet *sequence_control_set_ptr = (SequenceControlSet *)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     for (sb_index = 0; sb_index < picture_control_set_ptr->parent_pcs_ptr->sequence_control_set_ptr->sb_tot_cnt; sb_index++) {
 
@@ -1592,7 +1592,7 @@ void derive_search_method(
     Output  : predicted budget for the LCU
 ******************************************************/
 void set_sb_budget(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     LargestCodingUnit_t                *sb_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
@@ -1643,7 +1643,7 @@ void set_sb_budget(
     Output  : optimal budget for each LCU
 ******************************************************/
 void  derive_optimal_budget_per_sb(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
@@ -1712,7 +1712,7 @@ void  derive_optimal_budget_per_sb(
 }
 
 EbErrorType derive_default_segments(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr){
 
     EbErrorType return_error = EB_ErrorNone;
@@ -1760,7 +1760,7 @@ EbErrorType derive_default_segments(
     Output  : LCU score
 ******************************************************/
 void derive_sb_score(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
@@ -1816,7 +1816,7 @@ Input   : cost per depth
 Output  : budget per picture
 ******************************************************/
 void set_target_budget_oq(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
@@ -1866,7 +1866,7 @@ void set_target_budget_oq(
     Output  : search method for each LCU
 ******************************************************/
 void derive_sb_md_mode(
-    SequenceControlSet_t               *sequence_control_set_ptr,
+    SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet_t                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr) {
 
@@ -1922,7 +1922,7 @@ EbErrorType signal_derivation_mode_decision_config_kernel_oq(
 
 
 void forward_sq_non4_blocks_to_md(
-    SequenceControlSet_t                   *sequence_control_set_ptr,
+    SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr)
 {
 
@@ -1989,7 +1989,7 @@ void forward_sq_non4_blocks_to_md(
 }
 
 void sb_forward_sq_non4_blocks_to_md(
-    SequenceControlSet_t *sequence_control_set_ptr,
+    SequenceControlSet *sequence_control_set_ptr,
     PictureControlSet_t  *picture_control_set_ptr,
     uint32_t              sb_index)
 {
@@ -2027,7 +2027,7 @@ void sb_forward_sq_non4_blocks_to_md(
 }
 
 void forward_all_c_blocks_to_md(
-    SequenceControlSet_t   *sequence_control_set_ptr,
+    SequenceControlSet   *sequence_control_set_ptr,
     PictureControlSet_t    *picture_control_set_ptr){
 
     uint32_t                sb_index;
@@ -2090,7 +2090,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
     // Context & SCS & PCS
     ModeDecisionConfigurationContext_t         *context_ptr = (ModeDecisionConfigurationContext_t*)input_ptr;
     PictureControlSet_t                        *picture_control_set_ptr;
-    SequenceControlSet_t                       *sequence_control_set_ptr;
+    SequenceControlSet                       *sequence_control_set_ptr;
 
     // Input
     EbObjectWrapper                          *rateControlResultsWrapperPtr;
@@ -2109,7 +2109,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
 
         rateControlResultsPtr = (RateControlResults_t*)rateControlResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureControlSet_t*)rateControlResultsPtr->pictureControlSetWrapperPtr->object_ptr;
-        sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+        sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
       
         // Mode Decision Configuration Kernel Signal(s) derivation
         signal_derivation_mode_decision_config_kernel_oq(

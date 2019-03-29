@@ -350,7 +350,7 @@ const EB_AV1_LAMBDA_ASSIGN_FUNC av1_lambda_assignment_function_table[4] = {
 void reset_mode_decision(
     ModeDecisionContext_t   *context_ptr,
     PictureControlSet_t     *picture_control_set_ptr,
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
     uint32_t                   segment_index)
 {
     EB_SLICE                     slice_type;
@@ -437,7 +437,7 @@ void ModeDecisionConfigureLcu(
     ModeDecisionContext_t   *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
     PictureControlSet_t     *picture_control_set_ptr,
-    SequenceControlSet_t    *sequence_control_set_ptr,
+    SequenceControlSet    *sequence_control_set_ptr,
     uint8_t                    picture_qp,
     uint8_t                    sb_qp){
 

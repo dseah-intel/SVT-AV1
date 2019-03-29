@@ -732,7 +732,7 @@ void ProductFullLoop(
 {
     uint32_t                       tuOriginIndex;
     uint64_t                      y_full_cost;
-    SequenceControlSet_t        *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet        *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     EbAsm                         asm_type = sequence_control_set_ptr->encode_context_ptr->asm_type;
 
     EbBool                      clean_sparse_coeff_flag = EB_FALSE;
@@ -930,7 +930,7 @@ void ProductFullLoopTxSearch(
     PictureControlSet_t            *picture_control_set_ptr)
 {
     uint32_t                       tuOriginIndex;
-    SequenceControlSet_t          *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet          *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     EbAsm                          asm_type = sequence_control_set_ptr->encode_context_ptr->asm_type;
     EbBool                         clean_sparse_coeff_flag = EB_FALSE;
     uint64_t                       y_tu_coeff_bits;
@@ -1554,7 +1554,7 @@ void FullLoop_R(
     // EbPictureBufferDesc_t         * tuTransCoeffTmpPtr;
      //EbPictureBufferDesc_t         * tuQuantCoeffTmpPtr;
 
-    SequenceControlSet_t    *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet    *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     EbAsm     asm_type = sequence_control_set_ptr->encode_context_ptr->asm_type;
 
     EbBool clean_sparse_coeff_flag = EB_FALSE;
@@ -1741,7 +1741,7 @@ void CuFullDistortionFastTuMode_R(
     EbPictureBufferDesc_t          *transform_buffer;
     uint32_t                          tuTotalCount;
     uint32_t                          txb_itr = 0;
-    //    SequenceControlSet_t           *sequence_control_set_ptr=((SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr);
+    //    SequenceControlSet           *sequence_control_set_ptr=((SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr);
 
     tuTotalCount = context_ptr->blk_geom->txb_count;
     currentTuIndex = 0;
@@ -1901,7 +1901,7 @@ void  d1_non_square_block_decision(
 /// compute the cost of curr depth, and the depth above
 void   compute_depth_costs(
     ModeDecisionContext_t    *context_ptr,
-    SequenceControlSet_t     *sequence_control_set_ptr,
+    SequenceControlSet     *sequence_control_set_ptr,
     uint32_t                  curr_depth_mds,
     uint32_t                  above_depth_mds,
     uint32_t                  step,
@@ -2058,7 +2058,7 @@ uint32_t d2_inter_depth_block_decision(
     UNUSED(d1_idx_mds);
     UNUSED(d0_idx_mds);
     uint64_t                    parent_depth_cost = 0, current_depth_cost = 0;
-    SequenceControlSet_t     *sequence_control_set_ptr = (SequenceControlSet_t*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
+    SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     EbBool                    lastDepthFlag;
     const BlockGeom          * blk_geom;
 
