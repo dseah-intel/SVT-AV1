@@ -69,7 +69,7 @@ extern EbErrorType source_based_operations_context_ctor(
     SourceBasedOperationsContext **context_dbl_ptr,
     EbFifo                        *initial_rate_control_results_input_fifo_ptr,
     EbFifo                        *picture_demux_results_output_fifo_ptr,
-    SequenceControlSet_t            *sequence_control_set_ptr);
+    SequenceControlSet            *sequence_control_set_ptr);
 
 extern void* source_based_operations_kernel(void *input_ptr);
 

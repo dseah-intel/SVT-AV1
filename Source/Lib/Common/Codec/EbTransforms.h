@@ -4156,7 +4156,7 @@ extern "C" {
             inv_dst_transform4x4_sse2_intrin
         },
     };
-    void construct_pm_trans_coeff_shaping(SequenceControlSet_t  *sequence_control_set_ptr);
+    void construct_pm_trans_coeff_shaping(SequenceControlSet  *sequence_control_set_ptr);
 
 #ifdef __cplusplus
 }

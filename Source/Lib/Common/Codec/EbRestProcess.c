@@ -46,7 +46,7 @@ void generate_padding(
     uint32_t            padding_width,
     uint32_t            padding_height);
 void restoration_seg_search(
-    RestContext_t          *context_ptr,
+    RestContext          *context_ptr,
     Yv12BufferConfig       *org_fts,
     const Yv12BufferConfig *src,
     Yv12BufferConfig       *trial_frame_rst,
@@ -58,7 +58,7 @@ void rest_finish_search(Macroblock *x, Av1Common *const cm);
  * Rest Context Constructor
  ******************************************************/
 EbErrorType rest_context_ctor(
-    RestContext_t **context_dbl_ptr,
+    RestContext **context_dbl_ptr,
     EbFifo                *rest_input_fifo_ptr,
     EbFifo                *rest_output_fifo_ptr ,
     EbFifo                *picture_demux_fifo_ptr,
@@ -68,8 +68,8 @@ EbErrorType rest_context_ctor(
    )
 {
     EbErrorType return_error = EB_ErrorNone;
-    RestContext_t *context_ptr;
-    EB_MALLOC(RestContext_t*, context_ptr, sizeof(RestContext_t), EB_N_PTR);
+    RestContext *context_ptr;
+    EB_MALLOC(RestContext*, context_ptr, sizeof(RestContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     // Input/Output System Resource Manager FIFOs
@@ -141,7 +141,7 @@ EbErrorType rest_context_ctor(
 void   get_own_recon(
     SequenceControlSet                    *sequence_control_set_ptr,
     PictureControlSet_t                     *picture_control_set_ptr,
-    RestContext_t                            *context_ptr,
+    RestContext                            *context_ptr,
     EbBool  is16bit)
 {
     EbPictureBufferDesc_t  * recon_picture_ptr;
@@ -202,7 +202,7 @@ void   get_own_recon(
 void* rest_kernel(void *input_ptr)
 {
     // Context & SCS & PCS
-    RestContext_t                            *context_ptr = (RestContext_t*)input_ptr;
+    RestContext                            *context_ptr = (RestContext*)input_ptr;
     PictureControlSet_t                     *picture_control_set_ptr;
     SequenceControlSet                    *sequence_control_set_ptr;
 

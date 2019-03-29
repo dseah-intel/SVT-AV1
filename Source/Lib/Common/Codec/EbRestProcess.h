@@ -18,7 +18,7 @@
 /**************************************
  * Rest Context
  **************************************/
-typedef struct RestContext_s
+typedef struct RestContext
 {
     EbFifo                       *rest_input_fifo_ptr;
     EbFifo                       *rest_output_fifo_ptr;
@@ -36,13 +36,13 @@ typedef struct RestContext_s
     int32_t *rst_tmpbuf;
 
 
-} RestContext_t;
+} RestContext;
 
 /**************************************
  * Extern Function Declarations
  **************************************/
 extern EbErrorType rest_context_ctor(
-    RestContext_t **context_dbl_ptr,
+    RestContext **context_dbl_ptr,
     EbFifo                       *rest_input_fifo_ptr,
     EbFifo                       *rest_output_fifo_ptr,
     EbFifo                      *picture_demux_fifo_ptr,

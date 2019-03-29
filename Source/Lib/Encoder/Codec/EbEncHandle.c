@@ -1742,7 +1742,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->rest_process_init_count; ++processIndex) {
         return_error = rest_context_ctor(
-            (RestContext_t**)&encHandlePtr->restContextPtrArray[processIndex],
+            (RestContext**)&encHandlePtr->restContextPtrArray[processIndex],
             encHandlePtr->cdefResultsConsumerFifoPtrArray[processIndex],
             encHandlePtr->restResultsProducerFifoPtrArray[processIndex],
             encHandlePtr->pictureDemuxResultsProducerFifoPtrArray[
