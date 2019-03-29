@@ -1224,7 +1224,7 @@ void frame_level_rc_input_picture_vbr(
                     qp_calc_temp3 = (uint64_t)((qp_calc_temp1 / qp_calc_temp2)*rate_control_layer_ptr->k_coeff);
                 else
                     qp_calc_temp3 = (uint64_t)(qp_calc_temp1*rate_control_layer_ptr->k_coeff / qp_calc_temp2);
-                temp_qp = (uint64_t)(Log2fHighPrecision(MAX(((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION), 1), RC_PRECISION));
+                temp_qp = (uint64_t)(log2f_high_precision(MAX(((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION), 1), RC_PRECISION));
 
                 rate_control_layer_ptr->calculated_frame_qp = (uint8_t)(CLIP3(1, 63, (uint32_t)(temp_qp + RC_PRECISION_OFFSET) >> RC_PRECISION));
                 picture_control_set_ptr->parent_pcs_ptr->calculated_qp = (uint8_t)(CLIP3(1, 63, (uint32_t)(temp_qp + RC_PRECISION_OFFSET) >> RC_PRECISION));
@@ -2693,7 +2693,7 @@ void frame_level_rc_input_picture_cvbr(
                     qp_calc_temp3 = (uint64_t)((qp_calc_temp1 / qp_calc_temp2)*rate_control_layer_ptr->k_coeff);
                 else
                     qp_calc_temp3 = (uint64_t)(qp_calc_temp1*rate_control_layer_ptr->k_coeff / qp_calc_temp2);
-                temp_qp = (uint64_t)(Log2fHighPrecision(MAX(((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION), 1), RC_PRECISION));
+                temp_qp = (uint64_t)(log2f_high_precision(MAX(((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION)*((qp_calc_temp3 + RC_PRECISION_OFFSET) >> RC_PRECISION), 1), RC_PRECISION));
 
                 rate_control_layer_ptr->calculated_frame_qp = (uint8_t)(CLIP3(1, 63, (uint32_t)(temp_qp + RC_PRECISION_OFFSET) >> RC_PRECISION));
                 picture_control_set_ptr->parent_pcs_ptr->calculated_qp = (uint8_t)(CLIP3(1, 63, (uint32_t)(temp_qp + RC_PRECISION_OFFSET) >> RC_PRECISION));

@@ -12,7 +12,7 @@
 /*
  * @struct Holds a prediction model for a sequence
  */
-typedef struct    RateControlModel_s {
+typedef struct    RateControlModel {
     /*
      * @variable uint32_t[64]. Predicted intra frame size for a given QP.
      * Indexed by QP. intraSizePrediction[15] references the estimated size of an

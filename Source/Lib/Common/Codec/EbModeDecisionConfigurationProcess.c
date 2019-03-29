@@ -812,7 +812,7 @@ void Forward85CuToModeDecisionLCU(
     PictureControlSet_t   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
-    const CodedUnitStats_t  *cuStatsPtr;
+    const CodedUnitStats  *cuStatsPtr;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
 
@@ -825,7 +825,7 @@ void Forward85CuToModeDecisionLCU(
     while (cu_index < CU_MAX_COUNT)
     {
         split_flag = EB_TRUE;
-        cuStatsPtr = GetCodedUnitStats(cu_index);
+        cuStatsPtr = get_coded_unit_stats(cu_index);
         if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
         {
             switch (cuStatsPtr->depth) {
@@ -878,7 +878,7 @@ void Forward84CuToModeDecisionLCU(
     PictureControlSet_t   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
-    const CodedUnitStats_t  *cuStatsPtr;
+    const CodedUnitStats  *cuStatsPtr;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
 
@@ -891,7 +891,7 @@ void Forward84CuToModeDecisionLCU(
     while (cu_index < CU_MAX_COUNT)
     {
         split_flag = EB_TRUE;
-        cuStatsPtr = GetCodedUnitStats(cu_index);
+        cuStatsPtr = get_coded_unit_stats(cu_index);
         if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
         {
             switch (cuStatsPtr->depth) {
@@ -1112,7 +1112,7 @@ void Forward85CuToModeDecision(
     SequenceControlSet_t                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
 
-    const CodedUnitStats_t  *cuStatsPtr;
+    const CodedUnitStats  *cuStatsPtr;
     uint32_t                   sb_index;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
@@ -1125,7 +1125,7 @@ void Forward85CuToModeDecision(
         while (cu_index < CU_MAX_COUNT)
         {
             split_flag = EB_TRUE;
-            cuStatsPtr = GetCodedUnitStats(cu_index);
+            cuStatsPtr = get_coded_unit_stats(cu_index);
             if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
             {
                 switch (cuStatsPtr->depth) {
@@ -1173,7 +1173,7 @@ void Forward84CuToModeDecision(
     SequenceControlSet_t                   *sequence_control_set_ptr,
     PictureControlSet_t                    *picture_control_set_ptr) {
 
-    const CodedUnitStats_t  *cuStatsPtr;
+    const CodedUnitStats  *cuStatsPtr;
     uint32_t                   sb_index;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
@@ -1188,7 +1188,7 @@ void Forward84CuToModeDecision(
         while (cu_index < CU_MAX_COUNT)
         {
             split_flag = EB_TRUE;
-            cuStatsPtr = GetCodedUnitStats(cu_index);
+            cuStatsPtr = get_coded_unit_stats(cu_index);
             if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
             {
                 switch (cuStatsPtr->depth) {

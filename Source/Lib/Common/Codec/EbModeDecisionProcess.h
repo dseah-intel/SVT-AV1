@@ -146,7 +146,7 @@ extern "C" {
         CodingUnit_t                   *cu_ptr;
         const BlockGeom                *blk_geom;
         PredictionUnit_t               *pu_ptr;
-        const PredictionUnitStats_t    *pu_stats;
+        const PredictionUnitStats    *pu_stats;
         MvUnit_t                        mv_unit;
 
         // Entropy Coder

@@ -42,7 +42,7 @@ typedef struct EntropyCodingContext_s
 
     //  Context Variables---------------------------------
     CodingUnit_t                     *cu_ptr;
-    const CodedUnitStats_t           *cu_stats;
+    const CodedUnitStats           *cu_stats;
     uint32_t                          cu_index;
     uint8_t                           cu_depth;
     uint32_t                          cu_size;
@@ -54,7 +54,7 @@ typedef struct EntropyCodingContext_s
     uint32_t                          sb_origin_y;
     uint32_t                          pu_itr;
     PredictionUnit_t                 *pu_ptr;
-    const PredictionUnitStats_t      *pu_stats;
+    const PredictionUnitStats      *pu_stats;
     uint32_t                          pu_origin_x;
     uint32_t                          pu_origin_y;
     uint32_t                          pu_width;

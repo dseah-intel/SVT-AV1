@@ -23,7 +23,7 @@
 /***************************************
  * Macros
  ***************************************/
-#define CLIP3(MinVal, MaxVal, a)        (((a)<(MinVal)) ? (MinVal) : (((a)>(MaxVal)) ? (MaxVal) :(a)))
+#define CLIP3(min_val, max_val, a)        (((a)<(min_val)) ? (min_val) : (((a)>(max_val)) ? (max_val) :(a)))
 #define FUTURE_WINDOW_WIDTH                 4
 #define SIZE_OF_ONE_FRAME_IN_BYTES(width, height,is16bit) ( ( ((width)*(height)*3)>>1 )<<is16bit)
 #define YUV4MPEG2_IND_SIZE 9

@@ -28,7 +28,7 @@ static EbBool IsPassthroughData(EbLinkedListNode* dataNode)
 static EbLinkedListNode* ExtractPassthroughData(EbLinkedListNode** llPtrPtr)
 {
     EbLinkedListNode* llRestPtr = NULL;
-    EbLinkedListNode* llPassPtr = splitEbLinkedList(*llPtrPtr, &llRestPtr, IsPassthroughData);
+    EbLinkedListNode* llPassPtr = split_eb_linked_list(*llPtrPtr, &llRestPtr, IsPassthroughData);
     *llPtrPtr = llRestPtr;
     return llPassPtr;
 }
@@ -388,7 +388,7 @@ void* PacketizationKernel(void *input_ptr)
         // Note: last chance here to add more output meta data for an encoded picture -->
 
         // collect output meta data
-        queueEntryPtr->outMetaData = concatEbLinkedList(ExtractPassthroughData(&(picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr)),
+        queueEntryPtr->outMetaData = concat_eb_linked_list(ExtractPassthroughData(&(picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr)),
             picture_control_set_ptr->parent_pcs_ptr->app_out_data_ll_head_ptr);
         picture_control_set_ptr->parent_pcs_ptr->app_out_data_ll_head_ptr = (EbLinkedListNode *)EB_NULL;
 

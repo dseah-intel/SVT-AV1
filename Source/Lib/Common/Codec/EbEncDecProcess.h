@@ -83,7 +83,7 @@ extern "C" {
 
         //  Context Variables---------------------------------
         CodingUnit_t                          *cu_ptr;
-        const CodedUnitStats_t                *cu_stats;
+        const CodedUnitStats                *cu_stats;
         uint16_t                               cu_origin_x; // within the picture
         uint16_t                               cu_origin_y; // within the picture
         uint8_t                                sb_sz;

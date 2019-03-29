@@ -8717,8 +8717,8 @@ EbErrorType open_loop_intra_search_sb(
         while (pa_blk_index < CU_MAX_COUNT)
         {
            
-            const CodedUnitStats_t  *blk_stats_ptr;
-            blk_stats_ptr = GetCodedUnitStats(pa_blk_index);
+            const CodedUnitStats  *blk_stats_ptr;
+            blk_stats_ptr = get_coded_unit_stats(pa_blk_index);
             uint8_t bsize = blk_stats_ptr->size;
             if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[pa_blk_index]]) {
 

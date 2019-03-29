@@ -1994,7 +1994,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     uint32_t                                  cu_index,
     uint32_t                                  cu_size,
     uint8_t                                   type,
-    uint8_t                                   parent32x32Index,
+    uint8_t                                   parent32x32_index,
     EncDecContext_t                        *context_ptr)
 {
     EbErrorType                    return_error = EB_ErrorNone;
@@ -2090,7 +2090,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
             // Use the 8x8 background enhancement only for the Intra slice, otherwise, use the existing SB based BEA results
             bea64x64DeltaQp = non_moving_delta_qp;
 
-            if (((cu_index > 0) && ((picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][parent32x32Index]) > ANTI_CONTOURING_LUMA_T2 || (picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][parent32x32Index]) < ANTI_CONTOURING_LUMA_T1)) ||
+            if (((cu_index > 0) && ((picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][parent32x32_index]) > ANTI_CONTOURING_LUMA_T2 || (picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][parent32x32_index]) < ANTI_CONTOURING_LUMA_T1)) ||
                 ((cu_index == 0) && ((picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][0]) > ANTI_CONTOURING_LUMA_T2 || (picture_control_set_ptr->parent_pcs_ptr->yMean[sb_index][0]) < ANTI_CONTOURING_LUMA_T1))) {
 
                 if (bea64x64DeltaQp < 0) {
@@ -2652,7 +2652,7 @@ EB_EXTERN void AV1EncodePass(
                         d1_itr, // TOCHECK OMK
                         context_ptr->blk_geom->bwidth, // TOCHECK
                         cu_ptr->prediction_mode_flag,
-                        context_ptr->cu_stats->parent32x32Index, // TOCHECK not valid
+                        context_ptr->cu_stats->parent32x32_index, // TOCHECK not valid
                         context_ptr);
                 }
 
