@@ -957,7 +957,6 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Updating the pictureControlSetPoolTotalCount based on the maximum look ahead distance
     for (instance_index = 0; instance_index < encHandlePtr->encodeInstanceTotalCount; ++instance_index) {
-
         maxLookAheadDistance = MAX(maxLookAheadDistance, encHandlePtr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->static_config.look_ahead_distance);
     }
 
