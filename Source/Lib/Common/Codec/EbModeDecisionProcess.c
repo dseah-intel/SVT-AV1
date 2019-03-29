@@ -47,10 +47,10 @@ EbErrorType mode_decision_context_ctor(
     }
 
     // Transform and Quantization Buffers
-    EB_MALLOC(EbTransQuantBuffers_t*, context_ptr->trans_quant_buffers_ptr, sizeof(EbTransQuantBuffers_t), EB_N_PTR);
+    EB_MALLOC(EbTransQuantBuffers*, context_ptr->trans_quant_buffers_ptr, sizeof(EbTransQuantBuffers), EB_N_PTR);
 
 
-    return_error = EbTransQuantBuffersCtor(
+    return_error = eb_trans_quant_buffers_ctor(
         context_ptr->trans_quant_buffers_ptr);
 
     if (return_error == EB_ErrorInsufficientResources) {

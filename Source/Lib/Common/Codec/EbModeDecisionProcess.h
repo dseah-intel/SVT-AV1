@@ -120,7 +120,7 @@ extern "C" {
         IntraReferenceSamples_t        *intra_ref_ptr;
 
         // Transform and Quantization Buffers
-        EbTransQuantBuffers_t          *trans_quant_buffers_ptr;
+        EbTransQuantBuffers          *trans_quant_buffers_ptr;
         struct EncDecContext_s         *enc_dec_context_ptr;
 
         uint64_t                       *fast_cost_array;
