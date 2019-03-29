@@ -142,7 +142,7 @@ extern "C" {
 
         //  Context Variables---------------------------------
         LargestCodingUnit_t            *sb_ptr;
-        TransformUnit_t                *txb_ptr;
+        TransformUnit                *txb_ptr;
         CodingUnit_t                   *cu_ptr;
         const BlockGeom                *blk_geom;
         PredictionUnit_t               *pu_ptr;

@@ -2800,7 +2800,7 @@ uint8_t product_full_mode_decision(
             EB_MEMCPY(&pu_ptr->wm_params, &candidate_ptr->wm_params, sizeof(EbWarpedMotionParams));
     }
 
-    TransformUnit_t        *txb_ptr;
+    TransformUnit        *txb_ptr;
     uint32_t                  txb_itr;
     uint32_t                  tu_index;
     uint32_t                  tuTotalCount;

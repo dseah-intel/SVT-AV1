@@ -337,7 +337,7 @@ void av1_highbd_quantize_b_facade(const tran_low_t *coeff_ptr,
     tran_low_t *qcoeff_ptr,
     tran_low_t *dqcoeff_ptr, uint16_t *eob_ptr,
     const SCAN_ORDER *sc,
-    const QUANT_PARAM *qparam) {
+    const QuantParam *qparam) {
     // obsolete skip_block
     const int32_t skip_block = 0;
     const qm_val_t *qm_ptr = qparam->qmatrix;
@@ -430,7 +430,7 @@ void av1_quantize_b_facade_II(
     tran_low_t *dqcoeff_ptr,
     uint16_t *eob_ptr,
     const SCAN_ORDER *sc,
-    const QUANT_PARAM *qparam)
+    const QuantParam *qparam)
 {
     // obsolete skip_block
     const int32_t skip_block = 0;
@@ -616,7 +616,7 @@ void av1_quantize_inv_quantize_ii(
 
     const int32_t n_coeffs = av1_get_max_eob(transform_size);
 
-    QUANT_PARAM qparam;
+    QuantParam qparam;
 
     qparam.log_scale = av1_get_tx_scale(transform_size);
     qparam.tx_size = transform_size;
@@ -1149,7 +1149,7 @@ void encode_pass_tx_search(
     UNUSED(component_mask);
 
     CodingUnit_t          *cu_ptr = context_ptr->cu_ptr;
-    TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
     uint32_t               qp = cu_ptr->qp;
     const uint32_t         scratchLumaOffset = context_ptr->blk_geom->tx_org_x[context_ptr->txb_itr] + context_ptr->blk_geom->tx_org_y[context_ptr->txb_itr] * SB_STRIDE_Y;
     const uint32_t         coeff1dOffset = context_ptr->coded_area_sb;
@@ -1347,7 +1347,7 @@ void encode_pass_tx_search_hbd(
     UNUSED(count_non_zero_coeffs);
 
     CodingUnit_t    *cu_ptr               = context_ptr->cu_ptr;
-    TransformUnit_t *txb_ptr              = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit *txb_ptr              = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
     uint32_t         qp                   = cu_ptr->qp;
     const uint32_t   scratchLumaOffset    = context_ptr->blk_geom->origin_x + context_ptr->blk_geom->origin_y * SB_STRIDE_Y;
     const uint32_t   coeff1dOffset        = context_ptr->coded_area_sb;

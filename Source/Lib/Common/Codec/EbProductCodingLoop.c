@@ -691,7 +691,7 @@ void Initialize_cu_data_structure(
     } while (blk_idx < sequence_control_set_ptr->max_block_cnt);
 }
 
-static INLINE tran_high_t check_range(tran_high_t input, int32_t bd) {
+static INLINE TranHigh check_range(TranHigh input, int32_t bd) {
     // AV1 TX case
     // - 8 bit: signed 16 bit integer
     // - 10 bit: signed 18 bit integer
@@ -703,11 +703,11 @@ static INLINE tran_high_t check_range(tran_high_t input, int32_t bd) {
     assert(int_min <= input);
     assert(input <= int_max);
 #endif  // CONFIG_COEFFICIENT_RANGE_CHECKING
-    return (tran_high_t)clamp64(input, int_min, int_max);
+    return (TranHigh)clamp64(input, int_min, int_max);
 }
 
 #define HIGHBD_WRAPLOW(x, bd) ((int32_t)check_range((x), bd))
-static INLINE uint16_t highbd_clip_pixel_add(uint16_t dest, tran_high_t trans,
+static INLINE uint16_t highbd_clip_pixel_add(uint16_t dest, TranHigh trans,
     int32_t bd) {
     trans = HIGHBD_WRAPLOW(trans, bd);
     return clip_pixel_highbd(dest + (int32_t)trans, bd);
@@ -893,7 +893,7 @@ void AV1PerformInverseTransformRecon(
     uint32_t                           tuTotalCount;
     uint32_t                           tu_index;
     uint32_t                           txb_itr;
-    TransformUnit_t                   *txb_ptr;
+    TransformUnit                   *txb_ptr;
     
     UNUSED(blk_geom);
 
@@ -2198,8 +2198,8 @@ void move_cu_data(
 {
 
 
-    //CHKN TransformUnit_t             transform_unit_array[TRANSFORM_UNIT_MAX_COUNT]; // 2-bytes * 21 = 42-bytes
-    memcpy(dst_cu->transform_unit_array, src_cu->transform_unit_array, TRANSFORM_UNIT_MAX_COUNT * sizeof(TransformUnit_t));
+    //CHKN TransformUnit             transform_unit_array[TRANSFORM_UNIT_MAX_COUNT]; // 2-bytes * 21 = 42-bytes
+    memcpy(dst_cu->transform_unit_array, src_cu->transform_unit_array, TRANSFORM_UNIT_MAX_COUNT * sizeof(TransformUnit));
 
 
     //CHKN PredictionUnit_t            prediction_unit_array[MAX_NUM_OF_PU_PER_CU];    // 35-bytes * 4 = 140 bytes
@@ -2522,7 +2522,7 @@ void inter_depth_tx_search(
 
         context_ptr->md_local_cu_unit[cu_ptr->mds_idx].count_non_zero_coeffs = candidate_ptr->count_non_zero_coeffs;
 
-        TransformUnit_t        *txb_ptr;
+        TransformUnit        *txb_ptr;
         uint32_t                txb_itr;
         uint32_t                tu_index;
         uint32_t                tuTotalCount;

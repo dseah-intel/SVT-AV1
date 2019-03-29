@@ -571,7 +571,7 @@ static void Av1EncodeLoop(
 
     //    uint32_t                 chroma_qp = cbQp;
     CodingUnit_t          *cu_ptr = context_ptr->cu_ptr;
-    TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
     //    EB_SLICE               slice_type = sb_ptr->picture_control_set_ptr->slice_type;
     //    uint32_t                 temporal_layer_index = sb_ptr->picture_control_set_ptr->temporal_layer_index;
     uint32_t                 qp = cu_ptr->qp;
@@ -1046,7 +1046,7 @@ static void Av1EncodeLoop16bit(
     (void)cbQp;
 
     CodingUnit_t          *cu_ptr = context_ptr->cu_ptr;
-    TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
     //    EB_SLICE               slice_type = sb_ptr->picture_control_set_ptr->slice_type;
     //    uint32_t                 temporal_layer_index = sb_ptr->picture_control_set_ptr->temporal_layer_index;
     uint32_t                 qp = cu_ptr->qp;
@@ -1419,7 +1419,7 @@ static void Av1EncodeGenerateRecon(
     uint32_t               predLumaOffset;
     uint32_t               predChromaOffset;
     CodingUnit_t          *cu_ptr = context_ptr->cu_ptr;
-    TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
 
     // *Note - The prediction is built in-place in the Recon buffer. It is overwritten with Reconstructed
     //   samples if the CBF==1 && SKIP==False
@@ -1539,7 +1539,7 @@ static void Av1EncodeGenerateRecon16bit(
     uint32_t predChromaOffset;
 
     CodingUnit_t          *cu_ptr = context_ptr->cu_ptr;
-    TransformUnit_t       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
+    TransformUnit       *txb_ptr = &cu_ptr->transform_unit_array[context_ptr->txb_itr];
 
     (void)asm_type;
     (void)transformScratchBuffer;
