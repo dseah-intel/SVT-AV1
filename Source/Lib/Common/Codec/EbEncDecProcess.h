@@ -50,7 +50,7 @@ extern "C" {
         const BlockGeom                       *blk_geom;
 
         // TMVP
-        EbReferenceObject_t                   *reference_object_write_ptr;
+        EbReferenceObject                   *reference_object_write_ptr;
 
         // MCP Context
         MotionCompensationPredictionContext_t *mcp_context;

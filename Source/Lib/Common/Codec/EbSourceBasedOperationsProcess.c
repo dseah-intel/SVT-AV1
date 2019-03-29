@@ -291,7 +291,7 @@ void CalculateAcEnergy(
     uint32_t                   inputOriginIndex;
     SbParams_t  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
 
-    uint8_t       *meanPtr = picture_control_set_ptr->yMean[sb_index];
+    uint8_t       *meanPtr = picture_control_set_ptr->y_mean[sb_index];
     inputOriginIndex = (sb_params->origin_y + input_picture_ptr->origin_y) * inputLumaStride + (sb_params->origin_x + input_picture_ptr->origin_x);
 
     if (sb_params->is_complete_sb && picture_control_set_ptr->slice_type == I_SLICE) {
@@ -435,7 +435,7 @@ void GrassLcu(
 
 
             const uint32_t perfectCondition = 7;
-            const uint8_t yMean = context_ptr->y_mean_ptr[rasterScanCuIndex];
+            const uint8_t y_mean = context_ptr->y_mean_ptr[rasterScanCuIndex];
             const uint8_t cbMean = context_ptr->cb_mean_ptr[rasterScanCuIndex];
             const uint8_t crMean = context_ptr->cr_mean_ptr[rasterScanCuIndex];
             uint32_t grassCondition = 0;
@@ -443,7 +443,7 @@ void GrassLcu(
 
 
             // GRASS
-            grassCondition += (yMean > Y_MEAN_RANGE_02 && yMean < Y_MEAN_RANGE_01) ? 1 : 0;
+            grassCondition += (y_mean > Y_MEAN_RANGE_02 && y_mean < Y_MEAN_RANGE_01) ? 1 : 0;
             grassCondition += (cbMean > CB_MEAN_RANGE_00 && cbMean < CB_MEAN_RANGE_02) ? 2 : 0;
             grassCondition += (crMean > CR_MEAN_RANGE_00 && crMean < CR_MEAN_RANGE_02) ? 4 : 0;
 
@@ -455,7 +455,7 @@ void GrassLcu(
 
             cuStatPtr->grass_area = (EbBool)(grassCondition == perfectCondition);
             // SKIN
-            skinCondition += (yMean > Y_MEAN_RANGE_02 && yMean < Y_MEAN_RANGE_01) ? 1 : 0;
+            skinCondition += (y_mean > Y_MEAN_RANGE_02 && y_mean < Y_MEAN_RANGE_01) ? 1 : 0;
             skinCondition += (cbMean > 100 && cbMean < 120) ? 2 : 0;
             skinCondition += (crMean > 135 && crMean < 160) ? 4 : 0;
 
@@ -618,7 +618,7 @@ void DetermineMorePotentialAuraAreas(
         if ((sb_x > 0) && (sb_x < sequence_control_set_ptr->picture_width_in_sb - 1) && (sb_y > 0) && (sb_y < sequence_control_set_ptr->picture_height_in_sb - 1)) {
             countOfNonEdgeBlocks = 0;
             if (picture_control_set_ptr->edge_results_ptr[sb_index].edge_block_num
-                && picture_control_set_ptr->yMean[sb_index][ME_TIER_ZERO_PU_64x64] >= lightLumaValue) {
+                && picture_control_set_ptr->y_mean[sb_index][ME_TIER_ZERO_PU_64x64] >= lightLumaValue) {
 
                 for (lcuVer = -1; lcuVer <= 1; lcuVer++) {
                     lcuVerOffset = lcuVer * (int32_t)sequence_control_set_ptr->picture_width_in_sb;
@@ -740,7 +740,7 @@ void SpatialHighContrastClassifier(
     //16x16 blocks
     for (blkIt = 0; blkIt < 16; blkIt++) {
 
-        uint8_t ymean = context_ptr->y_mean_ptr[5 + blkIt];
+        uint8_t y_mean = context_ptr->y_mean_ptr[5 + blkIt];
         uint8_t umean = context_ptr->cb_mean_ptr[5 + blkIt];
         uint8_t vmean = context_ptr->cr_mean_ptr[5 + blkIt];
 
@@ -748,7 +748,7 @@ void SpatialHighContrastClassifier(
 
 
         if (var > VAR_MIN && var<VAR_MAX            &&  //medium texture
-            ymean>MIN_Y && ymean < MAX_Y            &&  //medium brightness(not too dark and not too bright)
+            y_mean>MIN_Y && y_mean < MAX_Y            &&  //medium brightness(not too dark and not too bright)
             ABS((int64_t)umean - MID_CB) < TH_CB &&  //middle of the color plane
             ABS((int64_t)vmean - MID_CR) < TH_CR     //middle of the color plane
             )
@@ -759,7 +759,7 @@ void SpatialHighContrastClassifier(
 
 
         if (
-            ymean < 30 &&  //medium brightness(not too dark and not too bright)
+            y_mean < 30 &&  //medium brightness(not too dark and not too bright)
             ABS((int64_t)umean - 128) < 5 &&  //middle of the color plane
             ABS((int64_t)vmean - 128) < 5     //middle of the color plane
             )
@@ -837,7 +837,7 @@ void DetectCu32x32CleanSparseLcu(
 
     if (sb_params->is_complete_sb) {
         variancePtr = picture_control_set_ptr->variance[sb_index];
-        meanPtr = picture_control_set_ptr->yMean[sb_index];
+        meanPtr = picture_control_set_ptr->y_mean[sb_index];
         for (blockIndexY = 0; blockIndexY < 2; ++blockIndexY) {
             for (blockIndexX = 0; blockIndexX < 2; ++blockIndexX) {
                 cu32x32Index = blockIndexX + (blockIndexY << 1) + 1;
@@ -940,7 +940,7 @@ void* source_based_operations_kernel(void *input_ptr)
             context_ptr->sb_high_contrast_array[sb_index] = 0;
             picture_control_set_ptr->sb_high_contrast_array_dialated[sb_index] = 0;
             EbBool is_complete_sb = sb_params->is_complete_sb;
-            uint8_t  *y_mean_ptr = picture_control_set_ptr->yMean[sb_index];
+            uint8_t  *y_mean_ptr = picture_control_set_ptr->y_mean[sb_index];
 
             _mm_prefetch((const char*)y_mean_ptr, _MM_HINT_T0);
 

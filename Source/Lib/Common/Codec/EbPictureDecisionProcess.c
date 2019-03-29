@@ -106,7 +106,7 @@ EbBool SceneTransitionDetector(
     //EbBool resetRunningAvg = context_ptr->resetRunningAvg;
 
     EbBool isAbruptChange; // this variable signals an abrubt change (scene change or flash)
-    EbBool isSceneChange; // this variable signals a frame representing a scene change
+    EbBool is_scene_change; // this variable signals a frame representing a scene change
     EbBool isFlash; // this variable signals a frame that contains a flash
     EbBool isFade; // this variable signals a frame that contains a fade
     EbBool gradualChange; // this signals the detection of a light scene change a small/localized flash or the start of a fade
@@ -154,7 +154,7 @@ EbBool SceneTransitionDetector(
         for (regionInPictureHeightIndex = 0; regionInPictureHeightIndex < sequence_control_set_ptr->picture_analysis_number_of_regions_per_height; regionInPictureHeightIndex++) { // loop over vertical regions
 
             isAbruptChange = EB_FALSE;
-            isSceneChange = EB_FALSE;
+            is_scene_change = EB_FALSE;
             isFlash = EB_FALSE;
             gradualChange = EB_FALSE;
 
@@ -227,7 +227,7 @@ EbBool SceneTransitionDetector(
                     //printf ("\nFlash in frame# %i , %i\n", currentPictureControlSetPtr->picture_number,aidFuturePast);
                 }
                 else {
-                    isSceneChange = EB_TRUE;
+                    is_scene_change = EB_TRUE;
                     //printf ("\nScene Change in frame# %i , %i\n", currentPictureControlSetPtr->picture_number,aidFuturePast);
                 }
 
@@ -252,7 +252,7 @@ EbBool SceneTransitionDetector(
             }
 
             isAbruptChangeCount += isAbruptChange;
-            isSceneChangeCount += isSceneChange;
+            isSceneChangeCount += is_scene_change;
         }
     }
 
@@ -512,9 +512,9 @@ EbErrorType update_base_layer_reference_queue_dependent_count(
                 dependant_list_removed_entries = input_entry_ptr->depList0Count + input_entry_ptr->depList1Count - input_entry_ptr->dependentCount;
                 input_entry_ptr->depList0Count = input_entry_ptr->list0.listCount;
 #if BASE_LAYER_REF
-                if (input_entry_ptr->pPcsPtr->slice_type == I_SLICE)
+                if (input_entry_ptr->p_pcs_ptr->slice_type == I_SLICE)
                     input_entry_ptr->depList1Count = input_entry_ptr->list1.listCount + sequence_control_set_ptr->extra_frames_to_ref_islice;
-                else if (input_entry_ptr->pPcsPtr->temporal_layer_index == 0 && picture_control_set_ptr->picture_number + (1 << sequence_control_set_ptr->static_config.hierarchical_levels) < sequence_control_set_ptr->max_frame_window_to_ref_islice + input_entry_ptr->pPcsPtr->last_islice_picture_number)
+                else if (input_entry_ptr->p_pcs_ptr->temporal_layer_index == 0 && picture_control_set_ptr->picture_number + (1 << sequence_control_set_ptr->static_config.hierarchical_levels) < sequence_control_set_ptr->max_frame_window_to_ref_islice + input_entry_ptr->p_pcs_ptr->last_islice_picture_number)
                     input_entry_ptr->depList1Count = MAX((int32_t)input_entry_ptr->list1.listCount - 1, 0);
                 else
                     input_entry_ptr->depList1Count = input_entry_ptr->list1.listCount;
@@ -1660,7 +1660,7 @@ void* picture_decision_kernel(void *input_ptr)
     PaReferenceQueueEntry_t         *paReferenceEntryPtr;
     uint32_t                           paReferenceQueueIndex;
 
-    uint64_t                           refPoc;
+    uint64_t                           ref_poc;
 
     uint32_t                           depIdx;
     uint64_t                           depPoc;
@@ -2032,7 +2032,7 @@ void* picture_decision_kernel(void *input_ptr)
 
                             // Set the Slice type
                             picture_control_set_ptr->slice_type = pictureType;
-                            ((EbPaReferenceObject_t*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->slice_type = picture_control_set_ptr->slice_type;
+                            ((EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->slice_type = picture_control_set_ptr->slice_type;
 
                             switch (pictureType) {
 
@@ -2289,7 +2289,7 @@ void* picture_decision_kernel(void *input_ptr)
                             inputEntryPtr->inputObjectPtr = picture_control_set_ptr->pa_reference_picture_wrapper_ptr;
                             inputEntryPtr->picture_number = picture_control_set_ptr->picture_number;
                             inputEntryPtr->referenceEntryIndex = encode_context_ptr->picture_decision_pa_reference_queue_tail_index;
-                            inputEntryPtr->pPcsPtr = picture_control_set_ptr;
+                            inputEntryPtr->p_pcs_ptr = picture_control_set_ptr;
                             encode_context_ptr->picture_decision_pa_reference_queue_tail_index =
                                 (encode_context_ptr->picture_decision_pa_reference_queue_tail_index == PICTURE_DECISION_PA_REFERENCE_QUEUE_MAX_DEPTH - 1) ? 0 : encode_context_ptr->picture_decision_pa_reference_queue_tail_index + 1;
 
@@ -2349,9 +2349,9 @@ void* picture_decision_kernel(void *input_ptr)
 
                             }
 
-                            ((EbPaReferenceObject_t*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->dependentPicturesCount = inputEntryPtr->dependentCount;
+                            ((EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->dependent_pictures_count = inputEntryPtr->dependentCount;
 
-                            /* uint32_t depCnt = ((EbPaReferenceObject_t*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->dependentPicturesCount;
+                            /* uint32_t depCnt = ((EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->dependent_pictures_count;
                             if (picture_control_set_ptr->picture_number>0 && picture_control_set_ptr->slice_type==I_SLICE && depCnt!=8 )
                             printf("depCnt Error1  POC:%i  TL:%i   is needed:%i\n",picture_control_set_ptr->picture_number,picture_control_set_ptr->temporal_layer_index,inputEntryPtr->dependentCount);
                             else if (picture_control_set_ptr->slice_type==B_SLICE && picture_control_set_ptr->temporal_layer_index == 0 && depCnt!=8)
@@ -2417,25 +2417,25 @@ void* picture_decision_kernel(void *input_ptr)
                                     paReferenceEntryPtr = encode_context_ptr->picture_decision_pa_reference_queue[paReferenceQueueIndex];
 
                                     // Calculate the Ref POC
-                                    refPoc = POC_CIRCULAR_ADD(
+                                    ref_poc = POC_CIRCULAR_ADD(
                                         picture_control_set_ptr->picture_number,
                                         -inputEntryPtr->list0Ptr->referenceList/*,
                                         sequence_control_set_ptr->bits_for_picture_order_count*/);
 
                                         // Set the Reference Object
                                     picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_0] = paReferenceEntryPtr->inputObjectPtr;
-                                    picture_control_set_ptr->ref_pic_poc_array[REF_LIST_0] = refPoc;
-                                    picture_control_set_ptr->ref_pa_pcs_array[REF_LIST_0] = paReferenceEntryPtr->pPcsPtr;
+                                    picture_control_set_ptr->ref_pic_poc_array[REF_LIST_0] = ref_poc;
+                                    picture_control_set_ptr->ref_pa_pcs_array[REF_LIST_0] = paReferenceEntryPtr->p_pcs_ptr;
 
                                     // Increment the PA Reference's live_count by the number of tiles in the input picture
                                     eb_object_inc_live_count(
                                         paReferenceEntryPtr->inputObjectPtr,
                                         1);
 
-                                    ((EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_0]->object_ptr)->pPcsPtr = paReferenceEntryPtr->pPcsPtr;
+                                    ((EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_0]->object_ptr)->p_pcs_ptr = paReferenceEntryPtr->p_pcs_ptr;
 
                                     eb_object_inc_live_count(
-                                        paReferenceEntryPtr->pPcsPtr->p_pcs_wrapper_ptr,
+                                        paReferenceEntryPtr->p_pcs_ptr->p_pcs_wrapper_ptr,
                                         1);
 
                                     --paReferenceEntryPtr->dependentCount;
@@ -2453,24 +2453,24 @@ void* picture_decision_kernel(void *input_ptr)
                                     paReferenceEntryPtr = encode_context_ptr->picture_decision_pa_reference_queue[paReferenceQueueIndex];
 
                                     // Calculate the Ref POC
-                                    refPoc = POC_CIRCULAR_ADD(
+                                    ref_poc = POC_CIRCULAR_ADD(
                                         picture_control_set_ptr->picture_number,
                                         -inputEntryPtr->list1Ptr->referenceList/*,
                                         sequence_control_set_ptr->bits_for_picture_order_count*/);
-                                    picture_control_set_ptr->ref_pa_pcs_array[REF_LIST_1] = paReferenceEntryPtr->pPcsPtr;
+                                    picture_control_set_ptr->ref_pa_pcs_array[REF_LIST_1] = paReferenceEntryPtr->p_pcs_ptr;
                                     // Set the Reference Object
                                     picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_1] = paReferenceEntryPtr->inputObjectPtr;
-                                    picture_control_set_ptr->ref_pic_poc_array[REF_LIST_1] = refPoc;
+                                    picture_control_set_ptr->ref_pic_poc_array[REF_LIST_1] = ref_poc;
 
                                     // Increment the PA Reference's live_count by the number of tiles in the input picture
                                     eb_object_inc_live_count(
                                         paReferenceEntryPtr->inputObjectPtr,
                                         1);
 
-                                    ((EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_1]->object_ptr)->pPcsPtr = paReferenceEntryPtr->pPcsPtr;
+                                    ((EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_1]->object_ptr)->p_pcs_ptr = paReferenceEntryPtr->p_pcs_ptr;
 
                                     eb_object_inc_live_count(
-                                        paReferenceEntryPtr->pPcsPtr->p_pcs_wrapper_ptr,
+                                        paReferenceEntryPtr->p_pcs_ptr->p_pcs_wrapper_ptr,
                                         1);
 
                                     --paReferenceEntryPtr->dependentCount;
@@ -2580,7 +2580,7 @@ void* picture_decision_kernel(void *input_ptr)
                     // Remove the entry
                     if ((inputEntryPtr->dependentCount == 0) &&
                         (inputEntryPtr->inputObjectPtr)) {
-                        eb_release_object(inputEntryPtr->pPcsPtr->p_pcs_wrapper_ptr);
+                        eb_release_object(inputEntryPtr->p_pcs_ptr->p_pcs_wrapper_ptr);
                         // Release the nominal live_count value
                         eb_release_object(inputEntryPtr->inputObjectPtr);
                         inputEntryPtr->inputObjectPtr = (EbObjectWrapper*)EB_NULL;

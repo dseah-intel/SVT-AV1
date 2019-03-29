@@ -14017,7 +14017,7 @@ extern "C" {
         EbObjectWrapper                    *ref_pa_pic_ptr_array[MAX_NUM_OF_REF_PIC_LIST];
         uint64_t                              ref_pic_poc_array[MAX_NUM_OF_REF_PIC_LIST];
         uint16_t                            **variance;
-        uint8_t                             **yMean;
+        uint8_t                             **y_mean;
         uint8_t                             **cbMean;
         uint8_t                             **crMean;
         uint32_t                              pre_assignment_buffer_count;

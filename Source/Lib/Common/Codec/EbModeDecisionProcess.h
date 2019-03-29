@@ -114,7 +114,7 @@ extern "C" {
         NeighborArrayUnit32_t          *interpolation_type_neighbor_array;
 
         // TMVP
-        EbReferenceObject_t            *reference_object_write_ptr;
+        EbReferenceObject            *reference_object_write_ptr;
 
         // Intra Reference Samples
         IntraReferenceSamples_t        *intra_ref_ptr;

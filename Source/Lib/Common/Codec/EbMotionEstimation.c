@@ -7584,7 +7584,7 @@ EbErrorType MotionEstimateLcu(
     uint32_t                  listIndex;
     uint8_t                   candidateIndex = 0;
     uint8_t                   totalMeCandidateIndex = 0;
-    EbPaReferenceObject_t  *referenceObject;  // input parameter, reference Object Ptr
+    EbPaReferenceObject  *referenceObject;  // input parameter, reference Object Ptr
 
     EbPictureBufferDesc_t  *refPicPtr;
     EbPictureBufferDesc_t  *quarterRefPicPtr;
@@ -7632,12 +7632,12 @@ EbErrorType MotionEstimateLcu(
 #if TEST5_DISABLE_NSQ_ME
     is_nsq_table_used = EB_FALSE;
 #endif
-    referenceObject = (EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[0]->object_ptr;
+    referenceObject = (EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[0]->object_ptr;
     ref0Poc = picture_control_set_ptr->ref_pic_poc_array[0];
 
     if (numOfListToSearch) {
 
-        referenceObject = (EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[1]->object_ptr;
+        referenceObject = (EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[1]->object_ptr;
         ref1Poc = picture_control_set_ptr->ref_pic_poc_array[1];
     }
 
@@ -7648,10 +7648,10 @@ EbErrorType MotionEstimateLcu(
         // Ref Picture Loop
         {
 
-            referenceObject = (EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]->object_ptr;
-            refPicPtr = (EbPictureBufferDesc_t*)referenceObject->inputPaddedPicturePtr;
-            quarterRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->quarterDecimatedPicturePtr;
-            sixteenthRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->sixteenthDecimatedPicturePtr;
+            referenceObject = (EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]->object_ptr;
+            refPicPtr = (EbPictureBufferDesc_t*)referenceObject->input_padded_picture_ptr;
+            quarterRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->quarter_decimated_picture_ptr;
+            sixteenthRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->sixteenth_decimated_picture_ptr;
 #if BASE_LAYER_REF
             if (picture_control_set_ptr->temporal_layer_index > 0 || listIndex == 0 || ((ref0Poc != ref1Poc) && (listIndex == 1))) {
 #else

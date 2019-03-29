@@ -442,7 +442,7 @@ void ReleasePaReferenceObjects(
             // Release PA Reference Pictures
             if (picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex] != EB_NULL) {
 
-                eb_release_object(((EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]->object_ptr)->pPcsPtr->p_pcs_wrapper_ptr);
+                eb_release_object(((EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]->object_ptr)->p_pcs_ptr->p_pcs_wrapper_ptr);
                 eb_release_object(picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]);
             }
         }
@@ -1322,14 +1322,14 @@ void DeriveSimilarCollocatedFlag(
             uint8_t                   refMean, curMean;
             uint16_t                  refVar, curVar;
 
-            EbPaReferenceObject_t    *refObjL0;
+            EbPaReferenceObject    *refObjL0;
 
-            refObjL0 = (EbPaReferenceObject_t*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_0]->object_ptr;
-            refMean = refObjL0->yMean[sb_index];
+            refObjL0 = (EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[REF_LIST_0]->object_ptr;
+            refMean = refObjL0->y_mean[sb_index];
 
             refVar = refObjL0->variance[sb_index];
 
-            curMean = picture_control_set_ptr->yMean[sb_index][RASTER_SCAN_CU_INDEX_64x64];
+            curMean = picture_control_set_ptr->y_mean[sb_index][RASTER_SCAN_CU_INDEX_64x64];
 
             curVar = picture_control_set_ptr->variance[sb_index][RASTER_SCAN_CU_INDEX_64x64];
 

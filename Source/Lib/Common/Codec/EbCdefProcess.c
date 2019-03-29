@@ -265,7 +265,7 @@ void cdef_seg_search16bit(
     EbPictureBufferDesc_t *input_pic_ptr = picture_control_set_ptr->input_frame16bit;
     EbPictureBufferDesc_t *recon_pic_ptr =
         (picture_control_set_ptr->parent_pcs_ptr->is_used_as_reference_flag == EB_TRUE) ?
-        ((EbReferenceObject_t*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture16bit :
+        ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit :
          picture_control_set_ptr->recon_picture16bit_ptr;
 
     struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;

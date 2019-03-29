@@ -1076,8 +1076,8 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (instance_index = 0; instance_index < encHandlePtr->encodeInstanceTotalCount; ++instance_index) {
 
-        EbReferenceObjectDescInitData_t     EbReferenceObjectDescInitDataStructure;
-        EbPaReferenceObjectDescInitData_t   EbPaReferenceObjectDescInitDataStructure;
+        EbReferenceObjectDescInitData     EbReferenceObjectDescInitDataStructure;
+        EbPaReferenceObjectDescInitData   EbPaReferenceObjectDescInitDataStructure;
         EbPictureBufferDescInitData_t       referencePictureBufferDescInitData;
         EbPictureBufferDescInitData_t       quarterDecimPictureBufferDescInitData;
         EbPictureBufferDescInitData_t       sixteenthDecimPictureBufferDescInitData;
@@ -1099,7 +1099,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             referencePictureBufferDescInitData.bit_depth = EB_10BIT;
         }
 
-        EbReferenceObjectDescInitDataStructure.referencePictureDescInitData = referencePictureBufferDescInitData;
+        EbReferenceObjectDescInitDataStructure.reference_picture_desc_init_data = referencePictureBufferDescInitData;
 
         // Reference Picture Buffers
         return_error = eb_system_resource_ctor(
@@ -1151,9 +1151,9 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
         sixteenthDecimPictureBufferDescInitData.bot_padding = encHandlePtr->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->sb_sz >> 2;
         sixteenthDecimPictureBufferDescInitData.splitMode = EB_FALSE;
 
-        EbPaReferenceObjectDescInitDataStructure.referencePictureDescInitData = referencePictureBufferDescInitData;
-        EbPaReferenceObjectDescInitDataStructure.quarterPictureDescInitData = quarterDecimPictureBufferDescInitData;
-        EbPaReferenceObjectDescInitDataStructure.sixteenthPictureDescInitData = sixteenthDecimPictureBufferDescInitData;
+        EbPaReferenceObjectDescInitDataStructure.reference_picture_desc_init_data = referencePictureBufferDescInitData;
+        EbPaReferenceObjectDescInitDataStructure.quarter_picture_desc_init_data = quarterDecimPictureBufferDescInitData;
+        EbPaReferenceObjectDescInitDataStructure.sixteenth_picture_desc_init_data = sixteenthDecimPictureBufferDescInitData;
 
         // Reference Picture Buffers
         return_error = eb_system_resource_ctor(

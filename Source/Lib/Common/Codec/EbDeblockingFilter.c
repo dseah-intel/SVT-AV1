@@ -1653,10 +1653,10 @@ static int64_t try_filter_frame(
 
         //get the 16bit form of the input LCU
         if (is16bit) {
-            recon_buffer = ((EbReferenceObject_t*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture16bit;
+            recon_buffer = ((EbReferenceObject*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit;
         }
         else {
-            recon_buffer = ((EbReferenceObject_t*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture;
+            recon_buffer = ((EbReferenceObject*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture;
         }
     }
     else { // non ref pictures
@@ -1718,10 +1718,10 @@ static int32_t search_filter_level(
 
         //get the 16bit form of the input LCU
         if (is16bit) {
-            recon_buffer = ((EbReferenceObject_t*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture16bit;
+            recon_buffer = ((EbReferenceObject*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit;
         }
         else {
-            recon_buffer = ((EbReferenceObject_t*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture;
+            recon_buffer = ((EbReferenceObject*)pcsPtr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture;
         }
     }
     else { // non ref pictures

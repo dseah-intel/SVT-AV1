@@ -484,7 +484,7 @@ void av1_cdef_frame(
 
 
     if (pPcs->is_used_as_reference_flag == EB_TRUE)
-        recon_picture_ptr = ((EbReferenceObject_t*)pCs->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture;
+        recon_picture_ptr = ((EbReferenceObject*)pCs->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture;
     else
         recon_picture_ptr = pCs->recon_picture_ptr;
 
@@ -813,7 +813,7 @@ void av1_cdef_frame16bit(
 
 
     if (pPcs->is_used_as_reference_flag == EB_TRUE)
-        recon_picture_ptr = ((EbReferenceObject_t*)pCs->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture16bit;
+        recon_picture_ptr = ((EbReferenceObject*)pCs->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit;
 
     else
         recon_picture_ptr = pCs->recon_picture16bit_ptr;
@@ -1610,7 +1610,7 @@ void av1_cdef_search(
 
     EbPictureBufferDesc_t  * recon_picture_ptr;
     if (pPcs->is_used_as_reference_flag == EB_TRUE)
-        recon_picture_ptr = ((EbReferenceObject_t*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture;
+        recon_picture_ptr = ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture;
     else
         recon_picture_ptr = picture_control_set_ptr->recon_picture_ptr;
 
@@ -1981,7 +1981,7 @@ void av1_cdef_search16bit(
 
     EbPictureBufferDesc_t  * recon_picture_ptr;
     if (pPcs->is_used_as_reference_flag == EB_TRUE)
-        recon_picture_ptr = ((EbReferenceObject_t*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->referencePicture16bit;
+        recon_picture_ptr = ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit;
     else
         recon_picture_ptr = picture_control_set_ptr->recon_picture16bit_ptr;
 
