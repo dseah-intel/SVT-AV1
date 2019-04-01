@@ -1189,7 +1189,7 @@ void ResetHomogeneityStructures(
 InitialRateControlReorderEntry_t  * DeterminePictureOffsetInQueue(
     EncodeContext_t                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr,
-    MotionEstimationResults_t         *inputResultsPtr)
+    MotionEstimationResults         *inputResultsPtr)
 {
 
     InitialRateControlReorderEntry_t  *queueEntryPtr;
@@ -1646,7 +1646,7 @@ void* InitialRateControlKernel(void *input_ptr)
     SequenceControlSet              *sequence_control_set_ptr;
 
     EbObjectWrapper                 *inputResultsWrapperPtr;
-    MotionEstimationResults_t         *inputResultsPtr;
+    MotionEstimationResults         *inputResultsPtr;
 
     EbObjectWrapper                 *outputResultsWrapperPtr;
     InitialRateControlResults_t       *outputResultsPtr;
@@ -1674,7 +1674,7 @@ void* InitialRateControlKernel(void *input_ptr)
             context_ptr->motionEstimationResultsInputFifoPtr,
             &inputResultsWrapperPtr);
 
-        inputResultsPtr = (MotionEstimationResults_t*)inputResultsWrapperPtr->object_ptr;
+        inputResultsPtr = (MotionEstimationResults*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
 
         segment_index = inputResultsPtr->segment_index;

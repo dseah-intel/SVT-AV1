@@ -1298,7 +1298,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Motion Estimation Results
     {
-        MotionEstimationResultsInitData_t motionEstimationResultInitData;
+        MotionEstimationResultsInitData motionEstimationResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->motionEstimationResultsResourcePtr,
@@ -1308,7 +1308,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             &encHandlePtr->motionEstimationResultsProducerFifoPtrArray,
             &encHandlePtr->motionEstimationResultsConsumerFifoPtrArray,
             EB_TRUE,
-            MotionEstimationResultsCtor,
+            motion_estimation_results_ctor,
             &motionEstimationResultInitData);
         if (return_error == EB_ErrorInsufficientResources) {
             return EB_ErrorInsufficientResources;
@@ -1596,7 +1596,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->motion_estimation_process_init_count; ++processIndex) {
 
-        return_error = MotionEstimationContextCtor(
+        return_error = motion_estimation_context_ctor(
             (MotionEstimationContext_t**)&encHandlePtr->motionEstimationContextPtrArray[processIndex],
             encHandlePtr->pictureDecisionResultsConsumerFifoPtrArray[processIndex],
             encHandlePtr->motionEstimationResultsProducerFifoPtrArray[processIndex]);
@@ -1806,7 +1806,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     EB_MALLOC(EbHandle*, encHandlePtr->motionEstimationThreadHandleArray, sizeof(EbHandle) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->motion_estimation_process_init_count, EB_N_PTR);
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->motion_estimation_process_init_count; ++processIndex) {
-        EB_CREATETHREAD(EbHandle, encHandlePtr->motionEstimationThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, MotionEstimationKernel, encHandlePtr->motionEstimationContextPtrArray[processIndex]);
+        EB_CREATETHREAD(EbHandle, encHandlePtr->motionEstimationThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, motion_estimation_kernel, encHandlePtr->motionEstimationContextPtrArray[processIndex]);
     }
 
     // Initial Rate Control
