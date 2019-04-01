@@ -45,7 +45,7 @@ EbErrorType encode_context_ctor(
 
     // Picture Decision Reordering Queue
     encode_context_ptr->picture_decision_reorder_queue_head_index = 0;
-    EB_MALLOC(PictureDecisionReorderEntry_t**, encode_context_ptr->picture_decision_reorder_queue, sizeof(PictureDecisionReorderEntry_t*) * PICTURE_DECISION_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(PictureDecisionReorderEntry**, encode_context_ptr->picture_decision_reorder_queue, sizeof(PictureDecisionReorderEntry*) * PICTURE_DECISION_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < PICTURE_DECISION_REORDER_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = picture_decision_reorder_entry_ctor(

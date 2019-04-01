@@ -284,7 +284,7 @@ EbErrorType ReleasePrevPictureFromReorderQueue(
 
     EbErrorType return_error = EB_ErrorNone;
 
-    PictureDecisionReorderEntry_t   *queuePreviousEntryPtr;
+    PictureDecisionReorderEntry   *queuePreviousEntryPtr;
     int32_t                           previousEntryIndex;
 
 
@@ -1642,14 +1642,14 @@ void* picture_decision_kernel(void *input_ptr)
     PictureAnalysisResults_t        *inputResultsPtr;
 
     EbObjectWrapper               *outputResultsWrapperPtr;
-    PictureDecisionResults_t        *outputResultsPtr;
+    PictureDecisionResults        *outputResultsPtr;
 
     PredictionStructureEntry      *predPositionPtr;
 
     EbBool                          preAssignmentBufferFirstPassFlag;
-    EB_SLICE                         pictureType;
+    EB_SLICE                         picture_type;
 
-    PictureDecisionReorderEntry_t   *queueEntryPtr;
+    PictureDecisionReorderEntry   *queueEntryPtr;
     int32_t                           queueEntryIndex;
 
     int32_t                           previousEntryIndex;
@@ -1947,7 +1947,7 @@ void* picture_decision_kernel(void *input_ptr)
                                 picture_control_set_ptr->use_rps_in_sps = EB_FALSE;
                                 picture_control_set_ptr->open_gop_cra_flag = EB_FALSE;
 
-                                pictureType = P_SLICE;
+                                picture_type = P_SLICE;
 
                             }
                             // Open GOP CRA - adjust the RPS
@@ -1960,7 +1960,7 @@ void* picture_decision_kernel(void *input_ptr)
                                 picture_control_set_ptr->use_rps_in_sps = EB_FALSE;
                                 picture_control_set_ptr->open_gop_cra_flag = EB_TRUE;
 
-                                pictureType = I_SLICE;
+                                picture_type = I_SLICE;
                             }
                             else {
 
@@ -1968,7 +1968,7 @@ void* picture_decision_kernel(void *input_ptr)
                                 picture_control_set_ptr->open_gop_cra_flag = EB_FALSE;
 
                                 // Set the Picture Type
-                                pictureType =
+                                picture_type =
                                     (picture_control_set_ptr->idr_flag) ? I_SLICE :
                                     (picture_control_set_ptr->cra_flag) ? I_SLICE :
                                     (picture_control_set_ptr->pred_structure == EB_PRED_LOW_DELAY_P) ? P_SLICE :
@@ -2000,7 +2000,7 @@ void* picture_decision_kernel(void *input_ptr)
                             //else if (encode_context_ptr->pre_assignment_buffer_scene_change_count > 0) {
                             //    if(bufferIndex < encode_context_ptr->pre_assignment_buffer_scene_change_index) {
                             //        ++encode_context_ptr->pred_struct_position;
-                            //        pictureType = P_SLICE;
+                            //        picture_type = P_SLICE;
                             //    }
                             //    else {
                             //        encode_context_ptr->pred_struct_position = picture_control_set_ptr->pred_struct_ptr->init_pic_index + encode_context_ptr->pre_assignment_buffer_count - bufferIndex - 1;
@@ -2031,10 +2031,10 @@ void* picture_decision_kernel(void *input_ptr)
                             predPositionPtr = picture_control_set_ptr->pred_struct_ptr->pred_struct_entry_ptr_array[encode_context_ptr->pred_struct_position];
 
                             // Set the Slice type
-                            picture_control_set_ptr->slice_type = pictureType;
+                            picture_control_set_ptr->slice_type = picture_type;
                             ((EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr)->slice_type = picture_control_set_ptr->slice_type;
 
-                            switch (pictureType) {
+                            switch (picture_type) {
 
                             case I_SLICE:
 
@@ -2302,13 +2302,13 @@ void* picture_decision_kernel(void *input_ptr)
 
                             // Copy the reference lists into the inputEntry and
                             // set the Reference Counts Based on Temporal Layer and how many frames are active
-                            picture_control_set_ptr->ref_list0_count = (pictureType == I_SLICE) ? 0 : (uint8_t)predPositionPtr->ref_list0.reference_list_count;
-                            picture_control_set_ptr->ref_list1_count = (pictureType == I_SLICE) ? 0 : (uint8_t)predPositionPtr->ref_list1.reference_list_count;
+                            picture_control_set_ptr->ref_list0_count = (picture_type == I_SLICE) ? 0 : (uint8_t)predPositionPtr->ref_list0.reference_list_count;
+                            picture_control_set_ptr->ref_list1_count = (picture_type == I_SLICE) ? 0 : (uint8_t)predPositionPtr->ref_list1.reference_list_count;
 #if BASE_LAYER_REF
                             inputEntryPtr->list0_ptr->reference_list = predPositionPtr->ref_list0.reference_list;
                             inputEntryPtr->list0_ptr->reference_list_count = predPositionPtr->ref_list0.reference_list_count;
 
-                            if (picture_control_set_ptr->temporal_layer_index == 0 && (pictureType != I_SLICE) && picture_control_set_ptr->picture_number < sequence_control_set_ptr->max_frame_window_to_ref_islice + picture_control_set_ptr->last_islice_picture_number)
+                            if (picture_control_set_ptr->temporal_layer_index == 0 && (picture_type != I_SLICE) && picture_control_set_ptr->picture_number < sequence_control_set_ptr->max_frame_window_to_ref_islice + picture_control_set_ptr->last_islice_picture_number)
                                 inputEntryPtr->list1_ptr->reference_list = picture_control_set_ptr->picture_number - picture_control_set_ptr->last_islice_picture_number;
                             else
                                 inputEntryPtr->list1_ptr->reference_list = predPositionPtr->ref_list1.reference_list;
@@ -2539,7 +2539,7 @@ void* picture_decision_kernel(void *input_ptr)
                                         context_ptr->picture_decision_results_output_fifo_ptr,
                                         &outputResultsWrapperPtr);
 
-                                    outputResultsPtr = (PictureDecisionResults_t*)outputResultsWrapperPtr->object_ptr;
+                                    outputResultsPtr = (PictureDecisionResults*)outputResultsWrapperPtr->object_ptr;
 
                                     outputResultsPtr->picture_control_set_wrapper_ptr = encode_context_ptr->pre_assignment_buffer[pictureIndex];
 

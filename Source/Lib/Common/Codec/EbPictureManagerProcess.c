@@ -60,18 +60,18 @@ static void ConfigurePictureEdges(
  * Picture Manager Context Constructor
  ************************************************/
 EbErrorType picture_manager_context_ctor(
-    PictureManagerContext_t **context_dbl_ptr,
+    PictureManagerContext **context_dbl_ptr,
     EbFifo                 *picture_input_fifo_ptr,
-    EbFifo                 *pictureManagerOutputFifoPtr,
+    EbFifo                 *picture_manager_output_fifo_ptr,
     EbFifo                **picture_control_set_fifo_ptr_array)
 {
-    PictureManagerContext_t *context_ptr;
-    EB_MALLOC(PictureManagerContext_t*, context_ptr, sizeof(PictureManagerContext_t), EB_N_PTR);
+    PictureManagerContext *context_ptr;
+    EB_MALLOC(PictureManagerContext*, context_ptr, sizeof(PictureManagerContext), EB_N_PTR);
 
     *context_dbl_ptr = context_ptr;
 
     context_ptr->picture_input_fifo_ptr = picture_input_fifo_ptr;
-    context_ptr->pictureManagerOutputFifoPtr = pictureManagerOutputFifoPtr;
+    context_ptr->picture_manager_output_fifo_ptr = picture_manager_output_fifo_ptr;
     context_ptr->picture_control_set_fifo_ptr_array = picture_control_set_fifo_ptr_array;
 
     return EB_ErrorNone;
@@ -103,7 +103,7 @@ EbErrorType picture_manager_context_ctor(
  ***************************************************************************************************/
 void* picture_manager_kernel(void *input_ptr)
 {
-    PictureManagerContext_t         *context_ptr = (PictureManagerContext_t*)input_ptr;
+    PictureManagerContext         *context_ptr = (PictureManagerContext*)input_ptr;
 
     EbObjectWrapper               *ChildPictureControlSetWrapperPtr;
     PictureControlSet_t             *ChildPictureControlSetPtr;
@@ -113,7 +113,7 @@ void* picture_manager_kernel(void *input_ptr)
 
 
     EbObjectWrapper               *inputPictureDemuxWrapperPtr;
-    PictureDemuxResults_t           *inputPictureDemuxPtr;
+    PictureDemuxResults           *inputPictureDemuxPtr;
 
     EbObjectWrapper               *outputWrapperPtr;
     RateControlTasks              *rateControlTasksPtr;
@@ -149,13 +149,13 @@ void* picture_manager_kernel(void *input_ptr)
             context_ptr->picture_input_fifo_ptr,
             &inputPictureDemuxWrapperPtr);
 
-        inputPictureDemuxPtr = (PictureDemuxResults_t*)inputPictureDemuxWrapperPtr->object_ptr;
+        inputPictureDemuxPtr = (PictureDemuxResults*)inputPictureDemuxWrapperPtr->object_ptr;
 
         // *Note - This should be overhauled and/or replaced when we
         //   need hierarchical support.
         loopCount++;
 
-        switch (inputPictureDemuxPtr->pictureType) {
+        switch (inputPictureDemuxPtr->picture_type) {
 
         case EB_PIC_INPUT:
 
@@ -871,7 +871,7 @@ void* picture_manager_kernel(void *input_ptr)
 
                         // Get Empty Results Object
                         eb_get_empty_object(
-                            context_ptr->pictureManagerOutputFifoPtr,
+                            context_ptr->picture_manager_output_fifo_ptr,
                             &outputWrapperPtr);
 
                         rateControlTasksPtr = (RateControlTasks*)outputWrapperPtr->object_ptr;

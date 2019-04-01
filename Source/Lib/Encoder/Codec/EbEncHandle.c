@@ -1279,7 +1279,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Picture Decision Results
     {
-        PictureDecisionResultInitData_t pictureDecisionResultInitData;
+        PictureDecisionResultInitData pictureDecisionResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->pictureDecisionResultsResourcePtr,
@@ -1337,7 +1337,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Picture Demux Results
     {
-        PictureResultInitData_t pictureResultInitData;
+        PictureResultInitData pictureResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->pictureDemuxResultsResourcePtr,
@@ -1633,7 +1633,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Picture Manager Context
     return_error = picture_manager_context_ctor(
-        (PictureManagerContext_t**)&encHandlePtr->pictureManagerContextPtr,
+        (PictureManagerContext**)&encHandlePtr->pictureManagerContextPtr,
         encHandlePtr->pictureDemuxResultsConsumerFifoPtrArray[0],
         encHandlePtr->rateControlTasksProducerFifoPtrArray[RateControlPortLookup(RATE_CONTROL_INPUT_PORT_PICTURE_MANAGER, 0)],
         encHandlePtr->pictureControlSetPoolProducerFifoPtrDblArray[0]);//The Child PCS Pool here

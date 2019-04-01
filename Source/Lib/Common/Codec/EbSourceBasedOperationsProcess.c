@@ -900,7 +900,7 @@ void* source_based_operations_kernel(void *input_ptr)
     EbObjectWrapper               *inputResultsWrapperPtr;
     InitialRateControlResults_t        *inputResultsPtr;
     EbObjectWrapper               *outputResultsWrapperPtr;
-    PictureDemuxResults_t           *outputResultsPtr;
+    PictureDemuxResults           *outputResultsPtr;
 
     for (;;) {
 
@@ -1086,9 +1086,9 @@ void* source_based_operations_kernel(void *input_ptr)
             context_ptr->picture_demux_results_output_fifo_ptr,
             &outputResultsWrapperPtr);
 
-        outputResultsPtr = (PictureDemuxResults_t*)outputResultsWrapperPtr->object_ptr;
+        outputResultsPtr = (PictureDemuxResults*)outputResultsWrapperPtr->object_ptr;
         outputResultsPtr->picture_control_set_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
-        outputResultsPtr->pictureType = EB_PIC_INPUT;
+        outputResultsPtr->picture_type = EB_PIC_INPUT;
 
         // Release the Input Results
         eb_release_object(inputResultsWrapperPtr);

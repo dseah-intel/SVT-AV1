@@ -59,7 +59,7 @@ typedef struct EncodeContext_s
     EbFifo                                        *pa_reference_picture_pool_fifo_ptr;
 
     // Picture Decision Reorder Queue
-    PictureDecisionReorderEntry_t                  **picture_decision_reorder_queue;
+    PictureDecisionReorderEntry                  **picture_decision_reorder_queue;
     uint32_t                                         picture_decision_reorder_queue_head_index;
 
     // Picture Manager Reorder Queue

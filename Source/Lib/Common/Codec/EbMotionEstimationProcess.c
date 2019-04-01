@@ -379,7 +379,7 @@ void* MotionEstimationKernel(void *input_ptr)
     SequenceControlSet        *sequence_control_set_ptr;
 
     EbObjectWrapper           *inputResultsWrapperPtr;
-    PictureDecisionResults_t    *inputResultsPtr;
+    PictureDecisionResults    *inputResultsPtr;
 
     EbObjectWrapper           *outputResultsWrapperPtr;
     MotionEstimationResults_t   *outputResultsPtr;
@@ -430,7 +430,7 @@ void* MotionEstimationKernel(void *input_ptr)
             context_ptr->pictureDecisionResultsInputFifoPtr,
             &inputResultsWrapperPtr);
 
-        inputResultsPtr = (PictureDecisionResults_t*)inputResultsWrapperPtr->object_ptr;
+        inputResultsPtr = (PictureDecisionResults*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         paReferenceObject = (EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr;
