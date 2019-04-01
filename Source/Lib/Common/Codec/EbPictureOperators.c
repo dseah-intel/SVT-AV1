@@ -203,7 +203,7 @@ uint64_t ComputeNxMSatd8x8Units_U8(
     uint64_t satd = 0;
     uint32_t blockIndexInWidth;
     uint32_t blockIndexInHeight;
-    EB_SATD_U8_TYPE Compute8x8SatdFunction = compute8x8_satd_u8_func_ptr_array[asm_type];
+    EbSatdU8Type Compute8x8SatdFunction = compute8x8_satd_u8_func_ptr_array[asm_type];
 
     for (blockIndexInHeight = 0; blockIndexInHeight < height >> 3; ++blockIndexInHeight) {
         for (blockIndexInWidth = 0; blockIndexInWidth < width >> 3; ++blockIndexInWidth) {
