@@ -1260,7 +1260,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Picture Analysis Results
     {
-        PictureAnalysisResultInitData_t pictureAnalysisResultInitData;
+        PictureAnalysisResultInitData pictureAnalysisResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->pictureAnalysisResultsResourcePtr,
@@ -1566,7 +1566,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
         return_error = picture_analysis_context_ctor(
             &pictureBufferDescConf,
             EB_TRUE,
-            (PictureAnalysisContext_t**)&encHandlePtr->pictureAnalysisContextPtrArray[processIndex],
+            (PictureAnalysisContext**)&encHandlePtr->pictureAnalysisContextPtrArray[processIndex],
             encHandlePtr->resourceCoordinationResultsConsumerFifoPtrArray[processIndex],
             encHandlePtr->pictureAnalysisResultsProducerFifoPtrArray[processIndex]);
 

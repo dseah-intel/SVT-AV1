@@ -44,12 +44,12 @@
 EbErrorType picture_analysis_context_ctor(
     EbPictureBufferDescInitData * input_picture_buffer_desc_init_data,
     EbBool                         denoise_flag,
-    PictureAnalysisContext_t **context_dbl_ptr,
+    PictureAnalysisContext **context_dbl_ptr,
     EbFifo *resource_coordination_results_input_fifo_ptr,
     EbFifo *picture_analysis_results_output_fifo_ptr)
 {
-    PictureAnalysisContext_t *context_ptr;
-    EB_MALLOC(PictureAnalysisContext_t*, context_ptr, sizeof(PictureAnalysisContext_t), EB_N_PTR);
+    PictureAnalysisContext *context_ptr;
+    EB_MALLOC(PictureAnalysisContext*, context_ptr, sizeof(PictureAnalysisContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     context_ptr->resource_coordination_results_input_fifo_ptr = resource_coordination_results_input_fifo_ptr;
@@ -3005,7 +3005,7 @@ EbErrorType ComputeBlockMeanComputeVariance(
 }
 
 EbErrorType DenoiseInputPicture(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       sb_total_count,
@@ -3148,7 +3148,7 @@ EbErrorType DenoiseInputPicture(
         }
 
     }
-    else if (context_ptr->picNoiseVarianceFloat >= 1.0) {
+    else if (context_ptr->pic_noise_variance_float >= 1.0) {
         //Luma : use filtered only for flatNoise LCUs
         for (lcuCodingOrder = 0; lcuCodingOrder < sb_total_count; ++lcuCodingOrder) {
 
@@ -3179,7 +3179,7 @@ EbErrorType DenoiseInputPicture(
 }
 
 EbErrorType DetectInputPictureNoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       sb_total_count,
@@ -3271,7 +3271,7 @@ EbErrorType DetectInputPictureNoise(
 
     }
 
-    context_ptr->picNoiseVarianceFloat = (double)picNoiseVariance / (double)totLcuCount;
+    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
 
     picNoiseVariance = picNoiseVariance / totLcuCount;
 
@@ -3348,7 +3348,7 @@ EbErrorType denoise_estimate_film_grain(
 
 
 EbErrorType FullSampleDenoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                     sb_total_count,
@@ -3590,7 +3590,7 @@ EbErrorType SubSampleFilterNoise(
 }
 
 EbErrorType QuarterSampleDetectNoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc       *quarter_decimated_picture_ptr,
     EbPictureBufferDesc       *noise_picture_ptr,
@@ -3697,7 +3697,7 @@ EbErrorType QuarterSampleDetectNoise(
     }
 
 
-    context_ptr->picNoiseVarianceFloat = (double)picNoiseVariance / (double)totLcuCount;
+    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
 
     picNoiseVariance = picNoiseVariance / totLcuCount;
 
@@ -3729,7 +3729,7 @@ EbErrorType QuarterSampleDetectNoise(
 
 
 EbErrorType SubSampleDetectNoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc       *sixteenth_decimated_picture_ptr,
@@ -3838,7 +3838,7 @@ EbErrorType SubSampleDetectNoise(
     }
 
 
-    context_ptr->picNoiseVarianceFloat = (double)picNoiseVariance / (double)totLcuCount;
+    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
 
     picNoiseVariance = picNoiseVariance / totLcuCount;
 
@@ -3866,7 +3866,7 @@ EbErrorType SubSampleDetectNoise(
 }
 
 EbErrorType QuarterSampleDenoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc        *quarter_decimated_picture_ptr,
@@ -3933,7 +3933,7 @@ EbErrorType QuarterSampleDenoise(
 
 
 EbErrorType SubSampleDenoise(
-    PictureAnalysisContext_t    *context_ptr,
+    PictureAnalysisContext    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
     PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc        *sixteenth_decimated_picture_ptr,
@@ -4920,14 +4920,14 @@ static int is_screen_content(const uint8_t *src, int use_hbd,
  ************************************************/
 void* picture_analysis_kernel(void *input_ptr)
 {
-    PictureAnalysisContext_t        *context_ptr = (PictureAnalysisContext_t*)input_ptr;
+    PictureAnalysisContext        *context_ptr = (PictureAnalysisContext*)input_ptr;
     PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
 
     EbObjectWrapper               *inputResultsWrapperPtr;
     ResourceCoordinationResults   *inputResultsPtr;
     EbObjectWrapper               *outputResultsWrapperPtr;
-    PictureAnalysisResults_t        *outputResultsPtr;
+    PictureAnalysisResults        *outputResultsPtr;
     EbPaReferenceObject           *paReferenceObject;
 
     EbPictureBufferDesc           *input_padded_picture_ptr;
@@ -5036,7 +5036,7 @@ void* picture_analysis_kernel(void *input_ptr)
             context_ptr->picture_analysis_results_output_fifo_ptr,
             &outputResultsWrapperPtr);
 
-        outputResultsPtr = (PictureAnalysisResults_t*)outputResultsWrapperPtr->object_ptr;
+        outputResultsPtr = (PictureAnalysisResults*)outputResultsWrapperPtr->object_ptr;
         outputResultsPtr->picture_control_set_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
 
         // Release the Input Results
