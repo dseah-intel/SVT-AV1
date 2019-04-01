@@ -53,7 +53,7 @@ typedef struct EntropyCodingContext_s
     uint32_t                          sb_origin_x;
     uint32_t                          sb_origin_y;
     uint32_t                          pu_itr;
-    PredictionUnit_t                 *pu_ptr;
+    PredictionUnit                 *pu_ptr;
     const PredictionUnitStats      *pu_stats;
     uint32_t                          pu_origin_x;
     uint32_t                          pu_origin_y;

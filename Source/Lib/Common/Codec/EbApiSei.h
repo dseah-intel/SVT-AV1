@@ -116,7 +116,7 @@ extern "C" {
         EbBool                    bitstreamRestrictionFlag;
                                   
         EbBool                    motionVectorsOverPicBoundariesFlag;
-        EbBool                    restrictedRefPicListsFlag;
+        EbBool                    restricted_ref_pic_lists_flag;
 
         uint32_t                  minSpatialSegmentationIdc;
         uint32_t                  maxBytesPerPicDenom;
@@ -243,7 +243,7 @@ extern "C" {
         uint32_t              nalUnitType;        // Pictures NAL Unit Type
         uint32_t              ref_list0_count;      // A count of zero indicates the list is inactive
         uint32_t              ref_list1_count;      // A count of zero indicates the list is inactive
-        EbBool             isReferenced;       // Indicates whether or not the picture is used as
+        EbBool             is_referenced;       // Indicates whether or not the picture is used as
                                                 //   future reference.
         uint32_t              futureReferenceCount;
         int32_t             *futureReferenceList;// Contains a list of delta POCs whose references shall

@@ -372,7 +372,7 @@ void* PacketizationKernel(void *input_ptr)
 #endif
         queueEntryPtr->av1FrameType = picture_control_set_ptr->parent_pcs_ptr->av1FrameType;
         queueEntryPtr->poc = picture_control_set_ptr->picture_number;
-        memcpy(&queueEntryPtr->av1RefSignal, &picture_control_set_ptr->parent_pcs_ptr->av1RefSignal, sizeof(Av1RpsNode_t));
+        memcpy(&queueEntryPtr->av1RefSignal, &picture_control_set_ptr->parent_pcs_ptr->av1RefSignal, sizeof(Av1RpsNode));
 
         queueEntryPtr->slice_type = picture_control_set_ptr->slice_type;
         queueEntryPtr->refPOCList0 = picture_control_set_ptr->parent_pcs_ptr->ref_pic_poc_array[REF_LIST_0];
@@ -491,8 +491,8 @@ void* PacketizationKernel(void *input_ptr)
                 }
                 else
                 {
-                    int32_t LASTrefIdx = queueEntryPtr->av1RefSignal.refDpbIndex[0];
-                    int32_t BWDrefIdx = queueEntryPtr->av1RefSignal.refDpbIndex[4];
+                    int32_t LASTrefIdx = queueEntryPtr->av1RefSignal.ref_dpb_index[0];
+                    int32_t BWDrefIdx = queueEntryPtr->av1RefSignal.ref_dpb_index[4];
 
                     if (queueEntryPtr->av1FrameType == INTER_FRAME)
                     {
@@ -532,7 +532,7 @@ void* PacketizationKernel(void *input_ptr)
                     //Update the DPB
                     for (i = 0; i < 8; i++)
                     {
-                        if ((queueEntryPtr->av1RefSignal.refreshFrameMask >> i) & 1)
+                        if ((queueEntryPtr->av1RefSignal.refresh_frame_mask >> i) & 1)
                         {
                             context_ptr->dpbDecOrder[i] = queueEntryPtr->picture_number;
                             context_ptr->dpbDispOrder[i] = queueEntryPtr->poc;

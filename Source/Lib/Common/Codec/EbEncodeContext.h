@@ -119,7 +119,7 @@ typedef struct EncodeContext_s
     EbBool                                           td_needed;
 
     // Prediction Structure
-    PredictionStructureGroup_t                       *prediction_structure_group_ptr;
+    PredictionStructureGroup                       *prediction_structure_group_ptr;
                                                      
     // MD Rate Estimation Table                      
     MdRateEstimationContext_t                        *md_rate_estimation_array;

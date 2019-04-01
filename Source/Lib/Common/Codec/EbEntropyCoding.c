@@ -3805,7 +3805,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*AV1_COMP *cpi
     int32_t frame_size_override_flag = 0;
     if (pcsPtr->av1FrameType == KEY_FRAME) {
         if (!pcsPtr->showFrame) {
-            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refreshFrameMask, REF_FRAMES);
+            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
         }
     }
     else {
@@ -3816,7 +3816,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*AV1_COMP *cpi
             for (int32_t i = 0; i < REF_FRAMES; i++) {
                 // If more than one frame is refreshed, it doesn't matter which one
                 // we pick, so pick the first.
-                if (pcsPtr->av1RefSignal.refreshFrameMask & (1 << i)) {
+                if (pcsPtr->av1RefSignal.refresh_frame_mask & (1 << i)) {
                     updated_fb = i;
                     break;
                 }
@@ -3824,24 +3824,24 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*AV1_COMP *cpi
             assert(updated_fb >= 0);
             pcsPtr->fb_of_context_type[pcsPtr->frame_context_idx] = updated_fb;
 
-            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refreshFrameMask, REF_FRAMES);
+            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
 
         }
         else if (pcsPtr->av1FrameType == INTER_FRAME || frame_is_sframe(pcsPtr)) {
 
             //pcsPtr->refresh_frame_mask = get_refresh_mask(cpi);
             if (pcsPtr->av1FrameType == INTER_FRAME) {
-                aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refreshFrameMask, REF_FRAMES);
+                aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
             }
             else {
-                assert(frame_is_sframe(pcsPtr) && pcsPtr->av1RefSignal.refreshFrameMask == 0xFF);
+                assert(frame_is_sframe(pcsPtr) && pcsPtr->av1RefSignal.refresh_frame_mask == 0xFF);
             }
 
             int32_t updated_fb = -1;
             for (int32_t i = 0; i < REF_FRAMES; i++) {
                 // If more than one frame is refreshed, it doesn't matter which one
                 // we pick, so pick the first.
-                if (pcsPtr->av1RefSignal.refreshFrameMask & (1 << i)) {
+                if (pcsPtr->av1RefSignal.refresh_frame_mask & (1 << i)) {
                     updated_fb = i;
                     break;
                 }
@@ -3851,7 +3851,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*AV1_COMP *cpi
                 pcsPtr->fb_of_context_type[pcsPtr->frame_context_idx] = updated_fb;
             }
 
-            if (!pcsPtr->av1RefSignal.refreshFrameMask) {
+            if (!pcsPtr->av1RefSignal.refresh_frame_mask) {
                 // NOTE: "cpi->refresh_frame_mask == 0" indicates that the coded frame
                 //       will not be used as a reference
                 pcsPtr->is_reference_frame = 0;

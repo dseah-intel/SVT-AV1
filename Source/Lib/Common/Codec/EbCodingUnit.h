@@ -319,7 +319,7 @@ extern "C" {
     typedef struct CodingUnit_s
     {
         TransformUnit             transform_unit_array[TRANSFORM_UNIT_MAX_COUNT]; // 2-bytes * 21 = 42-bytes
-        PredictionUnit_t            prediction_unit_array[MAX_NUM_OF_PU_PER_CU];    // 35-bytes * 4 = 140 bytes
+        PredictionUnit            prediction_unit_array[MAX_NUM_OF_PU_PER_CU];    // 35-bytes * 4 = 140 bytes
 
         unsigned                    skip_flag_context       : 2;
         unsigned                    prediction_mode_flag    : 2;

@@ -34,7 +34,7 @@ extern "C" {
         uint64_t                                total_num_bits;
 #endif
         FRAME_TYPE                            av1FrameType;
-        Av1RpsNode_t                          av1RefSignal;
+        Av1RpsNode                          av1RefSignal;
         EbBool                               showFrame;
         EbBool                               hasShowExisting;
         uint8_t                                 showExistingLoc;

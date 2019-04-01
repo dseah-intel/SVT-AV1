@@ -184,7 +184,7 @@ EbErrorType encode_context_ctor(
     encode_context_ptr->td_needed = EB_TRUE;
 
     // Prediction Structure Group
-    encode_context_ptr->prediction_structure_group_ptr = (PredictionStructureGroup_t*)EB_NULL;
+    encode_context_ptr->prediction_structure_group_ptr = (PredictionStructureGroup*)EB_NULL;
 
     // MD Rate Estimation Array
     EB_MALLOC(MdRateEstimationContext_t*, encode_context_ptr->md_rate_estimation_array, sizeof(MdRateEstimationContext_t) * TOTAL_NUMBER_OF_MD_RATE_ESTIMATION_CASE_BUFFERS, EB_N_PTR);

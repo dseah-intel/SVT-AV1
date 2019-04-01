@@ -21,12 +21,12 @@ typedef struct PaReferenceQueueEntry_s
     uint64_t                          picture_number;
     uint32_t                          dependentCount;
     uint32_t                          referenceEntryIndex;
-    ReferenceList_t                *list0Ptr;
-    ReferenceList_t                *list1Ptr;
+    ReferenceList                *list0Ptr;
+    ReferenceList                *list1Ptr;
     uint32_t                          depList0Count;
     uint32_t                          depList1Count;
-    DependentList_t                 list0;
-    DependentList_t                 list1;
+    DependentList                 list0;
+    DependentList                 list1;
 
     PictureParentControlSet_t       *p_pcs_ptr;
 } PaReferenceQueueEntry_t;

@@ -88,7 +88,7 @@ extern "C" {
         // Group of Pictures (GOP) Structure
         uint32_t                                max_ref_count;            // Maximum number of reference pictures, however each pred
                                                             //   entry can be less.
-        PredictionStructure_t                  *pred_struct_ptr;
+        PredictionStructure                  *pred_struct_ptr;
         int32_t                                 intra_period_length;      // The frequency of intra pictures
         uint32_t                                intra_refresh_type;       // 1: CRA, 2: IDR
 

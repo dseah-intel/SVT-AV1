@@ -2202,8 +2202,8 @@ void move_cu_data(
     memcpy(dst_cu->transform_unit_array, src_cu->transform_unit_array, TRANSFORM_UNIT_MAX_COUNT * sizeof(TransformUnit));
 
 
-    //CHKN PredictionUnit_t            prediction_unit_array[MAX_NUM_OF_PU_PER_CU];    // 35-bytes * 4 = 140 bytes
-    memcpy(dst_cu->prediction_unit_array, src_cu->prediction_unit_array, MAX_NUM_OF_PU_PER_CU * sizeof(PredictionUnit_t));
+    //CHKN PredictionUnit            prediction_unit_array[MAX_NUM_OF_PU_PER_CU];    // 35-bytes * 4 = 140 bytes
+    memcpy(dst_cu->prediction_unit_array, src_cu->prediction_unit_array, MAX_NUM_OF_PU_PER_CU * sizeof(PredictionUnit));
 
     //CHKN     unsigned                    skip_flag_context : 2;
     //CHKN     unsigned                    prediction_mode_flag : 2;

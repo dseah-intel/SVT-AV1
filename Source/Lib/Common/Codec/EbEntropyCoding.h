@@ -139,7 +139,7 @@ extern "C" {
         // (void)ref_frame;
         // return 0;
 
-        return pcsPtr->av1RefSignal.refDpbIndex[ref_frame - LAST_FRAME];//LAST-LAST2-LAST3-GOLDEN-BWD-ALT2-ALT
+        return pcsPtr->av1RefSignal.ref_dpb_index[ref_frame - LAST_FRAME];//LAST-LAST2-LAST3-GOLDEN-BWD-ALT2-ALT
         //if (ref_frame >= LAST_FRAME && ref_frame <= LAST3_FRAME)
         //    return pcsPtr->lst_fb_idxes[ref_frame - 1];
         //else if (ref_frame == GOLDEN_FRAME)

@@ -2664,7 +2664,7 @@ uint8_t product_full_mode_decision(
     uint64_t                  lowestCost = 0xFFFFFFFFFFFFFFFFull;
     uint64_t                  lowestIntraCost = 0xFFFFFFFFFFFFFFFFull;
     uint8_t                   lowestCostIndex = 0;
-    PredictionUnit_t       *pu_ptr;
+    PredictionUnit       *pu_ptr;
     uint32_t                   i;
     ModeDecisionCandidate_t       *candidate_ptr;
 

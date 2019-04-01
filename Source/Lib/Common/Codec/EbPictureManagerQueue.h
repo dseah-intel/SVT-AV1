@@ -24,8 +24,8 @@ extern "C" {
         EbObjectWrapper              *inputObjectPtr;
         uint32_t                          dependentCount;
         uint32_t                          referenceEntryIndex;
-        ReferenceList_t                *list0Ptr;
-        ReferenceList_t                *list1Ptr;
+        ReferenceList                *list0Ptr;
+        ReferenceList                *list1Ptr;
         uint32_t                          useCount;
         EbBool                         memoryMgmtLoopDone;
         EbBool                         rateControlLoopDone;
@@ -46,8 +46,8 @@ extern "C" {
         EbBool                         referenceAvailable;
         uint32_t                          depList0Count;
         uint32_t                          depList1Count;
-        DependentList_t                 list0;
-        DependentList_t                 list1;
+        DependentList                 list0;
+        DependentList                 list1;
         EbBool                         is_used_as_reference_flag;
 
         uint64_t                          rcGroupIndex;

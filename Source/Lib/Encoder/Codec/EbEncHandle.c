@@ -2890,7 +2890,7 @@ EB_API EbErrorType eb_svt_enc_set_parameter(
         pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr);
 
     // Initialize the Prediction Structure Group
-    return_error = (EbErrorType)PredictionStructureGroupCtor(
+    return_error = (EbErrorType)prediction_structure_group_ctor(
         &pEncCompData->sequence_control_set_instance_array[instance_index]->encode_context_ptr->prediction_structure_group_ptr,
         pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->static_config.base_layer_switch_mode);
 
@@ -2899,7 +2899,7 @@ EB_API EbErrorType eb_svt_enc_set_parameter(
     }
 
     // Set the Prediction Structure
-    pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pred_struct_ptr = GetPredictionStructure(
+    pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->pred_struct_ptr = get_prediction_structure(
         pEncCompData->sequence_control_set_instance_array[instance_index]->encode_context_ptr->prediction_structure_group_ptr,
         pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->static_config.pred_structure,
         pEncCompData->sequence_control_set_instance_array[instance_index]->sequence_control_set_ptr->max_ref_count,

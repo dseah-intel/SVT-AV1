@@ -145,7 +145,7 @@ extern "C" {
         TransformUnit                *txb_ptr;
         CodingUnit_t                   *cu_ptr;
         const BlockGeom                *blk_geom;
-        PredictionUnit_t               *pu_ptr;
+        PredictionUnit               *pu_ptr;
         const PredictionUnitStats    *pu_stats;
         MvUnit_t                        mv_unit;
 

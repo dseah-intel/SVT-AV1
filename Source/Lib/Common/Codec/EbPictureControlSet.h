@@ -13566,7 +13566,7 @@ extern "C" {
         //const int16_t *dequant_Q3;
     } MacroblockdPlane;
 
-    struct PredictionUnit_s;
+    struct PredictionUnit;
 
     typedef struct Av1Common {
 
@@ -13943,7 +13943,7 @@ extern "C" {
         EbObjectWrapper                    *reference_picture_wrapper_ptr;
         EbObjectWrapper                    *pa_reference_picture_wrapper_ptr;
         EbPictureBufferDesc_t                *enhanced_picture_ptr;
-        PredictionStructure_t                *pred_struct_ptr;          // need to check
+        PredictionStructure                *pred_struct_ptr;          // need to check
         struct SequenceControlSet          *sequence_control_set_ptr;
         struct PictureParentControlSet_s     *ref_pa_pcs_array[MAX_NUM_OF_REF_PIC_LIST];
         EbObjectWrapper                    *p_pcs_wrapper_ptr;
@@ -14138,7 +14138,7 @@ extern "C" {
 #endif
         //**********************************************************************************************************//
         FRAME_TYPE                            av1FrameType;
-        Av1RpsNode_t                          av1RefSignal;
+        Av1RpsNode                          av1RefSignal;
         EbBool                                showFrame;
         EbBool                                hasShowExisting;
         uint8_t                               showExistingLoc;
