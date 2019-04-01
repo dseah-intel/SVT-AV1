@@ -8,10 +8,10 @@
 
 
 EbErrorType pa_reference_queue_entry_ctor(
-    PaReferenceQueueEntry_t   **entry_dbl_ptr)
+    PaReferenceQueueEntry   **entry_dbl_ptr)
 {
-    PaReferenceQueueEntry_t *entryPtr;
-    EB_MALLOC(PaReferenceQueueEntry_t*, entryPtr, sizeof(PaReferenceQueueEntry_t), EB_N_PTR);
+    PaReferenceQueueEntry *entryPtr;
+    EB_MALLOC(PaReferenceQueueEntry*, entryPtr, sizeof(PaReferenceQueueEntry), EB_N_PTR);
     *entry_dbl_ptr = entryPtr;
 
     entryPtr->input_object_ptr = (EbObjectWrapper*)EB_NULL;

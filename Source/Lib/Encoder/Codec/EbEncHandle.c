@@ -1583,7 +1583,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
 
         return_error = picture_decision_context_ctor(
-            (PictureDecisionContext_t**)&encHandlePtr->pictureDecisionContextPtr,
+            (PictureDecisionContext**)&encHandlePtr->pictureDecisionContextPtr,
             encHandlePtr->pictureAnalysisResultsConsumerFifoPtrArray[0],
             encHandlePtr->pictureDecisionResultsProducerFifoPtrArray[0]);
         if (return_error == EB_ErrorInsufficientResources) {

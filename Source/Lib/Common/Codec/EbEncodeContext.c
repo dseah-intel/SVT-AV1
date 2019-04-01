@@ -115,7 +115,7 @@ EbErrorType encode_context_ctor(
     // Picture Decision PA Reference Queue
     encode_context_ptr->picture_decision_pa_reference_queue_head_index = 0;
     encode_context_ptr->picture_decision_pa_reference_queue_tail_index = 0;
-    EB_MALLOC(PaReferenceQueueEntry_t**, encode_context_ptr->picture_decision_pa_reference_queue, sizeof(PaReferenceQueueEntry_t*) * PICTURE_DECISION_PA_REFERENCE_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(PaReferenceQueueEntry**, encode_context_ptr->picture_decision_pa_reference_queue, sizeof(PaReferenceQueueEntry*) * PICTURE_DECISION_PA_REFERENCE_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < PICTURE_DECISION_PA_REFERENCE_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = pa_reference_queue_entry_ctor(

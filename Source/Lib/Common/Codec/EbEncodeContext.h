@@ -77,7 +77,7 @@ typedef struct EncodeContext_s
     uint32_t                                         pre_assignment_buffer_count;
 
     // Picture Decision Circular Queues
-    PaReferenceQueueEntry_t                        **picture_decision_pa_reference_queue;
+    PaReferenceQueueEntry                        **picture_decision_pa_reference_queue;
     uint32_t                                         picture_decision_pa_reference_queue_head_index;
     uint32_t                                         picture_decision_pa_reference_queue_tail_index;
 
