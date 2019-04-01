@@ -94,31 +94,31 @@ EbErrorType picture_analysis_context_ctor(
  ************************************************/
 
  /********************************************
-  * Decimation2D
+  * decimation_2d
   *      decimates the input
   ********************************************/
-void Decimation2D(
+void decimation_2d(
     uint8_t *  input_samples,      // input parameter, input samples Ptr
     uint32_t   input_stride,       // input parameter, input stride
     uint32_t   input_area_width,    // input parameter, input area width
     uint32_t   input_area_height,   // input parameter, input area height
-    uint8_t *  decimSamples,      // output parameter, decimated samples Ptr
-    uint32_t   decimStride,       // input parameter, output stride
-    uint32_t   decimStep)        // input parameter, area height
+    uint8_t *  decim_samples,      // output parameter, decimated samples Ptr
+    uint32_t   decim_stride,       // input parameter, output stride
+    uint32_t   decim_step)        // input parameter, area height
 {
 
     uint32_t horizontal_index;
     uint32_t vertical_index;
 
 
-    for (vertical_index = 0; vertical_index < input_area_height; vertical_index += decimStep) {
-        for (horizontal_index = 0; horizontal_index < input_area_width; horizontal_index += decimStep) {
+    for (vertical_index = 0; vertical_index < input_area_height; vertical_index += decim_step) {
+        for (horizontal_index = 0; horizontal_index < input_area_width; horizontal_index += decim_step) {
 
-            decimSamples[(horizontal_index >> (decimStep >> 1))] = input_samples[horizontal_index];
+            decim_samples[(horizontal_index >> (decim_step >> 1))] = input_samples[horizontal_index];
 
         }
-        input_samples += (input_stride << (decimStep >> 1));
-        decimSamples += decimStride;
+        input_samples += (input_stride << (decim_step >> 1));
+        decim_samples += decim_stride;
     }
 
     return;
@@ -133,7 +133,7 @@ void CalculateHistogram(
     uint32_t   input_area_width,    // input parameter, input area width
     uint32_t   input_area_height,   // input parameter, input area height
     uint32_t   stride,            // input parameter, input stride
-    uint8_t    decimStep,         // input parameter, area height
+    uint8_t    decim_step,         // input parameter, area height
     uint32_t  *histogram,            // output parameter, output histogram
     uint64_t  *sum)
 
@@ -143,12 +143,12 @@ void CalculateHistogram(
     uint32_t vertical_index;
     *sum = 0;
 
-    for (vertical_index = 0; vertical_index < input_area_height; vertical_index += decimStep) {
-        for (horizontal_index = 0; horizontal_index < input_area_width; horizontal_index += decimStep) {
+    for (vertical_index = 0; vertical_index < input_area_height; vertical_index += decim_step) {
+        for (horizontal_index = 0; horizontal_index < input_area_width; horizontal_index += decim_step) {
             ++(histogram[input_samples[horizontal_index]]);
             *sum += input_samples[horizontal_index];
         }
-        input_samples += (stride << (decimStep >> 1));
+        input_samples += (stride << (decim_step >> 1));
     }
 
     return;
@@ -3890,7 +3890,7 @@ EbErrorType QuarterSampleDenoise(
 
     picture_control_set_ptr->pic_noise_class = PIC_NOISE_CLASS_INV; //this init is for both REAL-TIME and BEST-QUALITY
 
-    Decimation2D(
+    decimation_2d(
         &input_picture_ptr->buffer_y[input_picture_ptr->origin_x + input_picture_ptr->origin_y * input_picture_ptr->stride_y],
         input_picture_ptr->stride_y,
         input_picture_ptr->width,
@@ -3957,7 +3957,7 @@ EbErrorType SubSampleDenoise(
 
     picture_control_set_ptr->pic_noise_class = PIC_NOISE_CLASS_INV; //this init is for both REAL-TIME and BEST-QUALITY
 
-    Decimation2D(
+    decimation_2d(
         &input_picture_ptr->buffer_y[input_picture_ptr->origin_x + input_picture_ptr->origin_y * input_picture_ptr->stride_y],
         input_picture_ptr->stride_y,
         input_picture_ptr->width,
@@ -4132,7 +4132,7 @@ void SubSampleChromaGeneratePixelIntensityHistogramBins(
     uint32_t                          regionInPictureHeightIndex;
 
     uint16_t                          histogramBin;
-    uint8_t                           decimStep = 4;
+    uint8_t                           decim_step = 4;
 
     regionWidth = input_picture_ptr->width / sequence_control_set_ptr->picture_analysis_number_of_regions_per_width;
     regionHeight = input_picture_ptr->height / sequence_control_set_ptr->picture_analysis_number_of_regions_per_height;
@@ -4161,17 +4161,17 @@ void SubSampleChromaGeneratePixelIntensityHistogramBins(
                 (regionWidth + regionWidthOffset) >> 1,
                 (regionHeight + regionHeightOffset) >> 1,
                 input_picture_ptr->stride_cb,
-                decimStep,
+                decim_step,
                 picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][1],
                 &sum);
 
-            sum = (sum << decimStep);
+            sum = (sum << decim_step);
             *sumAverageIntensityTotalRegionsCb += sum;
             picture_control_set_ptr->average_intensity_per_region[regionInPictureWidthIndex][regionInPictureHeightIndex][1] = (uint8_t)((sum + (((regionWidth + regionWidthOffset)*(regionHeight + regionHeightOffset)) >> 3)) / (((regionWidth + regionWidthOffset)*(regionHeight + regionHeightOffset)) >> 2));
 
             for (histogramBin = 0; histogramBin < HISTOGRAM_NUMBER_OF_BINS; histogramBin++) { // Loop over the histogram bins
                 picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][1][histogramBin] =
-                    picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][1][histogramBin] << decimStep;
+                    picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][1][histogramBin] << decim_step;
             }
 
             // V Histogram
@@ -4180,17 +4180,17 @@ void SubSampleChromaGeneratePixelIntensityHistogramBins(
                 (regionWidth + regionWidthOffset) >> 1,
                 (regionHeight + regionHeightOffset) >> 1,
                 input_picture_ptr->stride_cr,
-                decimStep,
+                decim_step,
                 picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][2],
                 &sum);
 
-            sum = (sum << decimStep);
+            sum = (sum << decim_step);
             *sumAverageIntensityTotalRegionsCr += sum;
             picture_control_set_ptr->average_intensity_per_region[regionInPictureWidthIndex][regionInPictureHeightIndex][2] = (uint8_t)((sum + (((regionWidth + regionWidthOffset)*(regionHeight + regionHeightOffset)) >> 3)) / (((regionWidth + regionWidthOffset)*(regionHeight + regionHeightOffset)) >> 2));
 
             for (histogramBin = 0; histogramBin < HISTOGRAM_NUMBER_OF_BINS; histogramBin++) { // Loop over the histogram bins
                 picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][2][histogramBin] =
-                    picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][2][histogramBin] << decimStep;
+                    picture_control_set_ptr->picture_histogram[regionInPictureWidthIndex][regionInPictureHeightIndex][2][histogramBin] << decim_step;
             }
         }
     }
@@ -4826,7 +4826,7 @@ void DecimateInputPicture(
     if (picture_control_set_ptr->enable_hme_flag) {
 
         if (picture_control_set_ptr->enable_hme_level1_flag) {
-            Decimation2D(
+            decimation_2d(
                 &input_padded_picture_ptr->buffer_y[input_padded_picture_ptr->origin_x + input_padded_picture_ptr->origin_y * input_padded_picture_ptr->stride_y],
                 input_padded_picture_ptr->stride_y,
                 input_padded_picture_ptr->width,
@@ -4847,7 +4847,7 @@ void DecimateInputPicture(
         if (picture_control_set_ptr->enable_hme_level0_flag) {
 
             // Sixteenth Input Picture Decimation
-            Decimation2D(
+            decimation_2d(
                 &input_padded_picture_ptr->buffer_y[input_padded_picture_ptr->origin_x + input_padded_picture_ptr->origin_y * input_padded_picture_ptr->stride_y],
                 input_padded_picture_ptr->stride_y,
                 input_padded_picture_ptr->width,

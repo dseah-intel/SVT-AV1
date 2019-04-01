@@ -294,7 +294,7 @@ EbErrorType ComputeDecimatedZzSad(
 
 
                 // 1/16 collocated SB decimation
-                Decimation2D(
+                decimation_2d(
                     &previousInputPictureFull->buffer_y[blkDisplacementFull],
                     previousInputPictureFull->stride_y,
                     BLOCK_SIZE_64,
@@ -555,7 +555,7 @@ void* motion_estimation_kernel(void *input_ptr)
                         }
                     }
 
-                    MotionEstimateLcu(
+                    motion_estimate_lcu(
                         picture_control_set_ptr,
                         sb_index,
                         sb_origin_x,
