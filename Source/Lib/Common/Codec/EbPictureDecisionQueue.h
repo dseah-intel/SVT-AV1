@@ -31,6 +31,7 @@ typedef struct PaReferenceQueueEntry
     PictureParentControlSet_t       *p_pcs_ptr;
 } PaReferenceQueueEntry;
 
+
 extern EbErrorType pa_reference_queue_entry_ctor(
     PaReferenceQueueEntry  **entry_dbl_ptr);
 

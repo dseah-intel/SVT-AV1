@@ -21,6 +21,7 @@ extern "C" {
         EbFifo **picture_control_set_fifo_ptr_array;
     } PictureManagerContext;
 
+
     /***************************************
      * Extern Function Declaration
      ***************************************/
