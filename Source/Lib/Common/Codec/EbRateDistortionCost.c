@@ -520,7 +520,7 @@ uint64_t av1_cost_coeffs_txb(
 /*static*/ void model_rd_from_sse(
     block_size bsize,
     int16_t quantizer,
-    //const AV1_COMP *const cpi,
+    //const Av1Comp *const cpi,
     //const MacroBlockD *const xd,
     //block_size bsize,
     //int32_t plane,

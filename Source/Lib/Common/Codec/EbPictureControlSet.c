@@ -53,7 +53,7 @@ EbErrorType picture_control_set_ctor(
     EbPtr object_init_data_ptr)
 {
     PictureControlSet *object_ptr;
-    PictureControlSetInitData_t *initDataPtr = (PictureControlSetInitData_t*)object_init_data_ptr;
+    PictureControlSetInitData *initDataPtr = (PictureControlSetInitData*)object_init_data_ptr;
 
     EbPictureBufferDescInitData_t input_picture_buffer_desc_init_data;
     EbPictureBufferDescInitData_t coeffBufferDescInitData;
@@ -901,8 +901,8 @@ EbErrorType picture_parent_control_set_ctor(
     EbPtr *object_dbl_ptr,
     EbPtr object_init_data_ptr)
 {
-    PictureParentControlSet_t   *object_ptr;
-    PictureControlSetInitData_t *initDataPtr = (PictureControlSetInitData_t*)object_init_data_ptr;
+    PictureParentControlSet   *object_ptr;
+    PictureControlSetInitData *initDataPtr = (PictureControlSetInitData*)object_init_data_ptr;
     EbErrorType return_error = EB_ErrorNone;
     const uint16_t pictureLcuWidth = (uint16_t)((initDataPtr->picture_width + initDataPtr->sb_sz - 1) / initDataPtr->sb_sz);
     const uint16_t pictureLcuHeight = (uint16_t)((initDataPtr->picture_height + initDataPtr->sb_sz - 1) / initDataPtr->sb_sz);
@@ -910,7 +910,7 @@ EbErrorType picture_parent_control_set_ctor(
     uint32_t regionInPictureWidthIndex;
     uint32_t regionInPictureHeightIndex;
 
-    EB_MALLOC(PictureParentControlSet_t*, object_ptr, sizeof(PictureParentControlSet_t), EB_N_PTR);
+    EB_MALLOC(PictureParentControlSet*, object_ptr, sizeof(PictureParentControlSet), EB_N_PTR);
 
     *object_dbl_ptr = (EbPtr)object_ptr;
     object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
@@ -1042,7 +1042,7 @@ EbErrorType picture_parent_control_set_ctor(
     // Allocate memory for 32x32 cu array for clean sparse coeff
     EB_MALLOC(uint8_t*, object_ptr->cu32x32_clean_sparse_coeff_map_array, sizeof(uint8_t) * object_ptr->cu32x32_clean_sparse_coeff_map_array_size, EB_N_PTR);
 
-    EB_MALLOC(SbStat_t*, object_ptr->sb_stat_array, sizeof(SbStat_t) * object_ptr->sb_total_count, EB_N_PTR);
+    EB_MALLOC(SbStat*, object_ptr->sb_stat_array, sizeof(SbStat) * object_ptr->sb_total_count, EB_N_PTR);
 
     EB_MALLOC(EbSbComplexityStatus*, object_ptr->complex_sb_array, sizeof(EbSbComplexityStatus) * object_ptr->sb_total_count, EB_N_PTR);
 

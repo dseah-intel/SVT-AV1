@@ -400,7 +400,7 @@ void SetGlobalMotionField(
 
 
 void av1_set_quantizer(
-    PictureParentControlSet_t                    *picture_control_set_ptr,
+    PictureParentControlSet                    *picture_control_set_ptr,
     int32_t q)
 {
     // quantizer has to be reinitialized with av1_init_quantizer() if any
@@ -522,7 +522,7 @@ void av1_build_quantizer(
 
 
 void av1_qm_init(
-    PictureParentControlSet_t                   *picture_control_set_ptr
+    PictureParentControlSet                   *picture_control_set_ptr
 )
 {
     const uint8_t num_planes = 3;// MAX_MB_PLANE;// NM- No monochroma

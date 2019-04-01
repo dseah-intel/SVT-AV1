@@ -68,7 +68,7 @@ void av1_set_mv_search_range(MvLimits *mv_limits, const MV *mv);
 #if 1 //---CHKN
 
 
-struct AV1_COMP;
+struct Av1Comp;
 struct SpeedFeatures;
 
 

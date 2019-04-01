@@ -41,7 +41,7 @@
 |42||43||46||47|     |58||59||62||63|
 -------------------------------------*/
 EbErrorType CheckZeroZeroCenter(
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t        *refPicPtr,
     MeContext_t                  *context_ptr,
     uint32_t                       sb_origin_x,
@@ -92,7 +92,7 @@ void* set_me_hme_params_from_config(
  ************************************************/
 void* set_me_hme_params_oq(
     MeContext_t                     *me_context_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     SequenceControlSet            *sequence_control_set_ptr,
     EbInputResolution                 input_resolution)
 {
@@ -164,7 +164,7 @@ void* set_me_hme_params_oq(
 ******************************************************/
 EbErrorType signal_derivation_me_kernel_oq(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     MotionEstimationContext_t   *context_ptr) {
 
     EbErrorType return_error = EB_ErrorNone;
@@ -232,7 +232,7 @@ int non_moving_th_shift[4] = { 4, 2, 0, 0 };
 EbErrorType ComputeDecimatedZzSad(
     MotionEstimationContext_t   *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t       *sixteenth_decimated_picture_ptr,
     uint32_t                         xLcuStartIndex,
     uint32_t                         xLcuEndIndex,
@@ -243,7 +243,7 @@ EbErrorType ComputeDecimatedZzSad(
 
     EbAsm asm_type = sequence_control_set_ptr->encode_context_ptr->asm_type;
 
-    PictureParentControlSet_t    *previous_picture_control_set_wrapper_ptr = ((PictureParentControlSet_t*)picture_control_set_ptr->previous_picture_control_set_wrapper_ptr->object_ptr);
+    PictureParentControlSet    *previous_picture_control_set_wrapper_ptr = ((PictureParentControlSet*)picture_control_set_ptr->previous_picture_control_set_wrapper_ptr->object_ptr);
     EbPictureBufferDesc_t        *previousInputPictureFull = previous_picture_control_set_wrapper_ptr->enhanced_picture_ptr;
 
     uint32_t sb_index;
@@ -375,7 +375,7 @@ void* MotionEstimationKernel(void *input_ptr)
 {
     MotionEstimationContext_t   *context_ptr = (MotionEstimationContext_t*)input_ptr;
 
-    PictureParentControlSet_t   *picture_control_set_ptr;
+    PictureParentControlSet   *picture_control_set_ptr;
     SequenceControlSet        *sequence_control_set_ptr;
 
     EbObjectWrapper           *inputResultsWrapperPtr;
@@ -431,7 +431,7 @@ void* MotionEstimationKernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (PictureDecisionResults*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         paReferenceObject = (EbPaReferenceObject*)picture_control_set_ptr->pa_reference_picture_wrapper_ptr->object_ptr;
         quarter_decimated_picture_ptr = (EbPictureBufferDesc_t*)paReferenceObject->quarter_decimated_picture_ptr;

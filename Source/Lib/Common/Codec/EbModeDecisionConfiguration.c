@@ -283,7 +283,7 @@ else if (AC energy < 32 * 32 * 1.6) OR (32 * 32 * 3.5 < AC energy < 32 * 32 * 4.
 else no action
 *******************************************/
 uint8_t DeriveContouringClass(
-    PictureParentControlSet_t   *parentPcsPtr,
+    PictureParentControlSet   *parentPcsPtr,
     uint16_t                       sb_index,
     uint8_t                        leaf_index)
 {
@@ -403,7 +403,7 @@ void PrePredictionRefinement(
 
     uint8_t           edge_block_num = picture_control_set_ptr->parent_pcs_ptr->edge_results_ptr[sb_index].edge_block_num;
 
-    SbStat_t      *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
+    SbStat      *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
     uint8_t           stationary_edge_over_time_flag = sb_stat_ptr->stationary_edge_over_time_flag;
 
     uint8_t           aura_status_iii = sb_ptr->aura_status_iii;
@@ -469,7 +469,7 @@ void ForwardCuToModeDecision(
     // CU Loop
     const CodedUnitStats *cuStatsPtr = get_coded_unit_stats(0);
 
-    SbStat_t *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
+    SbStat *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
 
     EbBool    testAllDepthIntraSliceFlag = EB_FALSE;
 

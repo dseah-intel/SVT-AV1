@@ -1457,7 +1457,7 @@ void EbCopyBuffer(
 }
 
 
-//int32_t av1_get_max_filter_level(const AV1_COMP *cpi) {
+//int32_t av1_get_max_filter_level(const Av1Comp *cpi) {
 //    if (cpi->oxcf.pass == 2) {
 //        return cpi->twopass.section_intra_rating > 8 ? MAX_LOOP_FILTER * 3 / 4
 //            : MAX_LOOP_FILTER;
@@ -1631,7 +1631,7 @@ uint64_t PictureSseCalculations(
 
 static int64_t try_filter_frame(
     //const Yv12BufferConfig *sd,
-    //AV1_COMP *const cpi,
+    //Av1Comp *const cpi,
     const EbPictureBufferDesc_t *sd,
     EbPictureBufferDesc_t  *tempLfReconBuffer,
     PictureControlSet *pcsPtr,
@@ -1685,7 +1685,7 @@ static int64_t try_filter_frame(
     return filt_err;
 }
 static int32_t search_filter_level(
-    //const Yv12BufferConfig *sd, AV1_COMP *cpi,
+    //const Yv12BufferConfig *sd, Av1Comp *cpi,
     EbPictureBufferDesc_t *sd, // source
     EbPictureBufferDesc_t  *tempLfReconBuffer,
     PictureControlSet *pcsPtr,

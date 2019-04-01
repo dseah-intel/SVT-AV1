@@ -28,7 +28,7 @@ typedef struct PaReferenceQueueEntry
     DependentList                 list0;
     DependentList                 list1;
 
-    PictureParentControlSet_t       *p_pcs_ptr;
+    PictureParentControlSet       *p_pcs_ptr;
 } PaReferenceQueueEntry;
 
 

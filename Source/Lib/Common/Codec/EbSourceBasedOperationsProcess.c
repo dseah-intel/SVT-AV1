@@ -87,7 +87,7 @@ EbErrorType source_based_operations_context_ctor(
 ** and or zz_cost_array is invalid
 ****************************************/
 void InitBeaQpmInfo(
-    PictureParentControlSet_t        *picture_control_set_ptr,
+    PictureParentControlSet        *picture_control_set_ptr,
     SequenceControlSet            *sequence_control_set_ptr)
 {
     uint32_t sb_index;
@@ -116,7 +116,7 @@ void InitBeaQpmInfo(
 ***************************************************/
 void DerivePictureActivityStatistics(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr)
+    PictureParentControlSet       *picture_control_set_ptr)
 
 {
 
@@ -172,7 +172,7 @@ void DerivePictureActivityStatistics(
 ******************************************************/
 void FailingMotionLcu(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t        *picture_control_set_ptr,
+    PictureParentControlSet        *picture_control_set_ptr,
     uint32_t                             sb_index) {
 
     uint32_t rasterScanCuIndex;
@@ -222,7 +222,7 @@ void FailingMotionLcu(
 ******************************************************/
 void DetectUncoveredLcu(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t        *picture_control_set_ptr,
+    PictureParentControlSet        *picture_control_set_ptr,
     uint32_t                             sb_index) {
 
     uint32_t rasterScanCuIndex;
@@ -283,7 +283,7 @@ void DetectUncoveredLcu(
 ******************************************************/
 void CalculateAcEnergy(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t        *picture_control_set_ptr,
+    PictureParentControlSet        *picture_control_set_ptr,
     uint32_t                             sb_index) {
 
     EbPictureBufferDesc_t    *input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;
@@ -347,7 +347,7 @@ void CalculateAcEnergy(
 void LumaContrastDetectorLcu(
     SourceBasedOperationsContext *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     uint32_t                            sb_index) {
 
     uint64_t                  cuOisSAD = 0;
@@ -386,7 +386,7 @@ void LumaContrastDetectorLcu(
 
 void LumaContrastDetectorPicture(
     SourceBasedOperationsContext        *context_ptr,
-    PictureParentControlSet_t            *picture_control_set_ptr) {
+    PictureParentControlSet            *picture_control_set_ptr) {
 
     context_ptr->y_non_moving_mean = (context_ptr->countOfNonMovingLcus != 0) ? (context_ptr->y_non_moving_mean / context_ptr->countOfNonMovingLcus) : 0;
     context_ptr->y_moving_mean = (context_ptr->count_of_moving_sbs != 0) ? (context_ptr->y_moving_mean / context_ptr->count_of_moving_sbs) : 0;
@@ -405,7 +405,7 @@ void LumaContrastDetectorPicture(
 void GrassLcu(
     SourceBasedOperationsContext        *context_ptr,
     SequenceControlSet                *sequence_control_set_ptr,
-    PictureParentControlSet_t            *picture_control_set_ptr,
+    PictureParentControlSet            *picture_control_set_ptr,
     uint32_t                                 sb_index) {
 
     uint32_t                  childIndex;
@@ -417,7 +417,7 @@ void GrassLcu(
     uint32_t  rasterScanCuIndex;
 
     LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-    SbStat_t *sb_stat_ptr = &(picture_control_set_ptr->sb_stat_array[sb_index]);
+    SbStat *sb_stat_ptr = &(picture_control_set_ptr->sb_stat_array[sb_index]);
 
     _mm_prefetch((const char*)sb_stat_ptr, _MM_HINT_T0);
 
@@ -431,7 +431,7 @@ void GrassLcu(
             const uint32_t mdScanCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex];
             const uint32_t rasterScanParentCuIndex = RASTER_SCAN_CU_PARENT_INDEX[rasterScanCuIndex];
             const uint32_t mdScanParentCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanParentCuIndex];
-            CuStat_t *cuStatPtr = &(sb_stat_ptr->cu_stat_array[mdScanCuIndex]);
+            CuStat *cuStatPtr = &(sb_stat_ptr->cu_stat_array[mdScanCuIndex]);
 
 
             const uint32_t perfectCondition = 7;
@@ -482,7 +482,7 @@ void GrassLcu(
 
 void GrassSkinPicture(
     SourceBasedOperationsContext        *context_ptr,
-    PictureParentControlSet_t            *picture_control_set_ptr) {
+    PictureParentControlSet            *picture_control_set_ptr) {
     picture_control_set_ptr->grass_percentage_in_picture = (uint8_t)(context_ptr->picture_num_grass_sb * 100 / picture_control_set_ptr->sb_total_count);
 }
 
@@ -491,7 +491,7 @@ void GrassSkinPicture(
 ******************************************************/
 void DetermineIsolatedNonHomogeneousRegionInPicture(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr)
+    PictureParentControlSet       *picture_control_set_ptr)
 {
     uint32_t sb_index;
     uint32_t cuuIndex;
@@ -564,7 +564,7 @@ void DetermineIsolatedNonHomogeneousRegionInPicture(
 
 void SetDefaultDeltaQpRange(
     SourceBasedOperationsContext    *context_ptr,
-    PictureParentControlSet_t        *picture_control_set_ptr,
+    PictureParentControlSet        *picture_control_set_ptr,
     EbBool                             scene_transition_flag) {
 
     int8_t    min_delta_qp;
@@ -598,7 +598,7 @@ void SetDefaultDeltaQpRange(
 
 void DetermineMorePotentialAuraAreas(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t    *picture_control_set_ptr)
+    PictureParentControlSet    *picture_control_set_ptr)
 {
     uint16_t sb_index;
     int32_t lcuHor, lcuVer, lcuVerOffset;
@@ -646,7 +646,7 @@ void DetermineMorePotentialAuraAreas(
 ***************************************************/
 void DeriveHighDarkAreaDensityFlag(
     SequenceControlSet                *sequence_control_set_ptr,
-    PictureParentControlSet_t           *picture_control_set_ptr) {
+    PictureParentControlSet           *picture_control_set_ptr) {
 
 
     uint32_t    regionInPictureWidthIndex;
@@ -702,7 +702,7 @@ void DeriveHighDarkAreaDensityFlag(
 ******************************************************/
 void TemporalHighContrastClassifier(
     SourceBasedOperationsContext    *context_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     uint32_t                           sb_index)
 {
 
@@ -729,7 +729,7 @@ void TemporalHighContrastClassifier(
 
 void SpatialHighContrastClassifier(
     SourceBasedOperationsContext    *context_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     uint32_t                           sb_index)
 {
 
@@ -773,7 +773,7 @@ void SpatialHighContrastClassifier(
 void DeriveComplexityContrastPicture(
     SourceBasedOperationsContext    *context_ptr,
     SequenceControlSet         *sequence_control_set_ptr,
-    PictureParentControlSet_t    *picture_control_set_ptr)
+    PictureParentControlSet    *picture_control_set_ptr)
 
 {
     uint32_t    sb_index;
@@ -827,7 +827,7 @@ void DeriveComplexityContrastPicture(
 ******************************************************/
 void DetectCu32x32CleanSparseLcu(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t    *picture_control_set_ptr,
+    PictureParentControlSet    *picture_control_set_ptr,
     uint32_t                         sb_index)
 {
     int32_t  blockIndex, blockIndexX, blockIndexY, cu32x32Index;
@@ -858,7 +858,7 @@ void DetectCu32x32CleanSparseLcu(
 }
 
 void DetectCu32x32CleanSparsePicture(
-    PictureParentControlSet_t    *picture_control_set_ptr)
+    PictureParentControlSet    *picture_control_set_ptr)
 {
 
     int32_t  blockIndex, blockIndexX, blockIndexY;
@@ -895,7 +895,7 @@ void DetectCu32x32CleanSparsePicture(
 void* source_based_operations_kernel(void *input_ptr)
 {
     SourceBasedOperationsContext    *context_ptr = (SourceBasedOperationsContext*)input_ptr;
-    PictureParentControlSet_t       *picture_control_set_ptr;
+    PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
     EbObjectWrapper               *inputResultsWrapperPtr;
     InitialRateControlResults_t        *inputResultsPtr;
@@ -910,7 +910,7 @@ void* source_based_operations_kernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (InitialRateControlResults_t*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
         picture_control_set_ptr->dark_back_groundlight_fore_ground = EB_FALSE;

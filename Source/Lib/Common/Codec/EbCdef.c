@@ -476,7 +476,7 @@ void av1_cdef_frame(
 {
     (void)context_ptr;
 
-    struct PictureParentControlSet_s     *pPcs = pCs->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = pCs->parent_pcs_ptr;
     Av1Common*   cm = pPcs->av1_cm;
 
 
@@ -805,7 +805,7 @@ void av1_cdef_frame16bit(
 )
 {
     (void)context_ptr;
-    struct PictureParentControlSet_s     *pPcs = pCs->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = pCs->parent_pcs_ptr;
     Av1Common*   cm = pPcs->av1_cm;
 
 
@@ -1416,7 +1416,7 @@ void finish_cdef_search(
 {
     (void)context_ptr;
     int32_t fast = 0;
-    struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
     Av1Common*   cm = pPcs->av1_cm;
     int32_t mi_rows = pPcs->av1_cm->mi_rows;
     int32_t mi_cols = pPcs->av1_cm->mi_cols;
@@ -1603,7 +1603,7 @@ void av1_cdef_search(
 {
     (void)context_ptr;
     int32_t fast = 0;
-    struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
     Av1Common*   cm = pPcs->av1_cm;
     int32_t mi_rows = pPcs->av1_cm->mi_rows;
     int32_t mi_cols = pPcs->av1_cm->mi_cols;
@@ -1974,7 +1974,7 @@ void av1_cdef_search16bit(
 {
     (void)context_ptr;
     int32_t fast = 0;
-    struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
     Av1Common*   cm = pPcs->av1_cm;
     int32_t mi_rows = pPcs->av1_cm->mi_rows;
     int32_t mi_cols = pPcs->av1_cm->mi_cols;

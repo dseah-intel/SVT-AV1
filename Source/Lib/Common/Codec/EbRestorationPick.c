@@ -1601,7 +1601,7 @@ static int32_t rest_tiles_in_plane(const Av1Common *cm, int32_t plane) {
 void *aom_memalign(size_t align, size_t size);
 void aom_free(void *memblk);
 
-void av1_pick_filter_restoration(const Yv12BufferConfig *src, Yv12BufferConfig * trial_frame_rst /*AV1_COMP *cpi*/, Macroblock *x, Av1Common *const cm) {
+void av1_pick_filter_restoration(const Yv12BufferConfig *src, Yv12BufferConfig * trial_frame_rst /*Av1Comp *cpi*/, Macroblock *x, Av1Common *const cm) {
 
     //CHKN Av1Common *const cm = &cpi->common;
     const int32_t num_planes = 3;// av1_num_planes(cm);

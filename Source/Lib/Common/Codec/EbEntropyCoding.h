@@ -101,17 +101,17 @@ extern "C" {
 
     //**********************************************************************************************************//
     //onyxc_int.h
-    static INLINE int32_t frame_is_intra_only(const PictureParentControlSet_t *const pcsPtr) {
+    static INLINE int32_t frame_is_intra_only(const PictureParentControlSet *const pcsPtr) {
         return pcsPtr->av1FrameType == KEY_FRAME || pcsPtr->av1FrameType == INTRA_ONLY_FRAME;
     }
 
-    static INLINE int32_t frame_is_sframe(const PictureParentControlSet_t *pcsPtr) {
+    static INLINE int32_t frame_is_sframe(const PictureParentControlSet *pcsPtr) {
         return pcsPtr->av1FrameType == S_FRAME;
     }
 
     // Returns 1 if this frame might allow mvs from some reference frame.
 
-    static INLINE int32_t frame_might_allow_ref_frame_mvs(const PictureParentControlSet_t *pcsPtr,
+    static INLINE int32_t frame_might_allow_ref_frame_mvs(const PictureParentControlSet *pcsPtr,
         SequenceControlSet    *scsPtr) {
         return !pcsPtr->error_resilient_mode &&
             scsPtr->enable_ref_frame_mvs &&
@@ -119,7 +119,7 @@ extern "C" {
     }
 
     // Returns 1 if this frame might use warped_motion
-    static INLINE int32_t frame_might_allow_warped_motion(const PictureParentControlSet_t *pcsPtr,
+    static INLINE int32_t frame_might_allow_warped_motion(const PictureParentControlSet *pcsPtr,
         SequenceControlSet    *scsPtr) {
         return !pcsPtr->error_resilient_mode && !frame_is_intra_only(pcsPtr) &&
             scsPtr->static_config.enable_warped_motion;
@@ -133,7 +133,7 @@ extern "C" {
 
     //**********************************************************************************************************//
     //encoder.h
-    static INLINE int32_t get_ref_frame_map_idx(const PictureParentControlSet_t *pcsPtr,
+    static INLINE int32_t get_ref_frame_map_idx(const PictureParentControlSet *pcsPtr,
         MvReferenceFrame ref_frame) {
         // (void)(*pcsPtr);
         // (void)ref_frame;
@@ -174,8 +174,8 @@ extern "C" {
     // bitstream.h
     struct aom_write_bit_buffer;
 
-    //void WriteSequenceHeader(/*AV1_COMP *cpi, */struct aom_write_bit_buffer *wb);
-    void WriteSequenceHeader(SequenceControlSet *scsPtr/*AV1_COMP *cpi*/, struct aom_write_bit_buffer *wb);
+    //void WriteSequenceHeader(/*Av1Comp *cpi, */struct aom_write_bit_buffer *wb);
+    void WriteSequenceHeader(SequenceControlSet *scsPtr/*Av1Comp *cpi*/, struct aom_write_bit_buffer *wb);
 
     uint32_t WriteObuHeader(obuType obuType, int32_t obuExtension,
         uint8_t *const dst);
@@ -183,9 +183,9 @@ extern "C" {
     int32_t WriteUlebObuSize(uint32_t obuHeaderSize, uint32_t obuPayloadSize,
         uint8_t *dest);
 
-    /*int32_t av1_pack_bitstream(AV1_COMP *const cpi, uint8_t *dest, size_t *size);
+    /*int32_t av1_pack_bitstream(Av1Comp *const cpi, uint8_t *dest, size_t *size);
 
-    static INLINE int32_t av1_preserve_existing_gf(AV1_COMP *cpi) {
+    static INLINE int32_t av1_preserve_existing_gf(Av1Comp *cpi) {
     // Do not swap gf and arf indices for internal overlay frames
     return !cpi->multi_arf_allowed && cpi->rc.is_src_frame_alt_ref &&
     !cpi->rc.is_src_frame_ext_arf;

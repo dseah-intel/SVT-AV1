@@ -416,7 +416,7 @@ uint64_t predict_bits(
 }
 
 void high_level_rc_input_picture_vbr(
-    PictureParentControlSet_t     *picture_control_set_ptr,
+    PictureParentControlSet     *picture_control_set_ptr,
     SequenceControlSet          *sequence_control_set_ptr,
     EncodeContext_t               *encode_context_ptr,
     RateControlContext          *context_ptr,
@@ -1384,7 +1384,7 @@ void frame_level_rc_input_picture_vbr(
 }
 
 void frame_level_rc_feedback_picture_vbr(
-    PictureParentControlSet_t *parentpicture_control_set_ptr,
+    PictureParentControlSet *parentpicture_control_set_ptr,
     SequenceControlSet      *sequence_control_set_ptr,
     RateControlContext      *context_ptr)
 {
@@ -1830,7 +1830,7 @@ void frame_level_rc_feedback_picture_vbr(
 
 }
 void high_level_rc_input_picture_cvbr(
-    PictureParentControlSet_t     *picture_control_set_ptr,
+    PictureParentControlSet     *picture_control_set_ptr,
     SequenceControlSet          *sequence_control_set_ptr,
     EncodeContext_t               *encode_context_ptr,
     RateControlContext          *context_ptr,
@@ -2825,7 +2825,7 @@ void frame_level_rc_input_picture_cvbr(
 }
 
 void frame_level_rc_feedback_picture_cvbr(
-    PictureParentControlSet_t *parentpicture_control_set_ptr,
+    PictureParentControlSet *parentpicture_control_set_ptr,
     SequenceControlSet      *sequence_control_set_ptr,
     RateControlContext      *context_ptr)
 {
@@ -3104,7 +3104,7 @@ void frame_level_rc_feedback_picture_cvbr(
 }
 
 void high_level_rc_feed_back_picture(
-    PictureParentControlSet_t *picture_control_set_ptr,
+    PictureParentControlSet *picture_control_set_ptr,
     SequenceControlSet      *sequence_control_set_ptr)
 {
 
@@ -3793,7 +3793,7 @@ void* rate_control_kernel(void *input_ptr)
     RateControlIntervalParamContext   *next_gop_rate_control_param_ptr;
 
     PictureControlSet                 *picture_control_set_ptr;
-    PictureParentControlSet_t           *parentpicture_control_set_ptr;
+    PictureParentControlSet           *parentpicture_control_set_ptr;
 
     // Config
     SequenceControlSet                *sequence_control_set_ptr;
@@ -4057,7 +4057,7 @@ void* rate_control_kernel(void *input_ptr)
 
         case RC_PACKETIZATION_FEEDBACK_RESULT:
 
-            parentpicture_control_set_ptr = (PictureParentControlSet_t  *)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
+            parentpicture_control_set_ptr = (PictureParentControlSet  *)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
             sequence_control_set_ptr = (SequenceControlSet *)parentpicture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if RC_FEEDBACK
             if (sequence_control_set_ptr->static_config.rate_control_mode) {

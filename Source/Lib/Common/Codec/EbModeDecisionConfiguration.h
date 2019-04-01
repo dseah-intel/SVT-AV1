@@ -45,7 +45,7 @@ void QpmDeriveDeltaQpMapWeights(
     PictureControlSet                  *picture_control_set_ptr);
 
 extern uint8_t DeriveContouringClass(
-    PictureParentControlSet_t   *parentPcsPtr,
+    PictureParentControlSet   *parentPcsPtr,
     uint16_t                       sb_index,
     uint8_t                        leaf_index);  
 /**************************************

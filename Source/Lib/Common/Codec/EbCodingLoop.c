@@ -1768,7 +1768,7 @@ EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
 
     context_ptr->qpmQp = picture_qp;
 
-    SbStat_t *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
+    SbStat *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
 
 
     context_ptr->non_moving_delta_qp = 0;
@@ -1911,7 +1911,7 @@ EbErrorType Av1QpModulationLcu(
             delta_qp = (delta_qp < context_ptr->min_delta_qp[0]) ? delta_qp : context_ptr->min_delta_qp[0];
         }
 
-        SbStat_t *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
+        SbStat *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
         if (sb_stat_ptr->stationary_edge_over_time_flag && delta_qp > 0) {
             delta_qp = 0;
         }
@@ -2106,7 +2106,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
             delta_qp = (delta_qp < context_ptr->min_delta_qp[0]) ? delta_qp : context_ptr->min_delta_qp[0];
         }
 
-        SbStat_t *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
+        SbStat *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
         if (sb_stat_ptr->stationary_edge_over_time_flag && delta_qp > 0) {
             delta_qp = 0;
         }
@@ -2265,7 +2265,7 @@ EB_EXTERN void AV1EncodePass(
     mdcontextPtr = context_ptr->md_context;
     inputPicture = context_ptr->input_samples = (EbPictureBufferDesc_t*)picture_control_set_ptr->parent_pcs_ptr->enhanced_picture_ptr;
 
-    SbStat_t                *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[tbAddr]);
+    SbStat                *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[tbAddr]);
 
     EbBool                    availableCoeff;
 

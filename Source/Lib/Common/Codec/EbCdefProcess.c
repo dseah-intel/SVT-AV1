@@ -92,7 +92,7 @@ void cdef_seg_search(
     uint32_t                        segment_index)
 {
 
-    struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
     Av1Common* cm = picture_control_set_ptr->parent_pcs_ptr->av1_cm;
     uint32_t  x_seg_idx;
     uint32_t  y_seg_idx;
@@ -268,7 +268,7 @@ void cdef_seg_search16bit(
         ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit :
          picture_control_set_ptr->recon_picture16bit_ptr;
 
-    struct PictureParentControlSet_s     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
+    struct PictureParentControlSet     *pPcs = picture_control_set_ptr->parent_pcs_ptr;
     Av1Common* cm = picture_control_set_ptr->parent_pcs_ptr->av1_cm;
     uint32_t  x_seg_idx;
     uint32_t  y_seg_idx;

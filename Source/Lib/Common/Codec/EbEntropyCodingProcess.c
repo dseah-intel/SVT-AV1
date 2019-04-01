@@ -23,8 +23,8 @@
 
 #define  AV1_MIN_TILE_SIZE_BYTES 1
 void av1_reset_loop_restoration(PictureControlSet     *piCSetPtr);
-void av1_tile_set_col(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int col);
-void av1_tile_set_row(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int row);
+void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcsPtr, int col);
+void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcsPtr, int row);
 
 
 /******************************************************
@@ -690,7 +690,7 @@ void* EntropyCodingKernel(void *input_ptr)
         else
         {
 
-             struct PictureParentControlSet_s     *ppcs_ptr = picture_control_set_ptr->parent_pcs_ptr;
+             struct PictureParentControlSet     *ppcs_ptr = picture_control_set_ptr->parent_pcs_ptr;
              Av1Common *const cm = ppcs_ptr->av1_cm;           
              uint32_t total_size = 0;
              int tile_row, tile_col;

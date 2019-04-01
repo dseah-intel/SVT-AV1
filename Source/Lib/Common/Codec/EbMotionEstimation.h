@@ -19,7 +19,7 @@
 extern "C" {
 #endif
     extern EbErrorType MotionEstimateLcu(
-        PictureParentControlSet_t   *picture_control_set_ptr,
+        PictureParentControlSet   *picture_control_set_ptr,
         uint32_t                       sb_index,
         uint32_t                       sb_origin_x,
         uint32_t                       sb_origin_y,
@@ -27,7 +27,7 @@ extern "C" {
         EbPictureBufferDesc_t       *input_ptr);
 
     extern EbErrorType OpenLoopIntraCandidateSearchLcu(
-        PictureParentControlSet_t   *picture_control_set_ptr,
+        PictureParentControlSet   *picture_control_set_ptr,
         uint32_t                       sb_index,
         MotionEstimationContext_t   *context_ptr,
         EbPictureBufferDesc_t       *input_ptr,
@@ -44,7 +44,7 @@ extern "C" {
 
     
     extern EbErrorType open_loop_intra_search_sb(
-        PictureParentControlSet_t   *picture_control_set_ptr,
+        PictureParentControlSet   *picture_control_set_ptr,
         uint32_t                       sb_index,
         MotionEstimationContext_t   *context_ptr,
         EbPictureBufferDesc_t       *input_ptr,

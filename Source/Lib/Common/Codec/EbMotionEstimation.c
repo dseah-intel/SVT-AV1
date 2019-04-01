@@ -3828,7 +3828,7 @@ static void PU_HalfPelRefinement(
 *******************************************/
 void HalfPelSearch_LCU(
     SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
-    PictureParentControlSet_t *picture_control_set_ptr,
+    PictureParentControlSet *picture_control_set_ptr,
     MeContext_t             *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     uint8_t                   *refBuffer,
     uint32_t                   ref_stride,
@@ -5491,7 +5491,7 @@ static void QuarterPelSearch_LCU(
 }
 
 void HmeOneQuadrantLevel0(
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     MeContext_t             *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     int16_t                   origin_x,                           // input parameter, SB position in the horizontal direction- sixteenth resolution
     int16_t                   origin_y,                           // input parameter, SB position in the vertical direction- sixteenth resolution
@@ -5687,7 +5687,7 @@ void HmeOneQuadrantLevel0(
 
 
 void HmeLevel0(
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     MeContext_t             *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     int16_t                   origin_x,                           // input parameter, SB position in the horizontal direction- sixteenth resolution
     int16_t                   origin_y,                           // input parameter, SB position in the vertical direction- sixteenth resolution
@@ -6014,7 +6014,7 @@ void HmeLevel1(
 }
 
 void HmeLevel2(
-    PictureParentControlSet_t   *picture_control_set_ptr,            // input parameter, Picture control set Ptr
+    PictureParentControlSet   *picture_control_set_ptr,            // input parameter, Picture control set Ptr
     MeContext_t             *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     int16_t                   origin_x,                           // input parameter, SB position in the horizontal direction
     int16_t                   origin_y,                           // input parameter, SB position in the vertical direction
@@ -6644,7 +6644,7 @@ EbErrorType  BiPredictionSearch(
     uint32_t                        activeRefPicSecondLisNum,
     uint8_t                        *totalMeCandidateIndex,
     EbAsm                        asm_type,
-    PictureParentControlSet_t   *picture_control_set_ptr)
+    PictureParentControlSet   *picture_control_set_ptr)
 {
     EbErrorType                 return_error = EB_ErrorNone;
 
@@ -6929,7 +6929,7 @@ EbErrorType CheckZeroZeroCenter(
 
 EbErrorType     suPelEnable(
     MeContext_t                 *context_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t listIndex,
     uint32_t refPicIndex,
     EbBool *enableHalfPel32x32,
@@ -7525,7 +7525,7 @@ static void hme_mv_center_check(
 *   performs ME (LCU)
 *******************************************/
 EbErrorType MotionEstimateLcu(
-    PictureParentControlSet_t   *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
+    PictureParentControlSet   *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
     uint32_t                       sb_index,              // input parameter, SB Index
     uint32_t                       sb_origin_x,            // input parameter, SB Origin X
     uint32_t                       sb_origin_y,            // input parameter, SB Origin X
@@ -8577,9 +8577,9 @@ uint64_t SixteenthDecimatedSearch(
 *   returns true is the SB has a high spatial & temporal complexity
 *******************************************/
 EbBool IsComplexLcu(
-    PictureParentControlSet_t    *previousParentPcs,
-    PictureParentControlSet_t    *currentParentPcs,
-    PictureParentControlSet_t    *plusOneParentPcs,
+    PictureParentControlSet    *previousParentPcs,
+    PictureParentControlSet    *currentParentPcs,
+    PictureParentControlSet    *plusOneParentPcs,
     uint32_t pictureWidthInLcus,
     uint32_t lcuAdrr,
     uint32_t sb_origin_x,
@@ -8692,7 +8692,7 @@ EbBool IsComplexLcu(
 
 
 EbErrorType open_loop_intra_search_sb(
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                     sb_index,
     MotionEstimationContext_t   *context_ptr,
     EbPictureBufferDesc_t       *input_ptr,

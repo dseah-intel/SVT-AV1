@@ -21,9 +21,9 @@
 #include "EbRateControlTasks.h"
 #include "EbSvtAv1ErrorCodes.h"
 
-void av1_tile_set_col(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int col);
-void av1_tile_set_row(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int row);
-void set_tile_info(PictureParentControlSet_t * pcsPtr);
+void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcsPtr, int col);
+void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcsPtr, int row);
+void set_tile_info(PictureParentControlSet * pcsPtr);
 
 
 /************************************************
@@ -107,7 +107,7 @@ void* picture_manager_kernel(void *input_ptr)
 
     EbObjectWrapper               *ChildPictureControlSetWrapperPtr;
     PictureControlSet             *ChildPictureControlSetPtr;
-    PictureParentControlSet_t       *picture_control_set_ptr;
+    PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
     EncodeContext_t                 *encode_context_ptr;
 
@@ -130,7 +130,7 @@ void* picture_manager_kernel(void *input_ptr)
     uint32_t                         depIdx;
     uint64_t                         depPoc;
     uint32_t                         depListCount;
-    PictureParentControlSet_t       *entryPictureControlSetPtr;
+    PictureParentControlSet       *entryPictureControlSetPtr;
     SequenceControlSet            *entrySequenceControlSetPtr;
 
     // Initialization
@@ -159,7 +159,7 @@ void* picture_manager_kernel(void *input_ptr)
 
         case EB_PIC_INPUT:
 
-            picture_control_set_ptr = (PictureParentControlSet_t*)inputPictureDemuxPtr->picture_control_set_wrapper_ptr->object_ptr;
+            picture_control_set_ptr = (PictureParentControlSet*)inputPictureDemuxPtr->picture_control_set_wrapper_ptr->object_ptr;
             sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
             encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
@@ -183,7 +183,7 @@ void* picture_manager_kernel(void *input_ptr)
 
             while (queueEntryPtr->parent_pcs_wrapper_ptr != EB_NULL) {
 
-                picture_control_set_ptr = (PictureParentControlSet_t*)queueEntryPtr->parent_pcs_wrapper_ptr->object_ptr;
+                picture_control_set_ptr = (PictureParentControlSet*)queueEntryPtr->parent_pcs_wrapper_ptr->object_ptr;
 
                 predPositionPtr = picture_control_set_ptr->pred_struct_ptr->pred_struct_entry_ptr_array[picture_control_set_ptr->pred_struct_index];
                 // If there was a change in the number of temporal layers, then cleanup the Reference Queue's Dependent Counts
@@ -563,7 +563,7 @@ void* picture_manager_kernel(void *input_ptr)
                 encode_context_ptr->app_callback_ptr,
                 EB_ENC_PM_ERROR9);
 
-            picture_control_set_ptr = (PictureParentControlSet_t*)EB_NULL;
+            picture_control_set_ptr = (PictureParentControlSet*)EB_NULL;
             encode_context_ptr = (EncodeContext_t*)EB_NULL;
 
             break;
@@ -582,7 +582,7 @@ void* picture_manager_kernel(void *input_ptr)
 
                 if (inputEntryPtr->input_object_ptr != EB_NULL) {
 
-                    entryPictureControlSetPtr = (PictureParentControlSet_t*)inputEntryPtr->input_object_ptr->object_ptr;
+                    entryPictureControlSetPtr = (PictureParentControlSet*)inputEntryPtr->input_object_ptr->object_ptr;
                     entrySequenceControlSetPtr = (SequenceControlSet*)entryPictureControlSetPtr->sequence_control_set_wrapper_ptr->object_ptr;
 
                     availabilityFlag = EB_TRUE;
@@ -732,7 +732,7 @@ void* picture_manager_kernel(void *input_ptr)
 
                         set_tile_info(ChildPictureControlSetPtr->parent_pcs_ptr);
 
-                        struct PictureParentControlSet_s     *ppcs_ptr = ChildPictureControlSetPtr->parent_pcs_ptr;
+                        struct PictureParentControlSet     *ppcs_ptr = ChildPictureControlSetPtr->parent_pcs_ptr;
                         Av1Common *const cm = ppcs_ptr->av1_cm;
                         int tile_row, tile_col;
                         uint32_t  x_lcu_index,  y_lcu_index;

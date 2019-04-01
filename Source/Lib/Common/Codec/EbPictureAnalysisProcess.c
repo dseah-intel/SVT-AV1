@@ -1624,7 +1624,7 @@ void noise_extract_luma_weak_lcu(
 }
 
 EbErrorType ZeroOutChromaBlockMean(
-    PictureParentControlSet_t   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
+    PictureParentControlSet   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
     uint32_t                       lcuCodingOrder                // input parameter, SB address
 )
 {
@@ -1689,7 +1689,7 @@ EbErrorType ZeroOutChromaBlockMean(
 *******************************************/
 EbErrorType ComputeChromaBlockMean(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
+    PictureParentControlSet   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
     EbPictureBufferDesc_t       *input_padded_picture_ptr,         // input parameter, Input Padded Picture
     uint32_t                       lcuCodingOrder,                // input parameter, SB address
     uint32_t                       inputCbOriginIndex,            // input parameter, SB index, used to point to source/reference samples
@@ -1985,7 +1985,7 @@ EbErrorType ComputeChromaBlockMean(
 *******************************************/
 EbErrorType ComputeBlockMeanComputeVariance(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
+    PictureParentControlSet   *picture_control_set_ptr,          // input parameter, Picture Control Set Ptr
     EbPictureBufferDesc_t       *input_padded_picture_ptr,         // input parameter, Input Padded Picture
     uint32_t                       sb_index,                // input parameter, SB address
     uint32_t                       inputLumaOriginIndex,          // input parameter, SB index, used to point to source/reference samples
@@ -3007,7 +3007,7 @@ EbErrorType ComputeBlockMeanComputeVariance(
 EbErrorType DenoiseInputPicture(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       sb_total_count,
     EbPictureBufferDesc_t       *input_picture_ptr,
     EbPictureBufferDesc_t       *denoised_picture_ptr,
@@ -3181,7 +3181,7 @@ EbErrorType DenoiseInputPicture(
 EbErrorType DetectInputPictureNoise(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       sb_total_count,
     EbPictureBufferDesc_t       *input_picture_ptr,
     EbPictureBufferDesc_t       *noise_picture_ptr,
@@ -3313,7 +3313,7 @@ EbErrorType DetectInputPictureNoise(
 }
 
 static int32_t apply_denoise_2d(SequenceControlSet        *scsPtr,
-    PictureParentControlSet_t   *pcsPtr,
+    PictureParentControlSet   *pcsPtr,
     EbPictureBufferDesc_t *inputPicturePointer,
     EbAsm asm_type) {
 
@@ -3328,7 +3328,7 @@ static int32_t apply_denoise_2d(SequenceControlSet        *scsPtr,
 
 EbErrorType denoise_estimate_film_grain(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbAsm asm_type)
 {
     EbErrorType return_error = EB_ErrorNone;
@@ -3350,7 +3350,7 @@ EbErrorType denoise_estimate_film_grain(
 EbErrorType FullSampleDenoise(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                     sb_total_count,
     EbBool                       denoise_flag,
     uint32_t                     picture_width_in_sb,
@@ -3401,7 +3401,7 @@ EbErrorType FullSampleDenoise(
 
 EbErrorType SubSampleFilterNoise(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       sb_total_count,
     EbPictureBufferDesc_t       *input_picture_ptr,
     EbPictureBufferDesc_t       *noise_picture_ptr,
@@ -3591,7 +3591,7 @@ EbErrorType SubSampleFilterNoise(
 
 EbErrorType QuarterSampleDetectNoise(
     PictureAnalysisContext_t    *context_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t       *quarter_decimated_picture_ptr,
     EbPictureBufferDesc_t       *noise_picture_ptr,
     EbPictureBufferDesc_t       *denoised_picture_ptr,
@@ -3731,7 +3731,7 @@ EbErrorType QuarterSampleDetectNoise(
 EbErrorType SubSampleDetectNoise(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t       *sixteenth_decimated_picture_ptr,
     EbPictureBufferDesc_t       *noise_picture_ptr,
     EbPictureBufferDesc_t       *denoised_picture_ptr,
@@ -3868,7 +3868,7 @@ EbErrorType SubSampleDetectNoise(
 EbErrorType QuarterSampleDenoise(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t        *quarter_decimated_picture_ptr,
     uint32_t                       sb_total_count,
     EbBool                      denoise_flag,
@@ -3935,7 +3935,7 @@ EbErrorType QuarterSampleDenoise(
 EbErrorType SubSampleDenoise(
     PictureAnalysisContext_t    *context_ptr,
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc_t        *sixteenth_decimated_picture_ptr,
     uint32_t                       sb_total_count,
     EbBool                      denoise_flag,
@@ -4023,7 +4023,7 @@ void SetPictureParametersForStatisticsGathering(
  ***** Denoising
  ************************************************/
 void PicturePreProcessingOperations(
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     SequenceControlSet            *sequence_control_set_ptr,
     EbPictureBufferDesc_t           *quarter_decimated_picture_ptr,
@@ -4060,7 +4060,7 @@ void PicturePreProcessingOperations(
 **************************************************************/
 void SubSampleLumaGeneratePixelIntensityHistogramBins(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     uint64_t                          *sumAverageIntensityTotalRegionsLuma,
     EbAsm                           asm_type) {
@@ -4117,7 +4117,7 @@ void SubSampleLumaGeneratePixelIntensityHistogramBins(
 
 void SubSampleChromaGeneratePixelIntensityHistogramBins(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     uint64_t                          *sumAverageIntensityTotalRegionsCb,
     uint64_t                          *sumAverageIntensityTotalRegionsCr,
@@ -4200,7 +4200,7 @@ void SubSampleChromaGeneratePixelIntensityHistogramBins(
 
 void EdgeDetectionMeanLumaChroma16x16(
     SequenceControlSet        *sequence_control_set_ptr,
-    PictureParentControlSet_t   *picture_control_set_ptr,
+    PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                       totalLcuCount)
 {
 
@@ -4213,9 +4213,9 @@ void EdgeDetectionMeanLumaChroma16x16(
     if ((picture_control_set_ptr->picture_number & 3) == 0) {
         for (sb_index = 0; sb_index < totalLcuCount; sb_index++) {
 
-            SbStat_t *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
+            SbStat *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
 
-            EB_MEMSET(sb_stat_ptr, 0, sizeof(SbStat_t));
+            EB_MEMSET(sb_stat_ptr, 0, sizeof(SbStat));
             LcuParameters     *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
             if (sb_params->potential_logo_sb &&sb_params->is_complete_sb)
 
@@ -4279,7 +4279,7 @@ void EdgeDetectionMeanLumaChroma16x16(
         for (sb_index = 0; sb_index < totalLcuCount; sb_index++) {
             LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
             if (sb_params->potential_logo_sb &&sb_params->is_complete_sb) {
-                SbStat_t *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
+                SbStat *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
 
                 uint32_t rasterScanCuIndex;
                 for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_16x16_0; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_16x16_15; rasterScanCuIndex++) {
@@ -4291,9 +4291,9 @@ void EdgeDetectionMeanLumaChroma16x16(
     else {
         for (sb_index = 0; sb_index < totalLcuCount; sb_index++) {
 
-            SbStat_t *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
+            SbStat *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
 
-            EB_MEMSET(sb_stat_ptr, 0, sizeof(SbStat_t));
+            EB_MEMSET(sb_stat_ptr, 0, sizeof(SbStat));
         }
     }
 }
@@ -4303,7 +4303,7 @@ void EdgeDetectionMeanLumaChroma16x16(
 ******************************************************/
 void EdgeDetection(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr)
+    PictureParentControlSet       *picture_control_set_ptr)
 {
 
     uint16_t  *variancePtr;
@@ -4422,7 +4422,7 @@ void EdgeDetection(
 ******************************************************/
 void DetermineHomogeneousRegionInPicture(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr)
+    PictureParentControlSet       *picture_control_set_ptr)
 {
 
     uint16_t  *variancePtr;
@@ -4545,7 +4545,7 @@ void DetermineHomogeneousRegionInPicture(
  ************************************************/
 void ComputePictureSpatialStatistics(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     EbPictureBufferDesc_t           *input_padded_picture_ptr,
     uint32_t                           sb_total_count,
@@ -4622,7 +4622,7 @@ void ComputePictureSpatialStatistics(
 
 void CalculateInputAverageIntensity(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     uint64_t                           sumAverageIntensityTotalRegionsLuma,
     uint64_t                           sumAverageIntensityTotalRegionsCb,
@@ -4673,7 +4673,7 @@ void CalculateInputAverageIntensity(
  ************************************************/
 void GatheringPictureStatistics(
     SequenceControlSet            *sequence_control_set_ptr,
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_picture_ptr,
     EbPictureBufferDesc_t           *input_padded_picture_ptr,
     EbPictureBufferDesc_t            *sixteenth_decimated_picture_ptr,
@@ -4816,7 +4816,7 @@ void PadPictureToMultipleOfLcuDimensions(
 * 1/4 & 1/16 input picture decimation
 ************************************************/
 void DecimateInputPicture(
-    PictureParentControlSet_t       *picture_control_set_ptr,
+    PictureParentControlSet       *picture_control_set_ptr,
     EbPictureBufferDesc_t           *input_padded_picture_ptr,
     EbPictureBufferDesc_t           *quarter_decimated_picture_ptr,
     EbPictureBufferDesc_t           *sixteenth_decimated_picture_ptr) {
@@ -4921,7 +4921,7 @@ static int is_screen_content(const uint8_t *src, int use_hbd,
 void* picture_analysis_kernel(void *input_ptr)
 {
     PictureAnalysisContext_t        *context_ptr = (PictureAnalysisContext_t*)input_ptr;
-    PictureParentControlSet_t       *picture_control_set_ptr;
+    PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
 
     EbObjectWrapper               *inputResultsWrapperPtr;
@@ -4949,7 +4949,7 @@ void* picture_analysis_kernel(void *input_ptr)
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (ResourceCoordinationResults*)inputResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureParentControlSet_t*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureParentControlSet*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;
 
