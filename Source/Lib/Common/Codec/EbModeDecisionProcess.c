@@ -421,7 +421,7 @@ void reset_mode_decision(
     }
 
     picture_control_set_ptr->parent_pcs_ptr->allow_warped_motion = sequence_control_set_ptr->static_config.enable_warped_motion
-        && !(picture_control_set_ptr->parent_pcs_ptr->av1FrameType == KEY_FRAME || picture_control_set_ptr->parent_pcs_ptr->av1FrameType == INTRA_ONLY_FRAME)
+        && !(picture_control_set_ptr->parent_pcs_ptr->av1_frame_type == KEY_FRAME || picture_control_set_ptr->parent_pcs_ptr->av1_frame_type == INTRA_ONLY_FRAME)
         && !picture_control_set_ptr->parent_pcs_ptr->error_resilient_mode;
     picture_control_set_ptr->parent_pcs_ptr->switchable_motion_mode = picture_control_set_ptr->parent_pcs_ptr->allow_warped_motion;
 

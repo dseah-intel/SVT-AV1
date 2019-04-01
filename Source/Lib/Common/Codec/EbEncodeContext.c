@@ -156,7 +156,7 @@ EbErrorType encode_context_ctor(
 
     // Packetization Reordering Queue
     encode_context_ptr->packetization_reorder_queue_head_index = 0;
-    EB_MALLOC(PacketizationReorderEntry_t**, encode_context_ptr->packetization_reorder_queue, sizeof(PacketizationReorderEntry_t*) * PACKETIZATION_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(PacketizationReorderEntry**, encode_context_ptr->packetization_reorder_queue, sizeof(PacketizationReorderEntry*) * PACKETIZATION_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < PACKETIZATION_REORDER_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = packetization_reorder_entry_ctor(

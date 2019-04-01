@@ -99,7 +99,7 @@ typedef struct EncodeContext_s
     EbHandle                                         hl_rate_control_historgram_queue_mutex;
 
     // Packetization Reorder Queue
-    PacketizationReorderEntry_t                    **packetization_reorder_queue;
+    PacketizationReorderEntry                    **packetization_reorder_queue;
     uint32_t                                         packetization_reorder_queue_head_index;
 
     // GOP Counters

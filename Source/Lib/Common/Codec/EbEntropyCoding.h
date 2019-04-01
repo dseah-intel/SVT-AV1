@@ -102,11 +102,11 @@ extern "C" {
     //**********************************************************************************************************//
     //onyxc_int.h
     static INLINE int32_t frame_is_intra_only(const PictureParentControlSet *const pcsPtr) {
-        return pcsPtr->av1FrameType == KEY_FRAME || pcsPtr->av1FrameType == INTRA_ONLY_FRAME;
+        return pcsPtr->av1_frame_type == KEY_FRAME || pcsPtr->av1_frame_type == INTRA_ONLY_FRAME;
     }
 
     static INLINE int32_t frame_is_sframe(const PictureParentControlSet *pcsPtr) {
-        return pcsPtr->av1FrameType == S_FRAME;
+        return pcsPtr->av1_frame_type == S_FRAME;
     }
 
     // Returns 1 if this frame might allow mvs from some reference frame.
@@ -139,7 +139,7 @@ extern "C" {
         // (void)ref_frame;
         // return 0;
 
-        return pcsPtr->av1RefSignal.ref_dpb_index[ref_frame - LAST_FRAME];//LAST-LAST2-LAST3-GOLDEN-BWD-ALT2-ALT
+        return pcsPtr->av1_ref_signal.ref_dpb_index[ref_frame - LAST_FRAME];//LAST-LAST2-LAST3-GOLDEN-BWD-ALT2-ALT
         //if (ref_frame >= LAST_FRAME && ref_frame <= LAST3_FRAME)
         //    return pcsPtr->lst_fb_idxes[ref_frame - 1];
         //else if (ref_frame == GOLDEN_FRAME)

@@ -3573,7 +3573,7 @@ static void write_film_grain_params(PictureParentControlSet *pcsPtr,
 
     aom_wb_write_literal(wb, pars->random_seed, 16);
 
-    if (pcsPtr->av1FrameType == INTER_FRAME) {
+    if (pcsPtr->av1_frame_type == INTER_FRAME) {
         EbReferenceObject* refObj0 = (EbReferenceObject*)pcsPtr->childPcs->ref_pic_ptr_array[REF_LIST_0]->object_ptr;
         int32_t ref_idx = 0;
         pars->update_parameters = 1;
@@ -3695,7 +3695,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
         if (showExisting) {
             //printf("ERROR[AN]: show_existing_frame not supported yet\n");
             //RefCntBuffer *const frame_bufs = cm->buffer_pool->frame_bufs;
-            //const int32_t frame_to_show = cm->ref_frame_map[cpi->showExistingLoc];
+            //const int32_t frame_to_show = cm->ref_frame_map[cpi->show_existing_loc];
 
             //if (frame_to_show < 0 || frame_bufs[frame_to_show].ref_count < 1) {
             //    aom_internal_error(&cm->error, AOM_CODEC_UNSUP_BITSTREAM,
@@ -3705,17 +3705,17 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
             //ref_cnt_fb(frame_bufs, &cm->new_fb_idx, frame_to_show);
 
             aom_wb_write_bit(wb, 1);  // show_existing_frame
-            aom_wb_write_literal(wb, pcsPtr->showExistingLoc, 3);
+            aom_wb_write_literal(wb, pcsPtr->show_existing_loc, 3);
 
             if (scsPtr->frame_id_numbers_present_flag) {
                 printf("ERROR[AN]: frame_id_numbers_present_flag not supported yet\n");
                 /*int32_t frame_id_len = cm->seq_params.frame_id_length;
-                int32_t display_frame_id = cm->ref_frame_id[cpi->showExistingLoc];
+                int32_t display_frame_id = cm->ref_frame_id[cpi->show_existing_loc];
                 aom_wb_write_literal(wb, display_frame_id, frame_id_len);*/
             }
 
             //        if (cm->reset_decoder_state &&
-            //            frame_bufs[frame_to_show].av1FrameType != KEY_FRAME) {
+            //            frame_bufs[frame_to_show].av1_frame_type != KEY_FRAME) {
             //            aom_internal_error(
             //                &cm->error, AOM_CODEC_UNSUP_BITSTREAM,
             //                "show_existing_frame to reset state on KEY_FRAME only");
@@ -3729,22 +3729,22 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
         }
 
 
-        //pcsPtr->av1FrameType = pcsPtr->intra_only ? INTRA_ONLY_FRAME : pcsPtr->av1FrameType;
+        //pcsPtr->av1_frame_type = pcsPtr->intra_only ? INTRA_ONLY_FRAME : pcsPtr->av1_frame_type;
 
-        aom_wb_write_literal(wb, pcsPtr->av1FrameType, 2);
+        aom_wb_write_literal(wb, pcsPtr->av1_frame_type, 2);
 
-        // if (pcsPtr->intra_only) pcsPtr->av1FrameType = INTRA_ONLY_FRAME;
+        // if (pcsPtr->intra_only) pcsPtr->av1_frame_type = INTRA_ONLY_FRAME;
 
-        aom_wb_write_bit(wb, pcsPtr->showFrame);
+        aom_wb_write_bit(wb, pcsPtr->show_frame);
 
-        if (!pcsPtr->showFrame) {
+        if (!pcsPtr->show_frame) {
             aom_wb_write_bit(wb, pcsPtr->showable_frame);
         }
-        if (pcsPtr->av1FrameType == S_FRAME) {
+        if (pcsPtr->av1_frame_type == S_FRAME) {
             assert(pcsPtr->error_resilient_mode);
         }
 
-        else if (!(pcsPtr->av1FrameType == KEY_FRAME && pcsPtr->showFrame)) {
+        else if (!(pcsPtr->av1_frame_type == KEY_FRAME && pcsPtr->show_frame)) {
 
             aom_wb_write_bit(wb, pcsPtr->error_resilient_mode);
         }
@@ -3787,10 +3787,10 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
         //}
 
         int32_t frame_size_override_flag = 0;
-        /*        (pcsPtr->av1FrameType == S_FRAME) ? 1
+        /*        (pcsPtr->av1_frame_type == S_FRAME) ? 1
         : (cm->width != cm->seq_params.max_frame_width ||
         cm->height != cm->seq_params.max_frame_height);*/
-        if (pcsPtr->av1FrameType != S_FRAME) aom_wb_write_bit(wb, frame_size_override_flag);
+        if (pcsPtr->av1_frame_type != S_FRAME) aom_wb_write_bit(wb, frame_size_override_flag);
 
         if (scsPtr->enable_order_hint)
             aom_wb_write_literal(wb, (int32_t)pcsPtr->frame_offset,
@@ -3803,20 +3803,20 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
 
     }
     int32_t frame_size_override_flag = 0;
-    if (pcsPtr->av1FrameType == KEY_FRAME) {
-        if (!pcsPtr->showFrame) {
-            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
+    if (pcsPtr->av1_frame_type == KEY_FRAME) {
+        if (!pcsPtr->show_frame) {
+            aom_wb_write_literal(wb, pcsPtr->av1_ref_signal.refresh_frame_mask, REF_FRAMES);
         }
     }
     else {
 
-        if (pcsPtr->av1FrameType == INTRA_ONLY_FRAME) {
+        if (pcsPtr->av1_frame_type == INTRA_ONLY_FRAME) {
             // pcsPtr->refresh_frame_mask = get_refresh_mask(cpi);
             int32_t updated_fb = -1;
             for (int32_t i = 0; i < REF_FRAMES; i++) {
                 // If more than one frame is refreshed, it doesn't matter which one
                 // we pick, so pick the first.
-                if (pcsPtr->av1RefSignal.refresh_frame_mask & (1 << i)) {
+                if (pcsPtr->av1_ref_signal.refresh_frame_mask & (1 << i)) {
                     updated_fb = i;
                     break;
                 }
@@ -3824,24 +3824,24 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
             assert(updated_fb >= 0);
             pcsPtr->fb_of_context_type[pcsPtr->frame_context_idx] = updated_fb;
 
-            aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
+            aom_wb_write_literal(wb, pcsPtr->av1_ref_signal.refresh_frame_mask, REF_FRAMES);
 
         }
-        else if (pcsPtr->av1FrameType == INTER_FRAME || frame_is_sframe(pcsPtr)) {
+        else if (pcsPtr->av1_frame_type == INTER_FRAME || frame_is_sframe(pcsPtr)) {
 
             //pcsPtr->refresh_frame_mask = get_refresh_mask(cpi);
-            if (pcsPtr->av1FrameType == INTER_FRAME) {
-                aom_wb_write_literal(wb, pcsPtr->av1RefSignal.refresh_frame_mask, REF_FRAMES);
+            if (pcsPtr->av1_frame_type == INTER_FRAME) {
+                aom_wb_write_literal(wb, pcsPtr->av1_ref_signal.refresh_frame_mask, REF_FRAMES);
             }
             else {
-                assert(frame_is_sframe(pcsPtr) && pcsPtr->av1RefSignal.refresh_frame_mask == 0xFF);
+                assert(frame_is_sframe(pcsPtr) && pcsPtr->av1_ref_signal.refresh_frame_mask == 0xFF);
             }
 
             int32_t updated_fb = -1;
             for (int32_t i = 0; i < REF_FRAMES; i++) {
                 // If more than one frame is refreshed, it doesn't matter which one
                 // we pick, so pick the first.
-                if (pcsPtr->av1RefSignal.refresh_frame_mask & (1 << i)) {
+                if (pcsPtr->av1_ref_signal.refresh_frame_mask & (1 << i)) {
                     updated_fb = i;
                     break;
                 }
@@ -3851,7 +3851,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
                 pcsPtr->fb_of_context_type[pcsPtr->frame_context_idx] = updated_fb;
             }
 
-            if (!pcsPtr->av1RefSignal.refresh_frame_mask) {
+            if (!pcsPtr->av1_ref_signal.refresh_frame_mask) {
                 // NOTE: "cpi->refresh_frame_mask == 0" indicates that the coded frame
                 //       will not be used as a reference
                 pcsPtr->is_reference_frame = 0;
@@ -3860,7 +3860,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
         }
     }
 
-    if (pcsPtr->av1FrameType == KEY_FRAME) {
+    if (pcsPtr->av1_frame_type == KEY_FRAME) {
         write_frame_size(pcsPtr, frame_size_override_flag, wb);
         //assert(av1_superres_unscaled(cm) ||
         //    !(cm->allow_intrabc && NO_FILTER_FOR_IBC));
@@ -3870,12 +3870,12 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
         pcsPtr->fb_of_context_type[REGULAR_FRAME] = 0;
     }
     else {
-        if (pcsPtr->av1FrameType == INTRA_ONLY_FRAME) {
+        if (pcsPtr->av1_frame_type == INTRA_ONLY_FRAME) {
             write_frame_size(pcsPtr, frame_size_override_flag, wb);
             if (pcsPtr->allow_screen_content_tools)
                 aom_wb_write_bit(wb, pcsPtr->allow_intrabc);
         }
-        else if (pcsPtr->av1FrameType == INTER_FRAME || frame_is_sframe(pcsPtr)) {
+        else if (pcsPtr->av1_frame_type == INTER_FRAME || frame_is_sframe(pcsPtr)) {
             MvReferenceFrame ref_frame;
 
             assert(pcsPtr->frame_refs_short_signaling == 0);
@@ -4049,7 +4049,7 @@ static void WriteUncompressedHeaderObu(SequenceControlSet *scsPtr/*Av1Comp *cpi*
 
 
 
-    if (scsPtr->film_grain_params_present && (pcsPtr->showFrame || pcsPtr->showable_frame)) {
+    if (scsPtr->film_grain_params_present && (pcsPtr->show_frame || pcsPtr->showable_frame)) {
         write_film_grain_params(pcsPtr, wb);
     }
 }

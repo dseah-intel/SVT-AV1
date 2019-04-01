@@ -14148,11 +14148,11 @@ extern "C" {
         uint8_t                               skip_sub_blks;
 #endif
         //**********************************************************************************************************//
-        FRAME_TYPE                            av1FrameType;
-        Av1RpsNode                          av1RefSignal;
-        EbBool                                showFrame;
-        EbBool                                hasShowExisting;
-        uint8_t                               showExistingLoc;
+        FRAME_TYPE                            av1_frame_type;
+        Av1RpsNode                          av1_ref_signal;
+        EbBool                                show_frame;
+        EbBool                                has_show_existing;
+        uint8_t                               show_existing_loc;
 
         int32_t                               ref_frame_map[REF_FRAMES]; /* maps fb_idx to reference slot */
         int32_t                               is_skip_mode_allowed;

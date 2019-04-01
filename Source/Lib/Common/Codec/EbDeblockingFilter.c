@@ -1858,7 +1858,7 @@ void av1_pick_filter_level(
     const int32_t num_planes = 3;
     (void)srcBuffer;
     struct loopfilter *const lf = &pcsPtr->parent_pcs_ptr->lf;
-    lf->sharpness_level = pcsPtr->parent_pcs_ptr->av1FrameType == KEY_FRAME ? 0 : LF_SHARPNESS;
+    lf->sharpness_level = pcsPtr->parent_pcs_ptr->av1_frame_type == KEY_FRAME ? 0 : LF_SHARPNESS;
 
     if (method == LPF_PICK_MINIMAL_LPF) {
         lf->filter_level[0] = 0;
@@ -1878,7 +1878,7 @@ void av1_pick_filter_level(
         int32_t filt_guess;
         switch (scsPtr->static_config.encoder_bit_depth) {
         case EB_8BIT:
-            filt_guess = (pcsPtr->parent_pcs_ptr->av1FrameType == KEY_FRAME)
+            filt_guess = (pcsPtr->parent_pcs_ptr->av1_frame_type == KEY_FRAME)
                 ? ROUND_POWER_OF_TWO(q * 17563 - 421574, 18)
                 : ROUND_POWER_OF_TWO(q * 6017 + 650707, 18);
             break;
@@ -1894,7 +1894,7 @@ void av1_pick_filter_level(
                 "or AOM_BITS_12");
             return;
         }
-        if (scsPtr->static_config.encoder_bit_depth != EB_8BIT && pcsPtr->parent_pcs_ptr->av1FrameType == KEY_FRAME)
+        if (scsPtr->static_config.encoder_bit_depth != EB_8BIT && pcsPtr->parent_pcs_ptr->av1_frame_type == KEY_FRAME)
             filt_guess -= 4;
 
    
