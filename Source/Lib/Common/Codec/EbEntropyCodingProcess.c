@@ -371,7 +371,7 @@ static void EntropyCodingLcu(
     UNUSED(sb_origin_y);
     (void)terminateSliceFlag;
     (void)sequence_control_set_ptr;
-    EbPictureBufferDesc_t *coeffPicturePtr = sb_ptr->quantized_coeff;
+    EbPictureBufferDesc *coeffPicturePtr = sb_ptr->quantized_coeff;
 
     //rate Control
     uint32_t                       writtenBitsBeforeQuantizedCoeff;
@@ -594,7 +594,7 @@ void* EntropyCodingKernel(void *input_ptr)
 #if RC            
                     sb_ptr->total_bits = 0;
                     uint32_t prev_pos = sb_index ? picture_control_set_ptr->entropy_coder_ptr->ecWriter.ec.offs : 0;//residual_bc.pos
-                    EbPictureBufferDesc_t *coeff_picture_ptr = sb_ptr->quantized_coeff;
+                    EbPictureBufferDesc *coeff_picture_ptr = sb_ptr->quantized_coeff;
                     write_sb(
                         context_ptr,
                         sb_ptr,
@@ -749,7 +749,7 @@ void* EntropyCodingKernel(void *input_ptr)
 #if RC
                              sb_ptr->total_bits = 0;
                              uint32_t prev_pos = sb_index ? picture_control_set_ptr->entropy_coder_ptr->ecWriter.ec.offs : 0;//residual_bc.pos
-                             EbPictureBufferDesc_t *coeff_picture_ptr = sb_ptr->quantized_coeff;
+                             EbPictureBufferDesc *coeff_picture_ptr = sb_ptr->quantized_coeff;
                              write_sb(
                                  context_ptr,
                                  sb_ptr,

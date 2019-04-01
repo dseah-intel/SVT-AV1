@@ -304,7 +304,7 @@ extern "C" {
         ModeDecisionCandidateBuffer_t   *candidateBuffer,
         LargestCodingUnit_t             *sb_ptr,
         ModeDecisionContext_t           *context_ptr,
-        EbPictureBufferDesc_t           *input_picture_ptr,
+        EbPictureBufferDesc           *input_picture_ptr,
         uint32_t                         inputCbOriginIndex,
         uint32_t                         cuChromaOriginIndex,
         EbAsm                            asm_type);

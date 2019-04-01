@@ -61,13 +61,13 @@ extern "C" {
         IntraReference16bitSamples_t          *intra_ref_ptr16;  //We need a different buffer for ENC pass then the MD one.
         
         // Coding Unit Workspace---------------------------
-        EbPictureBufferDesc_t                 *residual_buffer;
-        EbPictureBufferDesc_t                 *transform_buffer;
-        EbPictureBufferDesc_t                 *input_samples;
-        EbPictureBufferDesc_t                 *input_sample16bit_buffer;
+        EbPictureBufferDesc                 *residual_buffer;
+        EbPictureBufferDesc                 *transform_buffer;
+        EbPictureBufferDesc                 *input_samples;
+        EbPictureBufferDesc                 *input_sample16bit_buffer;
         // temporary buffers for decision making of LF (LPF_PICK_FROM_FULL_IMAGE).
         // Since recon switches between reconPtr and referencePtr, the temporary buffers sizes used the referencePtr's which has padding,...
-        EbPictureBufferDesc_t                 *inverse_quant_buffer;
+        EbPictureBufferDesc                 *inverse_quant_buffer;
         // Lambda
 #if ADD_DELTA_QP_SUPPORT
         uint16_t                               qp;

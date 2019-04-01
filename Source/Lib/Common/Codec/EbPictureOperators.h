@@ -30,10 +30,10 @@ extern "C" {
         EbAsm     asm_type);
 
     extern EbErrorType picture_copy8_bit(
-        EbPictureBufferDesc_t  *src,
+        EbPictureBufferDesc  *src,
         uint32_t                src_luma_origin_index,
         uint32_t                src_chroma_origin_index,
-        EbPictureBufferDesc_t  *dst,
+        EbPictureBufferDesc  *dst,
         uint32_t                dst_luma_origin_index,
         uint32_t                dst_chroma_origin_index,
         uint32_t                area_width,
@@ -44,10 +44,10 @@ extern "C" {
         EbAsm                   asm_type);
 
     extern EbErrorType picture_full_distortion32_bits(
-        EbPictureBufferDesc_t  *coeff,
+        EbPictureBufferDesc  *coeff,
         uint32_t                coeff_luma_origin_index,
         uint32_t                coeff_chroma_origin_index,
-        EbPictureBufferDesc_t  *recon_coeff,
+        EbPictureBufferDesc  *recon_coeff,
         uint32_t                recon_coeff_luma_origin_index,
         uint32_t                recon_coeff_chroma_origin_index,
         uint32_t                bwidth,

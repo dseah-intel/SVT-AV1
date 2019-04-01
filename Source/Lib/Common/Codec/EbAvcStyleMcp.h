@@ -22,15 +22,15 @@ extern "C" {
 #endif
 
     void estimate_bi_pred_interpolation_avc_luma(
-        EbPictureBufferDesc_t *ref_pic_list0,
-        EbPictureBufferDesc_t *ref_pic_list1,
+        EbPictureBufferDesc *ref_pic_list0,
+        EbPictureBufferDesc *ref_pic_list1,
         uint32_t                 refList0PosX,
         uint32_t                 refList0PosY,
         uint32_t                 refList1PosX,
         uint32_t                 refList1PosY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *biDst,
+        EbPictureBufferDesc *biDst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -41,12 +41,12 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_uni_pred_interpolation_avc_luma(
-        EbPictureBufferDesc_t *ref_pic,
+        EbPictureBufferDesc *ref_pic,
         uint32_t                 posX,
         uint32_t                 posY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *dst,
+        EbPictureBufferDesc *dst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -55,15 +55,15 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_bi_pred_interpolation_unpacked_avc_style(
-        EbPictureBufferDesc_t *ref_pic_list0,
-        EbPictureBufferDesc_t *ref_pic_list1,
+        EbPictureBufferDesc *ref_pic_list0,
+        EbPictureBufferDesc *ref_pic_list1,
         uint32_t                 refList0PosX,
         uint32_t                 refList0PosY,
         uint32_t                 refList1PosX,
         uint32_t                 refList1PosY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *biDst,
+        EbPictureBufferDesc *biDst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -74,12 +74,12 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_uni_pred_interpolation_unpacked_avc_style(
-        EbPictureBufferDesc_t *ref_pic,
+        EbPictureBufferDesc *ref_pic,
         uint32_t                 posX,
         uint32_t                 posY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *dst,
+        EbPictureBufferDesc *dst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -88,12 +88,12 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_uni_pred_interpolation_avc_chroma_ref10_bit(
-        EbPictureBufferDesc_t *refFramePicList0,
+        EbPictureBufferDesc *refFramePicList0,
         uint32_t                 posX,
         uint32_t                 posY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *dst,
+        EbPictureBufferDesc *dst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,          //input parameter, please refer to the detailed explanation above.
         uint32_t                 component_mask,
@@ -101,15 +101,15 @@ extern "C" {
         EbBool                sub_pred,
         EbAsm                 asm_type);
     void estimate_bi_pred_interpolation_avc_chroma_ref10_bit(
-        EbPictureBufferDesc_t *refFramePicList0,
-        EbPictureBufferDesc_t *refFramePicList1,
+        EbPictureBufferDesc *refFramePicList0,
+        EbPictureBufferDesc *refFramePicList1,
         uint32_t                 refList0PosX,
         uint32_t                 refList0PosY,
         uint32_t                 refList1PosX,
         uint32_t                 refList1PosY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *biDst,
+        EbPictureBufferDesc *biDst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -120,12 +120,12 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_uni_pred_interpolation_avc_lumaRef10Bit(
-        EbPictureBufferDesc_t *refFramePicList0,
+        EbPictureBufferDesc *refFramePicList0,
         uint32_t                 posX,
         uint32_t                 posY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *dst,
+        EbPictureBufferDesc *dst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,          //input parameter, please refer to the detailed explanation above.
         uint32_t                 component_mask,
@@ -135,15 +135,15 @@ extern "C" {
         EbAsm                 asm_type);
 
     void estimate_bi_pred_interpolation_avc_luma_ref10_bit(
-        EbPictureBufferDesc_t *refFramePicList0,
-        EbPictureBufferDesc_t *refFramePicList1,
+        EbPictureBufferDesc *refFramePicList0,
+        EbPictureBufferDesc *refFramePicList1,
         uint32_t                 refList0PosX,
         uint32_t                 refList0PosY,
         uint32_t                 refList1PosX,
         uint32_t                 refList1PosY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *biDst,
+        EbPictureBufferDesc *biDst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,
@@ -155,12 +155,12 @@ extern "C" {
         EbAsm                 asm_type);
 
     void uni_pred_i_free_ref8_bit(
-        EbPictureBufferDesc_t *ref_pic,
+        EbPictureBufferDesc *ref_pic,
         uint32_t                 posX,
         uint32_t                 posY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *dst,
+        EbPictureBufferDesc *dst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,          //input parameter, please refer to the detailed explanation above.
         uint32_t                 component_mask,
@@ -169,15 +169,15 @@ extern "C" {
         EbBool                subSamplePredFlagChroma,
         EbAsm                 asm_type);
     void bi_pred_i_free_ref8_bit(
-        EbPictureBufferDesc_t *ref_pic_list0,
-        EbPictureBufferDesc_t *ref_pic_list1,
+        EbPictureBufferDesc *ref_pic_list0,
+        EbPictureBufferDesc *ref_pic_list1,
         uint32_t                 refList0PosX,
         uint32_t                 refList0PosY,
         uint32_t                 refList1PosX,
         uint32_t                 refList1PosY,
         uint32_t                 pu_width,
         uint32_t                 pu_height,
-        EbPictureBufferDesc_t *biDst,
+        EbPictureBufferDesc *biDst,
         uint32_t                 dstLumaIndex,
         uint32_t                 dstChromaIndex,
         uint32_t                 component_mask,

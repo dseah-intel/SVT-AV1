@@ -12,9 +12,9 @@
 
 typedef struct EbReferenceObject 
 {
-    EbPictureBufferDesc_t          *reference_picture;
-    EbPictureBufferDesc_t          *reference_picture16bit;
-    EbPictureBufferDesc_t          *ref_den_src_picture;
+    EbPictureBufferDesc          *reference_picture;
+    EbPictureBufferDesc          *reference_picture16bit;
+    EbPictureBufferDesc          *ref_den_src_picture;
 
     TmvpUnit_t                     *tmvp_map;
     EbBool                          tmvp_enable_flag;
@@ -39,14 +39,14 @@ typedef struct EbReferenceObject
 } EbReferenceObject;
 
 typedef struct EbReferenceObjectDescInitData {
-    EbPictureBufferDescInitData_t   reference_picture_desc_init_data;
+    EbPictureBufferDescInitData   reference_picture_desc_init_data;
 } EbReferenceObjectDescInitData;
 
 typedef struct EbPaReferenceObject 
 {
-    EbPictureBufferDesc_t          *input_padded_picture_ptr;
-    EbPictureBufferDesc_t          *quarter_decimated_picture_ptr;
-    EbPictureBufferDesc_t          *sixteenth_decimated_picture_ptr;
+    EbPictureBufferDesc          *input_padded_picture_ptr;
+    EbPictureBufferDesc          *quarter_decimated_picture_ptr;
+    EbPictureBufferDesc          *sixteenth_decimated_picture_ptr;
     uint16_t                        variance[MAX_NUMBER_OF_TREEBLOCKS_PER_PICTURE];
     uint8_t                         y_mean[MAX_NUMBER_OF_TREEBLOCKS_PER_PICTURE];
     EB_SLICE                        slice_type;
@@ -57,9 +57,9 @@ typedef struct EbPaReferenceObject
 
 typedef struct EbPaReferenceObjectDescInitData 
 {
-    EbPictureBufferDescInitData_t   reference_picture_desc_init_data;
-    EbPictureBufferDescInitData_t   quarter_picture_desc_init_data;
-    EbPictureBufferDescInitData_t   sixteenth_picture_desc_init_data;
+    EbPictureBufferDescInitData   reference_picture_desc_init_data;
+    EbPictureBufferDescInitData   quarter_picture_desc_init_data;
+    EbPictureBufferDescInitData   sixteenth_picture_desc_init_data;
 } EbPaReferenceObjectDescInitData;
 
 /**************************************

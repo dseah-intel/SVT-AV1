@@ -797,7 +797,7 @@ static INLINE void setup_pred_plane(struct Buf2d *dst, block_size bsize,
 }
 void av1_setup_dst_planes(struct MacroblockdPlane *planes, block_size bsize,
     //const Yv12BufferConfig *src,
-    const EbPictureBufferDesc_t *src,
+    const EbPictureBufferDesc *src,
     int32_t mi_row, int32_t mi_col,
     const int32_t plane_start, const int32_t plane_end) {
     // We use AOMMIN(num_planes, MAX_MB_PLANE) instead of num_planes to quiet
@@ -818,14 +818,14 @@ void av1_setup_dst_planes(struct MacroblockdPlane *planes, block_size bsize,
         }
         else if (i == 1) {
             struct MacroblockdPlane *const pd = &planes[1];
-            setup_pred_plane(&pd->dst, bsize, &src->bufferCb[((src->origin_x + src->origin_y*src->strideCb) << pd->is16Bit) / 2], src->width / 2,
-                src->height / 2, src->strideCb, mi_row,
+            setup_pred_plane(&pd->dst, bsize, &src->buffer_cb[((src->origin_x + src->origin_y*src->stride_cb) << pd->is16Bit) / 2], src->width / 2,
+                src->height / 2, src->stride_cb, mi_row,
                 mi_col, /*NULL,*/ pd->subsampling_x, pd->subsampling_y, pd->is16Bit);
         }
         else if (i == 2) {
             struct MacroblockdPlane *const pd = &planes[2];
-            setup_pred_plane(&pd->dst, bsize, &src->bufferCr[((src->origin_x + src->origin_y*src->strideCr) << pd->is16Bit) / 2], src->width / 2,
-                src->height / 2, src->strideCr, mi_row,
+            setup_pred_plane(&pd->dst, bsize, &src->buffer_cr[((src->origin_x + src->origin_y*src->stride_cr) << pd->is16Bit) / 2], src->width / 2,
+                src->height / 2, src->stride_cr, mi_row,
                 mi_col,/* NULL,*/ pd->subsampling_x, pd->subsampling_y, pd->is16Bit);
         }
     }
@@ -1271,7 +1271,7 @@ void av1_filter_block_plane_horz(
 
 // New function to filter each sb (64x64)
 void loop_filter_sb(
-    EbPictureBufferDesc_t *frame_buffer,//reconpicture,
+    EbPictureBufferDesc *frame_buffer,//reconpicture,
     //Yv12BufferConfig *frame_buffer,
     PictureControlSet *pcsPtr,
     MacroBlockD *xd, int32_t mi_row, int32_t mi_col,
@@ -1349,7 +1349,7 @@ void loop_filter_sb(
 }
 
 void av1_loop_filter_frame(
-    EbPictureBufferDesc_t *frame_buffer,
+    EbPictureBufferDesc *frame_buffer,
     PictureControlSet *picture_control_set_ptr,
     int32_t plane_start, int32_t plane_end) {
 
@@ -1391,8 +1391,8 @@ void av1_loop_filter_frame(
 extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth);
 
 void EbCopyBuffer(
-    EbPictureBufferDesc_t  *srcBuffer,
-    EbPictureBufferDesc_t  *dstBuffer,
+    EbPictureBufferDesc  *srcBuffer,
+    EbPictureBufferDesc  *dstBuffer,
     PictureControlSet    *pcsPtr,
     uint8_t                   plane) {
 
@@ -1401,11 +1401,11 @@ void EbCopyBuffer(
     dstBuffer->origin_y = srcBuffer->origin_y;
     dstBuffer->width = srcBuffer->width;
     dstBuffer->height = srcBuffer->height;
-    dstBuffer->maxWidth = srcBuffer->maxWidth;
-    dstBuffer->maxHeight = srcBuffer->maxHeight;
+    dstBuffer->max_width = srcBuffer->max_width;
+    dstBuffer->max_height = srcBuffer->max_height;
     dstBuffer->bit_depth = srcBuffer->bit_depth;
-    dstBuffer->lumaSize = srcBuffer->lumaSize;
-    dstBuffer->chromaSize = srcBuffer->chromaSize;
+    dstBuffer->luma_size = srcBuffer->luma_size;
+    dstBuffer->chroma_size = srcBuffer->chroma_size;
     dstBuffer->packedFlag = srcBuffer->packedFlag;
 
     uint32_t   lumaBufferOffset = (srcBuffer->origin_x + srcBuffer->origin_y*srcBuffer->stride_y) << is16bit;
@@ -1416,7 +1416,7 @@ void EbCopyBuffer(
         uint16_t stride_y = srcBuffer->stride_y << is16bit;
 
         dstBuffer->stride_y = srcBuffer->stride_y;
-        dstBuffer->strideBitIncY = srcBuffer->strideBitIncY;
+        dstBuffer->stride_bit_inc_y = srcBuffer->stride_bit_inc_y;
 
         for (int32_t inputRowIndex = 0; inputRowIndex < luma_height; inputRowIndex++) {
             EB_MEMCPY((dstBuffer->buffer_y + lumaBufferOffset + stride_y * inputRowIndex),
@@ -1426,30 +1426,30 @@ void EbCopyBuffer(
 
     }
     else if (plane == 1) {
-        uint16_t strideCb = srcBuffer->strideCb << is16bit;
-        dstBuffer->strideCb = srcBuffer->strideCb;
-        dstBuffer->strideBitIncCb = srcBuffer->strideBitIncCb;
+        uint16_t stride_cb = srcBuffer->stride_cb << is16bit;
+        dstBuffer->stride_cb = srcBuffer->stride_cb;
+        dstBuffer->stride_bit_inc_cb = srcBuffer->stride_bit_inc_cb;
 
-        uint32_t   chromaBufferOffset = (srcBuffer->origin_x / 2 + srcBuffer->origin_y / 2 * srcBuffer->strideCb) << is16bit;
+        uint32_t   chromaBufferOffset = (srcBuffer->origin_x / 2 + srcBuffer->origin_y / 2 * srcBuffer->stride_cb) << is16bit;
 
         for (int32_t inputRowIndex = 0; inputRowIndex < luma_height >> 1; inputRowIndex++) {
-            EB_MEMCPY((dstBuffer->bufferCb + chromaBufferOffset + strideCb * inputRowIndex),
-                (srcBuffer->bufferCb + chromaBufferOffset + strideCb * inputRowIndex),
+            EB_MEMCPY((dstBuffer->buffer_cb + chromaBufferOffset + stride_cb * inputRowIndex),
+                (srcBuffer->buffer_cb + chromaBufferOffset + stride_cb * inputRowIndex),
                 chroma_width);
 
         }
     }
     else if (plane == 2) {
-        uint16_t strideCr = srcBuffer->strideCr << is16bit;
+        uint16_t stride_cr = srcBuffer->stride_cr << is16bit;
 
-        dstBuffer->strideCr = srcBuffer->strideCr;
-        dstBuffer->strideBitIncCr = srcBuffer->strideBitIncCr;
+        dstBuffer->stride_cr = srcBuffer->stride_cr;
+        dstBuffer->stride_bit_inc_cr = srcBuffer->stride_bit_inc_cr;
 
-        uint32_t   chromaBufferOffset = (srcBuffer->origin_x / 2 + srcBuffer->origin_y / 2 * srcBuffer->strideCr) << is16bit;
+        uint32_t   chromaBufferOffset = (srcBuffer->origin_x / 2 + srcBuffer->origin_y / 2 * srcBuffer->stride_cr) << is16bit;
 
         for (int32_t inputRowIndex = 0; inputRowIndex < luma_height >> 1; inputRowIndex++) {
-            EB_MEMCPY((dstBuffer->bufferCr + chromaBufferOffset + strideCr * inputRowIndex),
-                (srcBuffer->bufferCr + chromaBufferOffset + strideCr * inputRowIndex),
+            EB_MEMCPY((dstBuffer->buffer_cr + chromaBufferOffset + stride_cr * inputRowIndex),
+                (srcBuffer->buffer_cr + chromaBufferOffset + stride_cr * inputRowIndex),
                 chroma_width);
         }
 
@@ -1469,7 +1469,7 @@ void EbCopyBuffer(
 
 uint64_t PictureSseCalculations(
     PictureControlSet    *picture_control_set_ptr,
-    EbPictureBufferDesc_t *recon_ptr,
+    EbPictureBufferDesc *recon_ptr,
     int32_t plane)
 
 {
@@ -1478,7 +1478,7 @@ uint64_t PictureSseCalculations(
 
     if (!is16bit) {
 
-        EbPictureBufferDesc_t *input_picture_ptr = (EbPictureBufferDesc_t*)picture_control_set_ptr->parent_pcs_ptr->enhanced_picture_ptr;
+        EbPictureBufferDesc *input_picture_ptr = (EbPictureBufferDesc*)picture_control_set_ptr->parent_pcs_ptr->enhanced_picture_ptr;
 
         uint32_t   columnIndex;
         uint32_t   row_index = 0;
@@ -1508,8 +1508,8 @@ uint64_t PictureSseCalculations(
 
         else if (plane == 1) {
 
-            reconCoeffBuffer = &((recon_ptr->bufferCb)[recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->strideCb]);
-            inputBuffer = &((input_picture_ptr->bufferCb)[input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->strideCb]);
+            reconCoeffBuffer = &((recon_ptr->buffer_cb)[recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->stride_cb]);
+            inputBuffer = &((input_picture_ptr->buffer_cb)[input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->stride_cb]);
 
             residualDistortion = 0;
             row_index = 0;
@@ -1521,16 +1521,16 @@ uint64_t PictureSseCalculations(
                     ++columnIndex;
                 }
 
-                inputBuffer += input_picture_ptr->strideCb;
-                reconCoeffBuffer += recon_ptr->strideCb;
+                inputBuffer += input_picture_ptr->stride_cb;
+                reconCoeffBuffer += recon_ptr->stride_cb;
                 ++row_index;
             }
 
             return residualDistortion;
         }
         else if (plane == 2) {
-            reconCoeffBuffer = &((recon_ptr->bufferCr)[recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->strideCr]);
-            inputBuffer = &((input_picture_ptr->bufferCr)[input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->strideCr]);
+            reconCoeffBuffer = &((recon_ptr->buffer_cr)[recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->stride_cr]);
+            inputBuffer = &((input_picture_ptr->buffer_cr)[input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->stride_cr]);
             residualDistortion = 0;
             row_index = 0;
 
@@ -1542,8 +1542,8 @@ uint64_t PictureSseCalculations(
                     ++columnIndex;
                 }
 
-                inputBuffer += input_picture_ptr->strideCr;
-                reconCoeffBuffer += recon_ptr->strideCr;
+                inputBuffer += input_picture_ptr->stride_cr;
+                reconCoeffBuffer += recon_ptr->stride_cr;
                 ++row_index;
             }
 
@@ -1552,7 +1552,7 @@ uint64_t PictureSseCalculations(
         return 0;
     }
     else {
-        EbPictureBufferDesc_t *input_picture_ptr = (EbPictureBufferDesc_t*)picture_control_set_ptr->input_frame16bit;
+        EbPictureBufferDesc *input_picture_ptr = (EbPictureBufferDesc*)picture_control_set_ptr->input_frame16bit;
 
         uint32_t   columnIndex;
         uint32_t   row_index = 0;
@@ -1583,8 +1583,8 @@ uint64_t PictureSseCalculations(
 
         else if (plane == 1) {
 
-            reconCoeffBuffer = (uint16_t*)&((recon_ptr->bufferCb)[(recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->strideCb) << is16bit]);
-            inputBuffer = (uint16_t*)&((input_picture_ptr->bufferCb)[(input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->strideCb) << is16bit]);
+            reconCoeffBuffer = (uint16_t*)&((recon_ptr->buffer_cb)[(recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->stride_cb) << is16bit]);
+            inputBuffer = (uint16_t*)&((input_picture_ptr->buffer_cb)[(input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->stride_cb) << is16bit]);
 
             residualDistortion = 0;
             row_index = 0;
@@ -1596,16 +1596,16 @@ uint64_t PictureSseCalculations(
                     ++columnIndex;
                 }
 
-                inputBuffer += input_picture_ptr->strideCb;
-                reconCoeffBuffer += recon_ptr->strideCb;
+                inputBuffer += input_picture_ptr->stride_cb;
+                reconCoeffBuffer += recon_ptr->stride_cb;
                 ++row_index;
             }
 
             return residualDistortion;
         }
         else if (plane == 2) {
-            reconCoeffBuffer = (uint16_t*)&((recon_ptr->bufferCr)[(recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->strideCr) << is16bit]);
-            inputBuffer = (uint16_t*)&((input_picture_ptr->bufferCr)[(input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->strideCr) << is16bit]);
+            reconCoeffBuffer = (uint16_t*)&((recon_ptr->buffer_cr)[(recon_ptr->origin_x / 2 + recon_ptr->origin_y / 2 * recon_ptr->stride_cr) << is16bit]);
+            inputBuffer = (uint16_t*)&((input_picture_ptr->buffer_cr)[(input_picture_ptr->origin_x / 2 + input_picture_ptr->origin_y / 2 * input_picture_ptr->stride_cr) << is16bit]);
             residualDistortion = 0;
             row_index = 0;
 
@@ -1617,8 +1617,8 @@ uint64_t PictureSseCalculations(
                     ++columnIndex;
                 }
 
-                inputBuffer += input_picture_ptr->strideCr;
-                reconCoeffBuffer += recon_ptr->strideCr;
+                inputBuffer += input_picture_ptr->stride_cr;
+                reconCoeffBuffer += recon_ptr->stride_cr;
                 ++row_index;
             }
 
@@ -1632,8 +1632,8 @@ uint64_t PictureSseCalculations(
 static int64_t try_filter_frame(
     //const Yv12BufferConfig *sd,
     //Av1Comp *const cpi,
-    const EbPictureBufferDesc_t *sd,
-    EbPictureBufferDesc_t  *tempLfReconBuffer,
+    const EbPictureBufferDesc *sd,
+    EbPictureBufferDesc  *tempLfReconBuffer,
     PictureControlSet *pcsPtr,
     int32_t filt_level,
     int32_t partial_frame, int32_t plane, int32_t dir) {
@@ -1648,7 +1648,7 @@ static int64_t try_filter_frame(
     if (plane == 0 && dir == 1) filter_level[0] = pcsPtr->parent_pcs_ptr->lf.filter_level[0];
 
     EbBool is16bit = (EbBool)(pcsPtr->parent_pcs_ptr->sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
-    EbPictureBufferDesc_t  *recon_buffer = is16bit ? pcsPtr->recon_picture16bit_ptr : pcsPtr->recon_picture_ptr;
+    EbPictureBufferDesc  *recon_buffer = is16bit ? pcsPtr->recon_picture16bit_ptr : pcsPtr->recon_picture_ptr;
     if (pcsPtr->parent_pcs_ptr->is_used_as_reference_flag == EB_TRUE) {
 
         //get the 16bit form of the input LCU
@@ -1686,8 +1686,8 @@ static int64_t try_filter_frame(
 }
 static int32_t search_filter_level(
     //const Yv12BufferConfig *sd, Av1Comp *cpi,
-    EbPictureBufferDesc_t *sd, // source
-    EbPictureBufferDesc_t  *tempLfReconBuffer,
+    EbPictureBufferDesc *sd, // source
+    EbPictureBufferDesc  *tempLfReconBuffer,
     PictureControlSet *pcsPtr,
     int32_t partial_frame,
     const int32_t *last_frame_filter_level,
@@ -1712,7 +1712,7 @@ static int32_t search_filter_level(
     int32_t filter_step = filt_mid < 16 ? 4 : filt_mid / 4;
 
     EbBool is16bit = (EbBool)(pcsPtr->parent_pcs_ptr->sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
-    EbPictureBufferDesc_t  *recon_buffer = is16bit ? pcsPtr->recon_picture16bit_ptr : pcsPtr->recon_picture_ptr;
+    EbPictureBufferDesc  *recon_buffer = is16bit ? pcsPtr->recon_picture16bit_ptr : pcsPtr->recon_picture_ptr;
 
     if (pcsPtr->parent_pcs_ptr->is_used_as_reference_flag == EB_TRUE) {
 
@@ -1850,7 +1850,7 @@ static int32_t search_filter_level(
 
 void av1_pick_filter_level(
     DlfContext_t            *context_ptr,
-    EbPictureBufferDesc_t   *srcBuffer, // source input
+    EbPictureBufferDesc   *srcBuffer, // source input
     PictureControlSet     *pcsPtr,
     LPF_PICK_METHOD          method) {
 
@@ -1913,7 +1913,7 @@ void av1_pick_filter_level(
             lf->filter_level[1],
             lf->filter_level_u,
             lf->filter_level_v };
-        EbPictureBufferDesc_t  *tempLfReconBuffer = (scsPtr->static_config.encoder_bit_depth != EB_8BIT) ? context_ptr->temp_lf_recon_picture16bit_ptr : context_ptr->temp_lf_recon_picture_ptr;
+        EbPictureBufferDesc  *tempLfReconBuffer = (scsPtr->static_config.encoder_bit_depth != EB_8BIT) ? context_ptr->temp_lf_recon_picture16bit_ptr : context_ptr->temp_lf_recon_picture_ptr;
 
         lf->filter_level[0] = lf->filter_level[1] =
             search_filter_level(srcBuffer, tempLfReconBuffer, pcsPtr, method == LPF_PICK_FROM_SUBIMAGE,

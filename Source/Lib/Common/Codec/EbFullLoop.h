@@ -15,7 +15,7 @@ extern "C" {
         LargestCodingUnit_t            *sb_ptr,
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
         ModeDecisionContext_t          *context_ptr,
-        EbPictureBufferDesc_t          *input_picture_ptr,
+        EbPictureBufferDesc          *input_picture_ptr,
         PictureControlSet            *picture_control_set_ptr,
         uint32_t                          component_mask,
         uint32_t                          cbQp,

@@ -1185,7 +1185,7 @@ EbErrorType IntraOpenLoopReferenceSamplesCtor(
  */
 EbErrorType UpdateNeighborSamplesArrayOpenLoop(
     IntraReferenceSamplesOpenLoop_t *intra_ref_ptr,
-    EbPictureBufferDesc_t           *inputPtr,
+    EbPictureBufferDesc           *inputPtr,
     uint32_t                           stride,
     uint32_t                           src_origin_x,
     uint32_t                           src_origin_y,
@@ -4090,7 +4090,7 @@ extern void av1_predict_intra_block(
     FILTER_INTRA_MODE filter_intra_mode,
     uint8_t* topNeighArray,
     uint8_t* leftNeighArray,
-    EbPictureBufferDesc_t  *recon_buffer,
+    EbPictureBufferDesc  *recon_buffer,
     int32_t col_off,
     int32_t row_off,
     int32_t plane,
@@ -4155,12 +4155,12 @@ extern void av1_predict_intra_block(
         dst_stride = recon_buffer->stride_y;
     }
     else if (plane == 1) {
-        dst = recon_buffer->bufferCb + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->strideCb);
-        dst_stride = recon_buffer->strideCb;
+        dst = recon_buffer->buffer_cb + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->stride_cb);
+        dst_stride = recon_buffer->stride_cb;
     }
     else {
-        dst = recon_buffer->bufferCr + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->strideCr);
-        dst_stride = recon_buffer->strideCr;
+        dst = recon_buffer->buffer_cr + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->stride_cr);
+        dst_stride = recon_buffer->stride_cr;
 
     }
 
@@ -4347,7 +4347,7 @@ void av1_predict_intra_block_16bit(
     FILTER_INTRA_MODE filter_intra_mode,
     uint16_t* topNeighArray,
     uint16_t* leftNeighArray,
-    EbPictureBufferDesc_t  *recon_buffer,
+    EbPictureBufferDesc  *recon_buffer,
     int32_t col_off,
     int32_t row_off,
     int32_t plane,
@@ -4403,12 +4403,12 @@ void av1_predict_intra_block_16bit(
         dst_stride = recon_buffer->stride_y;
     }
     else if (plane == 1) {
-        dst = (uint16_t*)(recon_buffer->bufferCb) + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->strideCb);
-        dst_stride = recon_buffer->strideCb;
+        dst = (uint16_t*)(recon_buffer->buffer_cb) + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->stride_cb);
+        dst_stride = recon_buffer->stride_cb;
     }
     else {
-        dst = (uint16_t*)(recon_buffer->bufferCr) + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->strideCr);
-        dst_stride = recon_buffer->strideCr;
+        dst = (uint16_t*)(recon_buffer->buffer_cr) + (pred_buf_x_offest + recon_buffer->origin_x / 2 + (pred_buf_y_offest + recon_buffer->origin_y / 2)*recon_buffer->stride_cr);
+        dst_stride = recon_buffer->stride_cr;
 
     }
 
@@ -4707,7 +4707,7 @@ EbErrorType AV1IntraPredictionCL(
 EbErrorType update_neighbor_samples_array_open_loop(
         uint8_t                           *above_ref,
         uint8_t                            *left_ref,
-        EbPictureBufferDesc_t              *input_ptr,
+        EbPictureBufferDesc              *input_ptr,
         uint32_t                            stride,
         uint32_t                            src_origin_x,
         uint32_t                            src_origin_y,

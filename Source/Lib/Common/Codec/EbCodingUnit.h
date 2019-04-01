@@ -345,9 +345,9 @@ extern "C" {
 
         };
 #if NO_ENCDEC
-        EbPictureBufferDesc_t      *quant_tmp;
-        EbPictureBufferDesc_t      *coeff_tmp;
-        EbPictureBufferDesc_t      *recon_tmp;
+        EbPictureBufferDesc      *quant_tmp;
+        EbPictureBufferDesc      *coeff_tmp;
+        EbPictureBufferDesc      *recon_tmp;
         uint32_t                    cand_buff_index;
 #endif
         MacroBlockD                *av1xd;
@@ -433,7 +433,7 @@ extern "C" {
         uint32_t                        total_bits;
 
         // Quantized Coefficients
-        EbPictureBufferDesc_t          *quantized_coeff;
+        EbPictureBufferDesc          *quantized_coeff;
         TileInfo tile_info;
 
     } LargestCodingUnit_t;

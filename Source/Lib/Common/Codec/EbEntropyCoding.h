@@ -57,7 +57,7 @@ extern "C" {
         LargestCodingUnit_t     *tbPtr,
         PictureControlSet     *picture_control_set_ptr,
         EntropyCoder_t          *entropy_coder_ptr,
-        EbPictureBufferDesc_t   *coeffPtr);
+        EbPictureBufferDesc   *coeffPtr);
 
 
     extern EbErrorType EncodeSliceFinish(
@@ -79,7 +79,7 @@ extern "C" {
         uint32_t                                  tuOriginIndex,
         uint32_t                                  tuChromaOriginIndex,
         EntropyCoder_t                         *entropy_coder_ptr,
-        EbPictureBufferDesc_t                  *coeff_buffer_sb,
+        EbPictureBufferDesc                  *coeff_buffer_sb,
         uint32_t                                 yEob,
         uint32_t                                 cbEob,
         uint32_t                                 crEob,

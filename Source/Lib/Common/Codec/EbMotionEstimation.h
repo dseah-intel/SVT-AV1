@@ -24,13 +24,13 @@ extern "C" {
         uint32_t                       sb_origin_x,
         uint32_t                       sb_origin_y,
         MeContext_t                 *context_ptr,
-        EbPictureBufferDesc_t       *input_ptr);
+        EbPictureBufferDesc       *input_ptr);
 
     extern EbErrorType OpenLoopIntraCandidateSearchLcu(
         PictureParentControlSet   *picture_control_set_ptr,
         uint32_t                       sb_index,
         MotionEstimationContext_t   *context_ptr,
-        EbPictureBufferDesc_t       *input_ptr,
+        EbPictureBufferDesc       *input_ptr,
         EbAsm                       asm_type);
 
     extern void Decimation2D(
@@ -47,7 +47,7 @@ extern "C" {
         PictureParentControlSet   *picture_control_set_ptr,
         uint32_t                       sb_index,
         MotionEstimationContext_t   *context_ptr,
-        EbPictureBufferDesc_t       *input_ptr,
+        EbPictureBufferDesc       *input_ptr,
         EbAsm                       asm_type);
 
 

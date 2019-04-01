@@ -336,13 +336,13 @@ EbErrorType AllocateOutputReconBuffers(
 {
 
     EbErrorType   return_error = EB_ErrorNone;
-    const size_t lumaSize =
+    const size_t luma_size =
         config->input_padded_width    *
         config->input_padded_height;
     // both u and v
-    const size_t chromaSize = lumaSize >> 1;
+    const size_t chroma_size = luma_size >> 1;
     const size_t tenBit = (config->encoder_bit_depth > 8);
-    const size_t frameSize = (lumaSize + chromaSize) << tenBit;
+    const size_t frameSize = (luma_size + chroma_size) << tenBit;
 
 // ... Recon Port
     EB_APP_MALLOC(EbBufferHeaderType*, callback_data->recon_buffer, sizeof(EbBufferHeaderType), EB_N_PTR, EB_ErrorInsufficientResources);

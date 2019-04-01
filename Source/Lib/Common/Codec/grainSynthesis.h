@@ -110,8 +110,8 @@ extern "C" {
      * \param[in]    dst              Resulting image with grain
      */
 
-     //void av1_add_film_grain(aom_film_grain_t *grain_params, EbPictureBufferDesc_t *src,
-     //        EbPictureBufferDesc_t *dst);
+     //void av1_add_film_grain(aom_film_grain_t *grain_params, EbPictureBufferDesc *src,
+     //        EbPictureBufferDesc *dst);
 
      //void av1_film_grain_write_updated(const aom_film_grain_t *pars,
      //  int32_t monochrome, struct aom_write_bit_buffer *wb);

@@ -5499,7 +5499,7 @@ void HmeOneQuadrantLevel0(
     uint32_t                   sb_height,                         // input parameter, SB height - sixteenth resolution
     int16_t                   xHmeSearchCenter,                  // input parameter, HME search center in the horizontal direction
     int16_t                   yHmeSearchCenter,                  // input parameter, HME search center in the vertical direction
-    EbPictureBufferDesc_t   *sixteenthRefPicPtr,                // input parameter, sixteenth reference Picture Ptr
+    EbPictureBufferDesc   *sixteenthRefPicPtr,                // input parameter, sixteenth reference Picture Ptr
     uint64_t                  *level0BestSad,                     // output parameter, Level0 SAD at (searchRegionNumberInWidth, searchRegionNumberInHeight)
     int16_t                  *xLevel0SearchCenter,               // output parameter, Level0 xMV at (searchRegionNumberInWidth, searchRegionNumberInHeight)
     int16_t                  *yLevel0SearchCenter,               // output parameter, Level0 yMV at (searchRegionNumberInWidth, searchRegionNumberInHeight)
@@ -5695,7 +5695,7 @@ void HmeLevel0(
     uint32_t                   sb_height,                         // input parameter, SB height - sixteenth resolution
     int16_t                   xHmeSearchCenter,                  // input parameter, HME search center in the horizontal direction
     int16_t                   yHmeSearchCenter,                  // input parameter, HME search center in the vertical direction
-    EbPictureBufferDesc_t   *sixteenthRefPicPtr,                // input parameter, sixteenth reference Picture Ptr
+    EbPictureBufferDesc   *sixteenthRefPicPtr,                // input parameter, sixteenth reference Picture Ptr
     uint32_t                   searchRegionNumberInWidth,         // input parameter, search region number in the horizontal direction
     uint32_t                   searchRegionNumberInHeight,        // input parameter, search region number in the vertical direction
     uint64_t                  *level0BestSad,                     // output parameter, Level0 SAD at (searchRegionNumberInWidth, searchRegionNumberInHeight)
@@ -5886,7 +5886,7 @@ void HmeLevel1(
     int16_t                   origin_y,                           // input parameter, SB position in the vertical direction - quarter resolution
     uint32_t                   sb_width,                          // input parameter, SB pwidth - quarter resolution
     uint32_t                   sb_height,                         // input parameter, SB height - quarter resolution
-    EbPictureBufferDesc_t   *quarterRefPicPtr,                  // input parameter, quarter reference Picture Ptr
+    EbPictureBufferDesc   *quarterRefPicPtr,                  // input parameter, quarter reference Picture Ptr
     int16_t                   hmeLevel1SearchAreaInWidth,         // input parameter, hme level 1 search area in width
     int16_t                   hmeLevel1SearchAreaInHeight,        // input parameter, hme level 1 search area in height
     int16_t                   xLevel0SearchCenter,               // input parameter, best Level0 xMV at (searchRegionNumberInWidth, searchRegionNumberInHeight)
@@ -6020,7 +6020,7 @@ void HmeLevel2(
     int16_t                   origin_y,                           // input parameter, SB position in the vertical direction
     uint32_t                   sb_width,                          // input parameter, SB pwidth - full resolution
     uint32_t                   sb_height,                         // input parameter, SB height - full resolution
-    EbPictureBufferDesc_t   *refPicPtr,                         // input parameter, reference Picture Ptr
+    EbPictureBufferDesc   *refPicPtr,                         // input parameter, reference Picture Ptr
     uint32_t                   searchRegionNumberInWidth,         // input parameter, search region number in the horizontal direction
     uint32_t                   searchRegionNumberInHeight,        // input parameter, search region number in the vertical direction
     int16_t                   xLevel1SearchCenter,               // input parameter, best Level1 xMV at(searchRegionNumberInWidth, searchRegionNumberInHeight)
@@ -6317,8 +6317,8 @@ static void QuarterPelCompensation(
 * Requirement: skip         = 0 or 1
 * Requirement (x86 only): temp_buf % 16 = 0
 * Requirement (x86 only): (dst->buffer_y  + dstLumaIndex  ) % 16 = 0 when pu_width %16 = 0
-* Requirement (x86 only): (dst->bufferCb + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
-* Requirement (x86 only): (dst->bufferCr + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
+* Requirement (x86 only): (dst->buffer_cb + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
+* Requirement (x86 only): (dst->buffer_cr + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
 * Requirement (x86 only): dst->stride_y   % 16 = 0 when pu_width %16 = 0
 * Requirement (x86 only): dst->chromaStride % 16 = 0 when pu_width %32 = 0
 *******************************************************************************/
@@ -6842,7 +6842,7 @@ int8_t Sort3Elements(uint32_t a, uint32_t b, uint32_t c) {
 
 
 EbErrorType CheckZeroZeroCenter(
-    EbPictureBufferDesc_t        *refPicPtr,
+    EbPictureBufferDesc        *refPicPtr,
     MeContext_t                  *context_ptr,
     uint32_t                       sb_origin_x,
     uint32_t                       sb_origin_y,
@@ -7256,7 +7256,7 @@ EbErrorType     suPelEnable(
 }
 
 static void hme_mv_center_check(
-    EbPictureBufferDesc_t       *ref_pic_ptr,
+    EbPictureBufferDesc       *ref_pic_ptr,
     MeContext_t                    *context_ptr,
     int16_t                     *xsc,
     int16_t                     *ysc,
@@ -7530,7 +7530,7 @@ EbErrorType MotionEstimateLcu(
     uint32_t                       sb_origin_x,            // input parameter, SB Origin X
     uint32_t                       sb_origin_y,            // input parameter, SB Origin X
     MeContext_t                    *context_ptr,                        // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
-    EbPictureBufferDesc_t       *input_ptr)              // input parameter, source Picture Ptr
+    EbPictureBufferDesc       *input_ptr)              // input parameter, source Picture Ptr
 {
     EbErrorType return_error = EB_ErrorNone;
 
@@ -7586,9 +7586,9 @@ EbErrorType MotionEstimateLcu(
     uint8_t                   totalMeCandidateIndex = 0;
     EbPaReferenceObject  *referenceObject;  // input parameter, reference Object Ptr
 
-    EbPictureBufferDesc_t  *refPicPtr;
-    EbPictureBufferDesc_t  *quarterRefPicPtr;
-    EbPictureBufferDesc_t  *sixteenthRefPicPtr;
+    EbPictureBufferDesc  *refPicPtr;
+    EbPictureBufferDesc  *quarterRefPicPtr;
+    EbPictureBufferDesc  *sixteenthRefPicPtr;
 
     int16_t                  tempXHmeSearchCenter = 0;
     int16_t                  tempYHmeSearchCenter = 0;
@@ -7649,9 +7649,9 @@ EbErrorType MotionEstimateLcu(
         {
 
             referenceObject = (EbPaReferenceObject*)picture_control_set_ptr->ref_pa_pic_ptr_array[listIndex]->object_ptr;
-            refPicPtr = (EbPictureBufferDesc_t*)referenceObject->input_padded_picture_ptr;
-            quarterRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->quarter_decimated_picture_ptr;
-            sixteenthRefPicPtr = (EbPictureBufferDesc_t*)referenceObject->sixteenth_decimated_picture_ptr;
+            refPicPtr = (EbPictureBufferDesc*)referenceObject->input_padded_picture_ptr;
+            quarterRefPicPtr = (EbPictureBufferDesc*)referenceObject->quarter_decimated_picture_ptr;
+            sixteenthRefPicPtr = (EbPictureBufferDesc*)referenceObject->sixteenth_decimated_picture_ptr;
 #if BASE_LAYER_REF
             if (picture_control_set_ptr->temporal_layer_index > 0 || listIndex == 0 || ((ref0Poc != ref1Poc) && (listIndex == 1))) {
 #else
@@ -8449,7 +8449,7 @@ uint64_t SixteenthDecimatedSearch(
     int16_t                   origin_y,
     uint32_t                   sb_width,
     uint32_t                   sb_height,
-    EbPictureBufferDesc_t   *sixteenthRefPicPtr,
+    EbPictureBufferDesc   *sixteenthRefPicPtr,
     int16_t                     search_area_width,
     int16_t                     search_area_height,
     EbAsm                   asm_type)
@@ -8695,7 +8695,7 @@ EbErrorType open_loop_intra_search_sb(
     PictureParentControlSet   *picture_control_set_ptr,
     uint32_t                     sb_index,
     MotionEstimationContext_t   *context_ptr,
-    EbPictureBufferDesc_t       *input_ptr,
+    EbPictureBufferDesc       *input_ptr,
     EbAsm                        asm_type)
 {
     EbErrorType return_error = EB_ErrorNone;

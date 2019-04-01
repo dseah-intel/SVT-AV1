@@ -202,8 +202,8 @@ extern "C" {
         uint32_t                                mode;
         uint64_t                                cost;
         uint64_t                                distortion;
-        EbPictureBufferDesc_t                  *prediction_ptr;
-        EbPictureBufferDesc_t                  *residual_ptr;
+        EbPictureBufferDesc                  *prediction_ptr;
+        EbPictureBufferDesc                  *residual_ptr;
     } IntraChromaCandidateBuffer_t;
 
     /**************************************
@@ -214,15 +214,15 @@ extern "C" {
         ModeDecisionCandidate_t                *candidate_ptr;
 
         // Video Buffers
-        EbPictureBufferDesc_t                  *prediction_ptr;
-        EbPictureBufferDesc_t                  *predictionPtrTemp;
-        EbPictureBufferDesc_t                  *cflTempPredictionPtr;
-        EbPictureBufferDesc_t                  *residualQuantCoeffPtr;// One buffer for residual and quantized coefficient
-        EbPictureBufferDesc_t                  *reconCoeffPtr;
-        EbPictureBufferDesc_t                  *residual_ptr;
+        EbPictureBufferDesc                  *prediction_ptr;
+        EbPictureBufferDesc                  *predictionPtrTemp;
+        EbPictureBufferDesc                  *cflTempPredictionPtr;
+        EbPictureBufferDesc                  *residualQuantCoeffPtr;// One buffer for residual and quantized coefficient
+        EbPictureBufferDesc                  *reconCoeffPtr;
+        EbPictureBufferDesc                  *residual_ptr;
 
         // *Note - We should be able to combine the reconCoeffPtr & recon_ptr pictures (they aren't needed at the same time)
-        EbPictureBufferDesc_t                  *recon_ptr;
+        EbPictureBufferDesc                  *recon_ptr;
 
         // Distortion (SAD)
         uint64_t                                residual_luma_sad;

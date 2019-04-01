@@ -28,10 +28,10 @@ extern "C" {
 #if !USE_PRE_COMPUTE
         EbByte                   avc_style_mcp_two_d_interpolation_first_pass_filter_result_buf; // For short filter in MD
 #endif
-        EbPictureBufferDesc_t   *local_reference_block_l0;                //used to pre-load reference L0 full pel block in local memory in 16bit mode
-        EbPictureBufferDesc_t   *local_reference_block_l1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
-        EbPictureBufferDesc_t   *local_reference_block8_bitl0;                //used to pre-load reference L0 full pel block in local memory in 16bit mode
-        EbPictureBufferDesc_t   *local_reference_block8_bitl1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
+        EbPictureBufferDesc   *local_reference_block_l0;                //used to pre-load reference L0 full pel block in local memory in 16bit mode
+        EbPictureBufferDesc   *local_reference_block_l1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
+        EbPictureBufferDesc   *local_reference_block8_bitl0;                //used to pre-load reference L0 full pel block in local memory in 16bit mode
+        EbPictureBufferDesc   *local_reference_block8_bitl1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
     }MotionCompensationPredictionContext_t;
 
     /** InterpolationFilter()

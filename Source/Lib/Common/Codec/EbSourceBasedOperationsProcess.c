@@ -286,7 +286,7 @@ void CalculateAcEnergy(
     PictureParentControlSet        *picture_control_set_ptr,
     uint32_t                             sb_index) {
 
-    EbPictureBufferDesc_t    *input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;
+    EbPictureBufferDesc    *input_picture_ptr = picture_control_set_ptr->enhanced_picture_ptr;
     uint32_t                     inputLumaStride = input_picture_ptr->stride_y;
     uint32_t                   inputOriginIndex;
     LcuParameters  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];

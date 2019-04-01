@@ -38,7 +38,7 @@ typedef struct EntropyCodingContext_s
     uint8_t                         chroma_qp;
 #endif
     // Coding Unit Workspace---------------------------
-    EbPictureBufferDesc_t           *coeff_buffer_sb;                              //Used to hold quantized coeff for one TB in EncPass.
+    EbPictureBufferDesc           *coeff_buffer_sb;                              //Used to hold quantized coeff for one TB in EncPass.
 
     //  Context Variables---------------------------------
     CodingUnit_t                     *cu_ptr;

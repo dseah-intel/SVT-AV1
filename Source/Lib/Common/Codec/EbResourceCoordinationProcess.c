@@ -559,7 +559,7 @@ void* resource_coordination_kernel(void *input_ptr)
         // Copy data from the svt buffer to the input frame
         // *Note - Assumes 4:2:0 planar
         input_picture_wrapper_ptr = ebInputWrapperPtr;
-        picture_control_set_ptr->enhanced_picture_ptr = (EbPictureBufferDesc_t*)ebInputPtr->p_buffer;
+        picture_control_set_ptr->enhanced_picture_ptr = (EbPictureBufferDesc*)ebInputPtr->p_buffer;
         picture_control_set_ptr->input_ptr            = ebInputPtr;
         end_of_sequence_flag = (picture_control_set_ptr->input_ptr->flags & EB_BUFFERFLAG_EOS) ? EB_TRUE : EB_FALSE;
         EbStartTime(&picture_control_set_ptr->start_time_seconds, &picture_control_set_ptr->start_time_u_seconds);

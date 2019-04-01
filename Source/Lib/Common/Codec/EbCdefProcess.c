@@ -262,8 +262,8 @@ void cdef_seg_search16bit(
     SequenceControlSet           *sequence_control_set_ptr,
     uint32_t                        segment_index)
 {
-    EbPictureBufferDesc_t *input_pic_ptr = picture_control_set_ptr->input_frame16bit;
-    EbPictureBufferDesc_t *recon_pic_ptr =
+    EbPictureBufferDesc *input_pic_ptr = picture_control_set_ptr->input_frame16bit;
+    EbPictureBufferDesc *recon_pic_ptr =
         (picture_control_set_ptr->parent_pcs_ptr->is_used_as_reference_flag == EB_TRUE) ?
         ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture16bit :
          picture_control_set_ptr->recon_picture16bit_ptr;
@@ -329,8 +329,8 @@ void cdef_seg_search16bit(
 
         src[pli] = picture_control_set_ptr->src[pli];
         ref_coeff[pli] = picture_control_set_ptr->ref_coeff[pli];
-        stride_src[pli] = pli == 0 ? recon_pic_ptr->stride_y : (pli == 1 ? recon_pic_ptr->strideCb : recon_pic_ptr->strideCr);
-        stride_ref[pli] = pli == 0 ? input_pic_ptr->stride_y : (pli == 1 ? input_pic_ptr->strideCb : input_pic_ptr->strideCr);
+        stride_src[pli] = pli == 0 ? recon_pic_ptr->stride_y : (pli == 1 ? recon_pic_ptr->stride_cb : recon_pic_ptr->stride_cr);
+        stride_ref[pli] = pli == 0 ? input_pic_ptr->stride_y : (pli == 1 ? input_pic_ptr->stride_cb : input_pic_ptr->stride_cr);
 
     }
 

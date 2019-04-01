@@ -24,8 +24,8 @@ typedef struct DlfContext_s
     EbFifo                       *dlf_output_fifo_ptr;
 
 
-    EbPictureBufferDesc_t                 *temp_lf_recon_picture_ptr;
-    EbPictureBufferDesc_t                 *temp_lf_recon_picture16bit_ptr;
+    EbPictureBufferDesc                 *temp_lf_recon_picture_ptr;
+    EbPictureBufferDesc                 *temp_lf_recon_picture16bit_ptr;
 
 
 } DlfContext_t;

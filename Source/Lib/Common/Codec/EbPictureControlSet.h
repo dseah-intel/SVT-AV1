@@ -13707,12 +13707,12 @@ extern "C" {
     {
         EbObjectWrapper                    *sequence_control_set_wrapper_ptr;
         
-        EbPictureBufferDesc_t                *recon_picture_ptr;
-        EbPictureBufferDesc_t                *film_grain_picture_ptr;
-        EbPictureBufferDesc_t                *recon_picture16bit_ptr;
-        EbPictureBufferDesc_t                *film_grain_picture16bit_ptr;
-        EbPictureBufferDesc_t                *recon_picture32bit_ptr;
-        EbPictureBufferDesc_t                *input_frame16bit;
+        EbPictureBufferDesc                *recon_picture_ptr;
+        EbPictureBufferDesc                *film_grain_picture_ptr;
+        EbPictureBufferDesc                *recon_picture16bit_ptr;
+        EbPictureBufferDesc                *film_grain_picture16bit_ptr;
+        EbPictureBufferDesc                *recon_picture32bit_ptr;
+        EbPictureBufferDesc                *input_frame16bit;
 
         struct PictureParentControlSet     *parent_pcs_ptr;  //The parent of this PCS.
         EbObjectWrapper                    *picture_parent_control_set_wrapper_ptr;
@@ -13953,7 +13953,7 @@ extern "C" {
         EbObjectWrapper                    *input_picture_wrapper_ptr;
         EbObjectWrapper                    *reference_picture_wrapper_ptr;
         EbObjectWrapper                    *pa_reference_picture_wrapper_ptr;
-        EbPictureBufferDesc_t                *enhanced_picture_ptr;
+        EbPictureBufferDesc                *enhanced_picture_ptr;
         PredictionStructure                *pred_struct_ptr;          // need to check
         struct SequenceControlSet          *sequence_control_set_ptr;
         struct PictureParentControlSet     *ref_pa_pcs_array[MAX_NUM_OF_REF_PIC_LIST];

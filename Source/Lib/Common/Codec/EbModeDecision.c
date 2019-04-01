@@ -134,10 +134,10 @@ EbErrorType mode_decision_candidate_buffer_ctor(
     uint64_t                       *full_cost_skip_ptr,
     uint64_t                       *full_cost_merge_ptr)
 {
-    EbPictureBufferDescInitData_t pictureBufferDescInitData;
-    EbPictureBufferDescInitData_t doubleWidthPictureBufferDescInitData;
+    EbPictureBufferDescInitData pictureBufferDescInitData;
+    EbPictureBufferDescInitData doubleWidthPictureBufferDescInitData;
 
-    EbPictureBufferDescInitData_t ThirtyTwoWidthPictureBufferDescInitData;
+    EbPictureBufferDescInitData ThirtyTwoWidthPictureBufferDescInitData;
 
 
     EbErrorType return_error = EB_ErrorNone;
@@ -147,34 +147,34 @@ EbErrorType mode_decision_candidate_buffer_ctor(
     *buffer_dbl_ptr = bufferPtr;
 
     // Init Picture Data
-    pictureBufferDescInitData.maxWidth = MAX_SB_SIZE;
-    pictureBufferDescInitData.maxHeight = MAX_SB_SIZE;
+    pictureBufferDescInitData.max_width = MAX_SB_SIZE;
+    pictureBufferDescInitData.max_height = MAX_SB_SIZE;
     pictureBufferDescInitData.bit_depth = EB_8BIT;
-    pictureBufferDescInitData.bufferEnableMask = PICTURE_BUFFER_DESC_FULL_MASK;
+    pictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     pictureBufferDescInitData.left_padding = 0;
     pictureBufferDescInitData.right_padding = 0;
     pictureBufferDescInitData.top_padding = 0;
     pictureBufferDescInitData.bot_padding = 0;
-    pictureBufferDescInitData.splitMode = EB_FALSE;
-    doubleWidthPictureBufferDescInitData.maxWidth = MAX_SB_SIZE;
-    doubleWidthPictureBufferDescInitData.maxHeight = MAX_SB_SIZE;
+    pictureBufferDescInitData.split_mode = EB_FALSE;
+    doubleWidthPictureBufferDescInitData.max_width = MAX_SB_SIZE;
+    doubleWidthPictureBufferDescInitData.max_height = MAX_SB_SIZE;
     doubleWidthPictureBufferDescInitData.bit_depth = EB_16BIT;
-    doubleWidthPictureBufferDescInitData.bufferEnableMask = PICTURE_BUFFER_DESC_FULL_MASK;
+    doubleWidthPictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     doubleWidthPictureBufferDescInitData.left_padding = 0;
     doubleWidthPictureBufferDescInitData.right_padding = 0;
     doubleWidthPictureBufferDescInitData.top_padding = 0;
     doubleWidthPictureBufferDescInitData.bot_padding = 0;
-    doubleWidthPictureBufferDescInitData.splitMode = EB_FALSE;
+    doubleWidthPictureBufferDescInitData.split_mode = EB_FALSE;
 
-    ThirtyTwoWidthPictureBufferDescInitData.maxWidth = MAX_SB_SIZE;
-    ThirtyTwoWidthPictureBufferDescInitData.maxHeight = MAX_SB_SIZE;
+    ThirtyTwoWidthPictureBufferDescInitData.max_width = MAX_SB_SIZE;
+    ThirtyTwoWidthPictureBufferDescInitData.max_height = MAX_SB_SIZE;
     ThirtyTwoWidthPictureBufferDescInitData.bit_depth = EB_32BIT;
-    ThirtyTwoWidthPictureBufferDescInitData.bufferEnableMask = PICTURE_BUFFER_DESC_FULL_MASK;
+    ThirtyTwoWidthPictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     ThirtyTwoWidthPictureBufferDescInitData.left_padding = 0;
     ThirtyTwoWidthPictureBufferDescInitData.right_padding = 0;
     ThirtyTwoWidthPictureBufferDescInitData.top_padding = 0;
     ThirtyTwoWidthPictureBufferDescInitData.bot_padding = 0;
-    ThirtyTwoWidthPictureBufferDescInitData.splitMode = EB_FALSE;
+    ThirtyTwoWidthPictureBufferDescInitData.split_mode = EB_FALSE;
 
     // Candidate Ptr
     bufferPtr->candidate_ptr = (ModeDecisionCandidate_t*)EB_NULL;
@@ -2890,16 +2890,16 @@ uint8_t product_full_mode_decision(
                 bwidth = context_ptr->blk_geom->tx_width_uv[txb_itr];
                 bheight = context_ptr->blk_geom->tx_height_uv[txb_itr];
 
-                src_ptr = &(((int32_t*)buffer_ptr_array[lowestCostIndex]->residualQuantCoeffPtr->bufferCb)[txb_1d_offset_uv]);
-                dst_ptr = &(((int32_t*)context_ptr->cu_ptr->coeff_tmp->bufferCb)[txb_1d_offset_uv]);
+                src_ptr = &(((int32_t*)buffer_ptr_array[lowestCostIndex]->residualQuantCoeffPtr->buffer_cb)[txb_1d_offset_uv]);
+                dst_ptr = &(((int32_t*)context_ptr->cu_ptr->coeff_tmp->buffer_cb)[txb_1d_offset_uv]);
 
                 for (j = 0; j < bheight; j++)
                 {
                     memcpy(dst_ptr + j * bwidth, src_ptr + j * bwidth, bwidth * sizeof(int32_t));
                 }
 
-                src_ptr = &(((int32_t*)buffer_ptr_array[lowestCostIndex]->residualQuantCoeffPtr->bufferCr)[txb_1d_offset_uv]);
-                dst_ptr = &(((int32_t*)context_ptr->cu_ptr->coeff_tmp->bufferCr)[txb_1d_offset_uv]);
+                src_ptr = &(((int32_t*)buffer_ptr_array[lowestCostIndex]->residualQuantCoeffPtr->buffer_cr)[txb_1d_offset_uv]);
+                dst_ptr = &(((int32_t*)context_ptr->cu_ptr->coeff_tmp->buffer_cr)[txb_1d_offset_uv]);
 
                 for (j = 0; j < bheight; j++)
                 {

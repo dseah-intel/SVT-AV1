@@ -693,7 +693,7 @@ static EbErrorType Av1EncodeCoeff1D(
     uint32_t                  cu_origin_y,
     uint32_t                  intraLumaDir,
     block_size              plane_bsize,
-    EbPictureBufferDesc_t  *coeffPtr,
+    EbPictureBufferDesc  *coeffPtr,
     NeighborArrayUnit_t     *luma_dc_sign_level_coeff_neighbor_array,
     NeighborArrayUnit_t     *cr_dc_sign_level_coeff_neighbor_array,
     NeighborArrayUnit_t     *cb_dc_sign_level_coeff_neighbor_array)
@@ -756,7 +756,7 @@ static EbErrorType Av1EncodeCoeff1D(
         if (blk_geom->has_uv) {
 
             // cb
-            coeff_buffer = (int32_t*)coeffPtr->bufferCb + context_ptr->coded_area_sb_uv;
+            coeff_buffer = (int32_t*)coeffPtr->buffer_cb + context_ptr->coded_area_sb_uv;
             {
                 int16_t txb_skip_ctx = 0;
                 int16_t dcSignCtx = 0;
@@ -783,7 +783,7 @@ static EbErrorType Av1EncodeCoeff1D(
                         txb_itr,
                         intraLumaDir,
                         coeff_buffer,
-                        coeffPtr->strideCb,
+                        coeffPtr->stride_cb,
                         COMPONENT_CHROMA,
                         txb_skip_ctx,
                         dcSignCtx,
@@ -792,7 +792,7 @@ static EbErrorType Av1EncodeCoeff1D(
             }
 
             // cr
-            coeff_buffer = (int32_t*)coeffPtr->bufferCr + context_ptr->coded_area_sb_uv;
+            coeff_buffer = (int32_t*)coeffPtr->buffer_cr + context_ptr->coded_area_sb_uv;
             {
 
                 int16_t txb_skip_ctx = 0;
@@ -820,7 +820,7 @@ static EbErrorType Av1EncodeCoeff1D(
                         txb_itr,
                         intraLumaDir,
                         coeff_buffer,
-                        coeffPtr->strideCr,
+                        coeffPtr->stride_cr,
                         COMPONENT_CHROMA,
                         txb_skip_ctx,
                         dcSignCtx,
@@ -4590,7 +4590,7 @@ EbErrorType ec_update_neighbors(
     uint32_t                 blkOriginY,
     CodingUnit_t            *cu_ptr,
     block_size                bsize,
-    EbPictureBufferDesc_t   *coeffPtr)
+    EbPictureBufferDesc   *coeffPtr)
 {
     UNUSED(coeffPtr);
     EbErrorType return_error = EB_ErrorNone;
@@ -4851,7 +4851,7 @@ EbErrorType write_modes_b(
     EntropyCoder_t          *entropy_coder_ptr,
     LargestCodingUnit_t     *tbPtr,
     CodingUnit_t            *cu_ptr,
-    EbPictureBufferDesc_t   *coeffPtr)
+    EbPictureBufferDesc   *coeffPtr)
 {
     UNUSED(tbPtr);
     EbErrorType return_error = EB_ErrorNone;
@@ -5296,7 +5296,7 @@ EB_EXTERN EbErrorType write_sb(
     LargestCodingUnit_t     *tbPtr,
     PictureControlSet     *picture_control_set_ptr,
     EntropyCoder_t          *entropy_coder_ptr,
-    EbPictureBufferDesc_t   *coeffPtr)
+    EbPictureBufferDesc   *coeffPtr)
 {
     EbErrorType return_error = EB_ErrorNone;
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;

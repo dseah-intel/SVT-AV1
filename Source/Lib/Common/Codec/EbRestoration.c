@@ -28,7 +28,7 @@ void aom_yv12_copy_v_c(const Yv12BufferConfig *src_bc, Yv12BufferConfig *dst_bc)
 int32_t aom_realloc_frame_buffer(Yv12BufferConfig *ybf, int32_t width, int32_t height,
     int32_t ss_x, int32_t ss_y, int32_t use_highbitdepth,
     int32_t border, int32_t byte_alignment,
-    aom_codec_frame_buffer_t *fb,
+    AomCodecFrameBuffer *fb,
     aom_get_frame_buffer_cb_fn_t cb, void *cb_priv);
 
 

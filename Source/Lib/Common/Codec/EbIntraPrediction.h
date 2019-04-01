@@ -146,7 +146,7 @@ extern "C" {
     extern EbErrorType update_neighbor_samples_array_open_loop(
         uint8_t                           *above_ref,
         uint8_t                            *left_ref,
-        EbPictureBufferDesc_t              *input_ptr,
+        EbPictureBufferDesc              *input_ptr,
         uint32_t                            stride,
         uint32_t                            srcOriginX,
         uint32_t                            srcOriginY,
@@ -183,7 +183,7 @@ extern "C" {
 
     typedef uint32_t(*EB_NEIGHBOR_DC_INTRA_TYPE)(
         MotionEstimationContext_t       *context_ptr,
-        EbPictureBufferDesc_t           *input_ptr,
+        EbPictureBufferDesc           *input_ptr,
         uint32_t                           src_origin_x,
         uint32_t                           src_origin_y,
         uint32_t                           block_size,

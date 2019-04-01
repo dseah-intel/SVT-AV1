@@ -29,7 +29,7 @@ EbErrorType largest_coding_unit_ctor(
 {
     EbErrorType return_error = EB_ErrorNone;
     uint32_t tu_index;
-    EbPictureBufferDescInitData_t coeffInitData;
+    EbPictureBufferDescInitData coeffInitData;
 
     LargestCodingUnit_t *largestCodingUnitPtr;
     EB_MALLOC(LargestCodingUnit_t*, largestCodingUnitPtr, sizeof(LargestCodingUnit_t), EB_N_PTR);
@@ -68,15 +68,15 @@ EbErrorType largest_coding_unit_ctor(
 
     EB_MALLOC(PartitionType*, largestCodingUnitPtr->cu_partition_array, sizeof(PartitionType) * max_block_count, EB_N_PTR);
 
-    coeffInitData.bufferEnableMask = PICTURE_BUFFER_DESC_FULL_MASK;
-    coeffInitData.maxWidth = SB_STRIDE_Y;
-    coeffInitData.maxHeight = SB_STRIDE_Y;
+    coeffInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
+    coeffInitData.max_width = SB_STRIDE_Y;
+    coeffInitData.max_height = SB_STRIDE_Y;
     coeffInitData.bit_depth = EB_32BIT;
     coeffInitData.left_padding = 0;
     coeffInitData.right_padding = 0;
     coeffInitData.top_padding = 0;
     coeffInitData.bot_padding = 0;
-    coeffInitData.splitMode = EB_FALSE;
+    coeffInitData.split_mode = EB_FALSE;
 
     return_error = eb_picture_buffer_desc_ctor(
         (EbPtr*) &(largestCodingUnitPtr->quantized_coeff),
