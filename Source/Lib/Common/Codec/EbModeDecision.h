@@ -62,7 +62,7 @@ extern "C" {
                     uint32_t MVsL1;
                 };
             };
-            uint64_t MVs;
+            uint64_t mvs;
         };
 
         uint8_t                                skip_flag;

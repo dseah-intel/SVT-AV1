@@ -1621,26 +1621,26 @@ void* EncDecKernel(void *input_ptr)
                             uint32_t me_sb_addr_2 = (me_sb_y + 1) < me_pic_height_in_sb ? (me_sb_x + 0) + ((me_sb_y + 1) * me_pic_width_in_sb) : me_sb_addr_0;
                             uint32_t me_sb_addr_3 = ((me_sb_x + 1) < me_pic_width_in_sb) && ((me_sb_y + 1) < me_pic_height_in_sb) ? (me_sb_x + 1) + ((me_sb_y + 1) * me_pic_width_in_sb) : me_sb_addr_0;
 
-                            MeCuResults_t * me_block_results_0 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_0][0];
-                            MeCuResults_t * me_block_results_1 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_1][0];
-                            MeCuResults_t * me_block_results_2 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_2][0];
-                            MeCuResults_t * me_block_results_3 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_3][0];
+                            MeCuResults * me_block_results_0 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_0][0];
+                            MeCuResults * me_block_results_1 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_1][0];
+                            MeCuResults * me_block_results_2 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_2][0];
+                            MeCuResults * me_block_results_3 = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr_3][0];
 
-                            // Compute average open_loop 64x64 MVs
-                            mv_l0_x = ((me_block_results_0->xMvL0 + me_block_results_1->xMvL0 + me_block_results_2->xMvL0 + me_block_results_3->xMvL0) >> 2) >> 2;
-                            mv_l0_y = ((me_block_results_0->yMvL0 + me_block_results_1->yMvL0 + me_block_results_2->yMvL0 + me_block_results_3->yMvL0) >> 2) >> 2;
-                            mv_l1_x = ((me_block_results_0->xMvL1 + me_block_results_1->xMvL1 + me_block_results_2->xMvL1 + me_block_results_3->xMvL1) >> 2) >> 2;
-                            mv_l1_y = ((me_block_results_0->yMvL1 + me_block_results_1->yMvL1 + me_block_results_2->yMvL1 + me_block_results_3->yMvL1) >> 2) >> 2;
+                            // Compute average open_loop 64x64 mvs
+                            mv_l0_x = ((me_block_results_0->x_mv_l0 + me_block_results_1->x_mv_l0 + me_block_results_2->x_mv_l0 + me_block_results_3->x_mv_l0) >> 2) >> 2;
+                            mv_l0_y = ((me_block_results_0->y_mv_l0 + me_block_results_1->y_mv_l0 + me_block_results_2->y_mv_l0 + me_block_results_3->y_mv_l0) >> 2) >> 2;
+                            mv_l1_x = ((me_block_results_0->x_mv_l1 + me_block_results_1->x_mv_l1 + me_block_results_2->x_mv_l1 + me_block_results_3->x_mv_l1) >> 2) >> 2;
+                            mv_l1_y = ((me_block_results_0->y_mv_l1 + me_block_results_1->y_mv_l1 + me_block_results_2->y_mv_l1 + me_block_results_3->y_mv_l1) >> 2) >> 2;
 
                         }
                         else {
                             me_sb_addr = sb_index;
-                            MeCuResults_t * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr][0];
+                            MeCuResults * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr][0];
 
-                            mv_l0_x = mePuResult->xMvL0 >> 2;
-                            mv_l0_y = mePuResult->yMvL0 >> 2;
-                            mv_l1_x = mePuResult->xMvL1 >> 2;
-                            mv_l1_y = mePuResult->yMvL1 >> 2;
+                            mv_l0_x = mePuResult->x_mv_l0 >> 2;
+                            mv_l0_y = mePuResult->y_mv_l0 >> 2;
+                            mv_l1_x = mePuResult->x_mv_l1 >> 2;
+                            mv_l1_y = mePuResult->y_mv_l1 >> 2;
                         }
 
 

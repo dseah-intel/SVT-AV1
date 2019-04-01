@@ -45,10 +45,10 @@ extern "C" {
         PictureControlSet                 *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
         uint32_t                             sb_origin_x,            // input parameter, SB Origin X
         uint32_t                             sb_origin_y,            // input parameter, SB Origin X
-        int16_t                              xMvL0,
-        int16_t                              yMvL0,
-        int16_t                              xMvL1,
-        int16_t                              yMvL1,
+        int16_t                              x_mv_l0,
+        int16_t                              y_mv_l0,
+        int16_t                              x_mv_l1,
+        int16_t                              y_mv_l1,
         SsMeContext_t                        *context_ptr);          // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
 
     extern EbErrorType mode_decision_sb(

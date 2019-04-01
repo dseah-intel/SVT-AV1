@@ -1368,25 +1368,25 @@ EbAuraStatus AuraDetection64x64Gold(
 
 
 
-        MeCuResults_t * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][0];
+        MeCuResults * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][0];
 
         //Curr Block
 
-        for (k = 0; k < mePuResult->totalMeCandidateIndex; k++) {
+        for (k = 0; k < mePuResult->total_me_candidate_index; k++) {
 
-            if (mePuResult->distortionDirection[k].direction == UNI_PRED_LIST_0) {
+            if (mePuResult->distortion_direction[k].direction == UNI_PRED_LIST_0) {
                 // Get reference list 0 / reference index 0 MV
-                xMv0 = mePuResult->xMvL0;
-                yMv0 = mePuResult->yMvL0;
+                xMv0 = mePuResult->x_mv_l0;
+                yMv0 = mePuResult->y_mv_l0;
             }
-            if (mePuResult->distortionDirection[k].direction == UNI_PRED_LIST_1) {
+            if (mePuResult->distortion_direction[k].direction == UNI_PRED_LIST_1) {
                 // Get reference list  1 / reference index 0 MV
-                xMv1 = mePuResult->xMvL1;
-                yMv1 = mePuResult->yMvL1;
+                xMv1 = mePuResult->x_mv_l1;
+                yMv1 = mePuResult->y_mv_l1;
             }
 
         }
-        currDist = mePuResult->distortionDirection[0].distortion;
+        currDist = mePuResult->distortion_direction[0].distortion;
 
 
 
@@ -1403,30 +1403,30 @@ EbAuraStatus AuraDetection64x64Gold(
 
             //Top Distortion
             lcuOffset = -picture_width_in_sb;
-            topDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortionDirection[0].distortion;
+            topDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
             //TopLeft Distortion
             lcuOffset = -picture_width_in_sb - 1;
-            topLDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortionDirection[0].distortion;
+            topLDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
             //TopRightDistortion
             lcuOffset = -picture_width_in_sb + 1;
-            topRDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortionDirection[0].distortion;
+            topRDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
             topRDist = (xLcuIndex < (uint32_t)(picture_width_in_sb - 2)) ? topRDist : currDist;
 
             //left Distortion
             lcuOffset = -1;
-            leftDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortionDirection[0].distortion;
+            leftDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
 
             //RightDistortion
             lcuOffset = 1;
-            rightDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortionDirection[0].distortion;
+            rightDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
 
@@ -1783,7 +1783,7 @@ void derive_sb_score(
                 distortion = 0;
                 for (cu8x8Index = RASTER_SCAN_CU_INDEX_8x8_0; cu8x8Index <= RASTER_SCAN_CU_INDEX_8x8_63; cu8x8Index++) {
                     if (sb_params->raster_scan_cu_validity[cu8x8Index]) {
-                        distortion += picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][cu8x8Index].distortionDirection[0].distortion;
+                        distortion += picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][cu8x8Index].distortion_direction[0].distortion;
                         validCu8x8Count++;
                     }
                 }
@@ -1795,7 +1795,7 @@ void derive_sb_score(
 
             }
             else {
-                distortion = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][RASTER_SCAN_CU_INDEX_64x64].distortionDirection[0].distortion;
+                distortion = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][RASTER_SCAN_CU_INDEX_64x64].distortion_direction[0].distortion;
                 // Perform SB score manipulation for incomplete SBs for SQ mode
                 sb_score = distortion;
 

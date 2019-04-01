@@ -14107,7 +14107,7 @@ extern "C" {
 
         // Motion Estimation Results
         uint8_t                               max_number_of_pus_per_sb;
-        MeCuResults_t                       **me_results;
+        MeCuResults                       **me_results;
         uint32_t                             *rc_me_distortion;
 
         // Motion Estimation Distortion and OIS Historgram

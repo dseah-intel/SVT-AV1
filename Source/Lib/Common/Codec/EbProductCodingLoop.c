@@ -2775,7 +2775,7 @@ void  order_nsq_table(
     max_number_of_pus_per_sb = picture_control_set_ptr->parent_pcs_ptr->max_number_of_pus_per_sb;
     me2Nx2NTableOffset = (context_ptr->blk_geom->bwidth == 4 || context_ptr->blk_geom->bheight == 4 || context_ptr->blk_geom->bwidth == 128 || context_ptr->blk_geom->bheight == 128) ? 0 :
         get_me_info_index(max_number_of_pus_per_sb, context_ptr->blk_geom, geom_offset_x, geom_offset_y);
-    MeCuResults_t * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr][me2Nx2NTableOffset];
+    MeCuResults * mePuResult = &picture_control_set_ptr->parent_pcs_ptr->me_results[me_sb_addr][me2Nx2NTableOffset];
     uint8_t nsq0 = mePuResult->me_nsq[0];
     uint8_t nsq1 = mePuResult->me_nsq[1];
     uint8_t me_part_0 = nsq0 == 0 ? PART_N : nsq0 == 1 ? PART_H : nsq0 == 2 ? PART_V : nsq0 == 3 ? PART_H4 : nsq0 == 4 ? PART_V4 : nsq0 == 5 ? PART_S : 0;
@@ -6924,10 +6924,10 @@ EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
     PictureControlSet         *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
     uint32_t                       sb_origin_x,            // input parameter, SB Origin X
     uint32_t                       sb_origin_y,            // input parameter, SB Origin X
-    int16_t                       xMvL0,
-    int16_t                       yMvL0,
-    int16_t                       xMvL1,
-    int16_t                       yMvL1,
+    int16_t                       x_mv_l0,
+    int16_t                       y_mv_l0,
+    int16_t                       x_mv_l1,
+    int16_t                       y_mv_l1,
     SsMeContext_t                 *context_ptr)           // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
 
 {
@@ -6999,8 +6999,8 @@ EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
         refPicPtr = is16bit ? (EbPictureBufferDesc*)referenceObject->reference_picture16bit : (EbPictureBufferDesc*)referenceObject->reference_picture;
         search_area_width = (int16_t)MIN(context_ptr->search_area_width, 127);
         search_area_height = (int16_t)MIN(context_ptr->search_area_height, 127);
-        x_search_center = listIndex == REF_LIST_0 ? xMvL0 : xMvL1;
-        y_search_center = listIndex == REF_LIST_0 ? yMvL0 : yMvL1;
+        x_search_center = listIndex == REF_LIST_0 ? x_mv_l0 : x_mv_l1;
+        y_search_center = listIndex == REF_LIST_0 ? y_mv_l0 : y_mv_l1;
 
         x_search_area_origin = x_search_center - (search_area_width >> 1);
         y_search_area_origin = y_search_center - (search_area_height >> 1);

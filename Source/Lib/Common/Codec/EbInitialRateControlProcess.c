@@ -36,16 +36,16 @@ void GetMv(
 
     uint32_t             meCandidateIndex;
 
-    MeCuResults_t * cuResults = &picture_control_set_ptr->me_results[sb_index][0];
+    MeCuResults * cuResults = &picture_control_set_ptr->me_results[sb_index][0];
 
 
 
 
-    for (meCandidateIndex = 0; meCandidateIndex < cuResults->totalMeCandidateIndex; meCandidateIndex++) {
-        if (cuResults->distortionDirection[meCandidateIndex].direction == UNI_PRED_LIST_0) {
+    for (meCandidateIndex = 0; meCandidateIndex < cuResults->total_me_candidate_index; meCandidateIndex++) {
+        if (cuResults->distortion_direction[meCandidateIndex].direction == UNI_PRED_LIST_0) {
 
-            *xCurrentMv = cuResults->xMvL0;
-            *yCurrentMv = cuResults->yMvL0;
+            *xCurrentMv = cuResults->x_mv_l0;
+            *yCurrentMv = cuResults->y_mv_l0;
 
             break;
         }
@@ -60,7 +60,7 @@ void GetMeDist(
     uint32_t                      *distortion)
 {
 
-    *distortion = (uint32_t)(picture_control_set_ptr->me_results[sb_index][0].distortionDirection[0].distortion);
+    *distortion = (uint32_t)(picture_control_set_ptr->me_results[sb_index][0].distortion_direction[0].distortion);
 
 }
 
@@ -1388,7 +1388,7 @@ void QpmGatherStatisticsSW(
 
 
 
-                meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortionDirection[0].distortion;
+                meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortion_direction[0].distortion;
 
 
                 //Keep track of the min,max and sum.
@@ -1421,7 +1421,7 @@ void QpmGatherStatisticsSW(
             ois_candidate_t *ois_cu_ptr = ois_sb_results_ptr->ois_candidate_array[mdScanCuIndex];
             oisSad = ois_cu_ptr[ois_sb_results_ptr->best_distortion_index[mdScanCuIndex]].distortion;
 
-            meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortionDirection[0].distortion;
+            meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortion_direction[0].distortion;
 
             //Keep track of the min,max and sum.
             picture_control_set_ptr->intra_complexity_min[cu_depth] = oisSad < picture_control_set_ptr->intra_complexity_min[cu_depth] ? oisSad : picture_control_set_ptr->intra_complexity_min[cu_depth];
@@ -1446,7 +1446,7 @@ void QpmGatherStatisticsSW(
             ois_candidate_t *ois_cu_ptr = ois_sb_results_ptr->ois_candidate_array[mdScanCuIndex];
             oisSad = ois_cu_ptr[ois_sb_results_ptr->best_distortion_index[mdScanCuIndex]].distortion;
 
-            meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortionDirection[0].distortion;
+            meSad = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortion_direction[0].distortion;
 
 
             //Keep track of the min,max and sum.
@@ -1470,7 +1470,7 @@ void QpmGatherStatisticsSW(
             ois_candidate_t *ois_cu_ptr = ois_sb_results_ptr->ois_candidate_array[mdScanCuIndex];
             oisSad = ois_cu_ptr[ois_sb_results_ptr->best_distortion_index[mdScanCuIndex]].distortion;
 
-        meSad = picture_control_set_ptr->me_results[sb_index][RASTER_SCAN_CU_INDEX_64x64].distortionDirection[0].distortion;
+        meSad = picture_control_set_ptr->me_results[sb_index][RASTER_SCAN_CU_INDEX_64x64].distortion_direction[0].distortion;
 
 
         //Keep track of the min,max and sum.
