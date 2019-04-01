@@ -4574,7 +4574,7 @@ void av1_predict_intra_block_16bit(
 is the main function to compute intra prediction for a PU
 */
 EbErrorType AV1IntraPredictionCL(
-    ModeDecisionContext_t                  *md_context_ptr,
+    ModeDecisionContext                  *md_context_ptr,
 
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t           *candidate_buffer_ptr,

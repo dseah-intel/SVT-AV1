@@ -36,7 +36,7 @@
 
 EbErrorType ProductGenerateMdCandidatesCu(
     LargestCodingUnit_t             *sb_ptr,
-    ModeDecisionContext_t           *context_ptr,
+    ModeDecisionContext           *context_ptr,
     SsMeContext                  *ss_mecontext,
 #if !M8_SKIP_BLK
     const uint32_t                    leaf_index,
@@ -89,7 +89,7 @@ const EB_AV1_FULL_COST_FUNC   Av1ProductFullCostFuncTable[3] =
 * Update Recon Samples Neighbor Arrays
 ***************************************************/
 void mode_decision_update_neighbor_arrays(
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     uint32_t                   index_mds,
     EbBool                  intraMdOpenLoop,
     EbBool                  intra4x4Selected
@@ -362,7 +362,7 @@ void mode_decision_update_neighbor_arrays(
 
 void copy_neighbour_arrays(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     uint32_t                            src_idx,
     uint32_t                            dst_idx,
     uint32_t                            blk_mds,
@@ -543,7 +543,7 @@ void copy_neighbour_arrays(
 
 void md_update_all_neighbour_arrays(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     uint32_t                             lastCuIndex_mds,
     uint32_t                            sb_origin_x,
     uint32_t                            sb_origin_y)
@@ -580,7 +580,7 @@ void md_update_all_neighbour_arrays(
 
 void md_update_all_neighbour_arrays_multiple(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     uint32_t                            blk_mds,
     uint32_t                            sb_origin_x,
     uint32_t                            sb_origin_y){
@@ -607,7 +607,7 @@ void md_update_all_neighbour_arrays_multiple(
 //*************************//
 
 void set_nfl(
-    ModeDecisionContext_t     *context_ptr
+    ModeDecisionContext     *context_ptr
     ){
 
     // NFL Level MD       Settings
@@ -658,7 +658,7 @@ void set_nfl(
 // the NMM candidates numbers are set
 //*************************//
 void Initialize_cu_data_structure(
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     LargestCodingUnit_t        *sb_ptr,
     const MdcLcuData        * const mdcResultTbPtr)
@@ -802,7 +802,7 @@ void picture_addition_kernel16_bit(
 
 void AV1PerformInverseTransformReconLuma(
     PictureControlSet               *picture_control_set_ptr,
-    ModeDecisionContext_t             *context_ptr,
+    ModeDecisionContext             *context_ptr,
     ModeDecisionCandidateBuffer_t     *candidateBuffer,
     CodingUnit_t                      *cu_ptr,
     const BlockGeom                   *blk_geom,
@@ -879,7 +879,7 @@ void AV1PerformInverseTransformReconLuma(
 }
 void AV1PerformInverseTransformRecon(
     PictureControlSet               *picture_control_set_ptr,
-    ModeDecisionContext_t             *context_ptr,
+    ModeDecisionContext             *context_ptr,
     ModeDecisionCandidateBuffer_t     *candidateBuffer,
     CodingUnit_t                      *cu_ptr,
     const BlockGeom                   *blk_geom,
@@ -1039,7 +1039,7 @@ void AV1PerformInverseTransformRecon(
 * Coding Loop - Fast Loop Initialization
 *******************************************/
 void ProductCodingLoopInitFastLoop(
-    ModeDecisionContext_t      *context_ptr,
+    ModeDecisionContext      *context_ptr,
     NeighborArrayUnit        *skip_coeff_neighbor_array,
     NeighborArrayUnit        *luma_dc_sign_level_coeff_neighbor_array,
     NeighborArrayUnit        *cb_dc_sign_level_coeff_neighbor_array,
@@ -1132,7 +1132,7 @@ uint64_t spatial_full_distortion_kernel16_mx_n_ssse3_intrin(
 void ProductMdFastPuPrediction(
     PictureControlSet                 *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t       *candidateBuffer,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     uint32_t                             modeType,
     ModeDecisionCandidate_t             *const candidate_ptr,
     uint32_t                             fastLoopCandidateIndex,
@@ -1156,11 +1156,11 @@ void ProductMdFastPuPrediction(
 }
 void generate_intra_reference_samples(
     const Av1Common         *cm,
-    ModeDecisionContext_t   *md_context_ptr);
+    ModeDecisionContext   *md_context_ptr);
 
 void perform_fast_loop(
     PictureControlSet                 *picture_control_set_ptr,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     ModeDecisionCandidateBuffer_t      **candidateBufferPtrArrayBase,
     ModeDecisionCandidate_t             *fast_candidate_array,
     int32_t                              fast_candidate_start_index,
@@ -1375,7 +1375,7 @@ void perform_fast_loop(
 
 void ProductConfigureChroma(
     PictureControlSet                 *picture_control_set_ptr,
-    ModeDecisionContext_t               *context_ptr,
+    ModeDecisionContext               *context_ptr,
     LargestCodingUnit_t                 *sb_ptr) {
 
     uint32_t  lcuAddr = sb_ptr->index;
@@ -1393,7 +1393,7 @@ void ProductConfigureChroma(
 void ProductDerivePartialFrequencyN2Flag(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionContext_t              *context_ptr){
+    ModeDecisionContext              *context_ptr){
 
     UNUSED(sequence_control_set_ptr);
     UNUSED(picture_control_set_ptr);
@@ -1405,7 +1405,7 @@ void AV1CostCalcCfl(
     PictureControlSet                *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t      *candidateBuffer,
     LargestCodingUnit_t                *sb_ptr,
-    ModeDecisionContext_t              *context_ptr,
+    ModeDecisionContext              *context_ptr,
     uint32_t                            component_mask,
     EbPictureBufferDesc              *input_picture_ptr,
     uint32_t                            inputCbOriginIndex,
@@ -1587,7 +1587,7 @@ void cfl_rd_pick_alpha(
     PictureControlSet     *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     LargestCodingUnit_t     *sb_ptr,
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     EbPictureBufferDesc   *input_picture_ptr,
     uint32_t                   inputCbOriginIndex,
     uint32_t                     cuChromaOriginIndex,
@@ -1756,7 +1756,7 @@ static void CflPrediction(
     PictureControlSet     *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     LargestCodingUnit_t     *sb_ptr,
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     EbPictureBufferDesc   *input_picture_ptr,
     uint32_t                   inputCbOriginIndex,
     uint32_t                     cuChromaOriginIndex,
@@ -1890,7 +1890,7 @@ void AV1PerformFullLoop(
     PictureControlSet     *picture_control_set_ptr,
     LargestCodingUnit_t     *sb_ptr,
     CodingUnit_t            *cu_ptr,
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     EbPictureBufferDesc   *input_picture_ptr,
     uint32_t                 inputOriginIndex,
     uint32_t                 inputCbOriginIndex,
@@ -2316,7 +2316,7 @@ void move_cu_data(
 EbBool allowed_ns_cu(
     EbBool                             is_nsq_table_used,
     uint8_t                            nsq_max_shapes_md,
-    ModeDecisionContext_t              *context_ptr,
+    ModeDecisionContext              *context_ptr,
     uint8_t                            is_complete_sb){
   
     EbBool  ret = 1;
@@ -2364,7 +2364,7 @@ void inter_depth_tx_search(
     PictureControlSet                      *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t            *candidateBuffer,
     CodingUnit_t                             *cu_ptr,
-    ModeDecisionContext_t                    *context_ptr,
+    ModeDecisionContext                    *context_ptr,
     EbPictureBufferDesc                    *input_picture_ptr,
     uint64_t                                  ref_fast_cost,
     EbAsm                                     asm_type)
@@ -2748,7 +2748,7 @@ PART get_partition_shape(
 ****************************************************/
 void  order_nsq_table(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
     NeighborArrayUnit            *leaf_partition_neighbor_array) {
@@ -2926,7 +2926,7 @@ void  order_nsq_table(
 #if M8_SKIP_BLK
 uint8_t check_skip_sub_blks(
     PictureControlSet              *picture_control_set_ptr,
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     CodingUnit_t                     *cu_ptr,
     uint8_t                           is_complete_sb,
     uint32_t                          sb_index) {
@@ -2947,7 +2947,7 @@ uint8_t check_skip_sub_blks(
 void md_encode_block(
     SequenceControlSet             *sequence_control_set_ptr,
     PictureControlSet              *picture_control_set_ptr,
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     SsMeContext                    *ss_mecontext,
 #if M8_SKIP_BLK
     uint8_t                          *skip_sub_blocks,
@@ -3315,7 +3315,7 @@ EB_EXTERN EbErrorType mode_decision_sb(
     uint16_t                             sb_origin_y,
     uint32_t                             lcuAddr,
     SsMeContext                       *ss_mecontext,
-    ModeDecisionContext_t               *context_ptr)
+    ModeDecisionContext               *context_ptr)
 {
     EbErrorType                          return_error = EB_ErrorNone;
 

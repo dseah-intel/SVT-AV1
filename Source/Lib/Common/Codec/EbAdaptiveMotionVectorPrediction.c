@@ -1145,7 +1145,7 @@ static INLINE IntMv gm_get_motion_vector(
 void generate_av1_mvp_table(
     TileInfo                         *tile,
 
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     CodingUnit_t                     *cu_ptr,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
@@ -1244,7 +1244,7 @@ void generate_av1_mvp_table(
 
 }
 void get_av1_mv_pred_drl(
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     CodingUnit_t      *cu_ptr,
     MvReferenceFrame   ref_frame,
     uint8_t            is_compound,
@@ -1310,7 +1310,7 @@ void get_av1_mv_pred_drl(
 void enc_pass_av1_mv_pred(
     TileInfo                         *tile,
 
-    ModeDecisionContext_t            *md_context_ptr,
+    ModeDecisionContext            *md_context_ptr,
     CodingUnit_t                     *cu_ptr,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
@@ -1416,7 +1416,7 @@ void update_av1_mi_map(
 
 
 void update_mi_map(
-    struct ModeDecisionContext_s   *context_ptr,
+    struct ModeDecisionContext   *context_ptr,
 
     CodingUnit_t                   *cu_ptr,
     uint32_t                        cu_origin_x,

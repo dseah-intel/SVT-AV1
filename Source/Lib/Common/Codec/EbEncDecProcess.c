@@ -1227,7 +1227,7 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
     SequenceControlSet    *sequence_control_set_ptr,
 
     PictureControlSet     *picture_control_set_ptr,
-    ModeDecisionContext_t   *context_ptr) {
+    ModeDecisionContext   *context_ptr) {
 
     EbErrorType return_error = EB_ErrorNone;
 
@@ -1570,7 +1570,7 @@ void* EncDecKernel(void *input_ptr)
                     context_ptr->md_context->cu_use_ref_src_flag = (picture_control_set_ptr->parent_pcs_ptr->use_src_ref) && (picture_control_set_ptr->parent_pcs_ptr->edge_results_ptr[sb_index].edge_block_num == EB_FALSE || picture_control_set_ptr->parent_pcs_ptr->sb_flat_noise_array[sb_index]) ? EB_TRUE : EB_FALSE;
 
                     // Configure the LCU
-                    ModeDecisionConfigureLcu(
+                    mode_decision_configure_lcu(
                         context_ptr->md_context,
                         sb_ptr,
                         picture_control_set_ptr,

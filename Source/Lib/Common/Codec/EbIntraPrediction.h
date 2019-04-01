@@ -26,7 +26,7 @@ extern "C" {
 #endif
 #define MAX_PU_SIZE                            64
 
-    struct ModeDecisionContext_s;
+    struct ModeDecisionContext;
 
     typedef void(*intra_pred_fn_c)(uint8_t *dst, ptrdiff_t stride, int32_t w, int32_t h,
         const uint8_t *above, const uint8_t *left);
@@ -123,7 +123,7 @@ extern "C" {
 
 
     extern EbErrorType AV1IntraPredictionCL(
-        struct ModeDecisionContext_s           *context_ptr,
+        struct ModeDecisionContext           *context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionCandidateBuffer_t           *candidate_buffer_ptr,
         EbAsm                                  asm_type);

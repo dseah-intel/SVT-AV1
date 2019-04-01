@@ -14,7 +14,7 @@ extern "C" {
     void FullLoop_R(
         LargestCodingUnit_t            *sb_ptr,
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
-        ModeDecisionContext_t          *context_ptr,
+        ModeDecisionContext          *context_ptr,
         EbPictureBufferDesc          *input_picture_ptr,
         PictureControlSet            *picture_control_set_ptr,
         uint32_t                          component_mask,
@@ -26,7 +26,7 @@ extern "C" {
     void CuFullDistortionFastTuMode_R(
         LargestCodingUnit_t            *sb_ptr,
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
-        ModeDecisionContext_t            *context_ptr,
+        ModeDecisionContext            *context_ptr,
         ModeDecisionCandidate_t           *candidate_ptr,
         PictureControlSet            *picture_control_set_ptr,
         uint64_t                          cbFullDistortion[DIST_CALC_TOTAL],
@@ -41,7 +41,7 @@ extern "C" {
 
     void ProductFullLoop(
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
-        ModeDecisionContext_t          *context_ptr,
+        ModeDecisionContext          *context_ptr,
         PictureControlSet            *picture_control_set_ptr,
         uint32_t                          qp,
         uint32_t                           *y_count_non_zero_coeffs,
@@ -51,10 +51,10 @@ extern "C" {
 
     void ProductFullLoopTxSearch(
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
-        ModeDecisionContext_t          *context_ptr,
+        ModeDecisionContext          *context_ptr,
         PictureControlSet            *picture_control_set_ptr);
     extern uint32_t d2_inter_depth_block_decision(
-        ModeDecisionContext_t          *context_ptr,
+        ModeDecisionContext          *context_ptr,
         uint32_t                        blk_mds,
         LargestCodingUnit_t            *tbPtr,
         uint32_t                          lcuAddr,
@@ -66,7 +66,7 @@ extern "C" {
 
 
     void  d1_non_square_block_decision(
-        ModeDecisionContext_t               *context_ptr
+        ModeDecisionContext               *context_ptr
     );
 
 

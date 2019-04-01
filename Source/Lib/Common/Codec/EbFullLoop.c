@@ -723,7 +723,7 @@ void av1_quantize_inv_quantize(
 ****************************************/
 void ProductFullLoop(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint32_t                          qp,
     uint32_t                          *y_count_non_zero_coeffs,
@@ -926,7 +926,7 @@ uint8_t allowed_tx_set_b[TX_SIZES_ALL][TX_TYPES] = {
 
 void ProductFullLoopTxSearch(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr)
 {
     uint32_t                       tuOriginIndex;
@@ -1529,7 +1529,7 @@ void encode_pass_tx_search_hbd(
 void FullLoop_R(
     LargestCodingUnit_t            *sb_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     EbPictureBufferDesc          *input_picture_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint32_t                          component_mask,
@@ -1715,7 +1715,7 @@ void FullLoop_R(
 void CuFullDistortionFastTuMode_R(
     LargestCodingUnit_t            *sb_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     ModeDecisionCandidate_t           *candidate_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint64_t                          cbFullDistortion[DIST_CALC_TOTAL],
@@ -1874,7 +1874,7 @@ void CuFullDistortionFastTuMode_R(
 
 
 void  d1_non_square_block_decision(
-    ModeDecisionContext_t               *context_ptr
+    ModeDecisionContext               *context_ptr
 )
 {
     //compute total cost for the whole block partition
@@ -1900,7 +1900,7 @@ void  d1_non_square_block_decision(
 
 /// compute the cost of curr depth, and the depth above
 void   compute_depth_costs(
-    ModeDecisionContext_t    *context_ptr,
+    ModeDecisionContext    *context_ptr,
     SequenceControlSet     *sequence_control_set_ptr,
     uint32_t                  curr_depth_mds,
     uint32_t                  above_depth_mds,
@@ -2035,7 +2035,7 @@ void   compute_depth_costs(
 }
 
 uint32_t d2_inter_depth_block_decision(
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     uint32_t                        blk_mds,
     LargestCodingUnit_t            *tbPtr,
     uint32_t                          lcuAddr,

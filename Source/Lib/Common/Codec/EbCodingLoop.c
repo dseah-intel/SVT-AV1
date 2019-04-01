@@ -2261,7 +2261,7 @@ EB_EXTERN void AV1EncodePass(
     EbPictureBufferDesc    *recon_buffer = is16bit ? picture_control_set_ptr->recon_picture16bit_ptr : picture_control_set_ptr->recon_picture_ptr;
     EbPictureBufferDesc    *coeff_buffer_sb = sb_ptr->quantized_coeff;
     EbPictureBufferDesc    *inputPicture;
-    ModeDecisionContext_t    *mdcontextPtr;
+    ModeDecisionContext    *mdcontextPtr;
     mdcontextPtr = context_ptr->md_context;
     inputPicture = context_ptr->input_samples = (EbPictureBufferDesc*)picture_control_set_ptr->parent_pcs_ptr->enhanced_picture_ptr;
 

@@ -46,7 +46,7 @@ extern "C" {
         EbFifo                              *picture_demux_output_fifo_ptr;   // to picture-manager
         int16_t                               *transform_inner_array_ptr;
         MdRateEstimationContext_t             *md_rate_estimation_ptr;
-        ModeDecisionContext_t                 *md_context;
+        ModeDecisionContext                 *md_context;
         const BlockGeom                       *blk_geom;
 
         // TMVP

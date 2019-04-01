@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-    struct ModeDecisionContext_s;
+    struct ModeDecisionContext;
     struct InterPredictionContext_s;
 
     typedef enum TmvpPos {
@@ -48,7 +48,7 @@ extern "C" {
 
     void generate_av1_mvp_table(
         TileInfo                              *tile,
-      struct ModeDecisionContext_s            *context_ptr,
+      struct ModeDecisionContext            *context_ptr,
         CodingUnit_t                     *cu_ptr,
         const BlockGeom                   * blk_geom,
         uint16_t                            cu_origin_x,
@@ -58,7 +58,7 @@ extern "C" {
         PictureControlSet              *picture_control_set_ptr);
 
     void get_av1_mv_pred_drl(
-        struct ModeDecisionContext_s            *context_ptr,
+        struct ModeDecisionContext            *context_ptr,
         CodingUnit_t      *cu_ptr,
         MvReferenceFrame ref_frame,
         uint8_t              is_compound,
@@ -71,7 +71,7 @@ extern "C" {
     void enc_pass_av1_mv_pred(
         TileInfo                               *tile,
 
-         struct ModeDecisionContext_s            *md_context_ptr,
+         struct ModeDecisionContext            *md_context_ptr,
         CodingUnit_t                     *cu_ptr,
         const BlockGeom                   * blk_geom,
         uint16_t                            cu_origin_x,
@@ -84,7 +84,7 @@ extern "C" {
     );
 
     void update_mi_map(
-        struct ModeDecisionContext_s   *context_ptr,
+        struct ModeDecisionContext   *context_ptr,
         CodingUnit_t                   *cu_ptr,
         uint32_t                          cu_origin_x,
         uint32_t                          cu_origin_y,

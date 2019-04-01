@@ -22,7 +22,7 @@
 extern "C" {
 #endif
     extern void coding_loop_context_generation(
-        ModeDecisionContext_t   *context_ptr,
+        ModeDecisionContext   *context_ptr,
         CodingUnit_t            *cu_ptr,
         uint32_t                 cu_origin_x,
         uint32_t                 cu_origin_y,
@@ -76,7 +76,7 @@ extern "C" {
 
     extern EbErrorType av1_split_flag_rate(
         SequenceControlSet      *sequence_control_set_ptr,
-        ModeDecisionContext_t     *context_ptr,
+        ModeDecisionContext     *context_ptr,
         CodingUnit_t              *cu_ptr,
         uint32_t                   leaf_index,
         PartitionType              partitionType,
@@ -129,7 +129,7 @@ extern "C" {
 
     extern EbErrorType av1_intra_full_cost(
         PictureControlSet                    *picture_control_set_ptr,
-        ModeDecisionContext_t                  *context_ptr,
+        ModeDecisionContext                  *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint64_t                                 *y_distortion,
@@ -143,7 +143,7 @@ extern "C" {
 
     extern EbErrorType av1_inter_full_cost(
         PictureControlSet                    *picture_control_set_ptr,
-        ModeDecisionContext_t                  *context_ptr,
+        ModeDecisionContext                  *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint64_t                                 *y_distortion,

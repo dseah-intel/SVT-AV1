@@ -50,7 +50,7 @@ int32_t av1_mv_bit_cost(const MV *mv, const MV *ref, const int32_t *mvjcost,
 #define MV_COST_WEIGHT 108
 
 void ChooseBestAv1MvPred(
-    ModeDecisionContext_t            *context_ptr,
+    ModeDecisionContext            *context_ptr,
     struct MdRateEstimationContext_s      *md_rate_estimation_ptr,
     CodingUnit_t      *cu_ptr,
     MvReferenceFrame ref_frame,
@@ -268,7 +268,7 @@ void RoundMv(
 * return true if the MV candidate is already injected
 ***************************************/
 EbBool is_already_injected_mv_l0(
-    ModeDecisionContext_t *context_ptr,
+    ModeDecisionContext *context_ptr,
     int16_t                mv_x,
     int16_t                mv_y) {
 
@@ -283,7 +283,7 @@ EbBool is_already_injected_mv_l0(
 }
 
 EbBool is_already_injected_mv_l1(
-    ModeDecisionContext_t *context_ptr,
+    ModeDecisionContext *context_ptr,
     int16_t                mv_x,
     int16_t                mv_y) {
 
@@ -298,7 +298,7 @@ EbBool is_already_injected_mv_l1(
 }
 
 EbBool is_already_injected_mv_bipred(
-    ModeDecisionContext_t *context_ptr,
+    ModeDecisionContext *context_ptr,
     int16_t                mv_x_l0,
     int16_t                mv_y_l0,
     int16_t                mv_x_l1,
@@ -401,7 +401,7 @@ EbErrorType SetMvpClipMVs(
 void LimitMvOverBound(
     int16_t *mvx,
     int16_t *mvy,
-    ModeDecisionContext_t     *ctxtPtr,
+    ModeDecisionContext     *ctxtPtr,
     const SequenceControlSet      *sCSet)
 {
     int32_t mvxF, mvyF;
@@ -431,7 +431,7 @@ void LimitMvOverBound(
 
 
 void sort_fast_loop_candidates(
-    struct ModeDecisionContext_s   *context_ptr,
+    struct ModeDecisionContext   *context_ptr,
     uint32_t                        buffer_total_count,
     ModeDecisionCandidateBuffer_t **buffer_ptr_array,
     uint8_t                        *best_candidate_index_array,
@@ -494,7 +494,7 @@ int8_t BIPRED_3x3_Y_POS[BIPRED_3x3_REFINMENT_POSITIONS] = { 0, 1, 1, 1, 0, -1, -
 
 void Unipred3x3CandidatesInjection(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
     SsMeContext                  *inloop_me_context,
@@ -645,7 +645,7 @@ void Unipred3x3CandidatesInjection(
 
 void Bipred3x3CandidatesInjection(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
     SsMeContext                  *inloop_me_context,
@@ -849,7 +849,7 @@ BIPred     : NEARST_NEARST  + upto 3x NEAR_NEAR
 **********************************************************************
 **********************************************************************/
 void InjectAv1MvpCandidates(
-    struct ModeDecisionContext_s     *context_ptr,
+    struct ModeDecisionContext     *context_ptr,
     CodingUnit_t                     *cu_ptr,
     MvReferenceFrame               *refFrames,
     PictureControlSet              *picture_control_set_ptr,
@@ -1116,7 +1116,7 @@ void InjectAv1MvpCandidates(
 
 void inject_warped_motion_candidates(
     PictureControlSet              *picture_control_set_ptr,
-    struct ModeDecisionContext_s     *context_ptr,
+    struct ModeDecisionContext     *context_ptr,
     CodingUnit_t                     *cu_ptr,
     uint32_t                         *candTotCnt,
     SsMeContext                    *ss_mecontext,
@@ -1318,7 +1318,7 @@ void inject_warped_motion_candidates(
 // END of Function Declarations
 void  inject_inter_candidates(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     SsMeContext                  *ss_mecontext,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
@@ -1926,7 +1926,7 @@ static INLINE TxType av1_get_tx_type(
 
 void  inject_intra_candidates_ois(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       *candidate_total_cnt){
 
@@ -2114,7 +2114,7 @@ void assert_release(int statement)
 
 void  intra_bc_search(
     PictureControlSet            *pcs,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *scs,
     LargestCodingUnit_t            *sb_ptr,
     CodingUnit_t                   *cu_ptr,
@@ -2297,7 +2297,7 @@ void  intra_bc_search(
 
 void  inject_intra_bc_candidates(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
     CodingUnit_t                   *cu_ptr,
@@ -2360,7 +2360,7 @@ void  inject_intra_bc_candidates(
 // END of Function Declarations
 void  inject_intra_candidates(
     PictureControlSet            *picture_control_set_ptr,
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
 #if M8_SKIP_BLK
@@ -2533,7 +2533,7 @@ void  inject_intra_candidates(
 }
 
 void ProductInitMdCandInjection(
-    ModeDecisionContext_t          *context_ptr,
+    ModeDecisionContext          *context_ptr,
     uint32_t                         *candidateTotalCnt)
 
 {
@@ -2550,7 +2550,7 @@ void ProductInitMdCandInjection(
 ***************************************/
 EbErrorType ProductGenerateMdCandidatesCu(
     LargestCodingUnit_t                 *sb_ptr,
-    ModeDecisionContext_t             *context_ptr,
+    ModeDecisionContext             *context_ptr,
     SsMeContext                    *ss_mecontext,
 #if !M8_SKIP_BLK
     const uint32_t                      leaf_index,
@@ -2648,7 +2648,7 @@ EbErrorType ProductGenerateMdCandidatesCu(
 * Full Mode Decision
 ***************************************/
 uint8_t product_full_mode_decision(
-    struct ModeDecisionContext_s   *context_ptr,
+    struct ModeDecisionContext   *context_ptr,
     CodingUnit_t                   *cu_ptr,
     uint8_t                           bwidth,
     uint8_t                           bheight,

@@ -26,7 +26,7 @@ extern "C" {
 
     // Create incomplete struct definition for the following function pointer typedefs
     struct ModeDecisionCandidateBuffer_s;
-    struct ModeDecisionContext_s;
+    struct ModeDecisionContext;
 
     /**************************************
     * Mode Decision Candidate
@@ -131,7 +131,7 @@ extern "C" {
     * Function Ptrs Definitions
     **************************************/
     typedef EbErrorType(*EB_PREDICTION_FUNC)(
-        struct ModeDecisionContext_s           *context_ptr,
+        struct ModeDecisionContext           *context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         EbAsm                                   asm_type);
@@ -173,7 +173,7 @@ extern "C" {
 
     typedef EbErrorType(*EB_AV1_FULL_COST_FUNC)(
         PictureControlSet                    *picture_control_set_ptr,
-        struct ModeDecisionContext_s           *context_ptr,
+        struct ModeDecisionContext           *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint64_t                               *y_distortion,
@@ -255,7 +255,7 @@ extern "C" {
         uint64_t                       *full_cost_merge_ptr
     );
     uint8_t product_full_mode_decision(
-        struct ModeDecisionContext_s   *context_ptr,
+        struct ModeDecisionContext   *context_ptr,
         CodingUnit_t                   *cu_ptr,
         uint8_t                         bwidth,
         uint8_t                         bheight,
@@ -264,14 +264,14 @@ extern "C" {
         uint8_t                        *best_candidate_index_array,
         uint32_t                       *best_intra_mode);
     void sort_fast_loop_candidates(
-        struct ModeDecisionContext_s   *context_ptr,
+        struct ModeDecisionContext   *context_ptr,
         uint32_t                        buffer_total_count,
         ModeDecisionCandidateBuffer_t **buffer_ptr_array,
         uint8_t                        *best_candidate_index_array,
         uint8_t                        *sorted_candidate_index_array,
         uint64_t                       *ref_fast_cost);
     typedef EbErrorType(*EB_INTRA_4x4_FAST_LUMA_COST_FUNC)(
-        struct ModeDecisionContext_s           *context_ptr,
+        struct ModeDecisionContext           *context_ptr,
         uint32_t                                pu_index,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         uint64_t                                luma_distortion,

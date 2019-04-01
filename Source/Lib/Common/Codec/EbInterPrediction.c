@@ -1508,7 +1508,7 @@ EbErrorType AV1MDInterPrediction(
 #endif
     PictureControlSet                     *picture_control_set_ptr,
     uint8_t                                  ref_frame_type,
-    ModeDecisionContext_t                   *md_context_ptr,
+    ModeDecisionContext                   *md_context_ptr,
     CodingUnit_t                            *cu_ptr,
     MvUnit                                *mv_unit,
     uint8_t                                 use_intrabc,
@@ -2929,7 +2929,7 @@ EbErrorType warped_motion_prediction(
 
 EbErrorType warped_motion_prediction_md(
     MvUnit                               *mv_unit,
-    ModeDecisionContext_t                  *md_context_ptr,
+    ModeDecisionContext                  *md_context_ptr,
     uint16_t                                pu_origin_x,
     uint16_t                                pu_origin_y,
     CodingUnit_t                           *cu_ptr,
@@ -3184,7 +3184,7 @@ extern int32_t av1_get_pred_context_switchable_interp(
 int32_t av1_get_switchable_rate(
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
     const Av1Common *const cm,
-    ModeDecisionContext_t *md_context_ptr//,
+    ModeDecisionContext *md_context_ptr//,
     // Macroblock *x,
     // const MacroBlockD *xd
 ) {
@@ -3441,7 +3441,7 @@ extern /*static*/ void model_rd_for_sb(
 
     PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc *prediction_ptr,
-    ModeDecisionContext_t *md_context_ptr,
+    ModeDecisionContext *md_context_ptr,
     //const Av1Comp *const cpi,
     //block_size bsize,
     //Macroblock *x,
@@ -3578,7 +3578,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 /*static*/ void interpolation_filter_search(
     PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc *prediction_ptr,
-    ModeDecisionContext_t *md_context_ptr,
+    ModeDecisionContext *md_context_ptr,
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
     MvUnit mv_unit,
     EbPictureBufferDesc  *ref_pic_list0,
@@ -3920,7 +3920,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 /*static*/ void interpolation_filter_search_HBD(
     PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc *prediction_ptr,
-    ModeDecisionContext_t *md_context_ptr,
+    ModeDecisionContext *md_context_ptr,
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
     MvUnit mv_unit,
     EbPictureBufferDesc  *ref_pic_list0,
@@ -4264,7 +4264,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 #endif
 
 EbErrorType inter_pu_prediction_av1(
-    ModeDecisionContext_t                  *md_context_ptr,
+    ModeDecisionContext                  *md_context_ptr,
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
     EbAsm                                   asm_type)

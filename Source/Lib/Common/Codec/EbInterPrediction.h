@@ -18,7 +18,7 @@
 extern "C" {
 #endif
 
-    struct ModeDecisionContext_s;
+    struct ModeDecisionContext;
     typedef struct InterPredictionContext_s {
         // mcp context
         MotionCompensationPredictionContext_t  *mcp_context;
@@ -48,7 +48,7 @@ extern "C" {
         EbAsm                                   asm_type);
 
     EbErrorType inter_pu_prediction_av1(
-        struct ModeDecisionContext_s           *md_context_ptr,
+        struct ModeDecisionContext           *md_context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
         EbAsm                                   asm_type);

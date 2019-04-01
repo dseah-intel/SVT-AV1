@@ -27,7 +27,7 @@ extern "C" {
         uint32_t                             sb_origin_x,
         uint32_t                             sb_origin_y,
         uint32_t                             lcuAddr,
-        ModeDecisionContext_t               *context_ptr);
+        ModeDecisionContext               *context_ptr);
 
 
     extern EbErrorType AV1ProductModeDecisionLcu(
@@ -38,7 +38,7 @@ extern "C" {
         uint32_t                             sb_origin_x,
         uint32_t                             sb_origin_y,
         uint32_t                             lcuAddr,
-        ModeDecisionContext_t               *context_ptr);
+        ModeDecisionContext               *context_ptr);
 
 
     extern EbErrorType in_loop_motion_estimation_sblock(
@@ -60,7 +60,7 @@ extern "C" {
         uint16_t                             sb_origin_y,
         uint32_t                             lcuAddr,
         SsMeContext                       *ss_mecontext,
-        ModeDecisionContext_t               *context_ptr);
+        ModeDecisionContext               *context_ptr);
 
 
 
@@ -70,7 +70,7 @@ extern "C" {
         LargestCodingUnit_t                 *sb_ptr,
         uint32_t                               sb_origin_x,
         uint32_t                               sb_origin_y,
-        ModeDecisionContext_t               *context_ptr);
+        ModeDecisionContext               *context_ptr);
 
     extern EbErrorType QpmDeriveWeightsMinAndMax(
         PictureControlSet                    *picture_control_set_ptr,

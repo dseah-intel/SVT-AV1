@@ -14,7 +14,7 @@
  * Mode Decision Context Constructor
  ******************************************************/
 EbErrorType mode_decision_context_ctor(
-    ModeDecisionContext_t  **context_dbl_ptr,
+    ModeDecisionContext  **context_dbl_ptr,
     EbFifo                *mode_decision_configuration_input_fifo_ptr,
     EbFifo                *mode_decision_output_fifo_ptr){
 
@@ -22,8 +22,8 @@ EbErrorType mode_decision_context_ctor(
     uint32_t candidateIndex;
     EbErrorType return_error = EB_ErrorNone;
 
-    ModeDecisionContext_t *context_ptr;
-    EB_MALLOC(ModeDecisionContext_t*, context_ptr, sizeof(ModeDecisionContext_t), EB_N_PTR);
+    ModeDecisionContext *context_ptr;
+    EB_MALLOC(ModeDecisionContext*, context_ptr, sizeof(ModeDecisionContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     // Input/Output System Resource Manager FIFOs
@@ -294,7 +294,7 @@ void lambdaAssignISlice(
     }
 
 }
-const EB_LAMBDA_ASSIGN_FUNC lambda_assignment_function_table[4] = {
+const EbLambdaAssignFunc lambda_assignment_function_table[4] = {
     lambda_assign_low_delay, // low delay P
     lambda_assign_low_delay, // low delay B
     lambda_assign_random_access, // Random Access
@@ -340,7 +340,7 @@ void Av1lambdaAssign(
     // NM: To be done: tune lambda based on the picture type and layer.
 
 }
-const EB_AV1_LAMBDA_ASSIGN_FUNC av1_lambda_assignment_function_table[4] = {
+const EbAv1LambdaAssignFunc av1_lambda_assignment_function_table[4] = {
     Av1lambdaAssign,
     Av1lambdaAssign,
     Av1lambdaAssign,
@@ -348,7 +348,7 @@ const EB_AV1_LAMBDA_ASSIGN_FUNC av1_lambda_assignment_function_table[4] = {
 };
 
 void reset_mode_decision(
-    ModeDecisionContext_t   *context_ptr,
+    ModeDecisionContext   *context_ptr,
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     uint32_t                   segment_index)
@@ -433,8 +433,8 @@ void reset_mode_decision(
 /******************************************************
  * Mode Decision Configure LCU
  ******************************************************/
-void ModeDecisionConfigureLcu(
-    ModeDecisionContext_t   *context_ptr,
+void mode_decision_configure_lcu(
+    ModeDecisionContext   *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
