@@ -1775,7 +1775,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Packetization Context
     return_error = packetization_context_ctor(
-        (PacketizationContext_t**)&encHandlePtr->packetizationContextPtr,
+        (PacketizationContext**)&encHandlePtr->packetizationContextPtr,
         encHandlePtr->entropyCodingResultsConsumerFifoPtrArray[0],
         encHandlePtr->rateControlTasksProducerFifoPtrArray[RateControlPortLookup(RATE_CONTROL_INPUT_PORT_PACKETIZATION, 0)]);
 
@@ -1869,7 +1869,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
 
     // Packetization
-    EB_CREATETHREAD(EbHandle, encHandlePtr->packetizationThreadHandle, sizeof(EbHandle), EB_THREAD, PacketizationKernel, encHandlePtr->packetizationContextPtr);
+    EB_CREATETHREAD(EbHandle, encHandlePtr->packetizationThreadHandle, sizeof(EbHandle), EB_THREAD, packetization_kernel, encHandlePtr->packetizationContextPtr);
 
 
 #if DISPLAY_MEMORY
