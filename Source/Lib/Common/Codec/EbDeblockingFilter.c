@@ -30,7 +30,7 @@
 is used to set qp in the qp_array on a CU basis.
 */
 void SetQpArrayBasedOnCU(
-    PictureControlSet_t *picture_control_set_ptr,          //input parameter
+    PictureControlSet *picture_control_set_ptr,          //input parameter
     uint32_t               cuPos_x,                       //input parameter, sample-based horizontal picture-wise locatin of the CU
     uint32_t               cuPos_y,                       //input parameter, sample-based vertical picture-wise locatin of the CU
     uint32_t               cuSizeInMinCuSize,             //input parameter
@@ -626,7 +626,7 @@ static void update_sharpness(loop_filter_info_n *lfi, int32_t sharpness_lvl) {
     }
 }
 static uint8_t get_filter_level(
-    const PictureControlSet_t *pcsPtr,
+    const PictureControlSet *pcsPtr,
     const loop_filter_info_n *lfi_n,
     const int32_t dir_idx, int32_t plane,
     const MbModeInfo *mbmi) {
@@ -676,7 +676,7 @@ static uint8_t get_filter_level(
     }
 }
 
-void av1_loop_filter_init(PictureControlSet_t *pcsPtr) {
+void av1_loop_filter_init(PictureControlSet *pcsPtr) {
     //assert(MB_MODE_COUNT == n_elements(mode_lf_lut));
     loop_filter_info_n *lfi = &pcsPtr->parent_pcs_ptr->lf_info;
     struct loopfilter *lf = &pcsPtr->parent_pcs_ptr->lf;
@@ -695,7 +695,7 @@ void av1_loop_filter_init(PictureControlSet_t *pcsPtr) {
 // Update the loop filter for the current frame.
 // This should be called before loop_filter_rows(),
 // av1_loop_filter_frame() calls this function directly.
-void av1_loop_filter_frame_init(PictureControlSet_t *pcsPtr, int32_t plane_start,
+void av1_loop_filter_frame_init(PictureControlSet *pcsPtr, int32_t plane_start,
     int32_t plane_end) {
     int32_t filt_lvl[MAX_MB_PLANE], filt_lvl_r[MAX_MB_PLANE];
     int32_t plane;
@@ -892,7 +892,7 @@ typedef struct AV1_DEBLOCKING_PARAMETERS {
 // awared
 static TxSize set_lpf_parameters(
     AV1_DEBLOCKING_PARAMETERS *const params, const uint64_t mode_step,
-    const PictureControlSet_t *const  pcsPtr, const MacroBlockD *const xd,
+    const PictureControlSet *const  pcsPtr, const MacroBlockD *const xd,
     const EDGE_DIR edge_dir, const uint32_t x, const uint32_t y,
     const int32_t plane, const struct MacroblockdPlane *const plane_ptr) {
     // reset to initial values
@@ -1012,7 +1012,7 @@ static TxSize set_lpf_parameters(
 }
 
 void av1_filter_block_plane_vert(
-    const PictureControlSet_t *const  pcsPtr,
+    const PictureControlSet *const  pcsPtr,
     const MacroBlockD *const xd, const int32_t plane,
     const MacroblockdPlane *const plane_ptr,
     const uint32_t mi_row, const uint32_t mi_col) {
@@ -1134,7 +1134,7 @@ void av1_filter_block_plane_vert(
 }
 
 void av1_filter_block_plane_horz(
-    const PictureControlSet_t *const  pcsPtr,
+    const PictureControlSet *const  pcsPtr,
     const MacroBlockD *const xd, const int32_t plane,
     const MacroblockdPlane *const plane_ptr,
     const uint32_t mi_row, const uint32_t mi_col) {
@@ -1273,7 +1273,7 @@ void av1_filter_block_plane_horz(
 void loop_filter_sb(
     EbPictureBufferDesc_t *frame_buffer,//reconpicture,
     //Yv12BufferConfig *frame_buffer,
-    PictureControlSet_t *pcsPtr,
+    PictureControlSet *pcsPtr,
     MacroBlockD *xd, int32_t mi_row, int32_t mi_col,
     int32_t plane_start, int32_t plane_end,
     uint8_t LastCol) {
@@ -1350,7 +1350,7 @@ void loop_filter_sb(
 
 void av1_loop_filter_frame(
     EbPictureBufferDesc_t *frame_buffer,
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     int32_t plane_start, int32_t plane_end) {
 
     SequenceControlSet *scsPtr = (SequenceControlSet*)picture_control_set_ptr->parent_pcs_ptr->sequence_control_set_wrapper_ptr->object_ptr;
@@ -1393,7 +1393,7 @@ extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bi
 void EbCopyBuffer(
     EbPictureBufferDesc_t  *srcBuffer,
     EbPictureBufferDesc_t  *dstBuffer,
-    PictureControlSet_t    *pcsPtr,
+    PictureControlSet    *pcsPtr,
     uint8_t                   plane) {
 
     EbBool is16bit = (EbBool)(pcsPtr->parent_pcs_ptr->sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
@@ -1468,7 +1468,7 @@ void EbCopyBuffer(
 //}
 
 uint64_t PictureSseCalculations(
-    PictureControlSet_t    *picture_control_set_ptr,
+    PictureControlSet    *picture_control_set_ptr,
     EbPictureBufferDesc_t *recon_ptr,
     int32_t plane)
 
@@ -1634,7 +1634,7 @@ static int64_t try_filter_frame(
     //AV1_COMP *const cpi,
     const EbPictureBufferDesc_t *sd,
     EbPictureBufferDesc_t  *tempLfReconBuffer,
-    PictureControlSet_t *pcsPtr,
+    PictureControlSet *pcsPtr,
     int32_t filt_level,
     int32_t partial_frame, int32_t plane, int32_t dir) {
     (void)sd;
@@ -1688,7 +1688,7 @@ static int32_t search_filter_level(
     //const Yv12BufferConfig *sd, AV1_COMP *cpi,
     EbPictureBufferDesc_t *sd, // source
     EbPictureBufferDesc_t  *tempLfReconBuffer,
-    PictureControlSet_t *pcsPtr,
+    PictureControlSet *pcsPtr,
     int32_t partial_frame,
     const int32_t *last_frame_filter_level,
     double *best_cost_ret, int32_t plane, int32_t dir) {
@@ -1851,7 +1851,7 @@ static int32_t search_filter_level(
 void av1_pick_filter_level(
     DlfContext_t            *context_ptr,
     EbPictureBufferDesc_t   *srcBuffer, // source input
-    PictureControlSet_t     *pcsPtr,
+    PictureControlSet     *pcsPtr,
     LPF_PICK_METHOD          method) {
 
     SequenceControlSet *scsPtr = (SequenceControlSet*)pcsPtr->parent_pcs_ptr->sequence_control_set_wrapper_ptr->object_ptr;

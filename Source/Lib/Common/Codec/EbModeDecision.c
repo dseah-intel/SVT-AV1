@@ -323,7 +323,7 @@ EbErrorType SetMvpClipMVs(
     uint32_t                    cu_origin_y,
     uint32_t                    pu_index,
     uint32_t                    tbSize,
-    PictureControlSet_t      *picture_control_set_ptr)
+    PictureControlSet      *picture_control_set_ptr)
 {
     EbErrorType  return_error = EB_ErrorNone;
 
@@ -493,7 +493,7 @@ int8_t BIPRED_3x3_X_POS[BIPRED_3x3_REFINMENT_POSITIONS] = { -1, -1, 0, 1, 1, 1, 
 int8_t BIPRED_3x3_Y_POS[BIPRED_3x3_REFINMENT_POSITIONS] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
 void Unipred3x3CandidatesInjection(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
@@ -644,7 +644,7 @@ void Unipred3x3CandidatesInjection(
 }
 
 void Bipred3x3CandidatesInjection(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
@@ -852,7 +852,7 @@ void InjectAv1MvpCandidates(
     struct ModeDecisionContext_s     *context_ptr,
     CodingUnit_t                     *cu_ptr,
     MvReferenceFrame               *refFrames,
-    PictureControlSet_t              *picture_control_set_ptr,
+    PictureControlSet              *picture_control_set_ptr,
     uint32_t                            lcuAddr,
 #if !M8_SKIP_BLK    
     uint32_t                            leaf_index,
@@ -1115,7 +1115,7 @@ void InjectAv1MvpCandidates(
 }
 
 void inject_warped_motion_candidates(
-    PictureControlSet_t              *picture_control_set_ptr,
+    PictureControlSet              *picture_control_set_ptr,
     struct ModeDecisionContext_s     *context_ptr,
     CodingUnit_t                     *cu_ptr,
     uint32_t                         *candTotCnt,
@@ -1317,7 +1317,7 @@ void inject_warped_motion_candidates(
 
 // END of Function Declarations
 void  inject_inter_candidates(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     SsMeContext_t                  *ss_mecontext,
     const SequenceControlSet     *sequence_control_set_ptr,
@@ -1925,7 +1925,7 @@ static INLINE TxType av1_get_tx_type(
 
 
 void  inject_intra_candidates_ois(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       *candidate_total_cnt){
@@ -2113,7 +2113,7 @@ void assert_release(int statement)
 }
 
 void  intra_bc_search(
-    PictureControlSet_t            *pcs,
+    PictureControlSet            *pcs,
     ModeDecisionContext_t          *context_ptr,
     const SequenceControlSet     *scs,
     LargestCodingUnit_t            *sb_ptr,
@@ -2296,7 +2296,7 @@ void  intra_bc_search(
 }
 
 void  inject_intra_bc_candidates(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
@@ -2359,7 +2359,7 @@ void  inject_intra_bc_candidates(
 }
 // END of Function Declarations
 void  inject_intra_candidates(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
@@ -2558,7 +2558,7 @@ EbErrorType ProductGenerateMdCandidatesCu(
     const uint32_t                      lcuAddr,
     uint32_t                           *candidateTotalCountPtr,
     EbPtr                              interPredContextPtr,
-    PictureControlSet_t              *picture_control_set_ptr)
+    PictureControlSet              *picture_control_set_ptr)
 {
 
     (void)lcuAddr;

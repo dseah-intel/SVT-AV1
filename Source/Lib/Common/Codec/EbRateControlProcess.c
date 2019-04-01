@@ -41,7 +41,7 @@ uint32_t qp_scaling_calc(
 *****************************/
 void rate_control_layer_reset(
     RateControlLayerContext *rate_control_layer_ptr,
-    PictureControlSet_t       *picture_control_set_ptr,
+    PictureControlSet       *picture_control_set_ptr,
     RateControlContext      *rate_control_context_ptr,
     uint32_t                 picture_area_in_pixel,
     EbBool                  was_used)
@@ -180,7 +180,7 @@ void rate_control_layer_reset(
 void rate_control_layer_reset_part2(
     RateControlContext      *context_ptr,
     RateControlLayerContext *rate_control_layer_ptr,
-    PictureControlSet_t       *picture_control_set_ptr)
+    PictureControlSet       *picture_control_set_ptr)
 {
     // update this based on temporal layers
     rate_control_layer_ptr->max_qp = (uint32_t)CLIP3(0, 63, (int32_t)context_ptr->qp_scaling_map[rate_control_layer_ptr->temporal_index][picture_control_set_ptr->picture_qp]);
@@ -902,7 +902,7 @@ void high_level_rc_input_picture_vbr(
     eb_release_mutex(sequence_control_set_ptr->encode_context_ptr->rate_table_update_mutex);
 }
 void frame_level_rc_input_picture_vbr(
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     RateControlContext              *context_ptr,
     RateControlLayerContext         *rate_control_layer_ptr,
@@ -916,7 +916,7 @@ void frame_level_rc_input_picture_vbr(
     uint32_t                 area_in_pixel;
 
     // SB Loop variables    
-    SbParams_t               *sb_params_ptr;
+    LcuParameters               *sb_params_ptr;
     uint32_t                 sb_index;
     uint64_t                 temp_qp;
     uint32_t                 area_in_sbs;
@@ -2308,7 +2308,7 @@ void high_level_rc_input_picture_cvbr(
     eb_release_mutex(sequence_control_set_ptr->encode_context_ptr->rate_table_update_mutex);
 }
 void frame_level_rc_input_picture_cvbr(
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     RateControlContext              *context_ptr,
     RateControlLayerContext         *rate_control_layer_ptr,
@@ -2322,7 +2322,7 @@ void frame_level_rc_input_picture_cvbr(
     uint32_t                 area_in_pixel;
 
     // LCU Loop variables
-    SbParams_t               *sb_params_ptr;
+    LcuParameters               *sb_params_ptr;
     uint32_t                 sb_index;
     uint64_t                 temp_qp;
     uint32_t                 area_in_sbs;
@@ -3138,7 +3138,7 @@ void high_level_rc_feed_back_picture(
 }
 // rate control QP refinement
 void rate_control_refinement(
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     RateControlIntervalParamContext *rate_control_param_ptr,
     RateControlIntervalParamContext *prev_gop_rate_control_param_ptr,
@@ -3238,7 +3238,7 @@ void rate_control_refinement(
 // initialize the rate control parameter at the beginning
 void init_rc(
     RateControlContext *context_ptr,
-    PictureControlSet_t  *picture_control_set_ptr,
+    PictureControlSet  *picture_control_set_ptr,
     SequenceControlSet *sequence_control_set_ptr) {
 
     context_ptr->high_level_rate_control_ptr->target_bit_rate = sequence_control_set_ptr->static_config.target_bit_rate;
@@ -3668,7 +3668,7 @@ static int get_gf_high_motion_quality(int q, aom_bit_depth_t bit_depth) {
 }
 
 static int adaptive_qindex_calc(
-    PictureControlSet_t         *picture_control_set_ptr,
+    PictureControlSet         *picture_control_set_ptr,
     RATE_CONTROL                *rc,
     int                          qindex) {
 
@@ -3792,7 +3792,7 @@ void* rate_control_kernel(void *input_ptr)
     RateControlIntervalParamContext   *prev_gop_rate_control_param_ptr;
     RateControlIntervalParamContext   *next_gop_rate_control_param_ptr;
 
-    PictureControlSet_t                 *picture_control_set_ptr;
+    PictureControlSet                 *picture_control_set_ptr;
     PictureParentControlSet_t           *parentpicture_control_set_ptr;
 
     // Config
@@ -3831,7 +3831,7 @@ void* rate_control_kernel(void *input_ptr)
 
         case RC_PICTURE_MANAGER_RESULT:
 
-            picture_control_set_ptr = (PictureControlSet_t  *)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
+            picture_control_set_ptr = (PictureControlSet  *)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
             sequence_control_set_ptr = (SequenceControlSet *)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
 
@@ -4302,7 +4302,7 @@ void* rate_control_kernel(void *input_ptr)
             break;
 
         default:
-            picture_control_set_ptr = (PictureControlSet_t*)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
+            picture_control_set_ptr = (PictureControlSet*)rate_control_tasks_ptr->picture_control_set_wrapper_ptr->object_ptr;
             sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
             break;

@@ -1400,7 +1400,7 @@ static void foreach_rest_unit_in_tile_seg(const AV1PixelRect *tile_rect,
     RestUnitVisitor on_rest_unit,
     void *priv ,
     int32_t vunits_per_tile,
-    PictureControlSet_t   *picture_control_set_ptr,
+    PictureControlSet   *picture_control_set_ptr,
     uint32_t segment_index  )
 {
     //tile_row=0
@@ -1468,7 +1468,7 @@ void av1_foreach_rest_unit_in_frame_seg(Av1Common *cm, int32_t plane,
     RestTileStartVisitor on_tile,
     RestUnitVisitor on_rest_unit,
     void *priv,
-    PictureControlSet_t   *picture_control_set_ptr,
+    PictureControlSet   *picture_control_set_ptr,
     uint32_t segment_index)
 {
     const int32_t is_uv = plane > 0;

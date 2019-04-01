@@ -30,7 +30,7 @@
 
 
 #define MAX_MESH_SPEED 5  // Max speed setting for mesh motion method
-static MESH_PATTERN
+static MeshPattern
 good_quality_mesh_patterns[MAX_MESH_SPEED + 1][MAX_MESH_STEP] = {
     { { 64, 8 }, { 28, 4 }, { 15, 1 }, { 7, 1 } },
     { { 64, 8 }, { 28, 4 }, { 15, 1 }, { 7, 1 } },
@@ -44,7 +44,7 @@ static unsigned char good_quality_max_mesh_pct[MAX_MESH_SPEED + 1] = {
 };
 // TODO: These settings are pretty relaxed, tune them for
 // each speed setting
-static MESH_PATTERN intrabc_mesh_patterns[MAX_MESH_SPEED + 1][MAX_MESH_STEP] = {
+static MeshPattern intrabc_mesh_patterns[MAX_MESH_SPEED + 1][MAX_MESH_STEP] = {
   { { 256, 1 }, { 256, 1 }, { 0, 0 }, { 0, 0 } },
   { { 256, 1 }, { 256, 1 }, { 0, 0 }, { 0, 0 } },
   { { 64, 1 }, { 64, 1 }, { 0, 0 }, { 0, 0 } },
@@ -334,7 +334,7 @@ static INLINE int32_t aom_get_qmlevel(int32_t qindex, int32_t first, int32_t las
 }
 
 void SetGlobalMotionField(
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
     // Init Global Motion Vector
     uint8_t frameIndex;
@@ -559,7 +559,7 @@ void av1_qm_init(
 * Compute picture and slice level chroma QP offsets
 ******************************************************/
 void SetSliceAndPictureChromaQpOffsets(
-    PictureControlSet_t                    *picture_control_set_ptr
+    PictureControlSet                    *picture_control_set_ptr
 
 )
 {
@@ -607,7 +607,7 @@ void SetSliceAndPictureChromaQpOffsets(
 * Set the reference sg ep for a given picture
 ******************************************************/
 void set_reference_sg_ep(
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
 
     Av1Common* cm = picture_control_set_ptr->parent_pcs_ptr->av1_cm;
@@ -642,7 +642,7 @@ void set_reference_sg_ep(
 * Set the reference cdef strength for a given picture
 ******************************************************/
 void set_reference_cdef_strength(
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
     EbReferenceObject  * refObjL0, *refObjL1;
     int32_t strength;
@@ -677,7 +677,7 @@ void set_reference_cdef_strength(
 void AdaptiveDlfParameterComputation(
     ModeDecisionConfigurationContext_t     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     EbBool                                    scene_transition_flag)
 {
     EbReferenceObject  * refObjL0, *refObjL1;
@@ -761,7 +761,7 @@ EbErrorType ModeDecisionConfigurationContextCtor(
 void PerformEarlyLcuPartitionning(
     ModeDecisionConfigurationContext_t     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr) {
+    PictureControlSet                    *picture_control_set_ptr) {
 
     LargestCodingUnit_t            *sb_ptr;
     uint32_t                         sb_index;
@@ -788,7 +788,7 @@ void PerformEarlyLcuPartitionning(
 void PerformEarlyLcuPartitionningLcu(
     ModeDecisionConfigurationContext_t     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     uint32_t                                    sb_index) {
 
     LargestCodingUnit_t            *sb_ptr;
@@ -809,15 +809,15 @@ void PerformEarlyLcuPartitionningLcu(
 
 void Forward85CuToModeDecisionLCU(
     SequenceControlSet  *sequence_control_set_ptr,
-    PictureControlSet_t   *picture_control_set_ptr,
+    PictureControlSet   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
     const CodedUnitStats  *cuStatsPtr;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
 
-    SbParams_t  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-    MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+    LcuParameters  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+    MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
     uint32_t cuIndexInRaterScan;   uint16_t cuVar;
 
     resultsPtr->leaf_count = 0;
@@ -875,15 +875,15 @@ void Forward85CuToModeDecisionLCU(
 
 void Forward84CuToModeDecisionLCU(
     SequenceControlSet  *sequence_control_set_ptr,
-    PictureControlSet_t   *picture_control_set_ptr,
+    PictureControlSet   *picture_control_set_ptr,
     uint32_t                 sb_index) {
 
     const CodedUnitStats  *cuStatsPtr;
     EbBool split_flag;
     // SB Loop : Partitionnig Decision
 
-    SbParams_t  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-    MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+    LcuParameters  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+    MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
     uint32_t cuIndexInRaterScan;   uint16_t cuVar;
 
     resultsPtr->leaf_count = 0;
@@ -940,7 +940,7 @@ void Forward84CuToModeDecisionLCU(
 
 void forward_all_blocks_to_md(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
 
     uint32_t                   sb_index;
@@ -951,7 +951,7 @@ void forward_all_blocks_to_md(
     for (sb_index = 0; sb_index < sequence_control_set_ptr->sb_tot_cnt; ++sb_index)
     {
 
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
 
         resultsPtr->leaf_count = 0;
 
@@ -1004,7 +1004,7 @@ void forward_all_blocks_to_md(
 
 void forward_sq_blocks_to_md(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
 
     uint32_t                   sb_index;
@@ -1014,7 +1014,7 @@ void forward_sq_blocks_to_md(
     for (sb_index = 0; sb_index < sequence_control_set_ptr->sb_tot_cnt; ++sb_index)
     {
 
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
 
         resultsPtr->leaf_count = 0;
 
@@ -1072,11 +1072,11 @@ void forward_sq_blocks_to_md(
 
 void sb_forward_sq_blocks_to_md(
     SequenceControlSet *sequence_control_set_ptr,
-    PictureControlSet_t  *picture_control_set_ptr,
+    PictureControlSet  *picture_control_set_ptr,
     uint32_t              sb_index)
 {
     EbBool   split_flag;
-    MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+    MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
     resultsPtr->leaf_count = 0;
     uint32_t  blk_index = picture_control_set_ptr->slice_type == I_SLICE && sequence_control_set_ptr->sb_size == BLOCK_128X128 ? 17 : 0;
 
@@ -1110,7 +1110,7 @@ void sb_forward_sq_blocks_to_md(
 
 void Forward85CuToModeDecision(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr) {
+    PictureControlSet                    *picture_control_set_ptr) {
 
     const CodedUnitStats  *cuStatsPtr;
     uint32_t                   sb_index;
@@ -1118,8 +1118,8 @@ void Forward85CuToModeDecision(
     // SB Loop : Partitionnig Decision
     for (sb_index = 0; sb_index < picture_control_set_ptr->sb_total_count; ++sb_index) {
 
-        SbParams_t  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        LcuParameters  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
         resultsPtr->leaf_count = 0;
         uint8_t cu_index = 0;
         while (cu_index < CU_MAX_COUNT)
@@ -1171,7 +1171,7 @@ void Forward85CuToModeDecision(
 
 void Forward84CuToModeDecision(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr) {
+    PictureControlSet                    *picture_control_set_ptr) {
 
     const CodedUnitStats  *cuStatsPtr;
     uint32_t                   sb_index;
@@ -1179,8 +1179,8 @@ void Forward84CuToModeDecision(
     // SB Loop : Partitionnig Decision
     for (sb_index = 0; sb_index < picture_control_set_ptr->sb_total_count; ++sb_index) {
 
-        SbParams_t  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        LcuParameters  *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
         uint32_t cuIndexInRaterScan;   uint16_t cuVar;
 
         resultsPtr->leaf_count = 0;
@@ -1253,7 +1253,7 @@ void Forward84CuToModeDecision(
 ******************************************************/
 void SetMdSettings(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr) {
+    PictureControlSet                    *picture_control_set_ptr) {
     // Initialize the homogeneous area threshold
     // Set the MD Open Loop Flag
     // HG - to clean up the intra_md_open_loop_flag derivation
@@ -1278,7 +1278,7 @@ void SetMdSettings(
 * Detect complex/non-flat/moving SB in a non-complex area (used to refine MDC depth control in Gold)
 ******************************************************/
 void DetectComplexNonFlatMovingLcu(
-    PictureControlSet_t       *picture_control_set_ptr,
+    PictureControlSet       *picture_control_set_ptr,
     uint32_t                    picture_width_in_sb,
     uint32_t                    picture_height_in_sb) {
 
@@ -1325,7 +1325,7 @@ void DetectComplexNonFlatMovingLcu(
 }
 
 EbAuraStatus AuraDetection64x64Gold(
-    PictureControlSet_t           *picture_control_set_ptr,
+    PictureControlSet           *picture_control_set_ptr,
     uint8_t                          picture_qp,
     uint32_t                         xLcuIndex,
     uint32_t                         yLcuIndex
@@ -1456,7 +1456,7 @@ EbAuraStatus AuraDetection64x64Gold(
 ******************************************************/
 void AuraDetection(
     SequenceControlSet         *sequence_control_set_ptr,
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     uint32_t                          picture_width_in_sb,
     uint32_t                          picture_height_in_sb)
 
@@ -1467,7 +1467,7 @@ void AuraDetection(
 
     for (sb_index = 0; sb_index < picture_control_set_ptr->sb_total_count; ++sb_index) {
 
-        SbParams_t    *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+        LcuParameters    *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
         LargestCodingUnit_t*        sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
         sb_x = sb_params->horizontal_index;
         sb_y = sb_params->vertical_index;
@@ -1495,7 +1495,7 @@ void AuraDetection(
     Output  : valid cost_depth_mode and valid sensitivePicture
 ******************************************************/
 void configure_adp(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr){
 
     UNUSED(picture_control_set_ptr);
@@ -1524,7 +1524,7 @@ void configure_adp(
     Output  : search method per LCU
 ******************************************************/
 void derive_search_method(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
     uint32_t sb_index;
@@ -1593,7 +1593,7 @@ void derive_search_method(
 ******************************************************/
 void set_sb_budget(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     LargestCodingUnit_t                *sb_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
@@ -1644,7 +1644,7 @@ void set_sb_budget(
 ******************************************************/
 void  derive_optimal_budget_per_sb(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
     uint32_t sb_index;
@@ -1761,7 +1761,7 @@ EbErrorType derive_default_segments(
 ******************************************************/
 void derive_sb_score(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
     uint32_t  sb_index;
@@ -1772,7 +1772,7 @@ void derive_sb_score(
     context_ptr->sb_max_score = 0u;
 
     for (sb_index = 0; sb_index < sequence_control_set_ptr->sb_tot_cnt; sb_index++) {
-        SbParams_t *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+        LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
         if (picture_control_set_ptr->slice_type == I_SLICE) {
             assert(0);
         }
@@ -1817,7 +1817,7 @@ Output  : budget per picture
 ******************************************************/
 void set_target_budget_oq(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr)
 {
     uint32_t budget;
@@ -1867,7 +1867,7 @@ void set_target_budget_oq(
 ******************************************************/
 void derive_sb_md_mode(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr) {
 
     // Configure ADP 
@@ -1910,7 +1910,7 @@ Input   : encoder mode and tune
 Output  : EncDec Kernel signal(s)
 ******************************************************/
 EbErrorType signal_derivation_mode_decision_config_kernel_oq(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionConfigurationContext_t *context_ptr) {
 
     EbErrorType return_error = EB_ErrorNone;
@@ -1923,7 +1923,7 @@ EbErrorType signal_derivation_mode_decision_config_kernel_oq(
 
 void forward_sq_non4_blocks_to_md(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr)
+    PictureControlSet                    *picture_control_set_ptr)
 {
 
     uint32_t                   sb_index;
@@ -1933,7 +1933,7 @@ void forward_sq_non4_blocks_to_md(
     for (sb_index = 0; sb_index < sequence_control_set_ptr->sb_tot_cnt; ++sb_index)
     {
 
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
 
         resultsPtr->leaf_count = 0;
 
@@ -1990,12 +1990,12 @@ void forward_sq_non4_blocks_to_md(
 
 void sb_forward_sq_non4_blocks_to_md(
     SequenceControlSet *sequence_control_set_ptr,
-    PictureControlSet_t  *picture_control_set_ptr,
+    PictureControlSet  *picture_control_set_ptr,
     uint32_t              sb_index)
 {
 
     EbBool split_flag;
-    MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+    MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
     resultsPtr->leaf_count = 0;
     uint32_t blk_index = picture_control_set_ptr->slice_type == I_SLICE && sequence_control_set_ptr->sb_size == BLOCK_128X128 ? 17 : 0;
 
@@ -2028,12 +2028,12 @@ void sb_forward_sq_non4_blocks_to_md(
 
 void forward_all_c_blocks_to_md(
     SequenceControlSet   *sequence_control_set_ptr,
-    PictureControlSet_t    *picture_control_set_ptr){
+    PictureControlSet    *picture_control_set_ptr){
 
     uint32_t                sb_index;
     for (sb_index = 0; sb_index < sequence_control_set_ptr->sb_tot_cnt; ++sb_index){
 
-        MdcLcuData_t *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+        MdcLcuData *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
         resultsPtr->leaf_count = 0;
         uint32_t blk_index = 0;
         uint32_t tot_d1_blocks;
@@ -2089,7 +2089,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
 {
     // Context & SCS & PCS
     ModeDecisionConfigurationContext_t         *context_ptr = (ModeDecisionConfigurationContext_t*)input_ptr;
-    PictureControlSet_t                        *picture_control_set_ptr;
+    PictureControlSet                        *picture_control_set_ptr;
     SequenceControlSet                       *sequence_control_set_ptr;
 
     // Input
@@ -2108,7 +2108,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
             &rateControlResultsWrapperPtr);
 
         rateControlResultsPtr = (RateControlResults*)rateControlResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)rateControlResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet*)rateControlResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
       
         // Mode Decision Configuration Kernel Signal(s) derivation
@@ -2335,7 +2335,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
         {
             int i;
             int speed = 1;
-            SPEED_FEATURES *sf = &picture_control_set_ptr->sf;
+            SpeedFeatures *sf = &picture_control_set_ptr->sf;
             sf->allow_exhaustive_searches = 1;
 
             const int mesh_speed = AOMMIN(speed, MAX_MESH_SPEED);

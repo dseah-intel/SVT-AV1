@@ -36,24 +36,24 @@ void *aom_malloc(size_t size);
 uint64_t compute_cdef_dist(uint16_t *dst, int32_t dstride, uint16_t *src,
     cdef_list *dlist, int32_t cdef_count, block_size bsize,
     int32_t coeff_shift, int32_t pli);
-int32_t sb_all_skip(PictureControlSet_t   *picture_control_set_ptr, const Av1Common *const cm, int32_t mi_row, int32_t mi_col);
-int32_t sb_compute_cdef_list(PictureControlSet_t   *picture_control_set_ptr, const Av1Common *const cm, int32_t mi_row, int32_t mi_col,
+int32_t sb_all_skip(PictureControlSet   *picture_control_set_ptr, const Av1Common *const cm, int32_t mi_row, int32_t mi_col);
+int32_t sb_compute_cdef_list(PictureControlSet   *picture_control_set_ptr, const Av1Common *const cm, int32_t mi_row, int32_t mi_col,
     cdef_list *dlist, block_size bs);
 void finish_cdef_search(
     EncDecContext_t                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
-    PictureControlSet_t            *picture_control_set_ptr
+    PictureControlSet            *picture_control_set_ptr
     ,int32_t                         selected_strength_cnt[64]
 
    );
 void av1_cdef_frame16bit(
     EncDecContext_t                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
-    PictureControlSet_t            *pCs);
+    PictureControlSet            *pCs);
 void av1_cdef_frame(
     EncDecContext_t                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
-    PictureControlSet_t            *pCs);
+    PictureControlSet            *pCs);
 void av1_loop_restoration_save_boundary_lines(const Yv12BufferConfig *frame, Av1Common *cm, int32_t after_cdef);
 
 
@@ -87,7 +87,7 @@ EbErrorType cdef_context_ctor(
 
 
 void cdef_seg_search(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     uint32_t                        segment_index)
 {
@@ -258,7 +258,7 @@ void cdef_seg_search(
 
 }
 void cdef_seg_search16bit(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     uint32_t                        segment_index)
 {
@@ -437,7 +437,7 @@ void* cdef_kernel(void *input_ptr)
 {
     // Context & SCS & PCS
     CdefContext_t                            *context_ptr = (CdefContext_t*)input_ptr;
-    PictureControlSet_t                     *picture_control_set_ptr;
+    PictureControlSet                     *picture_control_set_ptr;
     SequenceControlSet                    *sequence_control_set_ptr;
 
     //// Input
@@ -459,7 +459,7 @@ void* cdef_kernel(void *input_ptr)
             &dlf_results_wrapper_ptr);
 
         dlf_results_ptr = (DlfResults_t*)dlf_results_wrapper_ptr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)dlf_results_ptr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet*)dlf_results_ptr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
         EbBool  is16bit = (EbBool)(sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);

@@ -22,7 +22,7 @@
 #include "EbRateControlTasks.h"
 
 #define  AV1_MIN_TILE_SIZE_BYTES 1
-void av1_reset_loop_restoration(PictureControlSet_t     *piCSetPtr);
+void av1_reset_loop_restoration(PictureControlSet     *piCSetPtr);
 void av1_tile_set_col(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int col);
 void av1_tile_set_row(TileInfo *tile, PictureParentControlSet_t * pcsPtr, int row);
 
@@ -54,7 +54,7 @@ EbErrorType entropy_coding_context_ctor(
 /***********************************************
  * Entropy Coding Reset Neighbor Arrays
  ***********************************************/
-static void EntropyCodingResetNeighborArrays(PictureControlSet_t *picture_control_set_ptr)
+static void EntropyCodingResetNeighborArrays(PictureControlSet *picture_control_set_ptr)
 {
     neighbor_array_unit_reset(picture_control_set_ptr->mode_type_neighbor_array);
 
@@ -175,7 +175,7 @@ void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
  **************************************************/
 static void ResetEntropyCodingPicture(
     EntropyCodingContext_t  *context_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr)
 {
     ResetBitstream(EntropyCoderGetBitstreamPtr(picture_control_set_ptr->entropy_coder_ptr));
@@ -253,7 +253,7 @@ static void reset_ec_tile(
     uint32_t  total_size,
     uint32_t  is_last_tile_in_tg,
     EntropyCodingContext_t  *context_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr)
 {
     ResetBitstream(EntropyCoderGetBitstreamPtr(picture_control_set_ptr->entropy_coder_ptr));
@@ -336,7 +336,7 @@ static void reset_ec_tile(
 static void EntropyCodingConfigureLcu(
     EntropyCodingContext_t  *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
-    PictureControlSet_t     *picture_control_set_ptr)
+    PictureControlSet     *picture_control_set_ptr)
 {
 #if ADD_DELTA_QP_SUPPORT
     context_ptr->qp = picture_control_set_ptr->parent_pcs_ptr->base_qindex;
@@ -359,7 +359,7 @@ static void EntropyCodingConfigureLcu(
 static void EntropyCodingLcu(
     EntropyCodingContext_t              *context_ptr,
     LargestCodingUnit_t               *sb_ptr,
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     uint32_t                             sb_origin_x,
     uint32_t                             sb_origin_y,
@@ -448,7 +448,7 @@ static void EntropyCodingLcu(
  *   threads from performing an update (A).
  ******************************************************/
 static EbBool UpdateEntropyCodingRows(
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     uint32_t              *row_index,
     uint32_t               row_count,
     EbBool             *initialProcessCall)
@@ -506,7 +506,7 @@ void* EntropyCodingKernel(void *input_ptr)
 {
     // Context & SCS & PCS
     EntropyCodingContext_t                  *context_ptr = (EntropyCodingContext_t*)input_ptr;
-    PictureControlSet_t                     *picture_control_set_ptr;
+    PictureControlSet                     *picture_control_set_ptr;
     SequenceControlSet                    *sequence_control_set_ptr;
 
     // Input
@@ -539,7 +539,7 @@ void* EntropyCodingKernel(void *input_ptr)
             context_ptr->enc_dec_input_fifo_ptr,
             &encDecResultsWrapperPtr);
         encDecResultsPtr = (EncDecResults_t*)encDecResultsWrapperPtr->object_ptr;
-        picture_control_set_ptr = (PictureControlSet_t*)encDecResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
+        picture_control_set_ptr = (PictureControlSet*)encDecResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if !RC 
         lastLcuFlag = EB_FALSE;

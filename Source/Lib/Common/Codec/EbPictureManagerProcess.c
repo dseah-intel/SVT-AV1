@@ -36,7 +36,7 @@ void set_tile_info(PictureParentControlSet_t * pcsPtr);
   ************************************************/
 static void ConfigurePictureEdges(
     SequenceControlSet *scsPtr,
-    PictureControlSet_t  *ppsPtr)
+    PictureControlSet  *ppsPtr)
 {
     // Tiles Initialisation
     const uint16_t picture_width_in_sb = (scsPtr->luma_width + scsPtr->sb_size_pix - 1) / scsPtr->sb_size_pix;
@@ -106,7 +106,7 @@ void* picture_manager_kernel(void *input_ptr)
     PictureManagerContext         *context_ptr = (PictureManagerContext*)input_ptr;
 
     EbObjectWrapper               *ChildPictureControlSetWrapperPtr;
-    PictureControlSet_t             *ChildPictureControlSetPtr;
+    PictureControlSet             *ChildPictureControlSetPtr;
     PictureParentControlSet_t       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
     EncodeContext_t                 *encode_context_ptr;
@@ -679,7 +679,7 @@ void* picture_manager_kernel(void *input_ptr)
                             ChildPictureControlSetWrapperPtr,
                             1);
 
-                        ChildPictureControlSetPtr = (PictureControlSet_t*)ChildPictureControlSetWrapperPtr->object_ptr;
+                        ChildPictureControlSetPtr = (PictureControlSet*)ChildPictureControlSetWrapperPtr->object_ptr;
 
                         //1.Link The Child PCS to its Parent
                         ChildPictureControlSetPtr->picture_parent_control_set_wrapper_ptr = inputEntryPtr->input_object_ptr;

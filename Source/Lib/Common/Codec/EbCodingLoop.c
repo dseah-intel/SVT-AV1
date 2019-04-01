@@ -96,7 +96,7 @@ void av1_predict_intra_block_16bit(
 
 typedef void(*EB_AV1_ENCODE_LOOP_FUNC_PTR)(
 #if ENCDEC_TX_SEARCH
-    PictureControlSet_t    *picture_control_set_ptr,
+    PictureControlSet    *picture_control_set_ptr,
 #endif
     EncDecContext_t       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
@@ -507,7 +507,7 @@ void PfZeroOutUselessQuadrants(
 }
 
 void encode_pass_tx_search(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cbQp,
@@ -544,7 +544,7 @@ void encode_pass_tx_search(
 **********************************************************/
 static void Av1EncodeLoop(
 #if ENCDEC_TX_SEARCH
-    PictureControlSet_t    *picture_control_set_ptr,
+    PictureControlSet    *picture_control_set_ptr,
 #endif
     EncDecContext_t       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
@@ -980,7 +980,7 @@ static void Av1EncodeLoop(
 }
 
 void encode_pass_tx_search_hbd(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cbQp,
@@ -1019,7 +1019,7 @@ void encode_pass_tx_search_hbd(
 **********************************************************/
 static void Av1EncodeLoop16bit(
 #if ENCDEC_TX_SEARCH
-    PictureControlSet_t    *picture_control_set_ptr,
+    PictureControlSet    *picture_control_set_ptr,
 #endif
     EncDecContext_t       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
@@ -1642,7 +1642,7 @@ EB_AV1_GENERATE_RECON_FUNC_PTR   Av1EncodeGenerateReconFunctionPtr[2] =
 * Encode Pass - Assign Delta Qp
 *******************************************/
 static void EncodePassUpdateQp(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     EncDecContext_t         *context_ptr,
     EbBool                  availableCoeff,
     EbBool                  isDeltaQpEnable,
@@ -1746,7 +1746,7 @@ static void EncodePassUpdateQp(
 
 EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                 sb_index,
     EncDecContext_t                        *context_ptr)
@@ -1816,7 +1816,7 @@ EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
 ******************************************************************************/
 EbErrorType Av1QpModulationLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     uint8_t                                   type,
@@ -1986,7 +1986,7 @@ EbErrorType Av1QpModulationLcu(
 #endif
 EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     CodingUnit_t                           *cu_ptr,
@@ -2000,7 +2000,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     EbErrorType                    return_error = EB_ErrorNone;
 
 
-    //SbParams_t                        sb_params;
+    //LcuParameters                        sb_params;
     int64_t                          complexityDistance;
     int8_t                           delta_qp = 0;
     uint8_t                           qpmQp = (uint8_t)context_ptr->qpmQp;
@@ -2174,7 +2174,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 
 void Store16bitInputSrc(
     EncDecContext_t         *context_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     uint32_t                 lcuX,
     uint32_t                 lcuY,
     uint32_t                 lcuW,
@@ -2221,7 +2221,7 @@ void update_av1_mi_map(
     uint32_t                          cu_origin_x,
     uint32_t                          cu_origin_y,
     const BlockGeom                 *blk_geom,
-    PictureControlSet_t            *picture_control_set_ptr);
+    PictureControlSet            *picture_control_set_ptr);
 
 void move_cu_data(
     CodingUnit_t *src_cu,
@@ -2248,7 +2248,7 @@ void move_cu_data(
 *******************************************/
 EB_EXTERN void AV1EncodePass(
     SequenceControlSet      *sequence_control_set_ptr,
-    PictureControlSet_t       *picture_control_set_ptr,
+    PictureControlSet       *picture_control_set_ptr,
     LargestCodingUnit_t       *sb_ptr,
     uint32_t                   tbAddr,
     uint32_t                   sb_origin_x,
@@ -3650,7 +3650,7 @@ EB_EXTERN void AV1EncodePass(
 #if NO_ENCDEC
 EB_EXTERN void no_enc_dec_pass(
     SequenceControlSet    *sequence_control_set_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     LargestCodingUnit_t     *sb_ptr,
     uint32_t                   tbAddr,
     uint32_t                   sb_origin_x,

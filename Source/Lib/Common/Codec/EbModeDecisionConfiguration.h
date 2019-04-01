@@ -19,7 +19,7 @@ extern "C" {
  *******************************************/
 extern EbErrorType EarlyModeDecisionLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext_t     *context_ptr);
@@ -31,7 +31,7 @@ extern EbErrorType EarlyModeDecisionLcu(
 *******************************************/
 extern EbErrorType DeriveDeltaQPForEachLeafLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     int32_t                                  intra_min_distance,
@@ -42,7 +42,7 @@ extern EbErrorType DeriveDeltaQPForEachLeafLcu(
 
 void QpmDeriveDeltaQpMapWeights(
     ModeDecisionConfigurationContext_t    *context_ptr,
-    PictureControlSet_t                  *picture_control_set_ptr);
+    PictureControlSet                  *picture_control_set_ptr);
 
 extern uint8_t DeriveContouringClass(
     PictureParentControlSet_t   *parentPcsPtr,

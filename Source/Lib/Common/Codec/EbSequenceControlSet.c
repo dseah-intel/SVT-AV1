@@ -400,7 +400,7 @@ extern EbErrorType sb_params_ctor(
 
     EbErrorType return_error = EB_ErrorNone;
 
-    EB_MALLOC(SbParams_t*, sequence_control_set_ptr->sb_params_array, sizeof(SbParams_t) * ((MAX_PICTURE_WIDTH_SIZE + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz) * ((MAX_PICTURE_HEIGHT_SIZE + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz), EB_N_PTR);
+    EB_MALLOC(LcuParameters*, sequence_control_set_ptr->sb_params_array, sizeof(LcuParameters) * ((MAX_PICTURE_WIDTH_SIZE + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz) * ((MAX_PICTURE_HEIGHT_SIZE + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz), EB_N_PTR);
     return return_error;
 }
 
@@ -413,7 +413,7 @@ extern EbErrorType sb_params_init(
     uint16_t    md_scan_block_index;
     uint8_t   pictureLcuWidth = (uint8_t)((sequence_control_set_ptr->luma_width + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz);
     uint8_t    pictureLcuHeight = (uint8_t)((sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_sz - 1) / sequence_control_set_ptr->sb_sz);
-    EB_MALLOC(SbParams_t*, sequence_control_set_ptr->sb_params_array, sizeof(SbParams_t) * pictureLcuWidth * pictureLcuHeight, EB_N_PTR);
+    EB_MALLOC(LcuParameters*, sequence_control_set_ptr->sb_params_array, sizeof(LcuParameters) * pictureLcuWidth * pictureLcuHeight, EB_N_PTR);
 
     for (sb_index = 0; sb_index < pictureLcuWidth * pictureLcuHeight; ++sb_index) {
         sequence_control_set_ptr->sb_params_array[sb_index].horizontal_index = (uint8_t)(sb_index % pictureLcuWidth);
@@ -537,7 +537,7 @@ EbErrorType sb_geom_init(SequenceControlSet * sequence_control_set_ptr)
     uint16_t   pictureLcuWidth = (sequence_control_set_ptr->luma_width + sequence_control_set_ptr->sb_size_pix - 1) / sequence_control_set_ptr->sb_size_pix;
     uint16_t    pictureLcuHeight = (sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_size_pix - 1) / sequence_control_set_ptr->sb_size_pix;
 
-    EB_MALLOC(SbGeom_t*, sequence_control_set_ptr->sb_geom, sizeof(SbGeom_t) * pictureLcuWidth * pictureLcuHeight, EB_N_PTR);
+    EB_MALLOC(SbGeom*, sequence_control_set_ptr->sb_geom, sizeof(SbGeom) * pictureLcuWidth * pictureLcuHeight, EB_N_PTR);
 
 
     for (sb_index = 0; sb_index < pictureLcuWidth * pictureLcuHeight; ++sb_index) {

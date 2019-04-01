@@ -63,14 +63,14 @@ extern "C" {
 #endif
 
     void SetQpArrayBasedOnCU(
-        PictureControlSet_t *picture_control_set_ptr,          //input parameter
+        PictureControlSet *picture_control_set_ptr,          //input parameter
         uint32_t               cuPos_x,                       //input parameter, sample-based horizontal picture-wise locatin of the CU
         uint32_t               cuPos_y,                       //input parameter, sample-based vertical picture-wise locatin of the CU
         uint32_t               cuSizeInMinCuSize,             //input parameter
         uint32_t               cuQp);                         //input parameter, Qp of the CU
 
     extern void entropySetQpArrayBasedOnCU(
-        PictureControlSet_t *picture_control_set_ptr,
+        PictureControlSet *picture_control_set_ptr,
         uint32_t               cuPos_x,
         uint32_t               cuPos_y,
         uint32_t               cuWidth,
@@ -83,16 +83,16 @@ extern "C" {
     struct macroblockd;
     struct AV1LfSyncData;
 
-    void av1_loop_filter_init(PictureControlSet_t *pcsPtr);
+    void av1_loop_filter_init(PictureControlSet *pcsPtr);
 
-    void av1_loop_filter_frame_init(PictureControlSet_t *pcsPtr, int32_t plane_start,
+    void av1_loop_filter_frame_init(PictureControlSet *pcsPtr, int32_t plane_start,
         int32_t plane_end);
 
 
     void loop_filter_sb(
         EbPictureBufferDesc_t *frame_buffer,//reconpicture,
         //Yv12BufferConfig *frame_buffer,
-        PictureControlSet_t *pcsPtr,
+        PictureControlSet *pcsPtr,
         MacroBlockD *xd, int32_t mi_row, int32_t mi_col,
         int32_t plane_start, int32_t plane_end,
         uint8_t LastCol);
@@ -100,26 +100,26 @@ extern "C" {
     void av1_loop_filter_frame(
         EbPictureBufferDesc_t *frame_buffer,//reconpicture,
         //Yv12BufferConfig *frame_buffer,
-        PictureControlSet_t *pcsPtr,
+        PictureControlSet *pcsPtr,
         /*MacroBlockD *xd,*/ int32_t plane_start, int32_t plane_end/*,
         int32_t partial_frame*/);
 
     void av1_pick_filter_level(
         DlfContext_t            *context_ptr,
         EbPictureBufferDesc_t   *srcBuffer, // source input
-        PictureControlSet_t     *pcsPtr,
+        PictureControlSet     *pcsPtr,
         LPF_PICK_METHOD          method);
 
 
     void av1_filter_block_plane_vert(
-        const PictureControlSet_t *const  pcsPtr,
+        const PictureControlSet *const  pcsPtr,
         const MacroBlockD *const xd,
         const int32_t plane,
         const MacroblockdPlane *const plane_ptr,
         const uint32_t mi_row, const uint32_t mi_col);
 
     void av1_filter_block_plane_horz(
-        const PictureControlSet_t *const  pcsPtr,
+        const PictureControlSet *const  pcsPtr,
         const MacroBlockD *const xd, const int32_t plane,
         const MacroblockdPlane *const plane_ptr,
         const uint32_t mi_row, const uint32_t mi_col);
@@ -127,7 +127,7 @@ extern "C" {
     typedef struct LoopFilterWorkerData {
         EbPictureBufferDesc_t *frame_buffer;//reconpicture,
         //Yv12BufferConfig *frame_buffer;
-        PictureControlSet_t *pcsPtr;
+        PictureControlSet *pcsPtr;
         struct MacroblockdPlane planes[MAX_MB_PLANE];
         // TODO(Ranjit): When the filter functions are modified to use xd->lossless
         // add lossless as a member here.

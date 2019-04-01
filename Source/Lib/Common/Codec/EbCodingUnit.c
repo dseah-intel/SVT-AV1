@@ -24,7 +24,7 @@ EbErrorType largest_coding_unit_ctor(
     uint16_t                       sb_origin_x,
     uint16_t                       sb_origin_y,
     uint16_t                       sb_index,
-    struct PictureControlSet_s  *picture_control_set)
+    struct PictureControlSet  *picture_control_set)
 
 {
     EbErrorType return_error = EB_ErrorNone;

@@ -16,7 +16,7 @@ extern "C" {
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
         ModeDecisionContext_t          *context_ptr,
         EbPictureBufferDesc_t          *input_picture_ptr,
-        PictureControlSet_t            *picture_control_set_ptr,
+        PictureControlSet            *picture_control_set_ptr,
         uint32_t                          component_mask,
         uint32_t                          cbQp,
         uint32_t                          crQp,
@@ -28,7 +28,7 @@ extern "C" {
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
         ModeDecisionContext_t            *context_ptr,
         ModeDecisionCandidate_t           *candidate_ptr,
-        PictureControlSet_t            *picture_control_set_ptr,
+        PictureControlSet            *picture_control_set_ptr,
         uint64_t                          cbFullDistortion[DIST_CALC_TOTAL],
         uint64_t                          crFullDistortion[DIST_CALC_TOTAL],
         uint32_t                          count_non_zero_coeffs[3][MAX_NUM_OF_TU_PER_CU],
@@ -42,7 +42,7 @@ extern "C" {
     void ProductFullLoop(
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
         ModeDecisionContext_t          *context_ptr,
-        PictureControlSet_t            *picture_control_set_ptr,
+        PictureControlSet            *picture_control_set_ptr,
         uint32_t                          qp,
         uint32_t                           *y_count_non_zero_coeffs,
         uint64_t                         *y_coeff_bits,
@@ -52,7 +52,7 @@ extern "C" {
     void ProductFullLoopTxSearch(
         ModeDecisionCandidateBuffer_t  *candidateBuffer,
         ModeDecisionContext_t          *context_ptr,
-        PictureControlSet_t            *picture_control_set_ptr);
+        PictureControlSet            *picture_control_set_ptr);
     extern uint32_t d2_inter_depth_block_decision(
         ModeDecisionContext_t          *context_ptr,
         uint32_t                        blk_mds,
@@ -62,7 +62,7 @@ extern "C" {
         uint32_t                          tbOriginY,
         uint64_t                          full_lambda,
         MdRateEstimationContext_t      *md_rate_estimation_ptr,
-        PictureControlSet_t            *picture_control_set_ptr);
+        PictureControlSet            *picture_control_set_ptr);
 
 
     void  d1_non_square_block_decision(

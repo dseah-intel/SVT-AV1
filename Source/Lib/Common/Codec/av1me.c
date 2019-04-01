@@ -505,7 +505,7 @@ int av1_diamond_search_sad_c(IntraBcContext  *x, const search_site_config *cfg,
 /* do_refine: If last step (1-away) of n-step search doesn't pick the center
               point as the best match, we will do a final 1-away diamond
               refining search  */
-static int full_pixel_diamond(PictureControlSet_t *pcs, IntraBcContext /*MACROBLOCK*/ *x,
+static int full_pixel_diamond(PictureControlSet *pcs, IntraBcContext /*MACROBLOCK*/ *x,
                               MV *mvp_full, int step_param, int sadpb,
                               int further_steps, int do_refine, int *cost_list,
                               const aom_variance_fn_ptr_t *fn_ptr,
@@ -578,13 +578,13 @@ static int full_pixel_diamond(PictureControlSet_t *pcs, IntraBcContext /*MACROBL
 #define MIN_INTERVAL 1
 // Runs an limited range exhaustive mesh search using a pattern set
 // according to the encode speed profile.
-static int full_pixel_exhaustive(PictureControlSet_t *pcs, IntraBcContext  *x,
+static int full_pixel_exhaustive(PictureControlSet *pcs, IntraBcContext  *x,
                                  const MV *centre_mv_full, int sadpb,
                                  int *cost_list,
                                  const aom_variance_fn_ptr_t *fn_ptr,
                                  const MV *ref_mv, MV *dst_mv) {
     UNUSED(cost_list);
-    const SPEED_FEATURES *const sf = &pcs->sf;// cpi->sf;
+    const SpeedFeatures *const sf = &pcs->sf;// cpi->sf;
   MV temp_mv = { centre_mv_full->row, centre_mv_full->col };
   MV f_ref_mv = { ref_mv->row >> 3, ref_mv->col >> 3 };
   int bestsme;
@@ -712,7 +712,7 @@ int av1_refining_search_sad(IntraBcContext  *x, MV *ref_mv, int error_per_bit,
   return best_sad;
 }
 
-int av1_full_pixel_search(PictureControlSet_t *pcs, IntraBcContext  *x, block_size bsize,
+int av1_full_pixel_search(PictureControlSet *pcs, IntraBcContext  *x, block_size bsize,
                           MV *mvp_full, int step_param, int method,
                           int run_mesh_search, int error_per_bit,
                           int *cost_list, const MV *ref_mv, int var_max, int rd,
@@ -725,7 +725,7 @@ int av1_full_pixel_search(PictureControlSet_t *pcs, IntraBcContext  *x, block_si
     if (pcs->parent_pcs_ptr->ibc_mode > 0)
         ibc_shift = 1;
 
-    SPEED_FEATURES * sf = &pcs->sf;
+    SpeedFeatures * sf = &pcs->sf;
     sf->exhaustive_searches_thresh = (1 << 25);
   const aom_variance_fn_ptr_t *fn_ptr = &mefn_ptr[bsize];
   int var = 0;

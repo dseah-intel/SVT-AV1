@@ -44,7 +44,7 @@ EbErrorType ProductGenerateMdCandidatesCu(
     const uint32_t                    lcuAddr,
     uint32_t                         *fastCandidateTotalCount,
     EbPtr                           interPredContextPtr,
-    PictureControlSet_t            *picture_control_set_ptr);
+    PictureControlSet            *picture_control_set_ptr);
 
 
 
@@ -361,7 +361,7 @@ void mode_decision_update_neighbor_arrays(
 }
 
 void copy_neighbour_arrays(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionContext_t               *context_ptr,
     uint32_t                            src_idx,
     uint32_t                            dst_idx,
@@ -542,7 +542,7 @@ void copy_neighbour_arrays(
 }
 
 void md_update_all_neighbour_arrays(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionContext_t               *context_ptr,
     uint32_t                             lastCuIndex_mds,
     uint32_t                            sb_origin_x,
@@ -579,7 +579,7 @@ void md_update_all_neighbour_arrays(
 }
 
 void md_update_all_neighbour_arrays_multiple(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionContext_t               *context_ptr,
     uint32_t                            blk_mds,
     uint32_t                            sb_origin_x,
@@ -661,7 +661,7 @@ void Initialize_cu_data_structure(
     ModeDecisionContext_t   *context_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     LargestCodingUnit_t        *sb_ptr,
-    const MdcLcuData_t        * const mdcResultTbPtr)
+    const MdcLcuData        * const mdcResultTbPtr)
 {
     UNUSED(*sequence_control_set_ptr);
     UNUSED(*sb_ptr);
@@ -801,7 +801,7 @@ void picture_addition_kernel16_bit(
 }
 
 void AV1PerformInverseTransformReconLuma(
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     ModeDecisionContext_t             *context_ptr,
     ModeDecisionCandidateBuffer_t     *candidateBuffer,
     CodingUnit_t                      *cu_ptr,
@@ -878,7 +878,7 @@ void AV1PerformInverseTransformReconLuma(
     }
 }
 void AV1PerformInverseTransformRecon(
-    PictureControlSet_t               *picture_control_set_ptr,
+    PictureControlSet               *picture_control_set_ptr,
     ModeDecisionContext_t             *context_ptr,
     ModeDecisionCandidateBuffer_t     *candidateBuffer,
     CodingUnit_t                      *cu_ptr,
@@ -1082,7 +1082,7 @@ void ProductCodingLoopInitFastLoop(
 }
 
 uint64_t ProductGenerateChromaWeight(
-    PictureControlSet_t                 *picture_control_set_ptr,
+    PictureControlSet                 *picture_control_set_ptr,
     uint32_t                               qp)
 {
     uint64_t weight;
@@ -1130,7 +1130,7 @@ uint64_t spatial_full_distortion_kernel16_mx_n_ssse3_intrin(
     uint32_t   area_height);
 
 void ProductMdFastPuPrediction(
-    PictureControlSet_t                 *picture_control_set_ptr,
+    PictureControlSet                 *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t       *candidateBuffer,
     ModeDecisionContext_t               *context_ptr,
     uint32_t                             modeType,
@@ -1159,7 +1159,7 @@ void generate_intra_reference_samples(
     ModeDecisionContext_t   *md_context_ptr);
 
 void perform_fast_loop(
-    PictureControlSet_t                 *picture_control_set_ptr,
+    PictureControlSet                 *picture_control_set_ptr,
     ModeDecisionContext_t               *context_ptr,
     ModeDecisionCandidateBuffer_t      **candidateBufferPtrArrayBase,
     ModeDecisionCandidate_t             *fast_candidate_array,
@@ -1374,7 +1374,7 @@ void perform_fast_loop(
 }
 
 void ProductConfigureChroma(
-    PictureControlSet_t                 *picture_control_set_ptr,
+    PictureControlSet                 *picture_control_set_ptr,
     ModeDecisionContext_t               *context_ptr,
     LargestCodingUnit_t                 *sb_ptr) {
 
@@ -1392,7 +1392,7 @@ void ProductConfigureChroma(
 #if !PF_N2_32X32
 void ProductDerivePartialFrequencyN2Flag(
     SequenceControlSet               *sequence_control_set_ptr,
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionContext_t              *context_ptr){
 
     UNUSED(sequence_control_set_ptr);
@@ -1402,7 +1402,7 @@ void ProductDerivePartialFrequencyN2Flag(
 }
 #endif
 void AV1CostCalcCfl(
-    PictureControlSet_t                *picture_control_set_ptr,
+    PictureControlSet                *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t      *candidateBuffer,
     LargestCodingUnit_t                *sb_ptr,
     ModeDecisionContext_t              *context_ptr,
@@ -1584,7 +1584,7 @@ void AV1CostCalcCfl(
   (plane == CFL_PRED_U ? a * CFL_SIGNS + b - 1 : b * CFL_SIGNS + a - 1)
 /*************************Pick the best alpha for cfl mode  or Choose DC******************************************************/
 void cfl_rd_pick_alpha(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     LargestCodingUnit_t     *sb_ptr,
     ModeDecisionContext_t   *context_ptr,
@@ -1753,7 +1753,7 @@ void cfl_rd_pick_alpha(
 // 3: Loop over alphas and find the best or choose DC
 // 4: Recalculate the residual for chroma
 static void CflPrediction(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     LargestCodingUnit_t     *sb_ptr,
     ModeDecisionContext_t   *context_ptr,
@@ -1887,7 +1887,7 @@ uint8_t get_skip_tx_search_flag(
 }
 
 void AV1PerformFullLoop(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     LargestCodingUnit_t     *sb_ptr,
     CodingUnit_t            *cu_ptr,
     ModeDecisionContext_t   *context_ptr,
@@ -2361,7 +2361,7 @@ void init_candidate_buffer(
     memset(count_non_zero_coeffs[2], 0, sizeof(uint32_t)*MAX_NUM_OF_TU_PER_CU);
 }
 void inter_depth_tx_search(
-    PictureControlSet_t                      *picture_control_set_ptr,
+    PictureControlSet                      *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t            *candidateBuffer,
     CodingUnit_t                             *cu_ptr,
     ModeDecisionContext_t                    *context_ptr,
@@ -2747,7 +2747,7 @@ PART get_partition_shape(
 * probable Shape to be selected in the lowest index
 ****************************************************/
 void  order_nsq_table(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
@@ -2925,7 +2925,7 @@ void  order_nsq_table(
 }
 #if M8_SKIP_BLK
 uint8_t check_skip_sub_blks(
-    PictureControlSet_t              *picture_control_set_ptr,
+    PictureControlSet              *picture_control_set_ptr,
     ModeDecisionContext_t            *context_ptr,
     CodingUnit_t                     *cu_ptr,
     uint8_t                           is_complete_sb,
@@ -2946,7 +2946,7 @@ uint8_t check_skip_sub_blks(
 
 void md_encode_block(
     SequenceControlSet             *sequence_control_set_ptr,
-    PictureControlSet_t              *picture_control_set_ptr,
+    PictureControlSet              *picture_control_set_ptr,
     ModeDecisionContext_t            *context_ptr,
     SsMeContext_t                    *ss_mecontext,
 #if M8_SKIP_BLK
@@ -3308,8 +3308,8 @@ void md_encode_block(
 
 EB_EXTERN EbErrorType mode_decision_sb(
     SequenceControlSet                *sequence_control_set_ptr,
-    PictureControlSet_t                 *picture_control_set_ptr,
-    const MdcLcuData_t * const           mdcResultTbPtr,
+    PictureControlSet                 *picture_control_set_ptr,
+    const MdcLcuData * const           mdcResultTbPtr,
     LargestCodingUnit_t                 *sb_ptr,
     uint16_t                             sb_origin_x,
     uint16_t                             sb_origin_y,
@@ -3330,7 +3330,7 @@ EB_EXTERN EbErrorType mode_decision_sb(
     const uint32_t                         sb_height = MIN(BLOCK_SIZE_64, (uint32_t)(sequence_control_set_ptr->luma_height - sb_origin_y));
 
     uint32_t                               leaf_count = mdcResultTbPtr->leaf_count;
-    const EbMdcLeafData_t *const           leaf_data_array = mdcResultTbPtr->leaf_data_array;
+    const EbMdcLeafData *const           leaf_data_array = mdcResultTbPtr->leaf_data_array;
     UNUSED(sb_height);
     UNUSED(asm_type);
     UNUSED(lastCuIndex);
@@ -3395,7 +3395,7 @@ EB_EXTERN EbErrorType mode_decision_sb(
         context_ptr->cu_origin_x = sb_origin_x + blk_geom->origin_x;
         context_ptr->cu_origin_y = sb_origin_y + blk_geom->origin_y;
 
-        const EbMdcLeafData_t * const leafDataPtr = &mdcResultTbPtr->leaf_data_array[cuIdx];
+        const EbMdcLeafData * const leafDataPtr = &mdcResultTbPtr->leaf_data_array[cuIdx];
         context_ptr->sb_sz = BLOCK_SIZE_64;
         context_ptr->round_origin_x = ((context_ptr->cu_origin_x >> 3) << 3);
         context_ptr->round_origin_y = ((context_ptr->cu_origin_y >> 3) << 3);
@@ -6921,7 +6921,7 @@ static void in_loop_me_quarterpel_search_sblock(
 *  on the reference reconstructed pictures
 ***************************************************************/
 EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
-    PictureControlSet_t         *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
+    PictureControlSet         *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
     uint32_t                       sb_origin_x,            // input parameter, SB Origin X
     uint32_t                       sb_origin_y,            // input parameter, SB Origin X
     int16_t                       xMvL0,

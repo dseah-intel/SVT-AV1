@@ -320,7 +320,7 @@ extern "C" {
     * based on the frame CDF
     ***************************************************************************/
     extern void av1_estimate_mv_rate(
-        struct PictureControlSet_s     *picture_control_set_ptr,
+        struct PictureControlSet     *picture_control_set_ptr,
         MdRateEstimationContext_t  *md_rate_estimation_array,
         nmv_context                *nmv_ctx);
 

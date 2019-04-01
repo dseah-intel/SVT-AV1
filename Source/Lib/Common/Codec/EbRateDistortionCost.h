@@ -100,7 +100,7 @@ extern "C" {
         uint64_t                 chroma_distortion,
         uint64_t                 lambda,
         EbBool                   use_ssd,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         CandidateMv             *ref_mv_stack,
         const BlockGeom         *blk_geom,
         uint32_t                 miRow,
@@ -117,7 +117,7 @@ extern "C" {
         uint64_t                 chroma_distortion,
         uint64_t                 lambda,
         EbBool                   use_ssd,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         CandidateMv             *ref_mv_stack,
         const BlockGeom         *blk_geom,
         uint32_t                 miRow,
@@ -128,7 +128,7 @@ extern "C" {
 
 
     extern EbErrorType av1_intra_full_cost(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext_t                  *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
@@ -142,7 +142,7 @@ extern "C" {
         block_size                              bsize);
 
     extern EbErrorType av1_inter_full_cost(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext_t                  *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,

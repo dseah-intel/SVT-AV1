@@ -69,10 +69,10 @@ void av1_set_mv_search_range(MvLimits *mv_limits, const MV *mv);
 
 
 struct AV1_COMP;
-struct SPEED_FEATURES;
+struct SpeedFeatures;
 
 
-int av1_full_pixel_search(struct PictureControlSet_s *pcs, IntraBcContext /*MACROBLOCK*/ *x,
+int av1_full_pixel_search(struct PictureControlSet *pcs, IntraBcContext /*MACROBLOCK*/ *x,
                           block_size bsize, MV *mvp_full, int step_param,
                           int method, int run_mesh_search, int error_per_bit,
                           int *cost_list, const MV *ref_mv, int var_max, int rd,

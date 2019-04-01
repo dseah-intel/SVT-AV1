@@ -8706,7 +8706,7 @@ EbErrorType open_loop_intra_search_sb(
     uint32_t    pa_blk_index = 0;
     uint8_t     is_16_bit = (sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
 
-    SbParams_t          *sb_params          = &sequence_control_set_ptr->sb_params_array[sb_index];
+    LcuParameters          *sb_params          = &sequence_control_set_ptr->sb_params_array[sb_index];
     ois_sb_results_t    *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];    
 
     uint8_t top_neigh_array[64 * 2 + 1];

@@ -684,7 +684,7 @@ int32_t  Av1WriteCoeffsTxb1D(
 ******* Av1EncodeTuCoeff
 **************************************/
 static EbErrorType Av1EncodeCoeff1D(
-    PictureControlSet_t     *pcsPtr,
+    PictureControlSet     *pcsPtr,
     EntropyCodingContext_t  *context_ptr,
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ecWriter,
@@ -1293,7 +1293,7 @@ static INLINE int is_global_mv_block(
 
 
 MOTION_MODE motion_mode_allowed(
-    const PictureControlSet_t       *picture_control_set_ptr,
+    const PictureControlSet       *picture_control_set_ptr,
     const CodingUnit_t              *cu_ptr,
     const block_size                 bsize,
     MvReferenceFrame                rf0,
@@ -1342,7 +1342,7 @@ static void write_motion_mode(
     MvReferenceFrame          rf0,
     MvReferenceFrame          rf1,
     CodingUnit_t             *cu_ptr,
-    PictureControlSet_t      *picture_control_set_ptr)
+    PictureControlSet      *picture_control_set_ptr)
 {
     const PredictionMode mode = cu_ptr->prediction_unit_array[0].inter_mode;
     MOTION_MODE last_motion_mode_allowed =
@@ -4244,7 +4244,7 @@ static uint32_t WriteFrameHeaderObu(
 EbErrorType WriteFrameHeaderAv1(
     Bitstream_t *bitstreamPtr,
     SequenceControlSet *scsPtr,
-    PictureControlSet_t *pcsPtr,
+    PictureControlSet *pcsPtr,
     uint8_t showExisting)
 {
     EbErrorType                 return_error = EB_ErrorNone;
@@ -4387,7 +4387,7 @@ static void Av1writeDeltaQindex(
 
 static void write_cdef(
     SequenceControlSet     *seqCSetPtr,
-    PictureControlSet_t     *p_pcs_ptr,
+    PictureControlSet     *p_pcs_ptr,
     //Av1Common *cm,
     MacroBlockD *const xd,
     aom_writer *w,
@@ -4435,7 +4435,7 @@ static void write_cdef(
 }
 
 
-void av1_reset_loop_restoration(PictureControlSet_t     *piCSetPtr) {
+void av1_reset_loop_restoration(PictureControlSet     *piCSetPtr) {
     for (int32_t p = 0; p < 3; ++p) {
         set_default_wiener(piCSetPtr->wiener_info + p);
         set_default_sgrproj(piCSetPtr->sgrproj_info + p);
@@ -4516,7 +4516,7 @@ static void write_sgrproj_filter(const SgrprojInfo *sgrproj_info,
 
     memcpy(ref_sgrproj_info, sgrproj_info, sizeof(*sgrproj_info));
 }
-static void loop_restoration_write_sb_coeffs(PictureControlSet_t     *piCSetPtr, FRAME_CONTEXT           *frameContext, const Av1Common *const cm,
+static void loop_restoration_write_sb_coeffs(PictureControlSet     *piCSetPtr, FRAME_CONTEXT           *frameContext, const Av1Common *const cm,
     //MacroBlockD *xd,
     const RestorationUnitInfo *rui,
     aom_writer *const w, int32_t plane/*,
@@ -4584,7 +4584,7 @@ static void loop_restoration_write_sb_coeffs(PictureControlSet_t     *piCSetPtr,
 }
 
 EbErrorType ec_update_neighbors(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     EntropyCodingContext_t  *context_ptr,
     uint32_t                 blkOriginX,
     uint32_t                 blkOriginY,
@@ -4846,7 +4846,7 @@ static void write_intrabc_info(
 }
 
 EbErrorType write_modes_b(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     EntropyCodingContext_t  *context_ptr,
     EntropyCoder_t          *entropy_coder_ptr,
     LargestCodingUnit_t     *tbPtr,
@@ -5294,7 +5294,7 @@ EbErrorType write_modes_b(
 EB_EXTERN EbErrorType write_sb(
     EntropyCodingContext_t  *context_ptr,
     LargestCodingUnit_t     *tbPtr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     EntropyCoder_t          *entropy_coder_ptr,
     EbPictureBufferDesc_t   *coeffPtr)
 {
@@ -5319,7 +5319,7 @@ EB_EXTERN EbErrorType write_sb(
     tbPtr->quantized_coeffs_bits = 0;
     EbBool checkCuOutOfBound = EB_FALSE;
 
-    SbGeom_t * sb_geom = &sequence_control_set_ptr->sb_geom[tbPtr->index];// .block_is_inside_md_scan[blk_index])
+    SbGeom * sb_geom = &sequence_control_set_ptr->sb_geom[tbPtr->index];// .block_is_inside_md_scan[blk_index])
 
 
     if (!(sb_geom->is_complete_sb)) {

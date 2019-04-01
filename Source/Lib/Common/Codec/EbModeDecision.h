@@ -79,7 +79,7 @@ extern "C" {
         uint32_t                               full_distortion;
 
         EbPtr                                 prediction_context_ptr;
-        PictureControlSet_t                   *picture_control_set_ptr;
+        PictureControlSet                   *picture_control_set_ptr;
         EbPredDirection                        prediction_direction[MAX_NUM_OF_PU_PER_CU]; // 2 bits // Hsan: does not seem to be used why not removed ?
 
         int16_t                                motion_vector_pred_x[MAX_NUM_OF_REF_PIC_LIST]; // 16 bits // Hsan: does not seem to be used why not removed ?
@@ -132,7 +132,7 @@ extern "C" {
     **************************************/
     typedef EbErrorType(*EB_PREDICTION_FUNC)(
         struct ModeDecisionContext_s           *context_ptr,
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         EbAsm                                   asm_type);
     typedef uint64_t(*EB_FAST_COST_FUNC)(
@@ -143,7 +143,7 @@ extern "C" {
         uint64_t                                chroma_distortion,
         uint64_t                                lambda,
         EbBool                                  use_ssd,
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         CandidateMv                            *ref_mv_stack,
         const BlockGeom                        *blk_geom,
         uint32_t                                miRow,
@@ -169,10 +169,10 @@ extern "C" {
         uint64_t                               *cr_coeff_bits,
         uint32_t                                transform_size,
         uint32_t                                transform_chroma_size,
-        PictureControlSet_t                    *picture_control_set_ptr);
+        PictureControlSet                    *picture_control_set_ptr);
 
     typedef EbErrorType(*EB_AV1_FULL_COST_FUNC)(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionContext_s           *context_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
@@ -285,7 +285,7 @@ extern "C" {
         uint32_t                                transform_size);
 
     typedef EbErrorType(*EB_FULL_NXN_COST_FUNC)(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         uint32_t                                qp,
         uint64_t                               *y_distortion,

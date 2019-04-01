@@ -269,7 +269,7 @@ EbErrorType ComputeDecimatedZzSad(
         for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
 
             sb_index = xLcuIndex + yLcuIndex * sequence_control_set_ptr->picture_width_in_sb;
-            SbParams_t *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+            LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
 
             sb_width = sb_params->width;
             sb_height = sb_params->height;

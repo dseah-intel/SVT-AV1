@@ -13472,7 +13472,8 @@ extern "C" {
     },
     };
 
-    struct Buf2d {
+    struct Buf2d 
+    {
         uint8_t *buf;
         uint8_t *buf0;
         int32_t  width;
@@ -13480,7 +13481,8 @@ extern "C" {
         int32_t  stride;
     };
 
-    typedef struct MacroblockPlane {
+    typedef struct MacroblockPlane 
+    {
 
         // Quantizer setings
         // These are used/accessed only in the quantization process
@@ -13498,7 +13500,8 @@ extern "C" {
     // The Quants structure is used only for internal quantizer setup in
     // av1_quantize.c.
     // All of its fields use the same coefficient shift/scaling at TX.
-    typedef struct {
+    typedef struct Quants 
+    {
         // 0: dc 1: ac 2-8: ac repeated to SIMD width
         DECLARE_ALIGNED(16, int16_t, y_quant[QINDEX_RANGE][8]);
         DECLARE_ALIGNED(16, int16_t, y_quant_shift[QINDEX_RANGE][8]);
@@ -13528,7 +13531,8 @@ extern "C" {
     // av1_quantize.c.
     // Fields are sufffixed according to whether or not they're expressed in
     // the same coefficient shift/precision as TX or a fixed Q3 format.
-    typedef struct {
+    typedef struct Dequants 
+    {
         DECLARE_ALIGNED(16, int16_t,
         y_dequant_QTX[QINDEX_RANGE][8]);  // 8: SIMD width
         DECLARE_ALIGNED(16, int16_t,
@@ -13540,7 +13544,8 @@ extern "C" {
         DECLARE_ALIGNED(16, int16_t, v_dequant_Q3[QINDEX_RANGE][8]);  // 8: SIMD width
     } Dequants;
 
-    typedef struct MacroblockdPlane {
+    typedef struct MacroblockdPlane 
+    {
         //tran_low_t *dqcoeff;
         PLANE_TYPE plane_type;
         int32_t subsampling_x;
@@ -13568,7 +13573,8 @@ extern "C" {
 
     struct PredictionUnit;
 
-    typedef struct Av1Common {
+    typedef struct Av1Common 
+    {
 
         int32_t  mi_rows;
         int32_t  mi_cols;
@@ -13618,23 +13624,23 @@ extern "C" {
         int8_t  wn_filter_mode;
 
 
-        struct PictureControlSet_s               *pcs_ptr;
+        struct PictureControlSet               *pcs_ptr;
     } Av1Common;
 
     /**************************************
      * Segment-based Control Sets
      **************************************/
 
-    typedef struct EbMdcLeafData_s
+    typedef struct EbMdcLeafData
     {
         uint32_t          mds_idx;
         uint32_t          tot_d1_blocks; //how many d1 bloks every parent square would have
         uint8_t           leaf_index;
         EbBool            split_flag;
-    } EbMdcLeafData_t;
+    } EbMdcLeafData;
 
 
-    typedef struct MdcLcuData_s
+    typedef struct MdcLcuData
     {
         // Rate Control
         uint8_t           qp;
@@ -13642,15 +13648,15 @@ extern "C" {
         // ME Results
         uint64_t          treeblock_variance;
         uint32_t          leaf_count;
-        EbMdcLeafData_t   leaf_data_array[BLOCK_MAX_COUNT_SB_128];
+        EbMdcLeafData   leaf_data_array[BLOCK_MAX_COUNT_SB_128];
 
-    } MdcLcuData_t;
+    } MdcLcuData;
 
 
     /**************************************
      * MD Segment Control
      **************************************/
-    typedef struct MdSegmentCtrl_s
+    typedef struct MdSegmentCtrl
     {
         uint64_t completion_mask;
         EbHandle write_lock_mutex;
@@ -13660,7 +13666,7 @@ extern "C" {
         EbBool   in_progress;
         uint32_t current_row_idx;
 
-    } MdSegmentCtrl_t;
+    } MdSegmentCtrl;
 
     /**************************************
      * Picture Control Set
@@ -13669,12 +13675,14 @@ extern "C" {
     struct LargestCodingUnit_s;
 #define MAX_MESH_STEP 4
 
-    typedef struct MESH_PATTERN {
+    typedef struct MeshPattern 
+    {
         int range;
         int interval;
-    } MESH_PATTERN;
+    } MeshPattern;
 
-    typedef struct SPEED_FEATURES {
+    typedef struct SpeedFeatures 
+    {
 
         // TODO(jingning): combine the related motion search speed features
         // This allows us to use motion search at other sizes as a starting
@@ -13691,11 +13699,11 @@ extern "C" {
         int max_exaustive_pct;
 
         // Pattern to be used for any exhaustive mesh searches.
-        MESH_PATTERN mesh_patterns[MAX_MESH_STEP];
+        MeshPattern mesh_patterns[MAX_MESH_STEP];
 
-    } SPEED_FEATURES;
+    } SpeedFeatures;
 
-    typedef struct PictureControlSet_s
+    typedef struct PictureControlSet
     {
         EbObjectWrapper                    *sequence_control_set_wrapper_ptr;
         
@@ -13754,7 +13762,7 @@ extern "C" {
         uint8_t                               rest_segments_row_count;            
 
         // Mode Decision Config
-        MdcLcuData_t                         *mdc_sb_array;
+        MdcLcuData                         *mdc_sb_array;
 
         // Error Resilience
         EbBool                                constrained_intra_flag;
@@ -13874,17 +13882,18 @@ extern "C" {
         int32_t                               cdef_preset[4];
         WienerInfo                            wiener_info[MAX_MB_PLANE];
         SgrprojInfo                           sgrproj_info[MAX_MB_PLANE];
-        SPEED_FEATURES sf;
+        SpeedFeatures sf;
         search_site_config ss_cfg;//CHKN this might be a seq based
         hash_table hash_table;
         CRC_CALCULATOR crc_calculator1;
         CRC_CALCULATOR crc_calculator2;
 
-    } PictureControlSet_t;
+    } PictureControlSet;
 
     // To optimize based on the max input size
     // To study speed-memory trade-offs
-    typedef struct LcuParameters_s {
+    typedef struct LcuParameters 
+    {
         uint8_t   horizontal_index;
         uint8_t   vertical_index;
         uint16_t  origin_x;
@@ -13896,10 +13905,11 @@ extern "C" {
         EbBool    block_is_inside_md_scan[BLOCK_MAX_COUNT_SB_128];
         uint8_t   potential_logo_sb;
         uint8_t   is_edge_sb;
-    } SbParams_t;
+    } LcuParameters;
 
 
-    typedef struct SbGeom_s {
+    typedef struct SbGeom 
+    {
         uint16_t   horizontal_index;
         uint16_t   vertical_index;
         uint16_t   origin_x;
@@ -13908,7 +13918,7 @@ extern "C" {
         uint8_t    height;
         uint8_t    is_complete_sb;
         EbBool     block_is_inside_md_scan[BLOCK_MAX_COUNT_SB_128];
-    } SbGeom_t;
+    } SbGeom;
 
     typedef struct CuStat_s {
         EbBool            grass_area;
@@ -14273,7 +14283,7 @@ extern "C" {
         int16_t                               tiltMvx;
         int16_t                               tiltMvy;
         EbWarpedMotionParams                  global_motion[TOTAL_REFS_PER_FRAME];
-        PictureControlSet_t                  *childPcs;
+        PictureControlSet                  *childPcs;
         Macroblock                           *av1x;
         int32_t                               film_grain_params_present; //todo (AN): Do we need this flag at picture level?
         aom_film_grain_t                      film_grain_params;
@@ -14417,7 +14427,7 @@ extern "C" {
         //    int32_t ext_ref_frame_flags;
         //    RATE_FACTOR_LEVEL frame_rf_level[FRAME_BUFFERS];
         //
-        //    SPEED_FEATURES sf;
+        //    SpeedFeatures sf;
         //
         //    uint32_t max_mv_magnitude;
         //    int32_t mv_step_param;

@@ -494,7 +494,7 @@ void av1_quantize_b_facade_II(
 *  Unified Quant +iQuant
 *********************************************************************/
 void av1_quantize_inv_quantize_ii(
-    PictureControlSet_t  *picture_control_set_ptr,
+    PictureControlSet  *picture_control_set_ptr,
     int32_t               *coeff,
     const uint32_t          coeff_stride,
     int32_t               *quant_coeff,
@@ -651,7 +651,7 @@ void av1_quantize_inv_quantize_ii(
 
     }
 void av1_quantize_inv_quantize(
-    PictureControlSet_t  *picture_control_set_ptr,
+    PictureControlSet  *picture_control_set_ptr,
     int32_t               *coeff,
     const uint32_t          coeff_stride,
     int32_t               *quant_coeff,
@@ -724,7 +724,7 @@ void av1_quantize_inv_quantize(
 void ProductFullLoop(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     ModeDecisionContext_t          *context_ptr,
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     uint32_t                          qp,
     uint32_t                          *y_count_non_zero_coeffs,
     uint64_t                         *y_coeff_bits,
@@ -927,7 +927,7 @@ uint8_t allowed_tx_set_b[TX_SIZES_ALL][TX_TYPES] = {
 void ProductFullLoopTxSearch(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     ModeDecisionContext_t          *context_ptr,
-    PictureControlSet_t            *picture_control_set_ptr)
+    PictureControlSet            *picture_control_set_ptr)
 {
     uint32_t                       tuOriginIndex;
     SequenceControlSet          *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
@@ -1125,7 +1125,7 @@ void ProductFullLoopTxSearch(
 
 #if ENCDEC_TX_SEARCH
 void encode_pass_tx_search(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cbQp,
@@ -1323,7 +1323,7 @@ void encode_pass_tx_search(
 }
 
 void encode_pass_tx_search_hbd(
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cbQp,
@@ -1531,7 +1531,7 @@ void FullLoop_R(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     ModeDecisionContext_t          *context_ptr,
     EbPictureBufferDesc_t          *input_picture_ptr,
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     uint32_t                          component_mask,
     uint32_t                          cbQp,
     uint32_t                          crQp,
@@ -1717,7 +1717,7 @@ void CuFullDistortionFastTuMode_R(
     ModeDecisionCandidateBuffer_t  *candidateBuffer,
     ModeDecisionContext_t            *context_ptr,
     ModeDecisionCandidate_t           *candidate_ptr,
-    PictureControlSet_t            *picture_control_set_ptr,
+    PictureControlSet            *picture_control_set_ptr,
     uint64_t                          cbFullDistortion[DIST_CALC_TOTAL],
     uint64_t                          crFullDistortion[DIST_CALC_TOTAL],
     uint32_t                          count_non_zero_coeffs[3][MAX_NUM_OF_TU_PER_CU],
@@ -2043,7 +2043,7 @@ uint32_t d2_inter_depth_block_decision(
     uint32_t                          tbOriginY,
     uint64_t                          full_lambda,
     MdRateEstimationContext_t      *md_rate_estimation_ptr,
-    PictureControlSet_t            *picture_control_set_ptr)
+    PictureControlSet            *picture_control_set_ptr)
 {
     UNUSED(tbPtr);
     UNUSED(lcuAddr);

@@ -352,7 +352,7 @@ void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
 * based on the frame CDF
 ***************************************************************************/
 void av1_estimate_mv_rate(
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     MdRateEstimationContext_t  *md_rate_estimation_array,
     nmv_context                *nmv_ctx)
 {

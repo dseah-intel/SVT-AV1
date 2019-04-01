@@ -1022,7 +1022,7 @@ static void highbd_convolve_2d_for_intrabc(const uint16_t *src, int src_stride,
     }
 }
 EbErrorType av1_inter_prediction(
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     uint32_t                                interp_filters,
     CodingUnit_t                           *cu_ptr,
     uint8_t                                 ref_frame_type,
@@ -1506,7 +1506,7 @@ EbErrorType AV1InterPrediction10BitMD(
 #else
 EbErrorType AV1MDInterPrediction(
 #endif
-    PictureControlSet_t                     *picture_control_set_ptr,
+    PictureControlSet                     *picture_control_set_ptr,
     uint8_t                                  ref_frame_type,
     ModeDecisionContext_t                   *md_context_ptr,
     CodingUnit_t                            *cu_ptr,
@@ -2091,7 +2091,7 @@ EbErrorType AV1MDInterPrediction(
 
 
 EbErrorType av1_inter_prediction_hbd(
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     uint8_t                                   ref_frame_type,
     CodingUnit_t                           *cu_ptr,
     MvUnit_t                               *mv_unit,
@@ -3439,7 +3439,7 @@ void av1_model_rd_from_var_lapndz(int64_t var, uint32_t n_log2,
 
 extern /*static*/ void model_rd_for_sb(
 
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc_t *prediction_ptr,
     ModeDecisionContext_t *md_context_ptr,
     //const AV1_COMP *const cpi,
@@ -3531,7 +3531,7 @@ extern /*static*/ void model_rd_for_sb(
 /*static*/ /*INLINE*/ int32_t is_nontrans_global_motion(
     block_size sb_type,
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
-    PictureControlSet_t *picture_control_set_ptr
+    PictureControlSet *picture_control_set_ptr
 ) {
     int32_t ref;
 
@@ -3553,7 +3553,7 @@ extern /*static*/ void model_rd_for_sb(
 }
 static INLINE int32_t av1_is_interp_needed(
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     block_size bsize)
 {
     if (candidate_buffer_ptr->candidate_ptr->merge_flag)
@@ -3576,7 +3576,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 };
 
 /*static*/ void interpolation_filter_search(
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc_t *prediction_ptr,
     ModeDecisionContext_t *md_context_ptr,
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
@@ -3918,7 +3918,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 
 #if INTERPOL_FILTER_SEARCH_10BIT_SUPPORT
 /*static*/ void interpolation_filter_search_HBD(
-    PictureControlSet_t *picture_control_set_ptr,
+    PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc_t *prediction_ptr,
     ModeDecisionContext_t *md_context_ptr,
     ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
@@ -4265,7 +4265,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 
 EbErrorType inter_pu_prediction_av1(
     ModeDecisionContext_t                  *md_context_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
     EbAsm                                   asm_type)
 {
@@ -4584,7 +4584,7 @@ EbErrorType choose_mvp_idx_v2(
     int16_t                   *ref1_amvp_cand_array_x,
     int16_t                   *ref1_amvp_cand_array_y,
     uint32_t                    ref1NumAvailableAMVPCand,
-    PictureControlSet_t      *picture_control_set_ptr)
+    PictureControlSet      *picture_control_set_ptr)
 {
     EbErrorType  return_error = EB_ErrorNone;
     uint8_t         mvpRef0Idx;

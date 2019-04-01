@@ -124,7 +124,7 @@ extern "C" {
 
     extern EbErrorType AV1IntraPredictionCL(
         struct ModeDecisionContext_s           *context_ptr,
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionCandidateBuffer_t           *candidate_buffer_ptr,
         EbAsm                                  asm_type);
 

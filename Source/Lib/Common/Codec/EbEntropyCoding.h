@@ -55,7 +55,7 @@ extern "C" {
     extern EbErrorType write_sb(
         struct EntropyCodingContext_s   *context_ptr,
         LargestCodingUnit_t     *tbPtr,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         EntropyCoder_t          *entropy_coder_ptr,
         EbPictureBufferDesc_t   *coeffPtr);
 
@@ -73,7 +73,7 @@ extern "C" {
         EB_SLICE               slice_type);
 
     extern EbErrorType Av1TuEstimateCoeffBits(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint32_t                                  tuOriginIndex,
@@ -293,7 +293,7 @@ extern "C" {
     extern EbErrorType WriteFrameHeaderAv1(
         Bitstream_t *bitstreamPtr,
         SequenceControlSet *scsPtr,
-        PictureControlSet_t *pcsPtr,
+        PictureControlSet *pcsPtr,
         uint8_t showExisting);
     extern EbErrorType encode_td_av1(
         uint8_t *bitstreamPtr);
@@ -304,7 +304,7 @@ extern "C" {
     //*******************************************************************************************//
 
     MOTION_MODE motion_mode_allowed(
-        const PictureControlSet_t       *picture_control_set_ptr,
+        const PictureControlSet       *picture_control_set_ptr,
         const CodingUnit_t              *cu_ptr,
         const block_size                 bsize,
         MvReferenceFrame                rf0,

@@ -21,8 +21,8 @@ extern "C" {
 
     typedef EbErrorType(*EB_MODE_DECISION)(
         SequenceControlSet                *sequence_control_set_ptr,
-        PictureControlSet_t                 *picture_control_set_ptr,
-        const MdcLcuData_t * const           mdcResultTbPtr,
+        PictureControlSet                 *picture_control_set_ptr,
+        const MdcLcuData * const           mdcResultTbPtr,
         LargestCodingUnit_t                 *sb_ptr,
         uint32_t                             sb_origin_x,
         uint32_t                             sb_origin_y,
@@ -32,8 +32,8 @@ extern "C" {
 
     extern EbErrorType AV1ProductModeDecisionLcu(
         SequenceControlSet                *sequence_control_set_ptr,
-        PictureControlSet_t                 *picture_control_set_ptr,
-        const MdcLcuData_t * const           mdcResultTbPtr,
+        PictureControlSet                 *picture_control_set_ptr,
+        const MdcLcuData * const           mdcResultTbPtr,
         LargestCodingUnit_t                 *sb_ptr,
         uint32_t                             sb_origin_x,
         uint32_t                             sb_origin_y,
@@ -42,7 +42,7 @@ extern "C" {
 
 
     extern EbErrorType in_loop_motion_estimation_sblock(
-        PictureControlSet_t                 *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
+        PictureControlSet                 *picture_control_set_ptr,  // input parameter, Picture Control Set Ptr
         uint32_t                             sb_origin_x,            // input parameter, SB Origin X
         uint32_t                             sb_origin_y,            // input parameter, SB Origin X
         int16_t                              xMvL0,
@@ -53,8 +53,8 @@ extern "C" {
 
     extern EbErrorType mode_decision_sb(
         SequenceControlSet                *sequence_control_set_ptr,
-        PictureControlSet_t                 *picture_control_set_ptr,
-        const MdcLcuData_t * const           mdcResultTbPtr,
+        PictureControlSet                 *picture_control_set_ptr,
+        const MdcLcuData * const           mdcResultTbPtr,
         LargestCodingUnit_t                 *sb_ptr,
         uint16_t                             sb_origin_x,
         uint16_t                             sb_origin_y,
@@ -66,14 +66,14 @@ extern "C" {
 
     extern EbErrorType ModeDecisionRefinementLcu(
         SequenceControlSet                *sequence_control_set_ptr,
-        PictureControlSet_t                 *picture_control_set_ptr,
+        PictureControlSet                 *picture_control_set_ptr,
         LargestCodingUnit_t                 *sb_ptr,
         uint32_t                               sb_origin_x,
         uint32_t                               sb_origin_y,
         ModeDecisionContext_t               *context_ptr);
 
     extern EbErrorType QpmDeriveWeightsMinAndMax(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         EncDecContext_t                        *context_ptr);
 
     uint8_t get_skip_tx_search_flag(
@@ -84,7 +84,7 @@ extern "C" {
 
     extern void AV1EncodePass(
         SequenceControlSet    *sequence_control_set_ptr,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         LargestCodingUnit_t     *sb_ptr,
         uint32_t                   tbAddr,
         uint32_t                   sb_origin_x,
@@ -97,7 +97,7 @@ extern "C" {
 
     void no_enc_dec_pass(
         SequenceControlSet    *sequence_control_set_ptr,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         LargestCodingUnit_t     *sb_ptr,
         uint32_t                   tbAddr,
         uint32_t                   sb_origin_x,

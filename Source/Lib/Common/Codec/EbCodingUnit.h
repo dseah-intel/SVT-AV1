@@ -132,7 +132,7 @@ extern "C" {
     static INLINE int32_t av1_is_directional_mode(PredictionMode mode) {
         return mode >= V_PRED && mode <= D67_PRED;
     }
-    struct PictureControlSet_s;
+    struct PictureControlSet;
 
     typedef struct MV {
         int16_t row;
@@ -406,7 +406,7 @@ extern "C" {
         uint8_t  isolated_high_intensity_sb; // to be cleanedup
     } EdgeLcuResults_t;
     typedef struct LargestCodingUnit_s {
-        struct PictureControlSet_s     *picture_control_set_ptr;
+        struct PictureControlSet     *picture_control_set_ptr;
         CodingUnit_t                   *final_cu_arr;
         uint32_t                        tot_final_cu;
         PartitionType                  *cu_partition_array;
@@ -444,7 +444,7 @@ extern "C" {
         uint16_t                       sb_origin_x,
         uint16_t                       sb_origin_y,
         uint16_t                       sb_index,
-        struct PictureControlSet_s    *picture_control_set);
+        struct PictureControlSet    *picture_control_set);
 
 #ifdef __cplusplus
 }

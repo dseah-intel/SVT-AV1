@@ -250,7 +250,7 @@ extern "C" {
         EbFifo                    *mode_decision_output_fifo_ptr);
 
     extern void reset_mode_decision_neighbor_arrays(
-        PictureControlSet_t *picture_control_set_ptr);
+        PictureControlSet *picture_control_set_ptr);
 
     extern void lambda_assign_low_delay(
         uint32_t                    *fast_lambda,
@@ -286,21 +286,21 @@ extern "C" {
 
     extern void reset_mode_decision(
         ModeDecisionContext_t   *context_ptr,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         SequenceControlSet    *sequence_control_set_ptr,
         uint32_t                 segment_index);
 
     extern void ModeDecisionConfigureLcu(
         ModeDecisionContext_t   *context_ptr,
         LargestCodingUnit_t     *sb_ptr,
-        PictureControlSet_t     *picture_control_set_ptr,
+        PictureControlSet     *picture_control_set_ptr,
         SequenceControlSet    *sequence_control_set_ptr,
         uint8_t                  picture_qp,
         uint8_t                  sb_qp);
 
 
     extern void cfl_rd_pick_alpha(
-        PictureControlSet_t             *picture_control_set_ptr,
+        PictureControlSet             *picture_control_set_ptr,
         ModeDecisionCandidateBuffer_t   *candidateBuffer,
         LargestCodingUnit_t             *sb_ptr,
         ModeDecisionContext_t           *context_ptr,

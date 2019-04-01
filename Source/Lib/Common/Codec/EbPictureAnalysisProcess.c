@@ -4216,7 +4216,7 @@ void EdgeDetectionMeanLumaChroma16x16(
             SbStat_t *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
 
             EB_MEMSET(sb_stat_ptr, 0, sizeof(SbStat_t));
-            SbParams_t     *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+            LcuParameters     *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
             if (sb_params->potential_logo_sb &&sb_params->is_complete_sb)
 
             {
@@ -4277,7 +4277,7 @@ void EdgeDetectionMeanLumaChroma16x16(
         }
 
         for (sb_index = 0; sb_index < totalLcuCount; sb_index++) {
-            SbParams_t *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+            LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
             if (sb_params->potential_logo_sb &&sb_params->is_complete_sb) {
                 SbStat_t *sb_stat_ptr = &picture_control_set_ptr->sb_stat_array[sb_index];
 
@@ -4440,7 +4440,7 @@ void DetermineHomogeneousRegionInPicture(
         uint64_t meanSqrVariance64x64Based = 0, meanVariance64x64Based = 0;
         uint64_t varOfVar64x64Based = 0;
 
-        SbParams_t sb_params = sequence_control_set_ptr->sb_params_array[sb_index];
+        LcuParameters sb_params = sequence_control_set_ptr->sb_params_array[sb_index];
 
         // Initialize
         picture_control_set_ptr->sb_homogeneous_area_array[sb_index] = EB_TRUE;
@@ -4563,7 +4563,7 @@ void ComputePictureSpatialStatistics(
     picTotVariance = 0;
 
     for (sb_index = 0; sb_index < picture_control_set_ptr->sb_total_count; ++sb_index) {
-        SbParams_t   *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+        LcuParameters   *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
 
         sb_origin_x = sb_params->origin_x;
         sb_origin_y = sb_params->origin_y;

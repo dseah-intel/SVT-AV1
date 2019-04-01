@@ -293,7 +293,7 @@ uint8_t DeriveContouringClass(
 
     if (parentPcsPtr->is_sb_homogeneous_over_time[sb_index]) {
         if (leaf_index > 0) {
-            SbParams_t            *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+            LcuParameters            *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
             if (sb_params->is_edge_sb) {
 
                 if (parentPcsPtr->sb_y_src_energy_cu_array[sb_index][(leaf_index - 1) / 21 + 1] < ANTI_CONTOURING_TH_1) {
@@ -325,14 +325,14 @@ uint8_t DeriveContouringClass(
 
 void RefinementPredictionLoop(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext_t     *context_ptr)
 {
 
     MdcpLocalCodingUnit_t    *localCuArray         = context_ptr->localCuArray;
-    SbParams_t               *sb_params            = &sequence_control_set_ptr->sb_params_array[sb_index];
+    LcuParameters               *sb_params            = &sequence_control_set_ptr->sb_params_array[sb_index];
     uint32_t                  cu_index             = 0;
     sb_ptr->pred64 = EB_FALSE;
     while (cu_index < CU_MAX_COUNT)
@@ -390,14 +390,14 @@ void RefinementPredictionLoop(
 
 void PrePredictionRefinement(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     uint32_t                                 *startDepth,
     uint32_t                                 *endDepth
 )
 {
-    SbParams_t    *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+    LcuParameters    *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
 
     EB_SLICE        slice_type = picture_control_set_ptr->slice_type;
 
@@ -450,7 +450,7 @@ void PrePredictionRefinement(
 
 void ForwardCuToModeDecision(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
 
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext_t     *context_ptr
@@ -460,8 +460,8 @@ void ForwardCuToModeDecision(
     uint8_t                   cu_index = 0;
     uint32_t                  cuClass = DO_NOT_ADD_CU_CONTINUE_SPLIT;
     EbBool                 split_flag = EB_TRUE;
-    MdcLcuData_t           *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
-    SbParams_t            *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+    MdcLcuData           *resultsPtr = &picture_control_set_ptr->mdc_sb_array[sb_index];
+    LcuParameters            *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
     MdcpLocalCodingUnit_t  *localCuArray = context_ptr->localCuArray;
     EB_SLICE                slice_type = picture_control_set_ptr->slice_type;
 
@@ -769,7 +769,7 @@ void MdcInterDepthDecision(
 
 void PredictionPartitionLoop(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     uint32_t                                sb_index,
     uint32_t                                tbOriginX,
     uint32_t                                tbOriginY,
@@ -780,7 +780,7 @@ void PredictionPartitionLoop(
     MdcpLocalCodingUnit_t *localCuArray = context_ptr->localCuArray;
     MdcpLocalCodingUnit_t   *cu_ptr;
 
-    SbParams_t *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
+    LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
     uint32_t      cuIndexInRaterScan;
     uint32_t      cu_index = 0;
     uint32_t      start_index = 0;
@@ -904,7 +904,7 @@ void PredictionPartitionLoop(
 
 EbErrorType EarlyModeDecisionLcu(
     SequenceControlSet                   *sequence_control_set_ptr,
-    PictureControlSet_t                    *picture_control_set_ptr,
+    PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext_t     *context_ptr){

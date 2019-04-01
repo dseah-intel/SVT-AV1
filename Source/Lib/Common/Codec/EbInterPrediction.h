@@ -29,7 +29,7 @@ extern "C" {
         uint16_t                     max_cu_width,
         uint16_t                     max_cu_height);
     EbErrorType av1_inter_prediction(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         uint32_t                                interp_filters,
         CodingUnit_t                           *cu_ptr,
         uint8_t                                 ref_frame_type,
@@ -49,12 +49,12 @@ extern "C" {
 
     EbErrorType inter_pu_prediction_av1(
         struct ModeDecisionContext_s           *md_context_ptr,
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
         EbAsm                                   asm_type);
 
     EbErrorType av1_inter_prediction_hbd(
-        PictureControlSet_t                    *picture_control_set_ptr,
+        PictureControlSet                    *picture_control_set_ptr,
         uint8_t                                 ref_frame_type,
         CodingUnit_t                           *cu_ptr,
         MvUnit_t                               *mv_unit,
@@ -83,7 +83,7 @@ extern "C" {
         int16_t                               *ref1_amvp_cand_array_x,
         int16_t                               *ref1_amvp_cand_array_y,
         uint32_t                               ref1_num_available_amvp_cand,
-        PictureControlSet_t                   *picture_control_set_ptr);
+        PictureControlSet                   *picture_control_set_ptr);
 
 
     EbErrorType warped_motion_prediction(

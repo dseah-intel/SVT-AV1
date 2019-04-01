@@ -160,7 +160,7 @@ EbErrorType mode_decision_context_ctor(
 /**************************************************
  * Reset Mode Decision Neighbor Arrays
  *************************************************/
-void reset_mode_decision_neighbor_arrays(PictureControlSet_t *picture_control_set_ptr)
+void reset_mode_decision_neighbor_arrays(PictureControlSet *picture_control_set_ptr)
 {
     uint8_t depth;
     for (depth = 0; depth < NEIGHBOR_ARRAY_TOTAL_COUNT; depth++) {
@@ -191,7 +191,7 @@ void reset_mode_decision_neighbor_arrays(PictureControlSet_t *picture_control_se
 }
 
 
-void ResetMdRefinmentNeighborArrays(PictureControlSet_t *picture_control_set_ptr)
+void ResetMdRefinmentNeighborArrays(PictureControlSet *picture_control_set_ptr)
 {
     neighbor_array_unit_reset(picture_control_set_ptr->md_refinement_intra_luma_mode_neighbor_array);
     neighbor_array_unit_reset(picture_control_set_ptr->md_refinement_mode_type_neighbor_array);
@@ -349,7 +349,7 @@ const EB_AV1_LAMBDA_ASSIGN_FUNC av1_lambda_assignment_function_table[4] = {
 
 void reset_mode_decision(
     ModeDecisionContext_t   *context_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     uint32_t                   segment_index)
 {
@@ -436,7 +436,7 @@ void reset_mode_decision(
 void ModeDecisionConfigureLcu(
     ModeDecisionContext_t   *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
-    PictureControlSet_t     *picture_control_set_ptr,
+    PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     uint8_t                    picture_qp,
     uint8_t                    sb_qp){
