@@ -912,7 +912,7 @@ void UpdateGlobalMotionDetectionOverTime(
     for (framesToCheckIndex = 0; framesToCheckIndex < updateFramesToCheck; framesToCheckIndex++) {
 
         temporaryQueueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[inputQueueIndex];
-        temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parentPcsWrapperPtr)->object_ptr);
+        temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parent_pcs_wrapper_ptr)->object_ptr);
 
         if (temporaryPictureControlSetPtr->slice_type != I_SLICE) {
 
@@ -980,7 +980,7 @@ void UpdateBeaInfoOverTime(
 
 
             temporaryQueueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[inputQueueIndex];
-            temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parentPcsWrapperPtr)->object_ptr);
+            temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parent_pcs_wrapper_ptr)->object_ptr);
 
 
             if (temporaryPictureControlSetPtr->slice_type == I_SLICE || temporaryPictureControlSetPtr->end_of_sequence_flag) {
@@ -1061,7 +1061,7 @@ void UpdateMotionFieldUniformityOverTime(
 
 
         temporaryQueueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[inputQueueIndex];
-        temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parentPcsWrapperPtr)->object_ptr);
+        temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parent_pcs_wrapper_ptr)->object_ptr);
 
         if (temporaryPictureControlSetPtr->end_of_sequence_flag) {
             break;
@@ -1133,7 +1133,7 @@ void UpdateHomogeneityOverTime(
 
 
             temporaryQueueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[inputQueueIndex];
-            temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parentPcsWrapperPtr)->object_ptr);
+            temporaryPictureControlSetPtr = ((PictureParentControlSet_t*)(temporaryQueueEntryPtr->parent_pcs_wrapper_ptr)->object_ptr);
             if (temporaryPictureControlSetPtr->scene_change_flag || temporaryPictureControlSetPtr->end_of_sequence_flag) {
 
                 break;
@@ -1199,7 +1199,7 @@ InitialRateControlReorderEntry_t  * DeterminePictureOffsetInQueue(
     queueEntryIndex += encode_context_ptr->initial_rate_control_reorder_queue_head_index;
     queueEntryIndex = (queueEntryIndex > INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH - 1) ? queueEntryIndex - INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH : queueEntryIndex;
     queueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndex];
-    queueEntryPtr->parentPcsWrapperPtr = inputResultsPtr->picture_control_set_wrapper_ptr;
+    queueEntryPtr->parent_pcs_wrapper_ptr = inputResultsPtr->picture_control_set_wrapper_ptr;
     queueEntryPtr->picture_number = picture_control_set_ptr->picture_number;
 
 
@@ -1225,7 +1225,7 @@ void GetHistogramQueueData(
     histogramQueueEntryPtr = encode_context_ptr->hl_rate_control_historgram_queue[histogramQueueEntryIndex];
 
 
-    //histogramQueueEntryPtr->parentPcsWrapperPtr  = inputResultsPtr->picture_control_set_wrapper_ptr;
+    //histogramQueueEntryPtr->parent_pcs_wrapper_ptr  = inputResultsPtr->picture_control_set_wrapper_ptr;
     histogramQueueEntryPtr->picture_number = picture_control_set_ptr->picture_number;
     histogramQueueEntryPtr->end_of_sequence_flag = picture_control_set_ptr->end_of_sequence_flag;
     histogramQueueEntryPtr->slice_type = picture_control_set_ptr->slice_type;
@@ -1828,8 +1828,8 @@ void* InitialRateControlKernel(void *input_ptr)
 
                 // Check if the sliding window condition is valid
                 queueEntryIndexTemp = encode_context_ptr->initial_rate_control_reorder_queue_head_index;
-                if (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp]->parentPcsWrapperPtr != EB_NULL) {
-                    end_of_sequence_flag = (((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp]->parentPcsWrapperPtr)->object_ptr))->end_of_sequence_flag;
+                if (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp]->parent_pcs_wrapper_ptr != EB_NULL) {
+                    end_of_sequence_flag = (((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp]->parent_pcs_wrapper_ptr)->object_ptr))->end_of_sequence_flag;
                 }
                 else {
                     end_of_sequence_flag = EB_FALSE;
@@ -1843,10 +1843,10 @@ void* InitialRateControlKernel(void *input_ptr)
 
                     queueEntryIndexTemp2 = (queueEntryIndexTemp > INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH - 1) ? queueEntryIndexTemp - INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH : queueEntryIndexTemp;
 
-                    moveSlideWondowFlag = (EbBool)(moveSlideWondowFlag && (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parentPcsWrapperPtr != EB_NULL));
-                    if (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parentPcsWrapperPtr != EB_NULL) {
+                    moveSlideWondowFlag = (EbBool)(moveSlideWondowFlag && (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parent_pcs_wrapper_ptr != EB_NULL));
+                    if (encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parent_pcs_wrapper_ptr != EB_NULL) {
                         // check if it is the last frame. If we have reached the last frame, we would output the buffered frames in the Queue.
-                        end_of_sequence_flag = ((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parentPcsWrapperPtr)->object_ptr)->end_of_sequence_flag;
+                        end_of_sequence_flag = ((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parent_pcs_wrapper_ptr)->object_ptr)->end_of_sequence_flag;
                     }
                     else {
                         end_of_sequence_flag = EB_FALSE;
@@ -1859,7 +1859,7 @@ void* InitialRateControlKernel(void *input_ptr)
 
                     //get a new entry spot
                     queueEntryPtr = encode_context_ptr->initial_rate_control_reorder_queue[encode_context_ptr->initial_rate_control_reorder_queue_head_index];
-                    picture_control_set_ptr = ((PictureParentControlSet_t*)(queueEntryPtr->parentPcsWrapperPtr)->object_ptr);
+                    picture_control_set_ptr = ((PictureParentControlSet_t*)(queueEntryPtr->parent_pcs_wrapper_ptr)->object_ptr);
                     sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
                     picture_control_set_ptr->frames_in_sw = frames_in_sw;
                     queueEntryIndexTemp = encode_context_ptr->initial_rate_control_reorder_queue_head_index;
@@ -1869,7 +1869,7 @@ void* InitialRateControlKernel(void *input_ptr)
                         queueEntryIndexTemp <= encode_context_ptr->initial_rate_control_reorder_queue_head_index + sequence_control_set_ptr->static_config.look_ahead_distance) {
 
                         queueEntryIndexTemp2 = (queueEntryIndexTemp > INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH - 1) ? queueEntryIndexTemp - INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH : queueEntryIndexTemp;
-                        pictureControlSetPtrTemp = ((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parentPcsWrapperPtr)->object_ptr);
+                        pictureControlSetPtrTemp = ((PictureParentControlSet_t*)(encode_context_ptr->initial_rate_control_reorder_queue[queueEntryIndexTemp2]->parent_pcs_wrapper_ptr)->object_ptr);
                         if (sequence_control_set_ptr->intra_period_length != -1) {
                             if (picture_control_set_ptr->picture_number % ((sequence_control_set_ptr->intra_period_length + 1)) == 0) {
                                 picture_control_set_ptr->frames_in_interval[pictureControlSetPtrTemp->temporal_layer_index] ++;
@@ -1969,11 +1969,11 @@ void* InitialRateControlKernel(void *input_ptr)
                     eb_get_empty_object(
                         sequence_control_set_ptr->encode_context_ptr->reference_picture_pool_fifo_ptr,
                         &reference_picture_wrapper_ptr);
-                    ((PictureParentControlSet_t*)(queueEntryPtr->parentPcsWrapperPtr->object_ptr))->reference_picture_wrapper_ptr = reference_picture_wrapper_ptr;
+                    ((PictureParentControlSet_t*)(queueEntryPtr->parent_pcs_wrapper_ptr->object_ptr))->reference_picture_wrapper_ptr = reference_picture_wrapper_ptr;
 
                     // Give the new Reference a nominal live_count of 1
                     eb_object_inc_live_count(
-                        ((PictureParentControlSet_t*)(queueEntryPtr->parentPcsWrapperPtr->object_ptr))->reference_picture_wrapper_ptr,
+                        ((PictureParentControlSet_t*)(queueEntryPtr->parent_pcs_wrapper_ptr->object_ptr))->reference_picture_wrapper_ptr,
                         1);
                     //OPTION 1:  get the output stream buffer in ressource coordination
                     eb_get_empty_object(
@@ -1989,14 +1989,14 @@ void* InitialRateControlKernel(void *input_ptr)
                         &outputResultsWrapperPtr);
 
                     outputResultsPtr = (InitialRateControlResults_t*)outputResultsWrapperPtr->object_ptr;
-                    outputResultsPtr->picture_control_set_wrapper_ptr = queueEntryPtr->parentPcsWrapperPtr;
+                    outputResultsPtr->picture_control_set_wrapper_ptr = queueEntryPtr->parent_pcs_wrapper_ptr;
                     /////////////////////////////
                     // Post the Full Results Object
                     eb_post_full_object(outputResultsWrapperPtr);
 
                     // Reset the Reorder Queue Entry
                     queueEntryPtr->picture_number += INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH;
-                    queueEntryPtr->parentPcsWrapperPtr = (EbObjectWrapper *)EB_NULL;
+                    queueEntryPtr->parent_pcs_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
 
                     // Increment the Reorder Queue head Ptr
                     encode_context_ptr->initial_rate_control_reorder_queue_head_index =

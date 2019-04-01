@@ -58,7 +58,7 @@ EbErrorType encode_context_ctor(
 
     // Picture Manager Reordering Queue
     encode_context_ptr->picture_manager_reorder_queue_head_index = 0;
-    EB_MALLOC(PictureManagerReorderEntry_t**, encode_context_ptr->picture_manager_reorder_queue, sizeof(PictureManagerReorderEntry_t*) * PICTURE_MANAGER_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(PictureManagerReorderEntry**, encode_context_ptr->picture_manager_reorder_queue, sizeof(PictureManagerReorderEntry*) * PICTURE_MANAGER_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < PICTURE_MANAGER_REORDER_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = picture_manager_reorder_entry_ctor(
@@ -89,7 +89,7 @@ EbErrorType encode_context_ctor(
     // Picture Manager Input Queue
     encode_context_ptr->input_picture_queue_head_index = 0;
     encode_context_ptr->input_picture_queue_tail_index = 0;
-    EB_MALLOC(InputQueueEntry_t**, encode_context_ptr->input_picture_queue, sizeof(InputQueueEntry_t*) * INPUT_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(InputQueueEntry**, encode_context_ptr->input_picture_queue, sizeof(InputQueueEntry*) * INPUT_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < INPUT_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = input_queue_entry_ctor(
@@ -102,7 +102,7 @@ EbErrorType encode_context_ctor(
     // Picture Manager Reference Queue
     encode_context_ptr->reference_picture_queue_head_index = 0;
     encode_context_ptr->reference_picture_queue_tail_index = 0;
-    EB_MALLOC(ReferenceQueueEntry_t**, encode_context_ptr->reference_picture_queue, sizeof(ReferenceQueueEntry_t*) * REFERENCE_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(ReferenceQueueEntry**, encode_context_ptr->reference_picture_queue, sizeof(ReferenceQueueEntry*) * REFERENCE_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < REFERENCE_QUEUE_MAX_DEPTH; ++pictureIndex) {
         return_error = reference_queue_entry_ctor(

@@ -63,7 +63,7 @@ typedef struct EncodeContext_s
     uint32_t                                         picture_decision_reorder_queue_head_index;
 
     // Picture Manager Reorder Queue
-    PictureManagerReorderEntry_t                   **picture_manager_reorder_queue;
+    PictureManagerReorderEntry                   **picture_manager_reorder_queue;
     uint32_t                                         picture_manager_reorder_queue_head_index;
 
     // Picture Manager Pre-Assignment Buffer
@@ -82,10 +82,10 @@ typedef struct EncodeContext_s
     uint32_t                                         picture_decision_pa_reference_queue_tail_index;
 
     // Picture Manager Circular Queues
-    InputQueueEntry_t                              **input_picture_queue;
+    InputQueueEntry                              **input_picture_queue;
     uint32_t                                         input_picture_queue_head_index;
     uint32_t                                         input_picture_queue_tail_index;
-    ReferenceQueueEntry_t                          **reference_picture_queue;
+    ReferenceQueueEntry                          **reference_picture_queue;
     uint32_t                                         reference_picture_queue_head_index;
     uint32_t                                         reference_picture_queue_tail_index;
 

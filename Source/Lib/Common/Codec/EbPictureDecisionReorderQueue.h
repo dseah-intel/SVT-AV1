@@ -15,7 +15,7 @@
 typedef struct PictureDecisionReorderEntry_s 
 {
     uint64_t                              picture_number;
-    EbObjectWrapper                    *parentPcsWrapperPtr;
+    EbObjectWrapper                    *parent_pcs_wrapper_ptr;
 } PictureDecisionReorderEntry_t;
 
 extern EbErrorType picture_decision_reorder_entry_ctor(

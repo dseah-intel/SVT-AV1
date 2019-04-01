@@ -431,7 +431,7 @@ void LogErrorOutput(
         break;
 
     case EB_ENC_PM_ERROR1:
-        fprintf(error_log_file, "Error: EbPictureManager: dependentCount underflow!\n");
+        fprintf(error_log_file, "Error: EbPictureManager: dependent_count underflow!\n");
         break;
 
     case EB_ENC_PM_ERROR10:
@@ -443,7 +443,7 @@ void LogErrorOutput(
         break;
 
     case EB_ENC_PM_ERROR3:
-        fprintf(error_log_file, "Error: PictureManagerProcess: The dependentCount underflow detected!\n");
+        fprintf(error_log_file, "Error: PictureManagerProcess: The dependent_count underflow detected!\n");
         break;
 
     case EB_ENC_PM_ERROR4:
