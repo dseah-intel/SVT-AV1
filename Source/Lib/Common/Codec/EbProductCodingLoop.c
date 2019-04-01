@@ -37,7 +37,7 @@
 EbErrorType ProductGenerateMdCandidatesCu(
     LargestCodingUnit_t             *sb_ptr,
     ModeDecisionContext_t           *context_ptr,
-    SsMeContext_t                  *ss_mecontext,
+    SsMeContext                  *ss_mecontext,
 #if !M8_SKIP_BLK
     const uint32_t                    leaf_index,
 #endif
@@ -2948,7 +2948,7 @@ void md_encode_block(
     SequenceControlSet             *sequence_control_set_ptr,
     PictureControlSet              *picture_control_set_ptr,
     ModeDecisionContext_t            *context_ptr,
-    SsMeContext_t                    *ss_mecontext,
+    SsMeContext                    *ss_mecontext,
 #if M8_SKIP_BLK
     uint8_t                          *skip_sub_blocks,
 #else
@@ -3314,7 +3314,7 @@ EB_EXTERN EbErrorType mode_decision_sb(
     uint16_t                             sb_origin_x,
     uint16_t                             sb_origin_y,
     uint32_t                             lcuAddr,
-    SsMeContext_t                       *ss_mecontext,
+    SsMeContext                       *ss_mecontext,
     ModeDecisionContext_t               *context_ptr)
 {
     EbErrorType                          return_error = EB_ErrorNone;
@@ -4234,7 +4234,7 @@ static void in_loop_me_128xN_Nx128_distortion_update(
 ***************************************************************/
 
 static void in_loop_me_get_search_point_results_block(
-    SsMeContext_t            *context_ptr,                    // input parameter, ME context Ptr, used to get SB Ptr
+    SsMeContext            *context_ptr,                    // input parameter, ME context Ptr, used to get SB Ptr
     uint32_t                   list_index,                      // input parameter, reference list index
     uint32_t                   ref_index,
     int32_t                   x_search_index,                  // input parameter, search region position in the horizontal direction, used to derive xMV
@@ -4513,7 +4513,7 @@ static void in_loop_me_get_search_point_results_block(
 *  perform the full pel search for the whole super-block
 ***************************************************************/
 static void in_loop_me_fullpel_search_sblock(
-    SsMeContext_t            *context_ptr,
+    SsMeContext            *context_ptr,
     uint32_t                   list_index,
     int16_t                   x_search_area_origin,
     int16_t                     y_search_area_origin,
@@ -4546,13 +4546,13 @@ static void in_loop_me_fullpel_search_sblock(
 *  in-loop motion estimation construtor
 ***************************************************************/
 EbErrorType in_loop_me_context_ctor(
-    SsMeContext_t                          **object_dbl_ptr)
+    SsMeContext                          **object_dbl_ptr)
 {
 
     uint32_t                   listIndex;
     uint32_t                   refPicIndex;
 
-    EB_MALLOC(SsMeContext_t*, *object_dbl_ptr, sizeof(SsMeContext_t), EB_N_PTR);
+    EB_MALLOC(SsMeContext*, *object_dbl_ptr, sizeof(SsMeContext), EB_N_PTR);
 
     // Intermediate LCU-sized buffer to retain the input samples
     (*object_dbl_ptr)->sb_buffer_stride = MAX_SB_SIZE;
@@ -4636,7 +4636,7 @@ EbErrorType in_loop_me_context_ctor(
 *  performs AVC-style interpolation for the whole Search Region
 ***************************************************************/
 static void in_loop_me_interpolate_search_region_avc_style(
-    SsMeContext_t           *context_ptr,                       // input/output parameter, ME context ptr, used to get/set interpolated search area Ptr
+    SsMeContext           *context_ptr,                       // input/output parameter, ME context ptr, used to get/set interpolated search area Ptr
     uint32_t                   listIndex,                        // Refrence picture list index
     uint8_t                   *searchRegionBuffer,               // input parameter, search region index, used to point to reference samples
     uint32_t                   lumaStride,                       // input parameter, reference Picture stride
@@ -4731,7 +4731,7 @@ static void in_loop_me_interpolate_search_region_avc_style(
 ***************************************************************/
 static void in_loop_me_halfpel_refinement_block(
     SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
-    SsMeContext_t           *context_ptr,                        // input parameter, ME context Ptr, used to get SB Ptr
+    SsMeContext           *context_ptr,                        // input parameter, ME context Ptr, used to get SB Ptr
     uint32_t                   block_index_in_sb_buffer,                  // input parameter, PU origin, used to point to source samples
     uint8_t                   *pos_b_buffer,                        // input parameter, position "b" interpolated search area Ptr
     uint8_t                   *pos_h_buffer,                        // input parameter, position "h" interpolated search area Ptr
@@ -4934,7 +4934,7 @@ static void in_loop_me_halfpel_refinement_block(
 ***************************************************************/
 void in_loop_me_halfpel_search_sblock(
     SequenceControlSet    *sequence_control_set_ptr,             // input parameter, Sequence control set Ptr
-    SsMeContext_t           *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
+    SsMeContext           *context_ptr,                        // input/output parameter, ME context Ptr, used to get/update ME results
     uint8_t                   *pos_b_buffer,                        // input parameter, position "b" interpolated search area Ptr
     uint8_t                   *pos_h_buffer,                        // input parameter, position "h" interpolated search area Ptr
     uint8_t                   *pos_j_buffer,                        // input parameter, position "j" interpolated search area Ptr
@@ -5614,7 +5614,7 @@ void in_loop_me_halfpel_search_sblock(
 *   performs Quarter Pel refinement for each block
 ***************************************************************/
 static void in_loop_me_quarterpel_refinement_on_the_fly_block(
-    SsMeContext_t         *context_ptr,                      // [IN] ME context Ptr, used to get SB Ptr
+    SsMeContext         *context_ptr,                      // [IN] ME context Ptr, used to get SB Ptr
     uint32_t                 block_index_in_sb_buffer,                // [IN] PU origin, used to point to source samples
     uint8_t                **buf1,                            // [IN]
     uint32_t                *buf1Stride,
@@ -5945,7 +5945,7 @@ static void set_quarterpel_refinement_inputs_on_the_fly_block(
 *   perform the quarter-pel refinement for the whole super-block
 ***************************************************************/
 static void in_loop_me_quarterpel_search_sblock(
-    SsMeContext_t                *context_ptr,                     //[IN/OUT]  ME context Ptr, used to get/update ME results
+    SsMeContext                *context_ptr,                     //[IN/OUT]  ME context Ptr, used to get/update ME results
     uint8_t                        *pos_Full,                       //[IN]
     uint32_t                        full_stride,                      //[IN]
     uint8_t                        *pos_b,                          //[IN]
@@ -6928,7 +6928,7 @@ EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
     int16_t                       y_mv_l0,
     int16_t                       x_mv_l1,
     int16_t                       y_mv_l1,
-    SsMeContext_t                 *context_ptr)           // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
+    SsMeContext                 *context_ptr)           // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
 
 {
     EbErrorType return_error = EB_ErrorNone;
@@ -6986,7 +6986,7 @@ EB_EXTERN EbErrorType in_loop_motion_estimation_sblock(
     const uint32_t start_idx_32x64 = 847 * number_of_sb_quad;
     const uint32_t start_idx_128x64 = 849 * number_of_sb_quad;
 
-    context_ptr->fractionalSearchMethod = SSD_SEARCH; // all in-loop
+    context_ptr->fractional_search_method = SSD_SEARCH; // all in-loop
 
     numOfListToSearch = (picture_control_set_ptr->slice_type == P_SLICE) ? (uint32_t)REF_LIST_0 : (uint32_t)REF_LIST_1;
 

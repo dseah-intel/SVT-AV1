@@ -105,7 +105,7 @@ extern "C" {
         uint16_t                                max_cu_height);
 
     extern EbErrorType in_loop_me_context_ctor(
-        SsMeContext_t                         **ss_mecontext);
+        SsMeContext                         **ss_mecontext);
 
     extern void generate_padding(
         EbByte              src_pic,

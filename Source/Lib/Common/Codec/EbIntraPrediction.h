@@ -139,9 +139,9 @@ extern "C" {
 
 
     extern EbErrorType IntraOpenLoopReferenceSamplesCtor(
-        IntraReferenceSamplesOpenLoop_t **context_dbl_ptr);
+        IntraReferenceSamplesOpenLoop **context_dbl_ptr);
     extern void IntraOpenLoopReferenceSamplesDtor(
-        IntraReferenceSamplesOpenLoop_t  *context_ptr);
+        IntraReferenceSamplesOpenLoop  *context_ptr);
 
     extern EbErrorType update_neighbor_samples_array_open_loop(
         uint8_t                           *above_ref,

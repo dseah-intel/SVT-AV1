@@ -43,7 +43,7 @@
 EbErrorType CheckZeroZeroCenter(
     PictureParentControlSet   *picture_control_set_ptr,
     EbPictureBufferDesc        *refPicPtr,
-    MeContext_t                  *context_ptr,
+    MeContext                  *context_ptr,
     uint32_t                       sb_origin_x,
     uint32_t                       sb_origin_y,
     uint32_t                       sb_width,
@@ -57,7 +57,7 @@ EbErrorType CheckZeroZeroCenter(
  ************************************************/
 void* set_me_hme_params_from_config(
     SequenceControlSet        *sequence_control_set_ptr,
-    MeContext_t                 *me_context_ptr)
+    MeContext                 *me_context_ptr)
 {
 
     uint16_t hmeRegionIndex = 0;
@@ -91,7 +91,7 @@ void* set_me_hme_params_from_config(
  * Set ME/HME Params
  ************************************************/
 void* set_me_hme_params_oq(
-    MeContext_t                     *me_context_ptr,
+    MeContext                     *me_context_ptr,
     PictureParentControlSet       *picture_control_set_ptr,
     SequenceControlSet            *sequence_control_set_ptr,
     EbInputResolution                 input_resolution)
@@ -183,13 +183,13 @@ EbErrorType signal_derivation_me_kernel_oq(
             context_ptr->me_context_ptr);
  #if SCENE_CONTENT_SETTINGS   
     if (picture_control_set_ptr->sc_content_detected)
-        context_ptr->me_context_ptr->fractionalSearchMethod = FULL_SAD_SEARCH ; 
+        context_ptr->me_context_ptr->fractional_search_method = FULL_SAD_SEARCH ; 
     else 
 #endif
         if (picture_control_set_ptr->enc_mode <= ENC_M6)
-        context_ptr->me_context_ptr->fractionalSearchMethod = SSD_SEARCH ; 
+        context_ptr->me_context_ptr->fractional_search_method = SSD_SEARCH ; 
     else
-        context_ptr->me_context_ptr->fractionalSearchMethod = FULL_SAD_SEARCH;
+        context_ptr->me_context_ptr->fractional_search_method = FULL_SAD_SEARCH;
 
 
     return return_error;
@@ -215,7 +215,7 @@ EbErrorType motion_estimation_context_ctor(
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }
-    return_error = MeContextCtor(&(context_ptr->me_context_ptr));
+    return_error = me_context_ctor(&(context_ptr->me_context_ptr));
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }

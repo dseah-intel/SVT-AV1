@@ -497,7 +497,7 @@ void Unipred3x3CandidatesInjection(
     ModeDecisionContext_t          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
-    SsMeContext_t                  *inloop_me_context,
+    SsMeContext                  *inloop_me_context,
     EbBool                          use_close_loop_me,
     uint32_t                        close_loop_me_index,
     const uint32_t                  me2Nx2NTableOffset,
@@ -648,7 +648,7 @@ void Bipred3x3CandidatesInjection(
     ModeDecisionContext_t          *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                        me_sb_addr,
-    SsMeContext_t                  *inloop_me_context,
+    SsMeContext                  *inloop_me_context,
     EbBool                          use_close_loop_me,
     uint32_t                        close_loop_me_index,
     const uint32_t                  me2Nx2NTableOffset,
@@ -1119,7 +1119,7 @@ void inject_warped_motion_candidates(
     struct ModeDecisionContext_s     *context_ptr,
     CodingUnit_t                     *cu_ptr,
     uint32_t                         *candTotCnt,
-    SsMeContext_t                    *ss_mecontext,
+    SsMeContext                    *ss_mecontext,
     MeCuResults                    *mePuResult,
     EbBool                            use_close_loop_me,
     uint32_t                          close_loop_me_index)
@@ -1319,7 +1319,7 @@ void inject_warped_motion_candidates(
 void  inject_inter_candidates(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext_t          *context_ptr,
-    SsMeContext_t                  *ss_mecontext,
+    SsMeContext                  *ss_mecontext,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
 #if M8_SKIP_BLK
@@ -2551,7 +2551,7 @@ void ProductInitMdCandInjection(
 EbErrorType ProductGenerateMdCandidatesCu(
     LargestCodingUnit_t                 *sb_ptr,
     ModeDecisionContext_t             *context_ptr,
-    SsMeContext_t                    *ss_mecontext,
+    SsMeContext                    *ss_mecontext,
 #if !M8_SKIP_BLK
     const uint32_t                      leaf_index,
 #endif

@@ -49,7 +49,7 @@ extern "C" {
         int16_t                              y_mv_l0,
         int16_t                              x_mv_l1,
         int16_t                              y_mv_l1,
-        SsMeContext_t                        *context_ptr);          // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
+        SsMeContext                        *context_ptr);          // input parameter, ME Context Ptr, used to store decimated/interpolated LCU/SR
 
     extern EbErrorType mode_decision_sb(
         SequenceControlSet                *sequence_control_set_ptr,
@@ -59,7 +59,7 @@ extern "C" {
         uint16_t                             sb_origin_x,
         uint16_t                             sb_origin_y,
         uint32_t                             lcuAddr,
-        SsMeContext_t                       *ss_mecontext,
+        SsMeContext                       *ss_mecontext,
         ModeDecisionContext_t               *context_ptr);
 
 

@@ -1162,10 +1162,10 @@ void IntraModeAngular_AV1_Z3_16bit(
  * Intra Reference Samples Ctor
  **********************************************/
 EbErrorType IntraOpenLoopReferenceSamplesCtor(
-    IntraReferenceSamplesOpenLoop_t **context_dbl_ptr)
+    IntraReferenceSamplesOpenLoop **context_dbl_ptr)
 {
-    IntraReferenceSamplesOpenLoop_t *context_ptr;
-    EB_MALLOC(IntraReferenceSamplesOpenLoop_t*, context_ptr, sizeof(IntraReferenceSamplesOpenLoop_t), EB_N_PTR);
+    IntraReferenceSamplesOpenLoop *context_ptr;
+    EB_MALLOC(IntraReferenceSamplesOpenLoop*, context_ptr, sizeof(IntraReferenceSamplesOpenLoop), EB_N_PTR);
 
     *context_dbl_ptr = context_ptr;
 
@@ -1184,7 +1184,7 @@ EbErrorType IntraOpenLoopReferenceSamplesCtor(
         updates neighbor sample array
  */
 EbErrorType UpdateNeighborSamplesArrayOpenLoop(
-    IntraReferenceSamplesOpenLoop_t *intra_ref_ptr,
+    IntraReferenceSamplesOpenLoop *intra_ref_ptr,
     EbPictureBufferDesc           *inputPtr,
     uint32_t                           stride,
     uint32_t                           src_origin_x,

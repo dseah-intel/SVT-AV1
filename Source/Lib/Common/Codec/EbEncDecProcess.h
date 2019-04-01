@@ -54,7 +54,7 @@ extern "C" {
 
         // MCP Context
         MotionCompensationPredictionContext_t *mcp_context;
-        SsMeContext_t                         *ss_mecontext;
+        SsMeContext                         *ss_mecontext;
 
         // Intra Reference Samples
         IntraReferenceSamples_t               *intra_ref_ptr;

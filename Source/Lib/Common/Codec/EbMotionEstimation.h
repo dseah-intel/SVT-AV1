@@ -23,7 +23,7 @@ extern "C" {
         uint32_t                       sb_index,
         uint32_t                       sb_origin_x,
         uint32_t                       sb_origin_y,
-        MeContext_t                 *context_ptr,
+        MeContext                 *context_ptr,
         EbPictureBufferDesc       *input_ptr);
 
     extern EbErrorType OpenLoopIntraCandidateSearchLcu(

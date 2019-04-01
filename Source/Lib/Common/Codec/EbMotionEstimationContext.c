@@ -10,7 +10,7 @@
 
 
 void MotionEstimetionPredUnitCtor(
-    MePredUnit_t   *pu)
+    MePredUnit   *pu)
 {
 
     pu->distortion = 0xFFFFFFFFull;
@@ -25,15 +25,15 @@ void MotionEstimetionPredUnitCtor(
 }
 
 
-EbErrorType MeContextCtor(
-    MeContext_t     **object_dbl_ptr)
+EbErrorType me_context_ctor(
+    MeContext     **object_dbl_ptr)
 {
     uint32_t                   listIndex;
     uint32_t                   refPicIndex;
     uint32_t                   pu_index;
     uint32_t                   meCandidateIndex;
 
-    EB_MALLOC(MeContext_t*, *object_dbl_ptr, sizeof(MeContext_t), EB_N_PTR);
+    EB_MALLOC(MeContext*, *object_dbl_ptr, sizeof(MeContext), EB_N_PTR);
 
     // Intermediate LCU-sized buffer to retain the input samples
     (*object_dbl_ptr)->sb_buffer_stride = BLOCK_SIZE_64;
