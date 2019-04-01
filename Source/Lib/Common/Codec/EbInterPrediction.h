@@ -33,7 +33,7 @@ extern "C" {
         uint32_t                                interp_filters,
         CodingUnit_t                           *cu_ptr,
         uint8_t                                 ref_frame_type,
-        MvUnit_t                               *mv_unit,
+        MvUnit                               *mv_unit,
         uint8_t                                  use_intrabc,
         uint16_t                                pu_origin_x,
         uint16_t                                pu_origin_y,
@@ -57,7 +57,7 @@ extern "C" {
         PictureControlSet                    *picture_control_set_ptr,
         uint8_t                                 ref_frame_type,
         CodingUnit_t                           *cu_ptr,
-        MvUnit_t                               *mv_unit,
+        MvUnit                               *mv_unit,
         uint8_t                                  use_intrabc,
         uint16_t                                pu_origin_x,
         uint16_t                                pu_origin_y,
@@ -87,7 +87,7 @@ extern "C" {
 
 
     EbErrorType warped_motion_prediction(
-        MvUnit_t                               *mv_unit,
+        MvUnit                               *mv_unit,
         uint16_t                                pu_origin_x,
         uint16_t                                pu_origin_y,
         CodingUnit_t                           *cu_ptr,

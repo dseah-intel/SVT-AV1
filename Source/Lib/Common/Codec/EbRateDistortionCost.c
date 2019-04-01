@@ -1820,18 +1820,18 @@ void coding_loop_context_generation(
     uint32_t                      cu_origin_y,
     uint32_t                      sb_sz,
 
-    NeighborArrayUnit_t        *skip_coeff_neighbor_array,
-    NeighborArrayUnit_t        *luma_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *cb_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *cr_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *inter_pred_dir_neighbor_array,
-    NeighborArrayUnit_t        *ref_frame_type_neighbor_array,
+    NeighborArrayUnit        *skip_coeff_neighbor_array,
+    NeighborArrayUnit        *luma_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *cb_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *cr_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *inter_pred_dir_neighbor_array,
+    NeighborArrayUnit        *ref_frame_type_neighbor_array,
 
-    NeighborArrayUnit_t        *intra_luma_mode_neighbor_array,
-    NeighborArrayUnit_t        *skip_flag_neighbor_array,
-    NeighborArrayUnit_t        *mode_type_neighbor_array,
-    NeighborArrayUnit_t        *leaf_depth_neighbor_array,
-    NeighborArrayUnit_t       *leaf_partition_neighbor_array)
+    NeighborArrayUnit        *intra_luma_mode_neighbor_array,
+    NeighborArrayUnit        *skip_flag_neighbor_array,
+    NeighborArrayUnit        *mode_type_neighbor_array,
+    NeighborArrayUnit        *leaf_depth_neighbor_array,
+    NeighborArrayUnit       *leaf_partition_neighbor_array)
 {
     (void)sb_sz;
     uint32_t modeTypeLeftNeighborIndex = get_neighbor_array_unit_left_index(
@@ -1869,24 +1869,24 @@ void coding_loop_context_generation(
     // Intra Luma Neighbor Modes
 
     cu_ptr->prediction_unit_array->intra_luma_left_mode = (uint32_t)(
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->leftArray[intraLumaModeLeftNeighborIndex]);
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->left_array[intraLumaModeLeftNeighborIndex]);
 
     cu_ptr->prediction_unit_array->intra_luma_top_mode = (uint32_t)(
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->topArray[intraLumaModeTopNeighborIndex]);
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->top_array[intraLumaModeTopNeighborIndex]);
 
     int32_t contextIndex;
-    if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 3 :
-            (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE || mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 1 : 0;
+    if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 3 :
+            (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE || mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 1 : 0;
 
     }
-    else  if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
+    else  if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
     }
-    else if (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
+    else if (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
     }
     else {
         contextIndex = 0;
@@ -1899,29 +1899,29 @@ void coding_loop_context_generation(
       //   Top Intra Mode Neighbor Array instead of a Full
       // Skip Flag Context
     cu_ptr->skip_flag_context =
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INVALID_MODE) ? 0 :
-        (skip_flag_neighbor_array->leftArray[skipFlagLeftNeighborIndex] == EB_TRUE) ? 1 : 0;
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INVALID_MODE) ? 0 :
+        (skip_flag_neighbor_array->left_array[skipFlagLeftNeighborIndex] == EB_TRUE) ? 1 : 0;
     cu_ptr->skip_flag_context +=
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INVALID_MODE) ? 0 :
-        (skip_flag_neighbor_array->topArray[skipFlagTopNeighborIndex] == EB_TRUE) ? 1 : 0;
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INVALID_MODE) ? 0 :
+        (skip_flag_neighbor_array->top_array[skipFlagTopNeighborIndex] == EB_TRUE) ? 1 : 0;
 
     // Split Flag Context (neighbor info)
     context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_mode = (uint32_t)(
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->leftArray[intraLumaModeLeftNeighborIndex]);
-    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_depth = leaf_depth_neighbor_array->leftArray[leafDepthLeftNeighborIndex];
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->left_array[intraLumaModeLeftNeighborIndex]);
+    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_depth = leaf_depth_neighbor_array->left_array[leafDepthLeftNeighborIndex];
     context_ptr->md_local_cu_unit[cu_ptr->mds_idx].top_neighbor_mode = (uint32_t)(
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->topArray[intraLumaModeTopNeighborIndex]);
-    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].top_neighbor_depth = leaf_depth_neighbor_array->topArray[leafDepthTopNeighborIndex];
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->top_array[intraLumaModeTopNeighborIndex]);
+    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].top_neighbor_depth = leaf_depth_neighbor_array->top_array[leafDepthTopNeighborIndex];
 
 
     // Generate Partition context
-    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition = (((PartitionContext*)leaf_partition_neighbor_array->topArray)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)leaf_partition_neighbor_array->topArray)[partition_above_neighbor_index].above;
+    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition = (((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above;
 
-    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition = (((PartitionContext*)leaf_partition_neighbor_array->leftArray)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)leaf_partition_neighbor_array->leftArray)[partition_left_neighbor_index].left;
+    context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition = (((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left;
 
     // Skip Coeff AV1 Context
     uint32_t skipCoeffLeftNeighborIndex = get_neighbor_array_unit_left_index(
@@ -1933,13 +1933,13 @@ void coding_loop_context_generation(
 
 
     cu_ptr->skip_coeff_context =
-        (skip_coeff_neighbor_array->leftArray[skipCoeffLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_coeff_neighbor_array->leftArray[skipCoeffLeftNeighborIndex]) ? 1 : 0;
+        (skip_coeff_neighbor_array->left_array[skipCoeffLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_coeff_neighbor_array->left_array[skipCoeffLeftNeighborIndex]) ? 1 : 0;
 
 
     cu_ptr->skip_coeff_context +=
-        (skip_coeff_neighbor_array->topArray[skipCoeffTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_coeff_neighbor_array->topArray[skipCoeffTopNeighborIndex]) ? 1 : 0;
+        (skip_coeff_neighbor_array->top_array[skipCoeffTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_coeff_neighbor_array->top_array[skipCoeffTopNeighborIndex]) ? 1 : 0;
 
     // Skip and Dc sign context generation
 

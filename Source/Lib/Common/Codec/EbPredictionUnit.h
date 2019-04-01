@@ -16,8 +16,8 @@ extern "C" {
 #pragma pack(push, 1)
     typedef struct PredictionUnit
     {
-        Mv_t                         mv[MAX_NUM_OF_REF_PIC_LIST];  // 16-bytes
-        Mvd_t                        mvd[MAX_NUM_OF_REF_PIC_LIST]; // 16-bytes
+        Mv                         mv[MAX_NUM_OF_REF_PIC_LIST];  // 16-bytes
+        Mvd                        mvd[MAX_NUM_OF_REF_PIC_LIST]; // 16-bytes
         unsigned                     merge_flag                 : 1;
         unsigned                     inter_pred_direction_index : 2;
         unsigned                     intra_luma_mode            : 6;

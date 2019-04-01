@@ -1155,7 +1155,7 @@ void inject_warped_motion_candidates(
         candidateArray[canIdx].transform_type[PLANE_TYPE_Y] = DCT_DCT;
         candidateArray[canIdx].transform_type[PLANE_TYPE_UV] = DCT_DCT;
 
-        MvUnit_t mv_unit;
+        MvUnit mv_unit;
         mv_unit.mv[0].x = candidateArray[canIdx].motionVector_x_L0;
         mv_unit.mv[0].y = candidateArray[canIdx].motionVector_y_L0;
         candidateArray[canIdx].local_warp_valid = warped_motion_parameters(
@@ -1213,7 +1213,7 @@ void inject_warped_motion_candidates(
             candidateArray[canIdx].transform_type[PLANE_TYPE_Y] = DCT_DCT;
             candidateArray[canIdx].transform_type[PLANE_TYPE_UV] = DCT_DCT;
 
-            MvUnit_t mv_unit;
+            MvUnit mv_unit;
             mv_unit.mv[0].x = candidateArray[canIdx].motionVector_x_L0;
             mv_unit.mv[0].y = candidateArray[canIdx].motionVector_y_L0;
             candidateArray[canIdx].local_warp_valid = warped_motion_parameters(
@@ -1289,7 +1289,7 @@ void inject_warped_motion_candidates(
         candidateArray[canIdx].motion_vector_pred_x[REF_LIST_0] = bestPredmv[0].as_mv.col;
         candidateArray[canIdx].motion_vector_pred_y[REF_LIST_0] = bestPredmv[0].as_mv.row;
 
-        MvUnit_t mv_unit;
+        MvUnit mv_unit;
         mv_unit.mv[0].x = candidateArray[canIdx].motionVector_x_L0;
         mv_unit.mv[0].y = candidateArray[canIdx].motionVector_y_L0;
         candidateArray[canIdx].local_warp_valid = warped_motion_parameters(
@@ -2789,8 +2789,8 @@ uint8_t product_full_mode_decision(
         }
 
         // The MV prediction indicies are recalcated by the EncDec.
-        pu_ptr->mvd[REF_LIST_0].predIdx = 0;
-        pu_ptr->mvd[REF_LIST_1].predIdx = 0;
+        pu_ptr->mvd[REF_LIST_0].pred_idx = 0;
+        pu_ptr->mvd[REF_LIST_1].pred_idx = 0;
 
         pu_ptr->overlappable_neighbors[0] = context_ptr->cu_ptr->prediction_unit_array[0].overlappable_neighbors[0];
         pu_ptr->overlappable_neighbors[1] = context_ptr->cu_ptr->prediction_unit_array[0].overlappable_neighbors[1];

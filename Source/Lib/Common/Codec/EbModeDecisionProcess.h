@@ -95,23 +95,23 @@ extern "C" {
         MdCodingUnit_t                  md_local_cu_unit[BLOCK_MAX_COUNT_SB_128];
         CodingUnit_t                    md_cu_arr_nsq[BLOCK_MAX_COUNT_SB_128];
 
-        NeighborArrayUnit_t            *intra_luma_mode_neighbor_array;
-        NeighborArrayUnit_t            *intra_chroma_mode_neighbor_array;
-        NeighborArrayUnit_t            *mv_neighbor_array;
-        NeighborArrayUnit_t            *skip_flag_neighbor_array;
-        NeighborArrayUnit_t            *mode_type_neighbor_array;
-        NeighborArrayUnit_t            *leaf_depth_neighbor_array;
-        NeighborArrayUnit_t            *luma_recon_neighbor_array;
-        NeighborArrayUnit_t            *cb_recon_neighbor_array;
-        NeighborArrayUnit_t            *cr_recon_neighbor_array;
-        NeighborArrayUnit_t            *skip_coeff_neighbor_array;
-        NeighborArrayUnit_t            *luma_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits (COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
-        NeighborArrayUnit_t            *cr_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits(COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
-        NeighborArrayUnit_t            *cb_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits(COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
-        NeighborArrayUnit_t            *inter_pred_dir_neighbor_array;
-        NeighborArrayUnit_t            *ref_frame_type_neighbor_array;
-        NeighborArrayUnit_t            *leaf_partition_neighbor_array;
-        NeighborArrayUnit32_t          *interpolation_type_neighbor_array;
+        NeighborArrayUnit            *intra_luma_mode_neighbor_array;
+        NeighborArrayUnit            *intra_chroma_mode_neighbor_array;
+        NeighborArrayUnit            *mv_neighbor_array;
+        NeighborArrayUnit            *skip_flag_neighbor_array;
+        NeighborArrayUnit            *mode_type_neighbor_array;
+        NeighborArrayUnit            *leaf_depth_neighbor_array;
+        NeighborArrayUnit            *luma_recon_neighbor_array;
+        NeighborArrayUnit            *cb_recon_neighbor_array;
+        NeighborArrayUnit            *cr_recon_neighbor_array;
+        NeighborArrayUnit            *skip_coeff_neighbor_array;
+        NeighborArrayUnit            *luma_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits (COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
+        NeighborArrayUnit            *cr_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits(COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
+        NeighborArrayUnit            *cb_dc_sign_level_coeff_neighbor_array; // Stored per 4x4. 8 bit: lower 6 bits(COEFF_CONTEXT_BITS), shows if there is at least one Coef. Top 2 bit store the sign of DC as follow: 0->0,1->-1,2-> 1
+        NeighborArrayUnit            *inter_pred_dir_neighbor_array;
+        NeighborArrayUnit            *ref_frame_type_neighbor_array;
+        NeighborArrayUnit            *leaf_partition_neighbor_array;
+        NeighborArrayUnit32          *interpolation_type_neighbor_array;
 
         // TMVP
         EbReferenceObject            *reference_object_write_ptr;
@@ -147,7 +147,7 @@ extern "C" {
         const BlockGeom                *blk_geom;
         PredictionUnit               *pu_ptr;
         const PredictionUnitStats    *pu_stats;
-        MvUnit_t                        mv_unit;
+        MvUnit                        mv_unit;
 
         // Entropy Coder
         EntropyCoder_t                 *coeff_est_entropy_coder_ptr;

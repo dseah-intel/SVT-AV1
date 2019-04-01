@@ -158,10 +158,10 @@ typedef EbErrorType(*EB_GENERATE_INTRA_SAMPLES_FUNC_PTR)(
     uint32_t                      origin_y,
     uint32_t                      size,
     uint32_t                      cu_depth,
-    NeighborArrayUnit_t        *mode_type_neighbor_array,
-    NeighborArrayUnit_t        *luma_recon_neighbor_array,
-    NeighborArrayUnit_t        *cb_recon_neighbor_array,
-    NeighborArrayUnit_t        *cr_recon_neighbor_array,
+    NeighborArrayUnit        *mode_type_neighbor_array,
+    NeighborArrayUnit        *luma_recon_neighbor_array,
+    NeighborArrayUnit        *cb_recon_neighbor_array,
+    NeighborArrayUnit        *cr_recon_neighbor_array,
     void                       *refWrapperPtr,
     EbBool                     pictureLeftBoundary,
     EbBool                     pictureTopBoundary,
@@ -189,9 +189,9 @@ typedef EbErrorType(*EB_ENC_PASS_INTRA_FUNC_PTR)(
 * Update Intra Mode Neighbor Arrays
 ***************************************************/
 static void EncodePassUpdateIntraModeNeighborArrays(
-    NeighborArrayUnit_t     *mode_type_neighbor_array,
-    NeighborArrayUnit_t     *intra_luma_mode_neighbor_array,
-    NeighborArrayUnit_t     *intra_chroma_mode_neighbor_array,
+    NeighborArrayUnit     *mode_type_neighbor_array,
+    NeighborArrayUnit     *intra_luma_mode_neighbor_array,
+    NeighborArrayUnit     *intra_chroma_mode_neighbor_array,
     uint8_t                    luma_mode,
     uint8_t                    chroma_mode,
     uint32_t                   origin_x,
@@ -246,10 +246,10 @@ static void EncodePassUpdateIntraModeNeighborArrays(
 * Update Inter Mode Neighbor Arrays
 ***************************************************/
 static void EncodePassUpdateInterModeNeighborArrays(
-    NeighborArrayUnit_t     *mode_type_neighbor_array,
-    NeighborArrayUnit_t     *mv_neighbor_array,
-    NeighborArrayUnit_t     *skipNeighborArray,
-    MvUnit_t                *mv_unit,
+    NeighborArrayUnit     *mode_type_neighbor_array,
+    NeighborArrayUnit     *mv_neighbor_array,
+    NeighborArrayUnit     *skipNeighborArray,
+    MvUnit                *mv_unit,
     uint8_t                   *skip_flag,
     uint32_t                   origin_x,
     uint32_t                   origin_y,
@@ -295,9 +295,9 @@ static void EncodePassUpdateInterModeNeighborArrays(
 * Update Recon Samples Neighbor Arrays
 ***************************************************/
 static void EncodePassUpdateReconSampleNeighborArrays(
-    NeighborArrayUnit_t     *lumaReconSampleNeighborArray,
-    NeighborArrayUnit_t     *cbReconSampleNeighborArray,
-    NeighborArrayUnit_t     *crReconSampleNeighborArray,
+    NeighborArrayUnit     *lumaReconSampleNeighborArray,
+    NeighborArrayUnit     *cbReconSampleNeighborArray,
+    NeighborArrayUnit     *crReconSampleNeighborArray,
     EbPictureBufferDesc   *recon_buffer,
     uint32_t                   origin_x,
     uint32_t                   origin_y,
@@ -419,9 +419,9 @@ void GeneratePuIntraLumaNeighborModes(
     uint32_t                   pu_origin_x,
     uint32_t                   pu_origin_y,
     uint32_t                   sb_sz,
-    NeighborArrayUnit_t     *intraLumaNeighborArray,
-    NeighborArrayUnit_t     *intraChromaNeighborArray,
-    NeighborArrayUnit_t     *mode_type_neighbor_array)
+    NeighborArrayUnit     *intraLumaNeighborArray,
+    NeighborArrayUnit     *intraChromaNeighborArray,
+    NeighborArrayUnit     *mode_type_neighbor_array)
 {
 
     (void)sb_sz;
@@ -450,12 +450,12 @@ void GeneratePuIntraLumaNeighborModes(
         puOriginX_round >> 1);
 
     (&cu_ptr->prediction_unit_array[0])->intra_luma_left_mode = (uint32_t)(
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != INTRA_MODE) ? DC_PRED/*EB_INTRA_DC*/ :
-        (uint32_t)intraLumaNeighborArray->leftArray[intraLumaModeLeftNeighborIndex]);
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != INTRA_MODE) ? DC_PRED/*EB_INTRA_DC*/ :
+        (uint32_t)intraLumaNeighborArray->left_array[intraLumaModeLeftNeighborIndex]);
 
     (&cu_ptr->prediction_unit_array[0])->intra_luma_top_mode = (uint32_t)(
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != INTRA_MODE) ? DC_PRED/*EB_INTRA_DC*/ :
-        (uint32_t)intraLumaNeighborArray->topArray[intraLumaModeTopNeighborIndex]);       //   use DC. This seems like we could use a LCU-width
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != INTRA_MODE) ? DC_PRED/*EB_INTRA_DC*/ :
+        (uint32_t)intraLumaNeighborArray->top_array[intraLumaModeTopNeighborIndex]);       //   use DC. This seems like we could use a LCU-width
 
     uint32_t modeTypeLeftNeighborIndex_round = get_neighbor_array_unit_left_index(
         mode_type_neighbor_array,
@@ -465,12 +465,12 @@ void GeneratePuIntraLumaNeighborModes(
         puOriginX_round);
 
     (&cu_ptr->prediction_unit_array[0])->intra_chroma_left_mode = (uint32_t)(
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex_round] != INTRA_MODE) ? UV_DC_PRED :
-        (uint32_t)intraChromaNeighborArray->leftArray[intraChromaModeLeftNeighborIndex]);
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex_round] != INTRA_MODE) ? UV_DC_PRED :
+        (uint32_t)intraChromaNeighborArray->left_array[intraChromaModeLeftNeighborIndex]);
 
     (&cu_ptr->prediction_unit_array[0])->intra_chroma_top_mode = (uint32_t)(
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex_round] != INTRA_MODE) ? UV_DC_PRED :
-        (uint32_t)intraChromaNeighborArray->topArray[intraChromaModeTopNeighborIndex]);       //   use DC. This seems like we could use a LCU-width
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex_round] != INTRA_MODE) ? UV_DC_PRED :
+        (uint32_t)intraChromaNeighborArray->top_array[intraChromaModeTopNeighborIndex]);       //   use DC. This seems like we could use a LCU-width
 
 
     return;
@@ -2295,14 +2295,14 @@ EB_EXTERN void AV1EncodePass(
     uint32_t                  lcuRowIndex = sb_origin_y / BLOCK_SIZE_64;
 
     // Dereferencing early
-    NeighborArrayUnit_t      *ep_mode_type_neighbor_array = picture_control_set_ptr->ep_mode_type_neighbor_array;
-    NeighborArrayUnit_t      *ep_intra_luma_mode_neighbor_array = picture_control_set_ptr->ep_intra_luma_mode_neighbor_array;
-    NeighborArrayUnit_t      *ep_intra_chroma_mode_neighbor_array = picture_control_set_ptr->ep_intra_chroma_mode_neighbor_array;
-    NeighborArrayUnit_t      *ep_mv_neighbor_array = picture_control_set_ptr->ep_mv_neighbor_array;
-    NeighborArrayUnit_t      *ep_luma_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_luma_recon_neighbor_array16bit : picture_control_set_ptr->ep_luma_recon_neighbor_array;
-    NeighborArrayUnit_t      *ep_cb_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_cb_recon_neighbor_array16bit : picture_control_set_ptr->ep_cb_recon_neighbor_array;
-    NeighborArrayUnit_t      *ep_cr_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_cr_recon_neighbor_array16bit : picture_control_set_ptr->ep_cr_recon_neighbor_array;
-    NeighborArrayUnit_t      *ep_skip_flag_neighbor_array = picture_control_set_ptr->ep_skip_flag_neighbor_array;
+    NeighborArrayUnit      *ep_mode_type_neighbor_array = picture_control_set_ptr->ep_mode_type_neighbor_array;
+    NeighborArrayUnit      *ep_intra_luma_mode_neighbor_array = picture_control_set_ptr->ep_intra_luma_mode_neighbor_array;
+    NeighborArrayUnit      *ep_intra_chroma_mode_neighbor_array = picture_control_set_ptr->ep_intra_chroma_mode_neighbor_array;
+    NeighborArrayUnit      *ep_mv_neighbor_array = picture_control_set_ptr->ep_mv_neighbor_array;
+    NeighborArrayUnit      *ep_luma_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_luma_recon_neighbor_array16bit : picture_control_set_ptr->ep_luma_recon_neighbor_array;
+    NeighborArrayUnit      *ep_cb_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_cb_recon_neighbor_array16bit : picture_control_set_ptr->ep_cb_recon_neighbor_array;
+    NeighborArrayUnit      *ep_cr_recon_neighbor_array = is16bit ? picture_control_set_ptr->ep_cr_recon_neighbor_array16bit : picture_control_set_ptr->ep_cr_recon_neighbor_array;
+    NeighborArrayUnit      *ep_skip_flag_neighbor_array = picture_control_set_ptr->ep_skip_flag_neighbor_array;
 
     EbBool                 constrained_intra_flag = picture_control_set_ptr->constrained_intra_flag;
 
@@ -2732,9 +2732,9 @@ EB_EXTERN void AV1EncodePass(
 
                                 pu_ptr = cu_ptr->prediction_unit_array;
                                 // Set MvUnit
-                                context_ptr->mv_unit.predDirection = (uint8_t)pu_ptr->inter_pred_direction_index;
-                                context_ptr->mv_unit.mv[REF_LIST_0].mvUnion = pu_ptr->mv[REF_LIST_0].mvUnion;
-                                context_ptr->mv_unit.mv[REF_LIST_1].mvUnion = pu_ptr->mv[REF_LIST_1].mvUnion;
+                                context_ptr->mv_unit.pred_direction = (uint8_t)pu_ptr->inter_pred_direction_index;
+                                context_ptr->mv_unit.mv[REF_LIST_0].mv_union = pu_ptr->mv[REF_LIST_0].mv_union;
+                                context_ptr->mv_unit.mv[REF_LIST_1].mv_union = pu_ptr->mv[REF_LIST_1].mv_union;
 
                                 EbPictureBufferDesc * ref_pic_list0 = ((EbReferenceObject*)picture_control_set_ptr->parent_pcs_ptr->reference_picture_wrapper_ptr->object_ptr)->reference_picture;
 
@@ -2794,28 +2794,28 @@ EB_EXTERN void AV1EncodePass(
                                     TxSize  tx_size = plane ? blk_geom->txsize_uv[context_ptr->txb_itr] : blk_geom->txsize[context_ptr->txb_itr];
                                     if (plane == 0) {
                                         if (context_ptr->cu_origin_y != 0)
-                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_luma_recon_neighbor_array->topArray) + context_ptr->cu_origin_x, blk_geom->bwidth * 2 * sizeof(uint16_t));
+                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_luma_recon_neighbor_array->top_array) + context_ptr->cu_origin_x, blk_geom->bwidth * 2 * sizeof(uint16_t));
                                         if (context_ptr->cu_origin_x != 0)
-                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_luma_recon_neighbor_array->leftArray) + context_ptr->cu_origin_y, blk_geom->bheight * 2 * sizeof(uint16_t));
+                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_luma_recon_neighbor_array->left_array) + context_ptr->cu_origin_y, blk_geom->bheight * 2 * sizeof(uint16_t));
                                         if (context_ptr->cu_origin_y != 0 && context_ptr->cu_origin_x != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_luma_recon_neighbor_array->topLeftArray) + MAX_PICTURE_HEIGHT_SIZE + context_ptr->cu_origin_x - context_ptr->cu_origin_y)[0];
+                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_luma_recon_neighbor_array->top_left_array) + MAX_PICTURE_HEIGHT_SIZE + context_ptr->cu_origin_x - context_ptr->cu_origin_y)[0];
                                     }
 
                                     else if (plane == 1) {
                                         if (cu_originy_uv != 0)
-                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_cb_recon_neighbor_array->topArray) + cu_originx_uv, blk_geom->bwidth_uv * 2 * sizeof(uint16_t));
+                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_cb_recon_neighbor_array->top_array) + cu_originx_uv, blk_geom->bwidth_uv * 2 * sizeof(uint16_t));
                                         if (cu_originx_uv != 0)
-                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_cb_recon_neighbor_array->leftArray) + cu_originy_uv, blk_geom->bheight_uv * 2 * sizeof(uint16_t));
+                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_cb_recon_neighbor_array->left_array) + cu_originy_uv, blk_geom->bheight_uv * 2 * sizeof(uint16_t));
                                         if (cu_originy_uv != 0 && cu_originx_uv != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_cb_recon_neighbor_array->topLeftArray) + MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv)[0];
+                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_cb_recon_neighbor_array->top_left_array) + MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv)[0];
                                     }
                                     else {
                                         if (cu_originy_uv != 0)
-                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_cr_recon_neighbor_array->topArray) + cu_originx_uv, blk_geom->bwidth_uv * 2 * sizeof(uint16_t));
+                                            memcpy(topNeighArray + 1, (uint16_t*)(ep_cr_recon_neighbor_array->top_array) + cu_originx_uv, blk_geom->bwidth_uv * 2 * sizeof(uint16_t));
                                         if (cu_originx_uv != 0)
-                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_cr_recon_neighbor_array->leftArray) + cu_originy_uv, blk_geom->bheight_uv * 2 * sizeof(uint16_t));
+                                            memcpy(leftNeighArray + 1, (uint16_t*)(ep_cr_recon_neighbor_array->left_array) + cu_originy_uv, blk_geom->bheight_uv * 2 * sizeof(uint16_t));
                                         if (cu_originy_uv != 0 && cu_originx_uv != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_cr_recon_neighbor_array->topLeftArray) + MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv)[0];
+                                            topNeighArray[0] = leftNeighArray[0] = ((uint16_t*)(ep_cr_recon_neighbor_array->top_left_array) + MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv)[0];
 
                                     }
 
@@ -2862,34 +2862,34 @@ EB_EXTERN void AV1EncodePass(
 
                                     if (plane == 0) {
                                         if (context_ptr->cu_origin_y != 0)
-                                            memcpy(topNeighArray + 1, ep_luma_recon_neighbor_array->topArray + context_ptr->cu_origin_x, blk_geom->bwidth * 2);
+                                            memcpy(topNeighArray + 1, ep_luma_recon_neighbor_array->top_array + context_ptr->cu_origin_x, blk_geom->bwidth * 2);
 
                                         if (context_ptr->cu_origin_x != 0)
-                                            memcpy(leftNeighArray + 1, ep_luma_recon_neighbor_array->leftArray + context_ptr->cu_origin_y, blk_geom->bheight * 2);
+                                            memcpy(leftNeighArray + 1, ep_luma_recon_neighbor_array->left_array + context_ptr->cu_origin_y, blk_geom->bheight * 2);
 
                                         if (context_ptr->cu_origin_y != 0 && context_ptr->cu_origin_x != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ep_luma_recon_neighbor_array->topLeftArray[MAX_PICTURE_HEIGHT_SIZE + context_ptr->cu_origin_x - context_ptr->cu_origin_y];
+                                            topNeighArray[0] = leftNeighArray[0] = ep_luma_recon_neighbor_array->top_left_array[MAX_PICTURE_HEIGHT_SIZE + context_ptr->cu_origin_x - context_ptr->cu_origin_y];
                                     }
 
                                     else if (plane == 1) {
                                         if (cu_originy_uv != 0)
-                                            memcpy(topNeighArray + 1, ep_cb_recon_neighbor_array->topArray + cu_originx_uv, blk_geom->bwidth_uv * 2);
+                                            memcpy(topNeighArray + 1, ep_cb_recon_neighbor_array->top_array + cu_originx_uv, blk_geom->bwidth_uv * 2);
 
                                         if (cu_originx_uv != 0)
-                                            memcpy(leftNeighArray + 1, ep_cb_recon_neighbor_array->leftArray + cu_originy_uv, blk_geom->bheight_uv * 2);
+                                            memcpy(leftNeighArray + 1, ep_cb_recon_neighbor_array->left_array + cu_originy_uv, blk_geom->bheight_uv * 2);
 
                                         if (cu_originy_uv != 0 && cu_originx_uv != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ep_cb_recon_neighbor_array->topLeftArray[MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv];
+                                            topNeighArray[0] = leftNeighArray[0] = ep_cb_recon_neighbor_array->top_left_array[MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv];
                                     }
                                     else {
                                         if (cu_originy_uv != 0)
-                                            memcpy(topNeighArray + 1, ep_cr_recon_neighbor_array->topArray + cu_originx_uv, blk_geom->bwidth_uv * 2);
+                                            memcpy(topNeighArray + 1, ep_cr_recon_neighbor_array->top_array + cu_originx_uv, blk_geom->bwidth_uv * 2);
 
                                         if (cu_originx_uv != 0)
-                                            memcpy(leftNeighArray + 1, ep_cr_recon_neighbor_array->leftArray + cu_originy_uv, blk_geom->bheight_uv * 2);
+                                            memcpy(leftNeighArray + 1, ep_cr_recon_neighbor_array->left_array + cu_originy_uv, blk_geom->bheight_uv * 2);
 
                                         if (cu_originy_uv != 0 && cu_originx_uv != 0)
-                                            topNeighArray[0] = leftNeighArray[0] = ep_cr_recon_neighbor_array->topLeftArray[MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv];
+                                            topNeighArray[0] = leftNeighArray[0] = ep_cr_recon_neighbor_array->top_left_array[MAX_PICTURE_HEIGHT_SIZE / 2 + cu_originx_uv - cu_originy_uv];
                                     }
 
                                     if (plane)
@@ -3140,9 +3140,9 @@ EB_EXTERN void AV1EncodePass(
                         pu_ptr = cu_ptr->prediction_unit_array;
 
                         // Set MvUnit
-                        context_ptr->mv_unit.predDirection = (uint8_t)pu_ptr->inter_pred_direction_index;
-                        context_ptr->mv_unit.mv[REF_LIST_0].mvUnion = pu_ptr->mv[REF_LIST_0].mvUnion;
-                        context_ptr->mv_unit.mv[REF_LIST_1].mvUnion = pu_ptr->mv[REF_LIST_1].mvUnion;
+                        context_ptr->mv_unit.pred_direction = (uint8_t)pu_ptr->inter_pred_direction_index;
+                        context_ptr->mv_unit.mv[REF_LIST_0].mv_union = pu_ptr->mv[REF_LIST_0].mv_union;
+                        context_ptr->mv_unit.mv[REF_LIST_1].mv_union = pu_ptr->mv[REF_LIST_1].mv_union;
 
                         // Inter Prediction
                         if (doMC &&
@@ -3510,9 +3510,9 @@ EB_EXTERN void AV1EncodePass(
                         pu_ptr = cu_ptr->prediction_unit_array;
 
                         // Set MvUnit
-                        context_ptr->mv_unit.predDirection = (uint8_t)pu_ptr->inter_pred_direction_index;
-                        context_ptr->mv_unit.mv[REF_LIST_0].mvUnion = pu_ptr->mv[REF_LIST_0].mvUnion;
-                        context_ptr->mv_unit.mv[REF_LIST_1].mvUnion = pu_ptr->mv[REF_LIST_1].mvUnion;
+                        context_ptr->mv_unit.pred_direction = (uint8_t)pu_ptr->inter_pred_direction_index;
+                        context_ptr->mv_unit.mv[REF_LIST_0].mv_union = pu_ptr->mv[REF_LIST_0].mv_union;
+                        context_ptr->mv_unit.mv[REF_LIST_1].mv_union = pu_ptr->mv[REF_LIST_1].mv_union;
 
                         // Update Neighbor Arrays (Mode Type, MVs, SKIP)
                         {
@@ -3597,9 +3597,9 @@ EB_EXTERN void AV1EncodePass(
                         // Set the PU Loop Variables
                         pu_ptr = cu_ptr->prediction_unit_array;
                         // Set MvUnit
-                        context_ptr->mv_unit.predDirection = (uint8_t)pu_ptr->inter_pred_direction_index;
-                        context_ptr->mv_unit.mv[REF_LIST_0].mvUnion = pu_ptr->mv[REF_LIST_0].mvUnion;
-                        context_ptr->mv_unit.mv[REF_LIST_1].mvUnion = pu_ptr->mv[REF_LIST_1].mvUnion;
+                        context_ptr->mv_unit.pred_direction = (uint8_t)pu_ptr->inter_pred_direction_index;
+                        context_ptr->mv_unit.mv[REF_LIST_0].mv_union = pu_ptr->mv[REF_LIST_0].mv_union;
+                        context_ptr->mv_unit.mv[REF_LIST_1].mv_union = pu_ptr->mv[REF_LIST_1].mv_union;
                     }
 
                 }

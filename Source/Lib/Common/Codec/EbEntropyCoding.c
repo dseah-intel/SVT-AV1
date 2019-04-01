@@ -326,7 +326,7 @@ static INLINE int16_t GetBrCtx(
 
 void GetTxbCtx(
     const int32_t               plane,
-    NeighborArrayUnit_t     *dcSignLevelCoeffNeighborArray,
+    NeighborArrayUnit     *dcSignLevelCoeffNeighborArray,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
     const block_size        plane_bsize,
@@ -350,18 +350,18 @@ void GetTxbCtx(
 
     uint8_t sign;
 
-    if (dcSignLevelCoeffNeighborArray->topArray[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA){
+    if (dcSignLevelCoeffNeighborArray->top_array[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA){
         do {
-            sign = ((uint8_t)dcSignLevelCoeffNeighborArray->topArray[k + dcSignLevelCoeffTopNeighborIndex] >> COEFF_CONTEXT_BITS);
+            sign = ((uint8_t)dcSignLevelCoeffNeighborArray->top_array[k + dcSignLevelCoeffTopNeighborIndex] >> COEFF_CONTEXT_BITS);
             assert(sign <= 2);
             dc_sign += signs[sign];
         } while (++k < txb_w_unit);
     }
 
-    if (dcSignLevelCoeffNeighborArray->leftArray[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA){ 
+    if (dcSignLevelCoeffNeighborArray->left_array[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA){ 
         k = 0;
         do {
-            sign = ((uint8_t)dcSignLevelCoeffNeighborArray->leftArray[k + dcSignLevelCoeffLeftNeighborIndex] >> COEFF_CONTEXT_BITS);
+            sign = ((uint8_t)dcSignLevelCoeffNeighborArray->left_array[k + dcSignLevelCoeffLeftNeighborIndex] >> COEFF_CONTEXT_BITS);
             assert(sign <= 2);
             dc_sign += signs[sign];
         } while (++k < txb_h_unit);
@@ -388,17 +388,17 @@ void GetTxbCtx(
             int32_t left = 0;
 
             k = 0;
-            if (dcSignLevelCoeffNeighborArray->topArray[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA) {
+            if (dcSignLevelCoeffNeighborArray->top_array[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA) {
                 do {
-                    top |= (int32_t)(dcSignLevelCoeffNeighborArray->topArray[k + dcSignLevelCoeffTopNeighborIndex]);
+                    top |= (int32_t)(dcSignLevelCoeffNeighborArray->top_array[k + dcSignLevelCoeffTopNeighborIndex]);
                 } while (++k < txb_w_unit);
             }
             top &= COEFF_CONTEXT_MASK;
 
-            if (dcSignLevelCoeffNeighborArray->leftArray[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA) {
+            if (dcSignLevelCoeffNeighborArray->left_array[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA) {
                 k = 0;
                 do {
-                    left |= (int32_t)(dcSignLevelCoeffNeighborArray->leftArray[k + dcSignLevelCoeffLeftNeighborIndex]);
+                    left |= (int32_t)(dcSignLevelCoeffNeighborArray->left_array[k + dcSignLevelCoeffLeftNeighborIndex]);
                 } while (++k < txb_h_unit);
             }
             left &= COEFF_CONTEXT_MASK;
@@ -423,16 +423,16 @@ void GetTxbCtx(
         int16_t ctx_base_left = 0;
         int16_t ctx_base_top = 0;
 
-        if (dcSignLevelCoeffNeighborArray->topArray[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA) {
+        if (dcSignLevelCoeffNeighborArray->top_array[dcSignLevelCoeffTopNeighborIndex] != INVALID_NEIGHBOR_DATA) {
             k = 0;
             do {
-                ctx_base_top += (dcSignLevelCoeffNeighborArray->topArray[k + dcSignLevelCoeffTopNeighborIndex] != 0);
+                ctx_base_top += (dcSignLevelCoeffNeighborArray->top_array[k + dcSignLevelCoeffTopNeighborIndex] != 0);
             } while (++k < txb_w_unit);
         }
-        if (dcSignLevelCoeffNeighborArray->leftArray[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA) {
+        if (dcSignLevelCoeffNeighborArray->left_array[dcSignLevelCoeffLeftNeighborIndex] != INVALID_NEIGHBOR_DATA) {
             k = 0;
             do {
-                ctx_base_left += (dcSignLevelCoeffNeighborArray->leftArray[k + dcSignLevelCoeffLeftNeighborIndex] != 0);
+                ctx_base_left += (dcSignLevelCoeffNeighborArray->left_array[k + dcSignLevelCoeffLeftNeighborIndex] != 0);
             } while (++k < txb_h_unit);
         }
         const int32_t ctx_base = ((ctx_base_left != 0) + (ctx_base_top != 0));
@@ -694,9 +694,9 @@ static EbErrorType Av1EncodeCoeff1D(
     uint32_t                  intraLumaDir,
     block_size              plane_bsize,
     EbPictureBufferDesc  *coeffPtr,
-    NeighborArrayUnit_t     *luma_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t     *cr_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t     *cb_dc_sign_level_coeff_neighbor_array)
+    NeighborArrayUnit     *luma_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit     *cr_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit     *cb_dc_sign_level_coeff_neighbor_array)
 {
 
     EbErrorType return_error = EB_ErrorNone;
@@ -939,7 +939,7 @@ static void EncodePartitionAv1(
     PartitionType          p,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *partition_context_neighbor_array)
+    NeighborArrayUnit    *partition_context_neighbor_array)
 {
 
     const int32_t is_partition_point = bsize >= BLOCK_8X8;
@@ -959,10 +959,10 @@ static void EncodePartitionAv1(
 
     uint32_t contextIndex = 0;
 
-    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)partition_context_neighbor_array->topArray)[partitionContextTopNeighborIndex].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)partition_context_neighbor_array->topArray)[partitionContextTopNeighborIndex].above;
-    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)partition_context_neighbor_array->leftArray)[partitionContextLeftNeighborIndex].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)partition_context_neighbor_array->leftArray)[partitionContextLeftNeighborIndex].left;
+    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)partition_context_neighbor_array->top_array)[partitionContextTopNeighborIndex].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)partition_context_neighbor_array->top_array)[partitionContextTopNeighborIndex].above;
+    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)partition_context_neighbor_array->left_array)[partitionContextLeftNeighborIndex].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)partition_context_neighbor_array->left_array)[partitionContextLeftNeighborIndex].left;
 
     const int32_t bsl = mi_size_wide_log2[bsize] - mi_size_wide_log2[BLOCK_8X8];
     int32_t above = (above_ctx >> bsl) & 1, left = (left_ctx >> bsl) & 1;
@@ -1018,7 +1018,7 @@ static void EncodeSkipCoeffAv1(
     EbBool                 skipCoeffFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *skip_coeff_neighbor_array)
+    NeighborArrayUnit    *skip_coeff_neighbor_array)
 {
 
     uint32_t skipCoeffLeftNeighborIndex = get_neighbor_array_unit_left_index(
@@ -1031,13 +1031,13 @@ static void EncodeSkipCoeffAv1(
     uint32_t contextIndex = 0;
 
     contextIndex =
-        (skip_coeff_neighbor_array->leftArray[skipCoeffLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_coeff_neighbor_array->leftArray[skipCoeffLeftNeighborIndex]) ? 1 : 0;
+        (skip_coeff_neighbor_array->left_array[skipCoeffLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_coeff_neighbor_array->left_array[skipCoeffLeftNeighborIndex]) ? 1 : 0;
 
 
     contextIndex +=
-        (skip_coeff_neighbor_array->topArray[skipCoeffTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_coeff_neighbor_array->topArray[skipCoeffTopNeighborIndex]) ? 1 : 0;
+        (skip_coeff_neighbor_array->top_array[skipCoeffTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_coeff_neighbor_array->top_array[skipCoeffTopNeighborIndex]) ? 1 : 0;
 
     aom_write_symbol(
         ecWriter,
@@ -1058,8 +1058,8 @@ static void EncodeIntraLumaModeAv1(
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
     uint32_t                  luma_mode,
-    NeighborArrayUnit_t    *mode_type_neighbor_array,
-    NeighborArrayUnit_t    *intra_luma_mode_neighbor_array)
+    NeighborArrayUnit    *mode_type_neighbor_array,
+    NeighborArrayUnit    *intra_luma_mode_neighbor_array)
 {
     uint32_t modeTypeLeftNeighborIndex = get_neighbor_array_unit_left_index(
         mode_type_neighbor_array,
@@ -1078,12 +1078,12 @@ static void EncodeIntraLumaModeAv1(
     uint32_t topContext = 0, leftContext = 0;
 
     uint32_t left_neighbor_mode = (uint32_t)(
-        (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->leftArray[intraLumaModeLeftNeighborIndex]);
+        (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->left_array[intraLumaModeLeftNeighborIndex]);
 
     uint32_t top_neighbor_mode = (uint32_t)(
-        (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
-        intra_luma_mode_neighbor_array->topArray[intraLumaModeTopNeighborIndex]);
+        (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != INTRA_MODE) ? (uint32_t)DC_PRED :
+        intra_luma_mode_neighbor_array->top_array[intraLumaModeTopNeighborIndex]);
 
     topContext = intra_mode_context[top_neighbor_mode];
     leftContext = intra_mode_context[left_neighbor_mode];
@@ -1195,7 +1195,7 @@ static void EncodeSkipModeAv1(
     EbBool                 skipModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *skip_flag_neighbor_array)
+    NeighborArrayUnit    *skip_flag_neighbor_array)
 {
 
     uint32_t skipFlagLeftNeighborIndex = get_neighbor_array_unit_left_index(
@@ -1208,13 +1208,13 @@ static void EncodeSkipModeAv1(
     uint32_t contextIndex = 0;
 
     contextIndex =
-        (skip_flag_neighbor_array->leftArray[skipFlagLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_flag_neighbor_array->leftArray[skipFlagLeftNeighborIndex]) ? 1 : 0;
+        (skip_flag_neighbor_array->left_array[skipFlagLeftNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_flag_neighbor_array->left_array[skipFlagLeftNeighborIndex]) ? 1 : 0;
 
 
     contextIndex +=
-        (skip_flag_neighbor_array->topArray[skipFlagTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
-        (skip_flag_neighbor_array->topArray[skipFlagTopNeighborIndex]) ? 1 : 0;
+        (skip_flag_neighbor_array->top_array[skipFlagTopNeighborIndex] == (uint8_t)INVALID_NEIGHBOR_DATA) ? 0 :
+        (skip_flag_neighbor_array->top_array[skipFlagTopNeighborIndex]) ? 1 : 0;
 
     aom_write_symbol(
         ecWriter,
@@ -1234,7 +1234,7 @@ static void EncodePredModeAv1(
     EbBool                 predModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *mode_type_neighbor_array)
+    NeighborArrayUnit    *mode_type_neighbor_array)
 {
     uint32_t modeTypeLeftNeighborIndex = get_neighbor_array_unit_left_index(
         mode_type_neighbor_array,
@@ -1245,16 +1245,16 @@ static void EncodePredModeAv1(
 
     uint32_t contextIndex = 0;
 
-    if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 3 :
-            (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE || mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 1 : 0;
+    if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 3 :
+            (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE || mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 1 : 0;
 
     }
-    else  if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
+    else  if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
     }
-    else if (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
-        contextIndex = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
+    else if (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {
+        contextIndex = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) ? 2 : 0;
     }
     else {
         contextIndex = 0;
@@ -1787,10 +1787,10 @@ void av1_encode_mv(
 #define INTER_FILTER_DIR_OFFSET ((SWITCHABLE_FILTERS + 1) * 2)
 
 int32_t av1_get_pred_context_switchable_interp(
-    NeighborArrayUnit_t     *ref_frame_type_neighbor_array,
+    NeighborArrayUnit     *ref_frame_type_neighbor_array,
     MvReferenceFrame rf0,
     MvReferenceFrame rf1,
-    NeighborArrayUnit32_t     *interpolation_type_neighbor_array,
+    NeighborArrayUnit32     *interpolation_type_neighbor_array,
 
     uint32_t cu_origin_x,
     uint32_t cu_origin_y,
@@ -1825,21 +1825,21 @@ int32_t av1_get_pred_context_switchable_interp(
     int32_t left_type = SWITCHABLE_FILTERS;
     int32_t above_type = SWITCHABLE_FILTERS;
 
-    if (cu_origin_x != 0 /*&& interpolation_type_neighbor_array->leftArray[interpolationTypeLeftNeighborIndex] != SWITCHABLE_FILTERS*/) {
+    if (cu_origin_x != 0 /*&& interpolation_type_neighbor_array->left_array[interpolationTypeLeftNeighborIndex] != SWITCHABLE_FILTERS*/) {
 
         MvReferenceFrame rf_left[2];
-        av1_set_ref_frame(rf_left, ref_frame_type_neighbor_array->leftArray[rfLeftNeighborIndex]);
-        uint32_t leftNeigh = (uint32_t)interpolation_type_neighbor_array->leftArray[interpolationTypeLeftNeighborIndex];
+        av1_set_ref_frame(rf_left, ref_frame_type_neighbor_array->left_array[rfLeftNeighborIndex]);
+        uint32_t leftNeigh = (uint32_t)interpolation_type_neighbor_array->left_array[interpolationTypeLeftNeighborIndex];
         left_type = (rf_left[0] == ref_frame || rf_left[1] == ref_frame) ? av1_extract_interp_filter(leftNeigh, dir & 0x01) : SWITCHABLE_FILTERS;
     }
     //get_ref_filter_type(xd->mi[-1], xd, dir, ref_frame);
 
 
 
-    if (cu_origin_y != 0 /*&& interpolation_type_neighbor_array->topArray[interpolationTypeTopNeighborIndex] != SWITCHABLE_FILTERS*/) {
+    if (cu_origin_y != 0 /*&& interpolation_type_neighbor_array->top_array[interpolationTypeTopNeighborIndex] != SWITCHABLE_FILTERS*/) {
         MvReferenceFrame rf_above[2];
-        av1_set_ref_frame(rf_above, ref_frame_type_neighbor_array->topArray[rfTopNeighborIndex]);
-        uint32_t aboveNeigh = (uint32_t)interpolation_type_neighbor_array->topArray[interpolationTypeTopNeighborIndex];
+        av1_set_ref_frame(rf_above, ref_frame_type_neighbor_array->top_array[rfTopNeighborIndex]);
+        uint32_t aboveNeigh = (uint32_t)interpolation_type_neighbor_array->top_array[interpolationTypeTopNeighborIndex];
 
         above_type = (rf_above[0] == ref_frame || rf_above[1] == ref_frame) ? av1_extract_interp_filter(aboveNeigh, dir & 0x01) : SWITCHABLE_FILTERS;
         //get_ref_filter_type(xd->mi[-xd->mi_stride], xd, dir, ref_frame);
@@ -1907,7 +1907,7 @@ static int32_t av1_is_interp_needed(
 }
 
 void write_mb_interp_filter(
-    NeighborArrayUnit_t     *ref_frame_type_neighbor_array,
+    NeighborArrayUnit     *ref_frame_type_neighbor_array,
     block_size bsize,
     MvReferenceFrame rf0,
     MvReferenceFrame rf1,
@@ -1915,7 +1915,7 @@ void write_mb_interp_filter(
     aom_writer                  *ecWriter,
     CodingUnit_t             *cu_ptr,
     EntropyCoder_t *entropy_coder_ptr,
-    NeighborArrayUnit32_t     *interpolation_type_neighbor_array,
+    NeighborArrayUnit32     *interpolation_type_neighbor_array,
     uint32_t blkOriginX,
     uint32_t blkOriginY)
 {
@@ -1972,8 +1972,8 @@ static void WriteInterCompoundMode(
 int32_t Av1GetReferenceModeContext(
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *mode_type_neighbor_array,
-    NeighborArrayUnit_t    *inter_pred_dir_neighbor_array)
+    NeighborArrayUnit    *mode_type_neighbor_array,
+    NeighborArrayUnit    *inter_pred_dir_neighbor_array)
 {
 
 
@@ -1990,23 +1990,23 @@ int32_t Av1GetReferenceModeContext(
     // The mode info data structure has a one element border above and to the
     // left of the entries corresponding to real macroblocks.
     // The prediction flags in these dummy entries are initialized to 0.
-    if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // both edges available
-        const int32_t topIntra = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE);
-        const int32_t leftIntra = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE);
+    if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // both edges available
+        const int32_t topIntra = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE);
+        const int32_t leftIntra = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE);
         //if (has_above && has_left) {  // both edges available
-        if (!(inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == BI_PRED && !topIntra) && !(inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == BI_PRED && !leftIntra)) {
+        if (!(inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == BI_PRED && !topIntra) && !(inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == BI_PRED && !leftIntra)) {
             // neither edge uses comp pred (0/1)
-            ctx = (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
-                (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1);
+            ctx = (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
+                (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1);
         }
-        else if (!(inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == BI_PRED && !topIntra)/*has_second_ref(above_mbmi)*/) {
+        else if (!(inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == BI_PRED && !topIntra)/*has_second_ref(above_mbmi)*/) {
             // one of two edges uses comp pred (2/3)
-            ctx = 2 + ((inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ||
+            ctx = 2 + ((inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ||
                 topIntra);
         }
-        else if (!(inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == BI_PRED && !leftIntra)/*has_second_ref(left_mbmi)*/) {
+        else if (!(inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == BI_PRED && !leftIntra)/*has_second_ref(left_mbmi)*/) {
             // one of two edges uses comp pred (2/3)
-            ctx = 2 + ((inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1) ||
+            ctx = 2 + ((inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1) ||
                 leftIntra);
         }
         else {  // both edges use comp pred (4){
@@ -2014,22 +2014,22 @@ int32_t Av1GetReferenceModeContext(
             ctx = 4;
         }
     }
-    else if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
+    else if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
 
-        if (!(inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == BI_PRED && mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INTRA_MODE)/*has_second_ref(edge_mbmi)*/) {
+        if (!(inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == BI_PRED && mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INTRA_MODE)/*has_second_ref(edge_mbmi)*/) {
             // edge does not use comp pred (0/1)
-            ctx = (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1);
+            ctx = (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1);
         }
         else {
             // edge uses comp pred (3)
             ctx = 3;
         }
     }
-    else if (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
+    else if (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
 
-        if (!(inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == BI_PRED && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INTRA_MODE)/*has_second_ref(edge_mbmi)*/) {
+        if (!(inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == BI_PRED && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INTRA_MODE)/*has_second_ref(edge_mbmi)*/) {
             // edge does not use comp pred (0/1)
-            ctx = (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1);
+            ctx = (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1);
         }
         else {
             // edge uses comp pred (3)
@@ -2048,8 +2048,8 @@ int32_t Av1GetReferenceModeContext(
 int32_t Av1GetCompReferenceTypeContext(
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    NeighborArrayUnit_t    *mode_type_neighbor_array,
-    NeighborArrayUnit_t     *inter_pred_dir_neighbor_array) {
+    NeighborArrayUnit    *mode_type_neighbor_array,
+    NeighborArrayUnit     *inter_pred_dir_neighbor_array) {
 
     int32_t pred_context = 0;
 
@@ -2061,36 +2061,36 @@ int32_t Av1GetCompReferenceTypeContext(
         cu_origin_x);
 
 
-    if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // both edges available
-        const int32_t above_intra = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE);
-        const int32_t left_intra = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE);
+    if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE && mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // both edges available
+        const int32_t above_intra = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE);
+        const int32_t left_intra = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE);
 
         if (above_intra && left_intra) {  // intra/intra
             pred_context = 2;
         }
         else if (left_intra) {  // Intra & Inter. Left is Intra, check Top
 
-            if (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] != BI_PRED)  // single pred
+            if (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] != BI_PRED)  // single pred
                 pred_context = 2;
             else  // comp pred
                 pred_context = 1 + 2 * 0/* has_uni_comp_refs(inter_mbmi)*/;
         }
         else if (above_intra) {  // Intra & Inter. Top is Intra, check Left
 
-            if (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != BI_PRED)  // single pred
+            if (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] != BI_PRED)  // single pred
                 pred_context = 2;
             else  // comp pred
                 pred_context = 1 + 2 * 0/* has_uni_comp_refs(inter_mbmi)*/;
         }
         else {  // inter/inter
-            const int32_t a_sg = (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] != BI_PRED);
-            const int32_t l_sg = (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != BI_PRED);
+            const int32_t a_sg = (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] != BI_PRED);
+            const int32_t l_sg = (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] != BI_PRED);
             //const MvReferenceFrame frfa = above_mbmi->ref_frame[0];
             //const MvReferenceFrame frfl = left_mbmi->ref_frame[0];
 
             if (a_sg && l_sg) {  // single/single
-                pred_context = 1 + 2 * (!((inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
-                    (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1)));
+                pred_context = 1 + 2 * (!((inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
+                    (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1)));
             }
             else if (l_sg || a_sg) {  // single/comp
                 const int32_t uni_rfc =
@@ -2099,8 +2099,8 @@ int32_t Av1GetCompReferenceTypeContext(
                 if (!uni_rfc)  // comp bidir
                     pred_context = 1;
                 else  // comp unidir
-                    pred_context = 3 + (!((inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
-                    (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1)));
+                    pred_context = 3 + (!((inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] == UNI_PRED_LIST_1) ^
+                    (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] == UNI_PRED_LIST_1)));
             }
             else {  // comp/comp
                 const int32_t a_uni_rfc = 0;// has_uni_comp_refs(above_mbmi);
@@ -2117,27 +2117,27 @@ int32_t Av1GetCompReferenceTypeContext(
             }
         }
     }
-    else if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
+    else if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
 
 
-        if (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) {  // intra
+        if (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTRA_MODE) {  // intra
             pred_context = 2;
         }
         else {                           // inter
-            if (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != BI_PRED)  // single pred
+            if (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex] != BI_PRED)  // single pred
                 pred_context = 2;
             else  // comp pred
                 pred_context = 4 * 0/*has_uni_comp_refs(edge_mbmi)*/;
         }
     }
-    else if (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
+    else if (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE) {  // one edge available
 
 
-        if (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) {  // intra
+        if (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTRA_MODE) {  // intra
             pred_context = 2;
         }
         else {                           // inter
-            if (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex] != BI_PRED)  // single pred
+            if (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex] != BI_PRED)  // single pred
                 pred_context = 2;
             else  // comp pred
                 pred_context = 4 * 0/*has_uni_comp_refs(edge_mbmi)*/;
@@ -2155,9 +2155,9 @@ void Av1CollectNeighborsRefCounts(
     CodingUnit_t            *cu_ptr,
     uint32_t                   cu_origin_x,
     uint32_t                   cu_origin_y,
-    NeighborArrayUnit_t     *mode_type_neighbor_array,
-    NeighborArrayUnit_t     *inter_pred_dir_neighbor_array,
-    NeighborArrayUnit_t     *ref_frame_type_neighbor_array) {
+    NeighborArrayUnit     *mode_type_neighbor_array,
+    NeighborArrayUnit     *inter_pred_dir_neighbor_array,
+    NeighborArrayUnit     *ref_frame_type_neighbor_array) {
 
 
     av1_zero(cu_ptr->av1xd->neighbors_ref_counts);
@@ -2173,17 +2173,17 @@ void Av1CollectNeighborsRefCounts(
         cu_origin_x);
 
 
-    const int32_t topInter = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] == (uint8_t)INTER_MODE);
-    const int32_t leftInter = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] == (uint8_t)INTER_MODE);
+    const int32_t topInter = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] == (uint8_t)INTER_MODE);
+    const int32_t leftInter = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] == (uint8_t)INTER_MODE);
 
-    const int32_t topInImage = (mode_type_neighbor_array->topArray[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE);
-    const int32_t leftInImage = (mode_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE);
+    const int32_t topInImage = (mode_type_neighbor_array->top_array[modeTypeTopNeighborIndex] != (uint8_t)INVALID_MODE);
+    const int32_t leftInImage = (mode_type_neighbor_array->left_array[modeTypeLeftNeighborIndex] != (uint8_t)INVALID_MODE);
 
     // Above neighbor
     if (topInImage && topInter) {
         MvReferenceFrame topRfType[2];
-        av1_set_ref_frame(topRfType, ref_frame_type_neighbor_array->topArray[modeTypeTopNeighborIndex]);
-        switch (inter_pred_dir_neighbor_array->topArray[modeTypeTopNeighborIndex]) {
+        av1_set_ref_frame(topRfType, ref_frame_type_neighbor_array->top_array[modeTypeTopNeighborIndex]);
+        switch (inter_pred_dir_neighbor_array->top_array[modeTypeTopNeighborIndex]) {
         case UNI_PRED_LIST_0:
             ref_counts[topRfType[0]]++;
 
@@ -2205,8 +2205,8 @@ void Av1CollectNeighborsRefCounts(
     // Left neighbor
     if (leftInImage && leftInter) {
         MvReferenceFrame leftRfType[2];
-        av1_set_ref_frame(leftRfType, ref_frame_type_neighbor_array->leftArray[modeTypeLeftNeighborIndex]);
-        switch (inter_pred_dir_neighbor_array->leftArray[modeTypeLeftNeighborIndex]) {
+        av1_set_ref_frame(leftRfType, ref_frame_type_neighbor_array->left_array[modeTypeLeftNeighborIndex]);
+        switch (inter_pred_dir_neighbor_array->left_array[modeTypeLeftNeighborIndex]) {
         case UNI_PRED_LIST_0:
             ref_counts[leftRfType[0]]++;
 
@@ -2415,8 +2415,8 @@ static void WriteRefFrames(
     block_size                   bsize,
     uint32_t                       cu_origin_x,
     uint32_t                       cu_origin_y,
-    NeighborArrayUnit_t         *mode_type_neighbor_array,
-    NeighborArrayUnit_t         *inter_pred_dir_neighbor_array)
+    NeighborArrayUnit         *mode_type_neighbor_array,
+    NeighborArrayUnit         *inter_pred_dir_neighbor_array)
 {
     //const MbModeInfo *const mbmi = &xd->mi[0]->mbmi;
     const int32_t is_compound = (cu_ptr->prediction_unit_array[0].inter_pred_direction_index == BI_PRED); //is_compound;// has_second_ref(mbmi);
@@ -4594,16 +4594,16 @@ EbErrorType ec_update_neighbors(
 {
     UNUSED(coeffPtr);
     EbErrorType return_error = EB_ErrorNone;
-    NeighborArrayUnit_t     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
-    NeighborArrayUnit_t     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
-    NeighborArrayUnit_t     *skip_flag_neighbor_array = picture_control_set_ptr->skip_flag_neighbor_array;
-    NeighborArrayUnit_t     *skip_coeff_neighbor_array = picture_control_set_ptr->skip_coeff_neighbor_array;
-    NeighborArrayUnit_t     *luma_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->luma_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *cr_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cr_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *cb_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cb_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *inter_pred_dir_neighbor_array = picture_control_set_ptr->inter_pred_dir_neighbor_array;
-    NeighborArrayUnit_t     *ref_frame_type_neighbor_array = picture_control_set_ptr->ref_frame_type_neighbor_array;
-    NeighborArrayUnit32_t   *interpolation_type_neighbor_array = picture_control_set_ptr->interpolation_type_neighbor_array;
+    NeighborArrayUnit     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
+    NeighborArrayUnit     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
+    NeighborArrayUnit     *skip_flag_neighbor_array = picture_control_set_ptr->skip_flag_neighbor_array;
+    NeighborArrayUnit     *skip_coeff_neighbor_array = picture_control_set_ptr->skip_coeff_neighbor_array;
+    NeighborArrayUnit     *luma_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->luma_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *cr_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cr_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *cb_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cb_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *inter_pred_dir_neighbor_array = picture_control_set_ptr->inter_pred_dir_neighbor_array;
+    NeighborArrayUnit     *ref_frame_type_neighbor_array = picture_control_set_ptr->ref_frame_type_neighbor_array;
+    NeighborArrayUnit32   *interpolation_type_neighbor_array = picture_control_set_ptr->interpolation_type_neighbor_array;
     const BlockGeom         *blk_geom = get_blk_geom_mds(cu_ptr->mds_idx);
     EbBool                   skipCoeff = EB_FALSE;
     PartitionContext         partition;
@@ -4859,16 +4859,16 @@ EbErrorType write_modes_b(
     aom_writer              *ecWriter = &entropy_coder_ptr->ecWriter;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
-    NeighborArrayUnit_t     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
-    NeighborArrayUnit_t     *intra_luma_mode_neighbor_array = picture_control_set_ptr->intra_luma_mode_neighbor_array;
-    NeighborArrayUnit_t     *skip_flag_neighbor_array = picture_control_set_ptr->skip_flag_neighbor_array;
-    NeighborArrayUnit_t     *skip_coeff_neighbor_array = picture_control_set_ptr->skip_coeff_neighbor_array;
-    NeighborArrayUnit_t     *luma_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->luma_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *cr_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cr_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *cb_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cb_dc_sign_level_coeff_neighbor_array;
-    NeighborArrayUnit_t     *inter_pred_dir_neighbor_array = picture_control_set_ptr->inter_pred_dir_neighbor_array;
-    NeighborArrayUnit_t     *ref_frame_type_neighbor_array = picture_control_set_ptr->ref_frame_type_neighbor_array;
-    NeighborArrayUnit32_t   *interpolation_type_neighbor_array = picture_control_set_ptr->interpolation_type_neighbor_array;
+    NeighborArrayUnit     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
+    NeighborArrayUnit     *intra_luma_mode_neighbor_array = picture_control_set_ptr->intra_luma_mode_neighbor_array;
+    NeighborArrayUnit     *skip_flag_neighbor_array = picture_control_set_ptr->skip_flag_neighbor_array;
+    NeighborArrayUnit     *skip_coeff_neighbor_array = picture_control_set_ptr->skip_coeff_neighbor_array;
+    NeighborArrayUnit     *luma_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->luma_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *cr_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cr_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *cb_dc_sign_level_coeff_neighbor_array = picture_control_set_ptr->cb_dc_sign_level_coeff_neighbor_array;
+    NeighborArrayUnit     *inter_pred_dir_neighbor_array = picture_control_set_ptr->inter_pred_dir_neighbor_array;
+    NeighborArrayUnit     *ref_frame_type_neighbor_array = picture_control_set_ptr->ref_frame_type_neighbor_array;
+    NeighborArrayUnit32   *interpolation_type_neighbor_array = picture_control_set_ptr->interpolation_type_neighbor_array;
 
     const BlockGeom          *blk_geom = get_blk_geom_mds(cu_ptr->mds_idx);
     uint32_t blkOriginX = context_ptr->sb_origin_x + blk_geom->origin_x;
@@ -5302,7 +5302,7 @@ EB_EXTERN EbErrorType write_sb(
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;
     aom_writer              *ecWriter = &entropy_coder_ptr->ecWriter;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
-    NeighborArrayUnit_t     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
+    NeighborArrayUnit     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
 
     // CU Varaiables
     const BlockGeom          *blk_geom;

@@ -1768,7 +1768,7 @@ EbErrorType prediction_structure_group_ctor(
     uint32_t                         base_layer_switch_mode)
 {
     uint32_t          pred_struct_index = 0;
-    uint32_t          refIdx = 0;
+    uint32_t          ref_idx = 0;
     uint32_t          hierarchicalLevelIdx;
     uint32_t          predTypeIdx;
     uint32_t          number_of_references;
@@ -1791,8 +1791,8 @@ EbErrorType prediction_structure_group_ctor(
     EB_MALLOC(PredictionStructure**, prediction_structure_group_ptr->prediction_structure_ptr_array, sizeof(PredictionStructure*) * prediction_structure_group_ptr->prediction_structure_count, EB_N_PTR);
     for (hierarchicalLevelIdx = 0; hierarchicalLevelIdx < MAX_TEMPORAL_LAYERS; ++hierarchicalLevelIdx) {
         for (predTypeIdx = 0; predTypeIdx < EB_PRED_TOTAL_COUNT; ++predTypeIdx) {
-            pred_struct_index = PRED_STRUCT_INDEX(hierarchicalLevelIdx, predTypeIdx, refIdx);
-            number_of_references = refIdx + 1;
+            pred_struct_index = PRED_STRUCT_INDEX(hierarchicalLevelIdx, predTypeIdx, ref_idx);
+            number_of_references = ref_idx + 1;
 
             return_error = PredictionStructureCtor(
                 &(prediction_structure_group_ptr->prediction_structure_ptr_array[pred_struct_index]),

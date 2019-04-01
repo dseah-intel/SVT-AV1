@@ -608,7 +608,7 @@ void* picture_manager_kernel(void *input_ptr)
 
                             // Increment the current_input_poc is the case of POC rollover
                         current_input_poc = encode_context_ptr->current_input_poc;
-                        //current_input_poc += ((current_input_poc < ref_poc) && (inputEntryPtr->list0_ptr->reference_list[refIdx] > 0)) ?
+                        //current_input_poc += ((current_input_poc < ref_poc) && (inputEntryPtr->list0_ptr->reference_list[ref_idx] > 0)) ?
                         //    (1 << entrySequenceControlSetPtr->bits_for_picture_order_count) :
                         //    0;
 
@@ -649,7 +649,7 @@ void* picture_manager_kernel(void *input_ptr)
 
                                     // Increment the current_input_poc is the case of POC rollover
                                 current_input_poc = encode_context_ptr->current_input_poc;
-                                //current_input_poc += ((current_input_poc < ref_poc && inputEntryPtr->list1_ptr->reference_list[refIdx] > 0)) ?
+                                //current_input_poc += ((current_input_poc < ref_poc && inputEntryPtr->list1_ptr->reference_list[ref_idx] > 0)) ?
                                 //    (1 << entrySequenceControlSetPtr->bits_for_picture_order_count) :
                                 //    0;
 

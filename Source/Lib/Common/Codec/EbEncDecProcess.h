@@ -88,7 +88,7 @@ extern "C" {
         uint16_t                               cu_origin_y; // within the picture
         uint8_t                                sb_sz;
         uint32_t                               sb_index;
-        MvUnit_t                               mv_unit;
+        MvUnit                               mv_unit;
         int16_t                                x_mv_amvp_candidate_array_list0[MAX_NUM_OF_AMVP_CANDIDATES];
         uint8_t                                txb_itr;
         EbBool                                 is16bit; //enable 10 bit encode in CL

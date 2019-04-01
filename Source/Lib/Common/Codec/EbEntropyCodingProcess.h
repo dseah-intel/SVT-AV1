@@ -59,7 +59,7 @@ typedef struct EntropyCodingContext_s
     uint32_t                          pu_origin_y;
     uint32_t                          pu_width;
     uint32_t                          pu_height;
-    MvUnit_t                          mv_unit;
+    MvUnit                          mv_unit;
 
     uint32_t                          txb_itr;
     TransformUnit                  *txb_ptr;

@@ -205,7 +205,7 @@ extern "C" {
 
     void GetTxbCtx(
         const int32_t               plane,
-        NeighborArrayUnit_t     *dcSignLevelCoeffNeighborArray,
+        NeighborArrayUnit     *dcSignLevelCoeffNeighborArray,
         uint32_t                  cu_origin_x,
         uint32_t                  cu_origin_y,
         const block_size        plane_bsize,
@@ -216,22 +216,22 @@ extern "C" {
     extern int32_t Av1GetReferenceModeContext(
         uint32_t                  cu_origin_x,
         uint32_t                  cu_origin_y,
-        NeighborArrayUnit_t    *mode_type_neighbor_array,
-        NeighborArrayUnit_t    *inter_pred_dir_neighbor_array);
+        NeighborArrayUnit    *mode_type_neighbor_array,
+        NeighborArrayUnit    *inter_pred_dir_neighbor_array);
 
     extern int32_t Av1GetCompReferenceTypeContext(
         uint32_t                  cu_origin_x,
         uint32_t                  cu_origin_y,
-        NeighborArrayUnit_t    *mode_type_neighbor_array,
-        NeighborArrayUnit_t     *inter_pred_dir_neighbor_array);
+        NeighborArrayUnit    *mode_type_neighbor_array,
+        NeighborArrayUnit     *inter_pred_dir_neighbor_array);
 
     extern void Av1CollectNeighborsRefCounts(
         CodingUnit_t            *cu_ptr,
         uint32_t                   cu_origin_x,
         uint32_t                   cu_origin_y,
-        NeighborArrayUnit_t     *mode_type_neighbor_array,
-        NeighborArrayUnit_t     *inter_pred_dir_neighbor_array,
-        NeighborArrayUnit_t     *ref_frame_type_neighbor_array);
+        NeighborArrayUnit     *mode_type_neighbor_array,
+        NeighborArrayUnit     *inter_pred_dir_neighbor_array,
+        NeighborArrayUnit     *ref_frame_type_neighbor_array);
 
     // Obtain contexts to signal a reference frame be either BWDREF/ALTREF2, or
     // ALTREF.

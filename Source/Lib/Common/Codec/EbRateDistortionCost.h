@@ -27,17 +27,17 @@ extern "C" {
         uint32_t                 cu_origin_x,
         uint32_t                 cu_origin_y,
         uint32_t                 sb_sz,
-        NeighborArrayUnit_t     *skip_coeff_neighbor_array,
-        NeighborArrayUnit_t     *luma_dc_sign_level_coeff_neighbor_array,
-        NeighborArrayUnit_t     *cb_dc_sign_level_coeff_neighbor_array,
-        NeighborArrayUnit_t     *cr_dc_sign_level_coeff_neighbor_array,
-        NeighborArrayUnit_t     *inter_pred_dir_neighbor_array,
-        NeighborArrayUnit_t     *ref_frame_type_neighbor_array,
-        NeighborArrayUnit_t     *intra_luma_mode_neighbor_array,
-        NeighborArrayUnit_t     *skip_flag_neighbor_array,
-        NeighborArrayUnit_t     *mode_type_neighbor_array,
-        NeighborArrayUnit_t     *leaf_depth_neighbor_array,
-        NeighborArrayUnit_t     *leaf_partition_neighbor_array);
+        NeighborArrayUnit     *skip_coeff_neighbor_array,
+        NeighborArrayUnit     *luma_dc_sign_level_coeff_neighbor_array,
+        NeighborArrayUnit     *cb_dc_sign_level_coeff_neighbor_array,
+        NeighborArrayUnit     *cr_dc_sign_level_coeff_neighbor_array,
+        NeighborArrayUnit     *inter_pred_dir_neighbor_array,
+        NeighborArrayUnit     *ref_frame_type_neighbor_array,
+        NeighborArrayUnit     *intra_luma_mode_neighbor_array,
+        NeighborArrayUnit     *skip_flag_neighbor_array,
+        NeighborArrayUnit     *mode_type_neighbor_array,
+        NeighborArrayUnit     *leaf_depth_neighbor_array,
+        NeighborArrayUnit     *leaf_partition_neighbor_array);
 
     extern EbErrorType av1_tu_calc_cost(
         ModeDecisionCandidate_t *candidate_ptr,                         // input parameter, prediction result Ptr

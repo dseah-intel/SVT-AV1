@@ -122,10 +122,10 @@ void mode_decision_update_neighbor_arrays(
     uint8_t skipCoeff = !availableCoeff;
 
 
-    context_ptr->mv_unit.predDirection = (uint8_t)(context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].inter_pred_direction_index);
-    context_ptr->mv_unit.mv[REF_LIST_0].mvUnion = context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].mv[REF_LIST_0].mvUnion;
-    context_ptr->mv_unit.mv[REF_LIST_1].mvUnion = context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].mv[REF_LIST_1].mvUnion;
-    MvUnit_t                *mv_unit = &context_ptr->mv_unit;
+    context_ptr->mv_unit.pred_direction = (uint8_t)(context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].inter_pred_direction_index);
+    context_ptr->mv_unit.mv[REF_LIST_0].mv_union = context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].mv[REF_LIST_0].mv_union;
+    context_ptr->mv_unit.mv[REF_LIST_1].mv_union = context_ptr->md_cu_arr_nsq[index_mds].prediction_unit_array[0].mv[REF_LIST_1].mv_union;
+    MvUnit                *mv_unit = &context_ptr->mv_unit;
     (void)mv_unit;
 
 
@@ -1040,17 +1040,17 @@ void AV1PerformInverseTransformRecon(
 *******************************************/
 void ProductCodingLoopInitFastLoop(
     ModeDecisionContext_t      *context_ptr,
-    NeighborArrayUnit_t        *skip_coeff_neighbor_array,
-    NeighborArrayUnit_t        *luma_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *cb_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *cr_dc_sign_level_coeff_neighbor_array,
-    NeighborArrayUnit_t        *inter_pred_dir_neighbor_array,
-    NeighborArrayUnit_t        *ref_frame_type_neighbor_array,
-    NeighborArrayUnit_t        *intra_luma_mode_neighbor_array,
-    NeighborArrayUnit_t        *skip_flag_neighbor_array,
-    NeighborArrayUnit_t        *mode_type_neighbor_array,
-    NeighborArrayUnit_t        *leaf_depth_neighbor_array,
-    NeighborArrayUnit_t        *leaf_partition_neighbor_array
+    NeighborArrayUnit        *skip_coeff_neighbor_array,
+    NeighborArrayUnit        *luma_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *cb_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *cr_dc_sign_level_coeff_neighbor_array,
+    NeighborArrayUnit        *inter_pred_dir_neighbor_array,
+    NeighborArrayUnit        *ref_frame_type_neighbor_array,
+    NeighborArrayUnit        *intra_luma_mode_neighbor_array,
+    NeighborArrayUnit        *skip_flag_neighbor_array,
+    NeighborArrayUnit        *mode_type_neighbor_array,
+    NeighborArrayUnit        *leaf_depth_neighbor_array,
+    NeighborArrayUnit        *leaf_partition_neighbor_array
 )
 {
     // Keep track of the SB Ptr
@@ -2751,7 +2751,7 @@ void  order_nsq_table(
     ModeDecisionContext_t          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
     LargestCodingUnit_t            *sb_ptr,
-    NeighborArrayUnit_t            *leaf_partition_neighbor_array) {
+    NeighborArrayUnit            *leaf_partition_neighbor_array) {
     const uint32_t             lcuAddr = sb_ptr->index;
     EbBool isCompoundEnabled = (picture_control_set_ptr->parent_pcs_ptr->reference_mode == SINGLE_REFERENCE) ? 0 : 1;
     uint32_t me_sb_addr;
@@ -2788,10 +2788,10 @@ void  order_nsq_table(
     uint32_t partition_above_neighbor_index = get_neighbor_array_unit_top_index(
         leaf_partition_neighbor_array,
         context_ptr->cu_origin_x);
-    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)leaf_partition_neighbor_array->topArray)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)leaf_partition_neighbor_array->topArray)[partition_above_neighbor_index].above;
-    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)leaf_partition_neighbor_array->leftArray)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
-        0 : ((PartitionContext*)leaf_partition_neighbor_array->leftArray)[partition_left_neighbor_index].left;
+    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above;
+    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
+        0 : ((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left;
 
     PART neighbor_part = get_partition_shape(
         above_ctx,

@@ -647,14 +647,14 @@ void* EntropyCodingKernel(void *input_ptr)
                     // If the picture is complete, terminate the slice
                     if (picture_control_set_ptr->entropy_coding_current_row == picture_control_set_ptr->entropy_coding_row_count)
                     {
-                        uint32_t refIdx;
+                        uint32_t ref_idx;
 
                         picture_control_set_ptr->entropy_coding_pic_done = EB_TRUE;
 
                         EncodeSliceFinish(picture_control_set_ptr->entropy_coder_ptr);
 
                         // Release the List 0 Reference Pictures
-                        for (refIdx = 0; refIdx < picture_control_set_ptr->parent_pcs_ptr->ref_list0_count; ++refIdx) {
+                        for (ref_idx = 0; ref_idx < picture_control_set_ptr->parent_pcs_ptr->ref_list0_count; ++ref_idx) {
                             if (picture_control_set_ptr->ref_pic_ptr_array[0] != EB_NULL) {
 
                                 eb_release_object(picture_control_set_ptr->ref_pic_ptr_array[0]);
@@ -662,7 +662,7 @@ void* EntropyCodingKernel(void *input_ptr)
                         }
 
                         // Release the List 1 Reference Pictures
-                        for (refIdx = 0; refIdx < picture_control_set_ptr->parent_pcs_ptr->ref_list1_count; ++refIdx) {
+                        for (ref_idx = 0; ref_idx < picture_control_set_ptr->parent_pcs_ptr->ref_list1_count; ++ref_idx) {
                             if (picture_control_set_ptr->ref_pic_ptr_array[1] != EB_NULL) {
 
                                 eb_release_object(picture_control_set_ptr->ref_pic_ptr_array[1]);
@@ -797,18 +797,18 @@ void* EntropyCodingKernel(void *input_ptr)
 
              //the picture is complete, terminate the slice            
              {
-                 uint32_t refIdx;         
+                 uint32_t ref_idx;         
                  picture_control_set_ptr->entropy_coder_ptr->ec_frame_size = total_size;
 
                  // Release the List 0 Reference Pictures
-                 for (refIdx = 0; refIdx < picture_control_set_ptr->parent_pcs_ptr->ref_list0_count; ++refIdx) {
+                 for (ref_idx = 0; ref_idx < picture_control_set_ptr->parent_pcs_ptr->ref_list0_count; ++ref_idx) {
                      if (picture_control_set_ptr->ref_pic_ptr_array[0] != EB_NULL) {
                          eb_release_object(picture_control_set_ptr->ref_pic_ptr_array[0]);
                      }
                  }
 
                  // Release the List 1 Reference Pictures
-                 for (refIdx = 0; refIdx < picture_control_set_ptr->parent_pcs_ptr->ref_list1_count; ++refIdx) {
+                 for (ref_idx = 0; ref_idx < picture_control_set_ptr->parent_pcs_ptr->ref_list1_count; ++ref_idx) {
                      if (picture_control_set_ptr->ref_pic_ptr_array[1] != EB_NULL) {
                          eb_release_object(picture_control_set_ptr->ref_pic_ptr_array[1]);
                      }

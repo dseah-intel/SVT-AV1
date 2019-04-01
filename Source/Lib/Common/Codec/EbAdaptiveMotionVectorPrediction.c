@@ -1876,7 +1876,7 @@ uint16_t wm_find_samples(
 EbBool warped_motion_parameters(
     PictureControlSet              *picture_control_set_ptr,
     CodingUnit_t                     *cu_ptr,
-    MvUnit_t                         *mv_unit,
+    MvUnit                         *mv_unit,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
     uint16_t                          cu_origin_y,
