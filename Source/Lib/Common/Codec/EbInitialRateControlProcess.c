@@ -407,16 +407,16 @@ void DetectGlobalMotion(
 /************************************************
 * Initial Rate Control Context Constructor
 ************************************************/
-EbErrorType InitialRateControlContextCtor(
-    InitialRateControlContext_t **context_dbl_ptr,
-    EbFifo                     *motionEstimationResultsInputFifoPtr,
-    EbFifo                     *initialrateControlResultsOutputFifoPtr)
+EbErrorType initial_rate_control_context_ctor(
+    InitialRateControlContext **context_dbl_ptr,
+    EbFifo                     *motion_estimation_results_input_fifo_ptr,
+    EbFifo                     *initialrate_control_results_output_fifo_ptr)
 {
-    InitialRateControlContext_t *context_ptr;
-    EB_MALLOC(InitialRateControlContext_t*, context_ptr, sizeof(InitialRateControlContext_t), EB_N_PTR);
+    InitialRateControlContext *context_ptr;
+    EB_MALLOC(InitialRateControlContext*, context_ptr, sizeof(InitialRateControlContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
-    context_ptr->motionEstimationResultsInputFifoPtr = motionEstimationResultsInputFifoPtr;
-    context_ptr->initialrateControlResultsOutputFifoPtr = initialrateControlResultsOutputFifoPtr;
+    context_ptr->motion_estimation_results_input_fifo_ptr = motion_estimation_results_input_fifo_ptr;
+    context_ptr->initialrate_control_results_output_fifo_ptr = initialrate_control_results_output_fifo_ptr;
 
     return EB_ErrorNone;
 }
@@ -890,7 +890,7 @@ void UpdateGlobalMotionDetectionOverTime(
     PictureParentControlSet         *picture_control_set_ptr)
 {
 
-    InitialRateControlReorderEntry_t   *temporaryQueueEntryPtr;
+    InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
     PictureParentControlSet          *temporaryPictureControlSetPtr;
 
     uint32_t                                totalPanPictures = 0;
@@ -954,7 +954,7 @@ void UpdateBeaInfoOverTime(
     EncodeContext_t                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
-    InitialRateControlReorderEntry_t   *temporaryQueueEntryPtr;
+    InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
     PictureParentControlSet          *temporaryPictureControlSetPtr;
     uint32_t                                updateNonMovingIndexArrayFramesToCheck;
     uint16_t                              lcuIdx;
@@ -1039,7 +1039,7 @@ void UpdateMotionFieldUniformityOverTime(
     SequenceControlSet              *sequence_control_set_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
-    InitialRateControlReorderEntry_t   *temporaryQueueEntryPtr;
+    InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
     PictureParentControlSet          *temporaryPictureControlSetPtr;
     uint32_t                                inputQueueIndex;
     uint32_t                              NoFramesToCheck;
@@ -1096,7 +1096,7 @@ void UpdateHomogeneityOverTime(
     EncodeContext_t                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
-    InitialRateControlReorderEntry_t   *temporaryQueueEntryPtr;
+    InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
     PictureParentControlSet          *temporaryPictureControlSetPtr;
     uint32_t                              NoFramesToCheck;
 
@@ -1186,13 +1186,13 @@ void ResetHomogeneityStructures(
     return;
 }
 
-InitialRateControlReorderEntry_t  * DeterminePictureOffsetInQueue(
+InitialRateControlReorderEntry  * DeterminePictureOffsetInQueue(
     EncodeContext_t                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr,
     MotionEstimationResults         *inputResultsPtr)
 {
 
-    InitialRateControlReorderEntry_t  *queueEntryPtr;
+    InitialRateControlReorderEntry  *queueEntryPtr;
     int32_t                             queueEntryIndex;
 
     queueEntryIndex = (int32_t)(picture_control_set_ptr->picture_number - encode_context_ptr->initial_rate_control_reorder_queue[encode_context_ptr->initial_rate_control_reorder_queue_head_index]->picture_number);
@@ -1212,7 +1212,7 @@ void GetHistogramQueueData(
     EncodeContext_t                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
-    HlRateControlHistogramEntry_t     *histogramQueueEntryPtr;
+    HlRateControlHistogramEntry     *histogramQueueEntryPtr;
     int32_t                             histogramQueueEntryIndex;
 
     // Determine offset from the Head Ptr for HLRC histogram queue
@@ -1238,10 +1238,10 @@ void GetHistogramQueueData(
     histogramQueueEntryPtr->total_num_bits_coded = 0;
     histogramQueueEntryPtr->frames_in_sw = 0;
 #else
-    histogramQueueEntryPtr->lifeCount = 0;
-    histogramQueueEntryPtr->passedToHlrc = EB_FALSE;
-    histogramQueueEntryPtr->isCoded = EB_FALSE;
-    histogramQueueEntryPtr->totalNumBitsCoded = 0;
+    histogramQueueEntryPtr->life_count = 0;
+    histogramQueueEntryPtr->passed_to_hlrc = EB_FALSE;
+    histogramQueueEntryPtr->is_coded = EB_FALSE;
+    histogramQueueEntryPtr->total_num_bits_coded = 0;
 #endif
     EB_MEMCPY(
         histogramQueueEntryPtr->me_distortion_histogram,
@@ -1254,7 +1254,7 @@ void GetHistogramQueueData(
         sizeof(uint16_t) * NUMBER_OF_INTRA_SAD_INTERVALS);
 
     eb_release_mutex(sequence_control_set_ptr->encode_context_ptr->hl_rate_control_historgram_queue_mutex);
-    //printf("Test1 POC: %d\t POC: %d\t LifeCount: %d\n", histogramQueueEntryPtr->picture_number, picture_control_set_ptr->picture_number,  histogramQueueEntryPtr->lifeCount);
+    //printf("Test1 POC: %d\t POC: %d\t LifeCount: %d\n", histogramQueueEntryPtr->picture_number, picture_control_set_ptr->picture_number,  histogramQueueEntryPtr->life_count);
 
 
     return;
@@ -1272,7 +1272,7 @@ void UpdateHistogramQueueEntry(
 #endif
 {
 
-    HlRateControlHistogramEntry_t     *histogramQueueEntryPtr;
+    HlRateControlHistogramEntry     *histogramQueueEntryPtr;
     int32_t                             histogramQueueEntryIndex;
 
     eb_block_on_mutex(sequence_control_set_ptr->encode_context_ptr->rate_table_update_mutex);
@@ -1637,9 +1637,9 @@ void DeriveBlockinessPresentFlag(
 * P.S. Temporal noise reduction is now performed in Initial Rate Control Process.
 * In future we might decide to move it to Motion Analysis Process.
 ************************************************/
-void* InitialRateControlKernel(void *input_ptr)
+void* initial_rate_control_kernel(void *input_ptr)
 {
-    InitialRateControlContext_t       *context_ptr = (InitialRateControlContext_t*)input_ptr;
+    InitialRateControlContext       *context_ptr = (InitialRateControlContext*)input_ptr;
     PictureParentControlSet         *picture_control_set_ptr;
     PictureParentControlSet         *pictureControlSetPtrTemp;
     EncodeContext_t                   *encode_context_ptr;
@@ -1649,12 +1649,12 @@ void* InitialRateControlKernel(void *input_ptr)
     MotionEstimationResults         *inputResultsPtr;
 
     EbObjectWrapper                 *outputResultsWrapperPtr;
-    InitialRateControlResults_t       *outputResultsPtr;
+    InitialRateControlResults       *outputResultsPtr;
 
     // Queue variables
     uint32_t                             queueEntryIndexTemp;
     uint32_t                             queueEntryIndexTemp2;
-    InitialRateControlReorderEntry_t  *queueEntryPtr;
+    InitialRateControlReorderEntry  *queueEntryPtr;
 
     EbBool                            moveSlideWondowFlag = EB_TRUE;
     EbBool                            end_of_sequence_flag = EB_TRUE;
@@ -1671,7 +1671,7 @@ void* InitialRateControlKernel(void *input_ptr)
 
         // Get Input Full Object
         eb_get_full_object(
-            context_ptr->motionEstimationResultsInputFifoPtr,
+            context_ptr->motion_estimation_results_input_fifo_ptr,
             &inputResultsWrapperPtr);
 
         inputResultsPtr = (MotionEstimationResults*)inputResultsWrapperPtr->object_ptr;
@@ -1985,10 +1985,10 @@ void* InitialRateControlKernel(void *input_ptr)
 
                     // Get Empty Results Object
                     eb_get_empty_object(
-                        context_ptr->initialrateControlResultsOutputFifoPtr,
+                        context_ptr->initialrate_control_results_output_fifo_ptr,
                         &outputResultsWrapperPtr);
 
-                    outputResultsPtr = (InitialRateControlResults_t*)outputResultsWrapperPtr->object_ptr;
+                    outputResultsPtr = (InitialRateControlResults*)outputResultsWrapperPtr->object_ptr;
                     outputResultsPtr->picture_control_set_wrapper_ptr = queueEntryPtr->parent_pcs_wrapper_ptr;
                     /////////////////////////////
                     // Post the Full Results Object

@@ -90,11 +90,11 @@ typedef struct EncodeContext_s
     uint32_t                                         reference_picture_queue_tail_index;
 
     // Initial Rate Control Reorder Queue
-    InitialRateControlReorderEntry_t               **initial_rate_control_reorder_queue;
+    InitialRateControlReorderEntry               **initial_rate_control_reorder_queue;
     uint32_t                                         initial_rate_control_reorder_queue_head_index;
 
     // High Level Rate Control Histogram Queue
-    HlRateControlHistogramEntry_t                  **hl_rate_control_historgram_queue;
+    HlRateControlHistogramEntry                  **hl_rate_control_historgram_queue;
     uint32_t                                         hl_rate_control_historgram_queue_head_index;
     EbHandle                                         hl_rate_control_historgram_queue_mutex;
 

@@ -1525,7 +1525,7 @@ EbErrorType AV1MDInterPrediction(
     EbAsm                                    asm_type)
 {
     EbErrorType  return_error = EB_ErrorNone;
-    InterPredictionContext_t *context_ptr = (InterPredictionContext_t*)(md_context_ptr->inter_prediction_context);
+    InterPredictionContext *context_ptr = (InterPredictionContext*)(md_context_ptr->inter_prediction_context);
     uint8_t         is_compound = (mv_unit->pred_direction == BI_PRED) ? 1 : 0;
     DECLARE_ALIGNED(32, uint16_t, tmp_dstY[128 * 128]);//move this to context if stack does not hold.
     DECLARE_ALIGNED(32, uint16_t, tmp_dstCb[64 * 64]);
@@ -2942,7 +2942,7 @@ EbErrorType warped_motion_prediction_md(
     EbAsm                                   asm_type)
 {
     EbErrorType  return_error = EB_ErrorNone;
-    InterPredictionContext_t *context_ptr = (InterPredictionContext_t*)(md_context_ptr->inter_prediction_context);
+    InterPredictionContext *context_ptr = (InterPredictionContext*)(md_context_ptr->inter_prediction_context);
     uint8_t is_compound = (mv_unit->pred_direction == BI_PRED) ? 1 : 0;
     assert(!is_compound);
 
@@ -4493,14 +4493,14 @@ EbErrorType inter_pu_prediction_av1(
 
 
 EbErrorType inter_prediction_context_ctor(
-    InterPredictionContext_t **inter_prediction_context,
+    InterPredictionContext **inter_prediction_context,
     uint16_t                     max_cu_width,
     uint16_t                     max_cu_height)
 
 {
     EbErrorType              return_error = EB_ErrorNone;
-    InterPredictionContext_t *context_ptr;
-    EB_MALLOC(InterPredictionContext_t*, context_ptr, sizeof(InterPredictionContext_t), EB_N_PTR);
+    InterPredictionContext *context_ptr;
+    EB_MALLOC(InterPredictionContext*, context_ptr, sizeof(InterPredictionContext), EB_N_PTR);
 
     (*inter_prediction_context) = context_ptr;
 

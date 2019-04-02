@@ -229,7 +229,7 @@ uint64_t ComputeNxMSatd4x4Units_U8(
 
     for (blockIndexInHeight = 0; blockIndexInHeight < height >> 2; ++blockIndexInHeight) {
         for (blockIndexInWidth = 0; blockIndexInWidth < width >> 2; ++blockIndexInWidth) {
-            satd += Compute4x4Satd_U8(&(src[(blockIndexInWidth << 2) + (blockIndexInHeight << 2) * src_stride]), dc_value, src_stride);
+            satd += compute4x4_satd_u8(&(src[(blockIndexInWidth << 2) + (blockIndexInHeight << 2) * src_stride]), dc_value, src_stride);
 
         }
     }
@@ -237,7 +237,7 @@ uint64_t ComputeNxMSatd4x4Units_U8(
     return satd;
 }
 /*******************************************
- *   returns NxM Sum of Absolute Transformed Differences using Compute4x4Satd
+ *   returns NxM Sum of Absolute Transformed Differences using compute4x4_satd
  *******************************************/
 uint64_t compute_nx_m_satd_sad_lcu(
     uint8_t  *src,        // input parameter, source samples Ptr

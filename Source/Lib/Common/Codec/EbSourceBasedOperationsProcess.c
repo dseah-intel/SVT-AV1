@@ -898,7 +898,7 @@ void* source_based_operations_kernel(void *input_ptr)
     PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
     EbObjectWrapper               *inputResultsWrapperPtr;
-    InitialRateControlResults_t        *inputResultsPtr;
+    InitialRateControlResults        *inputResultsPtr;
     EbObjectWrapper               *outputResultsWrapperPtr;
     PictureDemuxResults           *outputResultsPtr;
 
@@ -909,7 +909,7 @@ void* source_based_operations_kernel(void *input_ptr)
             context_ptr->initial_rate_control_results_input_fifo_ptr,
             &inputResultsWrapperPtr);
 
-        inputResultsPtr = (InitialRateControlResults_t*)inputResultsWrapperPtr->object_ptr;
+        inputResultsPtr = (InitialRateControlResults*)inputResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureParentControlSet*)inputResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 

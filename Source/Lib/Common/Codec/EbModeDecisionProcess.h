@@ -91,7 +91,7 @@ extern "C" {
         ModeDecisionCandidate        *fast_candidate_array;
         ModeDecisionCandidateBuffer **candidate_buffer_ptr_array;
         MdRateEstimationContext      *md_rate_estimation_ptr;
-        InterPredictionContext_t       *inter_prediction_context;
+        InterPredictionContext       *inter_prediction_context;
         MdCodingUnit                  md_local_cu_unit[BLOCK_MAX_COUNT_SB_128];
         CodingUnit_t                    md_cu_arr_nsq[BLOCK_MAX_COUNT_SB_128];
 

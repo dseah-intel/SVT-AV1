@@ -127,10 +127,10 @@ EbErrorType encode_context_ctor(
 
     // Initial Rate Control Reordering Queue
     encode_context_ptr->initial_rate_control_reorder_queue_head_index = 0;
-    EB_MALLOC(InitialRateControlReorderEntry_t**, encode_context_ptr->initial_rate_control_reorder_queue, sizeof(InitialRateControlReorderEntry_t*) * INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(InitialRateControlReorderEntry**, encode_context_ptr->initial_rate_control_reorder_queue, sizeof(InitialRateControlReorderEntry*) * INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < INITIAL_RATE_CONTROL_REORDER_QUEUE_MAX_DEPTH; ++pictureIndex) {
-        return_error = InitialRateControlReorderEntryCtor(
+        return_error = initial_rate_control_reorder_entry_ctor(
             &(encode_context_ptr->initial_rate_control_reorder_queue[pictureIndex]),
             pictureIndex);
         if (return_error == EB_ErrorInsufficientResources) {
@@ -141,10 +141,10 @@ EbErrorType encode_context_ctor(
     // High level Rate Control histogram Queue
     encode_context_ptr->hl_rate_control_historgram_queue_head_index = 0;
 
-    EB_MALLOC(HlRateControlHistogramEntry_t**, encode_context_ptr->hl_rate_control_historgram_queue, sizeof(HlRateControlHistogramEntry_t*) * HIGH_LEVEL_RATE_CONTROL_HISTOGRAM_QUEUE_MAX_DEPTH, EB_N_PTR);
+    EB_MALLOC(HlRateControlHistogramEntry**, encode_context_ptr->hl_rate_control_historgram_queue, sizeof(HlRateControlHistogramEntry*) * HIGH_LEVEL_RATE_CONTROL_HISTOGRAM_QUEUE_MAX_DEPTH, EB_N_PTR);
 
     for (pictureIndex = 0; pictureIndex < HIGH_LEVEL_RATE_CONTROL_HISTOGRAM_QUEUE_MAX_DEPTH; ++pictureIndex) {
-        return_error = HlRateControlHistogramEntryCtor(
+        return_error = hl_rate_control_histogram_entry_ctor(
             &(encode_context_ptr->hl_rate_control_historgram_queue[pictureIndex]),
             pictureIndex);
         if (return_error == EB_ErrorInsufficientResources) {

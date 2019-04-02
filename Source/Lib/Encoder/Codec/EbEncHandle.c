@@ -1317,7 +1317,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Initial Rate Control Results
     {
-        InitialRateControlResultInitData_t initialRateControlResultInitData;
+        InitialRateControlResultInitData initialRateControlResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->initialRateControlResultsResourcePtr,
@@ -1327,7 +1327,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             &encHandlePtr->initialRateControlResultsProducerFifoPtrArray,
             &encHandlePtr->initialRateControlResultsConsumerFifoPtrArray,
             EB_TRUE,
-            InitialRateControlResultsCtor,
+            initial_rate_control_results_ctor,
             &initialRateControlResultInitData);
 
         if (return_error == EB_ErrorInsufficientResources) {
@@ -1607,8 +1607,8 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
 
     // Initial Rate Control Context
-    return_error = InitialRateControlContextCtor(
-        (InitialRateControlContext_t**)&encHandlePtr->initialRateControlContextPtr,
+    return_error = initial_rate_control_context_ctor(
+        (InitialRateControlContext**)&encHandlePtr->initialRateControlContextPtr,
         encHandlePtr->motionEstimationResultsConsumerFifoPtrArray[0],
         encHandlePtr->initialRateControlResultsProducerFifoPtrArray[0]);
     if (return_error == EB_ErrorInsufficientResources) {
@@ -1810,7 +1810,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
 
     // Initial Rate Control
-    EB_CREATETHREAD(EbHandle, encHandlePtr->initialRateControlThreadHandle, sizeof(EbHandle), EB_THREAD, InitialRateControlKernel, encHandlePtr->initialRateControlContextPtr);
+    EB_CREATETHREAD(EbHandle, encHandlePtr->initialRateControlThreadHandle, sizeof(EbHandle), EB_THREAD, initial_rate_control_kernel, encHandlePtr->initialRateControlContextPtr);
 
     // Source Based Oprations
     EB_MALLOC(EbHandle*, encHandlePtr->sourceBasedOperationsThreadHandleArray, sizeof(EbHandle) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->source_based_operations_process_init_count, EB_N_PTR);

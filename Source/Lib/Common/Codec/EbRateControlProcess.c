@@ -362,7 +362,7 @@ EbErrorType rate_control_context_ctor(
 #if RC
 uint64_t predict_bits(
     EncodeContext_t                 *encode_context_ptr,
-    HlRateControlHistogramEntry_t   *hl_rate_control_histogram_ptr_temp,
+    HlRateControlHistogramEntry   *hl_rate_control_histogram_ptr_temp,
     uint32_t                         qp,
     uint32_t                         area_in_pixel)
 {
@@ -425,7 +425,7 @@ void high_level_rc_input_picture_vbr(
 
     EbBool                      end_of_sequence_flag = EB_TRUE;
 
-    HlRateControlHistogramEntry_t *hl_rate_control_histogram_ptr_temp;
+    HlRateControlHistogramEntry *hl_rate_control_histogram_ptr_temp;
     // Queue variables
     uint32_t                     queue_entry_index_temp;
     uint32_t                     queue_entry_index_temp2;
@@ -1839,7 +1839,7 @@ void high_level_rc_input_picture_cvbr(
 
     EbBool                      end_of_sequence_flag = EB_TRUE;
 
-    HlRateControlHistogramEntry_t *hl_rate_control_histogram_ptr_temp;
+    HlRateControlHistogramEntry *hl_rate_control_histogram_ptr_temp;
     // Queue variables
     uint32_t                     queue_entry_index_temp;
     uint32_t                     queue_entry_index_temp2;
@@ -2470,7 +2470,7 @@ void frame_level_rc_input_picture_cvbr(
 
         HighLevelRateControlContext *high_level_rate_control_ptr = context_ptr->high_level_rate_control_ptr;
         EncodeContext_t               *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
-        HlRateControlHistogramEntry_t *hl_rate_control_histogram_ptr_temp;
+        HlRateControlHistogramEntry *hl_rate_control_histogram_ptr_temp;
         // Queue variables
         uint32_t                     queue_entry_index_temp;
         uint32_t                     queue_entry_index_temp2;
@@ -3109,7 +3109,7 @@ void high_level_rc_feed_back_picture(
 {
 
     // Queue variables
-    HlRateControlHistogramEntry_t *hl_rate_control_histogram_ptr_temp;
+    HlRateControlHistogramEntry *hl_rate_control_histogram_ptr_temp;
     uint32_t                     queue_entry_index_head_temp;
 
 
