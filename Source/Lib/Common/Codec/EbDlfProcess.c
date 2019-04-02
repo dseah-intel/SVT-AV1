@@ -92,11 +92,11 @@ void* dlf_kernel(void *input_ptr)
 
     //// Input
     EbObjectWrapper                       *enc_dec_results_wrapper_ptr;
-    EncDecResults_t                         *enc_dec_results_ptr;
+    EncDecResults                         *enc_dec_results_ptr;
 
     //// Output
     EbObjectWrapper                       *dlf_results_wrapper_ptr;
-    struct DlfResults_s*                     dlf_results_ptr;
+    struct DlfResults*                     dlf_results_ptr;
 
     // SB Loop variables
     for (;;) {
@@ -106,7 +106,7 @@ void* dlf_kernel(void *input_ptr)
             context_ptr->dlf_input_fifo_ptr,
             &enc_dec_results_wrapper_ptr);
 
-        enc_dec_results_ptr         = (EncDecResults_t*)enc_dec_results_wrapper_ptr->object_ptr;
+        enc_dec_results_ptr         = (EncDecResults*)enc_dec_results_wrapper_ptr->object_ptr;
         picture_control_set_ptr     = (PictureControlSet*)enc_dec_results_ptr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr    = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
@@ -248,7 +248,7 @@ void* dlf_kernel(void *input_ptr)
             eb_get_empty_object(
                 context_ptr->dlf_output_fifo_ptr,
                 &dlf_results_wrapper_ptr);
-            dlf_results_ptr = (struct DlfResults_s*)dlf_results_wrapper_ptr->object_ptr;
+            dlf_results_ptr = (struct DlfResults*)dlf_results_wrapper_ptr->object_ptr;
             dlf_results_ptr->picture_control_set_wrapper_ptr = enc_dec_results_ptr->picture_control_set_wrapper_ptr;
             dlf_results_ptr->segment_index = segment_index;
             // Post DLF Results

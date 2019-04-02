@@ -845,8 +845,8 @@ EbErrorType DlfResultsCtor(
     EbPtr *object_dbl_ptr,
     EbPtr object_init_data_ptr)
 {
-    DlfResults_t *context_ptr;
-    EB_MALLOC(DlfResults_t*, context_ptr, sizeof(DlfResults_t), EB_N_PTR);
+    DlfResults *context_ptr;
+    EB_MALLOC(DlfResults*, context_ptr, sizeof(DlfResults), EB_N_PTR);
 
     *object_dbl_ptr = (EbPtr)context_ptr;
 
@@ -858,8 +858,8 @@ EbErrorType CdefResultsCtor(
     EbPtr *object_dbl_ptr,
     EbPtr object_init_data_ptr)
 {
-    CdefResults_t *context_ptr;
-    EB_MALLOC(CdefResults_t*, context_ptr, sizeof(CdefResults_t), EB_N_PTR);
+    CdefResults *context_ptr;
+    EB_MALLOC(CdefResults*, context_ptr, sizeof(CdefResults), EB_N_PTR);
 
     *object_dbl_ptr = (EbPtr)context_ptr;
 
@@ -872,8 +872,8 @@ EbErrorType RestResultsCtor(
     EbPtr *object_dbl_ptr,
     EbPtr object_init_data_ptr)
 {
-    RestResults_t *context_ptr;
-    EB_MALLOC(RestResults_t*, context_ptr, sizeof(RestResults_t), EB_N_PTR);
+    RestResults *context_ptr;
+    EB_MALLOC(RestResults*, context_ptr, sizeof(RestResults), EB_N_PTR);
 
     *object_dbl_ptr = (EbPtr)context_ptr;
 
@@ -1421,7 +1421,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // EncDec Results
     {
-        EncDecResultsInitData_t encDecResultInitData;
+        EncDecResultsInitData encDecResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->encDecResultsResourcePtr,
@@ -1431,7 +1431,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             &encHandlePtr->encDecResultsProducerFifoPtrArray,
             &encHandlePtr->encDecResultsConsumerFifoPtrArray,
             EB_TRUE,
-            EncDecResultsCtor,
+            enc_dec_results_ctor,
             &encDecResultInitData);
         if (return_error == EB_ErrorInsufficientResources) {
             return EB_ErrorInsufficientResources;

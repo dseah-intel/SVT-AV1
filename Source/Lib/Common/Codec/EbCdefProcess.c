@@ -442,11 +442,11 @@ void* cdef_kernel(void *input_ptr)
 
     //// Input
     EbObjectWrapper                       *dlf_results_wrapper_ptr;
-    DlfResults_t                            *dlf_results_ptr;
+    DlfResults                            *dlf_results_ptr;
 
     //// Output
     EbObjectWrapper                       *cdef_results_wrapper_ptr;
-    CdefResults_t                           *cdef_results_ptr;
+    CdefResults                           *cdef_results_ptr;
 
     // SB Loop variables
 
@@ -458,7 +458,7 @@ void* cdef_kernel(void *input_ptr)
             context_ptr->cdef_input_fifo_ptr,
             &dlf_results_wrapper_ptr);
 
-        dlf_results_ptr = (DlfResults_t*)dlf_results_wrapper_ptr->object_ptr;
+        dlf_results_ptr = (DlfResults*)dlf_results_wrapper_ptr->object_ptr;
         picture_control_set_ptr = (PictureControlSet*)dlf_results_ptr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
@@ -568,7 +568,7 @@ void* cdef_kernel(void *input_ptr)
             eb_get_empty_object(
                 context_ptr->cdef_output_fifo_ptr,
                 &cdef_results_wrapper_ptr);
-            cdef_results_ptr = (struct CdefResults_s*)cdef_results_wrapper_ptr->object_ptr;
+            cdef_results_ptr = (struct CdefResults*)cdef_results_wrapper_ptr->object_ptr;
             cdef_results_ptr->picture_control_set_wrapper_ptr = dlf_results_ptr->picture_control_set_wrapper_ptr;
             cdef_results_ptr->segment_index = segment_index;
             // Post Cdef Results

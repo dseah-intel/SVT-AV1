@@ -511,7 +511,7 @@ void* entropy_coding_kernel(void *input_ptr)
 
     // Input
     EbObjectWrapper                       *encDecResultsWrapperPtr;
-    EncDecResults_t                         *encDecResultsPtr;
+    EncDecResults                         *encDecResultsPtr;
 
     // Output
     EbObjectWrapper                       *entropyCodingResultsWrapperPtr;
@@ -538,7 +538,7 @@ void* entropy_coding_kernel(void *input_ptr)
         eb_get_full_object(
             context_ptr->enc_dec_input_fifo_ptr,
             &encDecResultsWrapperPtr);
-        encDecResultsPtr = (EncDecResults_t*)encDecResultsWrapperPtr->object_ptr;
+        encDecResultsPtr = (EncDecResults*)encDecResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureControlSet*)encDecResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 #if !RC 
@@ -555,10 +555,10 @@ void* entropy_coding_kernel(void *input_ptr)
 
         {
             initialProcessCall = EB_TRUE;
-            y_lcu_index = encDecResultsPtr->completedLcuRowIndexStart;
+            y_lcu_index = encDecResultsPtr->completed_lcu_row_index_start;
 
             // LCU-loops
-            while (UpdateEntropyCodingRows(picture_control_set_ptr, &y_lcu_index, encDecResultsPtr->completedLcuRowCount, &initialProcessCall) == EB_TRUE)
+            while (UpdateEntropyCodingRows(picture_control_set_ptr, &y_lcu_index, encDecResultsPtr->completed_lcu_row_count, &initialProcessCall) == EB_TRUE)
             {
                 uint32_t rowTotalBits = 0;
 

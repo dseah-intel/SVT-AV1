@@ -1455,7 +1455,7 @@ void* EncDecKernel(void *input_ptr)
 
     // Output
     EbObjectWrapper                       *encDecResultsWrapperPtr;
-    EncDecResults_t                         *encDecResultsPtr;
+    EncDecResults                         *encDecResultsPtr;
     // SB Loop variables
     LargestCodingUnit_t                     *sb_ptr;
     uint16_t                                 sb_index;
@@ -1746,11 +1746,11 @@ void* EncDecKernel(void *input_ptr)
             eb_get_empty_object(
                 context_ptr->enc_dec_output_fifo_ptr,
                 &encDecResultsWrapperPtr);
-            encDecResultsPtr = (EncDecResults_t*)encDecResultsWrapperPtr->object_ptr;
+            encDecResultsPtr = (EncDecResults*)encDecResultsWrapperPtr->object_ptr;
             encDecResultsPtr->picture_control_set_wrapper_ptr = encDecTasksPtr->picture_control_set_wrapper_ptr;
             //CHKN these are not needed for DLF
-            encDecResultsPtr->completedLcuRowIndexStart = 0;
-            encDecResultsPtr->completedLcuRowCount = ((sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_size_pix - 1) >> lcuSizeLog2);
+            encDecResultsPtr->completed_lcu_row_index_start = 0;
+            encDecResultsPtr->completed_lcu_row_count = ((sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_size_pix - 1) >> lcuSizeLog2);
             // Post EncDec Results
             eb_post_full_object(encDecResultsWrapperPtr);
 

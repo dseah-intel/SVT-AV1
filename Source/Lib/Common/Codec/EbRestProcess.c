@@ -208,11 +208,11 @@ void* rest_kernel(void *input_ptr)
 
     //// Input
     EbObjectWrapper                       *cdef_results_wrapper_ptr;
-    CdefResults_t                         *cdef_results_ptr;
+    CdefResults                         *cdef_results_ptr;
 
     //// Output
     EbObjectWrapper                       *rest_results_wrapper_ptr;
-    RestResults_t*                          rest_results_ptr;
+    RestResults*                          rest_results_ptr;
     EbObjectWrapper                       *picture_demux_results_wrapper_ptr;
     PictureDemuxResults                   *picture_demux_results_rtr;
     // SB Loop variables
@@ -225,7 +225,7 @@ void* rest_kernel(void *input_ptr)
             context_ptr->rest_input_fifo_ptr,
             &cdef_results_wrapper_ptr);
 
-        cdef_results_ptr = (CdefResults_t*)cdef_results_wrapper_ptr->object_ptr;
+        cdef_results_ptr = (CdefResults*)cdef_results_wrapper_ptr->object_ptr;
         picture_control_set_ptr = (PictureControlSet*)cdef_results_ptr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         uint8_t lcuSizeLog2 = (uint8_t)Log2f(sequence_control_set_ptr->sb_size_pix);
@@ -407,7 +407,7 @@ void* rest_kernel(void *input_ptr)
             eb_get_empty_object(
                 context_ptr->rest_output_fifo_ptr,
                 &rest_results_wrapper_ptr);
-            rest_results_ptr = (struct RestResults_s*)rest_results_wrapper_ptr->object_ptr;
+            rest_results_ptr = (struct RestResults*)rest_results_wrapper_ptr->object_ptr;
             rest_results_ptr->picture_control_set_wrapper_ptr = cdef_results_ptr->picture_control_set_wrapper_ptr;
             rest_results_ptr->completed_lcu_row_index_start = 0;
             rest_results_ptr->completed_lcu_row_count = ((sequence_control_set_ptr->luma_height + sequence_control_set_ptr->sb_size_pix - 1) >> lcuSizeLog2);
