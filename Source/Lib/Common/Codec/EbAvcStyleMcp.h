@@ -132,7 +132,7 @@ extern "C" {
         uint32_t                 component_mask,
         EbByte                temp_buf,
         EbBool                sub_pred,
-        EbBool                subPredChroma,
+        EbBool                sub_pred_chroma,
         EbAsm                 asm_type);
 
     void estimate_bi_pred_interpolation_avc_luma_ref10_bit(
@@ -152,7 +152,7 @@ extern "C" {
         EbByte                ref_list1_temp_dst,
         EbByte                first_pass_if_temp_dst,
         EbBool                sub_pred,
-        EbBool                subPredChroma,
+        EbBool                sub_pred_chroma,
         EbAsm                 asm_type);
 
     void uni_pred_i_free_ref8_bit(
