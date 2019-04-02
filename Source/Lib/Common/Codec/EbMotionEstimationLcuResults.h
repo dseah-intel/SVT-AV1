@@ -61,7 +61,8 @@ extern "C" {
     } DistDir;
 
 
-    typedef struct MeCuResults {
+    typedef struct MeCuResults 
+    {
         union {
             struct {
                 signed short     x_mv_l0;

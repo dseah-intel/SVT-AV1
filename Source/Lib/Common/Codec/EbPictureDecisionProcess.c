@@ -605,20 +605,20 @@ EbErrorType GenerateMiniGopRps(
 
     EbErrorType return_error = EB_ErrorNone;
 
-    uint32_t                         miniGopIndex;
+    uint32_t                         mini_gop_index;
     PictureParentControlSet    *picture_control_set_ptr;
     uint32_t                         pictureIndex;
 
     // Loop over all mini GOPs
-    for (miniGopIndex = 0; miniGopIndex < context_ptr->total_number_of_mini_gops; ++miniGopIndex) {
+    for (mini_gop_index = 0; mini_gop_index < context_ptr->total_number_of_mini_gops; ++mini_gop_index) {
 
         // Loop over picture within the mini GOP
-        for (pictureIndex = context_ptr->mini_gop_start_index[miniGopIndex]; pictureIndex <= context_ptr->mini_gop_end_index[miniGopIndex]; pictureIndex++) {
+        for (pictureIndex = context_ptr->mini_gop_start_index[mini_gop_index]; pictureIndex <= context_ptr->mini_gop_end_index[mini_gop_index]; pictureIndex++) {
 
             picture_control_set_ptr = (PictureParentControlSet*)encode_context_ptr->pre_assignment_buffer[pictureIndex]->object_ptr;
 
             picture_control_set_ptr->pred_structure = EB_PRED_RANDOM_ACCESS;
-            picture_control_set_ptr->hierarchical_levels = (uint8_t)context_ptr->mini_gop_hierarchical_levels[miniGopIndex];
+            picture_control_set_ptr->hierarchical_levels = (uint8_t)context_ptr->mini_gop_hierarchical_levels[mini_gop_index];
 
             picture_control_set_ptr->pred_struct_ptr = get_prediction_structure(
                 encode_context_ptr->prediction_structure_group_ptr,
@@ -1668,7 +1668,7 @@ void* picture_decision_kernel(void *input_ptr)
     uint32_t                           depListCount;
 
     // Dynamic GOP
-    uint32_t                           miniGopIndex;
+    uint32_t                           mini_gop_index;
     uint32_t                           pictureIndex;
 
     // Initialization
@@ -1900,7 +1900,7 @@ void* picture_decision_kernel(void *input_ptr)
 
                     // Loop over Mini GOPs
 
-                    for (miniGopIndex = 0; miniGopIndex < context_ptr->total_number_of_mini_gops; ++miniGopIndex) {
+                    for (mini_gop_index = 0; mini_gop_index < context_ptr->total_number_of_mini_gops; ++mini_gop_index) {
 
                         preAssignmentBufferFirstPassFlag = EB_TRUE;
                         {
@@ -1908,14 +1908,14 @@ void* picture_decision_kernel(void *input_ptr)
                                 context_ptr,
                                 encode_context_ptr,
                                 sequence_control_set_ptr,
-                                miniGopIndex);
+                                mini_gop_index);
 
                             // Keep track of the number of hierarchical levels of the latest implemented mini GOP
-                            encode_context_ptr->previous_mini_gop_hierarchical_levels = context_ptr->mini_gop_hierarchical_levels[miniGopIndex];
+                            encode_context_ptr->previous_mini_gop_hierarchical_levels = context_ptr->mini_gop_hierarchical_levels[mini_gop_index];
                         }
 
                         // 1st Loop over Pictures in the Pre-Assignment Buffer
-                        for (pictureIndex = context_ptr->mini_gop_start_index[miniGopIndex]; pictureIndex <= context_ptr->mini_gop_end_index[miniGopIndex]; ++pictureIndex) {
+                        for (pictureIndex = context_ptr->mini_gop_start_index[mini_gop_index]; pictureIndex <= context_ptr->mini_gop_end_index[mini_gop_index]; ++pictureIndex) {
 
                             picture_control_set_ptr = (PictureParentControlSet*)encode_context_ptr->pre_assignment_buffer[pictureIndex]->object_ptr;
                             sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
@@ -1923,10 +1923,10 @@ void* picture_decision_kernel(void *input_ptr)
                             picture_control_set_ptr->last_islice_picture_number = context_ptr->last_islice_picture_number;
 #endif
                             // Keep track of the mini GOP size to which the input picture belongs - needed @ PictureManagerProcess()
-                            picture_control_set_ptr->pre_assignment_buffer_count = context_ptr->mini_gop_length[miniGopIndex];
+                            picture_control_set_ptr->pre_assignment_buffer_count = context_ptr->mini_gop_length[mini_gop_index];
 
                             // Update the Pred Structure if cutting short a Random Access period
-                            if ((context_ptr->mini_gop_length[miniGopIndex] < picture_control_set_ptr->pred_struct_ptr->pred_struct_period || context_ptr->mini_gop_idr_count[miniGopIndex] > 0) &&
+                            if ((context_ptr->mini_gop_length[mini_gop_index] < picture_control_set_ptr->pred_struct_ptr->pred_struct_period || context_ptr->mini_gop_idr_count[mini_gop_index] > 0) &&
 
                                 picture_control_set_ptr->pred_struct_ptr->pred_type == EB_PRED_RANDOM_ACCESS &&
                                 picture_control_set_ptr->idr_flag == EB_FALSE &&
@@ -1951,7 +1951,7 @@ void* picture_decision_kernel(void *input_ptr)
 
                             }
                             // Open GOP CRA - adjust the RPS
-                            else if ((context_ptr->mini_gop_length[miniGopIndex] == picture_control_set_ptr->pred_struct_ptr->pred_struct_period) &&
+                            else if ((context_ptr->mini_gop_length[mini_gop_index] == picture_control_set_ptr->pred_struct_ptr->pred_struct_period) &&
 
                                 (picture_control_set_ptr->pred_struct_ptr->pred_type == EB_PRED_RANDOM_ACCESS || picture_control_set_ptr->pred_struct_ptr->temporal_layer_count == 1) &&
                                 picture_control_set_ptr->idr_flag == EB_FALSE &&
@@ -1973,7 +1973,7 @@ void* picture_decision_kernel(void *input_ptr)
                                     (picture_control_set_ptr->cra_flag) ? I_SLICE :
                                     (picture_control_set_ptr->pred_structure == EB_PRED_LOW_DELAY_P) ? P_SLICE :
                                     (picture_control_set_ptr->pred_structure == EB_PRED_LOW_DELAY_B) ? B_SLICE :
-                                    (picture_control_set_ptr->pre_assignment_buffer_count == picture_control_set_ptr->pred_struct_ptr->pred_struct_period) ? ((pictureIndex == context_ptr->mini_gop_end_index[miniGopIndex] && sequence_control_set_ptr->static_config.base_layer_switch_mode) ? P_SLICE : B_SLICE) :
+                                    (picture_control_set_ptr->pre_assignment_buffer_count == picture_control_set_ptr->pred_struct_ptr->pred_struct_period) ? ((pictureIndex == context_ptr->mini_gop_end_index[mini_gop_index] && sequence_control_set_ptr->static_config.base_layer_switch_mode) ? P_SLICE : B_SLICE) :
 
                                     (encode_context_ptr->pre_assignment_buffer_eos_flag) ? P_SLICE :
                                     B_SLICE;
@@ -1988,7 +1988,7 @@ void* picture_decision_kernel(void *input_ptr)
                                 encode_context_ptr->pred_struct_position = picture_control_set_ptr->pred_struct_ptr->init_pic_index;
                             }
 
-                            else if (picture_control_set_ptr->cra_flag == EB_TRUE && context_ptr->mini_gop_length[miniGopIndex] < picture_control_set_ptr->pred_struct_ptr->pred_struct_period) {
+                            else if (picture_control_set_ptr->cra_flag == EB_TRUE && context_ptr->mini_gop_length[mini_gop_index] < picture_control_set_ptr->pred_struct_ptr->pred_struct_period) {
 
                                 encode_context_ptr->pred_struct_position = picture_control_set_ptr->pred_struct_ptr->init_pic_index;
                             }
@@ -2101,8 +2101,8 @@ void* picture_decision_kernel(void *input_ptr)
                             picture_control_set_ptr->is_used_as_reference_flag = predPositionPtr->is_referenced;
 
                             // Set the Decode Order
-                            if ((context_ptr->mini_gop_idr_count[miniGopIndex] == 0) &&
-                                (context_ptr->mini_gop_length[miniGopIndex] == picture_control_set_ptr->pred_struct_ptr->pred_struct_period))
+                            if ((context_ptr->mini_gop_idr_count[mini_gop_index] == 0) &&
+                                (context_ptr->mini_gop_length[mini_gop_index] == picture_control_set_ptr->pred_struct_ptr->pred_struct_period))
 
                             {
                                 picture_control_set_ptr->decode_order = encode_context_ptr->decode_base_number + predPositionPtr->decode_order;
@@ -2134,7 +2134,7 @@ void* picture_decision_kernel(void *input_ptr)
                                 picture_control_set_ptr,
                                 encode_context_ptr,
                                 context_ptr,
-                                pictureIndex - context_ptr->mini_gop_start_index[miniGopIndex]);
+                                pictureIndex - context_ptr->mini_gop_start_index[mini_gop_index]);
                             picture_control_set_ptr->allow_comp_inter_inter = 0;
                             picture_control_set_ptr->is_skip_mode_allowed = 0;
 
@@ -2378,7 +2378,7 @@ void* picture_decision_kernel(void *input_ptr)
                         }
 
                         // 2nd Loop over Pictures in the Pre-Assignment Buffer
-                        for (pictureIndex = context_ptr->mini_gop_start_index[miniGopIndex]; pictureIndex <= context_ptr->mini_gop_end_index[miniGopIndex]; ++pictureIndex) {
+                        for (pictureIndex = context_ptr->mini_gop_start_index[mini_gop_index]; pictureIndex <= context_ptr->mini_gop_end_index[mini_gop_index]; ++pictureIndex) {
 
                             picture_control_set_ptr = (PictureParentControlSet*)encode_context_ptr->pre_assignment_buffer[pictureIndex]->object_ptr;
 
@@ -2550,10 +2550,10 @@ void* picture_decision_kernel(void *input_ptr)
                                 }
                             }
 
-                            if (pictureIndex == context_ptr->mini_gop_end_index[miniGopIndex]) {
+                            if (pictureIndex == context_ptr->mini_gop_end_index[mini_gop_index]) {
 
                                 // Increment the Decode Base Number
-                                encode_context_ptr->decode_base_number += context_ptr->mini_gop_length[miniGopIndex];
+                                encode_context_ptr->decode_base_number += context_ptr->mini_gop_length[mini_gop_index];
                             }
 
                             if (pictureIndex == encode_context_ptr->pre_assignment_buffer_count - 1) {

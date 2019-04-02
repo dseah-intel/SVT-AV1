@@ -215,7 +215,8 @@ extern "C" {
 
     } MacroBlockDPlane;
 
-    typedef struct MacroBlockPlane {
+    typedef struct MacroBlockPlane 
+    {
 #if 0
         DECLARE_ALIGNED(16, int16_t, src_diff[MAX_SB_SQUARE]);
         TranLow *qcoeff;

@@ -31,7 +31,8 @@ extern "C" {
         int32_t eob_cost[2][11];
     } LvMapEobCost;
 
-    typedef struct LvMapCoeffCost {
+    typedef struct LvMapCoeffCost 
+    {
         int32_t txb_skip_cost[TXB_SKIP_CONTEXTS][2];
         int32_t base_eob_cost[SIG_COEF_CONTEXTS_EOB][3];
         int32_t base_cost[SIG_COEF_CONTEXTS][4];
