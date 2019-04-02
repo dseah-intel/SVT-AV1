@@ -322,7 +322,7 @@ EbErrorType SetMvpClipMVs(
     uint32_t                    cu_origin_x,
     uint32_t                    cu_origin_y,
     uint32_t                    pu_index,
-    uint32_t                    tbSize,
+    uint32_t                    tb_size,
     PictureControlSet      *picture_control_set_ptr)
 {
     EbErrorType  return_error = EB_ErrorNone;
@@ -347,7 +347,7 @@ EbErrorType SetMvpClipMVs(
             &candidate_ptr->motion_vector_yl0,
             picture_width,
             picture_height,
-            tbSize);
+            tb_size);
 
         break;
 
@@ -361,7 +361,7 @@ EbErrorType SetMvpClipMVs(
             &candidate_ptr->motion_vector_yl1,
             picture_width,
             picture_height,
-            tbSize);
+            tb_size);
 
         break;
 
@@ -376,7 +376,7 @@ EbErrorType SetMvpClipMVs(
             &candidate_ptr->motion_vector_yl0,
             picture_width,
             picture_height,
-            tbSize);
+            tb_size);
 
         // Choose the MVP in list1
         // Clip the input MV
@@ -387,7 +387,7 @@ EbErrorType SetMvpClipMVs(
             &candidate_ptr->motion_vector_yl1,
             picture_width,
             picture_height,
-            tbSize);
+            tb_size);
         break;
 
     default:
@@ -851,7 +851,7 @@ BIPred     : NEARST_NEARST  + upto 3x NEAR_NEAR
 void InjectAv1MvpCandidates(
     struct ModeDecisionContext     *context_ptr,
     CodingUnit                     *cu_ptr,
-    MvReferenceFrame               *refFrames,
+    MvReferenceFrame               *ref_frames,
     PictureControlSet              *picture_control_set_ptr,
     uint32_t                            lcuAddr,
 #if !M8_SKIP_BLK    
@@ -864,7 +864,7 @@ void InjectAv1MvpCandidates(
     (void)leaf_index;
 #endif
     (void)lcuAddr;
-    (void)refFrames;
+    (void)ref_frames;
     uint32_t                   canIdx = *candTotCnt;
     ModeDecisionCandidate    *candidateArray = context_ptr->fast_candidate_array;
     EbBool isCompoundEnabled = (picture_control_set_ptr->parent_pcs_ptr->reference_mode == SINGLE_REFERENCE) ? 0 : 1;
@@ -1333,7 +1333,7 @@ void  inject_inter_candidates(
     uint32_t                   canTotalCnt = *candidateTotalCnt;
     const uint32_t             lcuAddr = sb_ptr->index;
     ModeDecisionCandidate    *candidateArray = context_ptr->fast_candidate_array;
-    static MvReferenceFrame refFrames[] = { LAST_FRAME, BWDREF_FRAME, LAST_BWD_FRAME };
+    static MvReferenceFrame ref_frames[] = { LAST_FRAME, BWDREF_FRAME, LAST_BWD_FRAME };
     EbBool isCompoundEnabled = (picture_control_set_ptr->parent_pcs_ptr->reference_mode == SINGLE_REFERENCE) ? 0 : 1;
     uint32_t me_sb_addr;
     uint32_t geom_offset_x = 0;
@@ -1395,7 +1395,7 @@ void  inject_inter_candidates(
         context_ptr->blk_geom,
         context_ptr->cu_origin_x,
         context_ptr->cu_origin_y,
-        refFrames,
+        ref_frames,
         (picture_control_set_ptr->parent_pcs_ptr->reference_mode == SINGLE_REFERENCE) ? 1 : 3,
         picture_control_set_ptr);
 
@@ -1414,7 +1414,7 @@ void  inject_inter_candidates(
     InjectAv1MvpCandidates(
         context_ptr,
         context_ptr->cu_ptr,
-        refFrames,
+        ref_frames,
         picture_control_set_ptr,
         lcuAddr,
 #if !M8_SKIP_BLK

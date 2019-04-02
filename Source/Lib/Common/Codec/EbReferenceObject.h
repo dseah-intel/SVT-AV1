@@ -16,7 +16,7 @@ typedef struct EbReferenceObject
     EbPictureBufferDesc          *reference_picture16bit;
     EbPictureBufferDesc          *ref_den_src_picture;
 
-    TmvpUnit_t                     *tmvp_map;
+    TmvpUnit                     *tmvp_map;
     EbBool                          tmvp_enable_flag;
     uint64_t                        ref_poc;
 #if ADD_DELTA_QP_SUPPORT

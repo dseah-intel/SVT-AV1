@@ -21,67 +21,67 @@ extern "C" {
     struct ModeDecisionContext;
     struct InterPredictionContext;
 
-    typedef enum TmvpPos {
+    typedef enum TmvpPos 
+    {
         TmvpColocatedBottomRight = 0,
         TmvpColocatedCenter = 1
     } TmvpPos;
 
     // TMVP items corresponding to one LCU
-    typedef struct TmvpUnit_s {
+    typedef struct TmvpUnit 
+    {
         Mv              mv[MAX_NUM_OF_REF_PIC_LIST][MAX_TMVP_CAND_PER_LCU];
-        uint64_t            refPicPOC[MAX_NUM_OF_REF_PIC_LIST][MAX_TMVP_CAND_PER_LCU];
+        uint64_t            ref_pic_poc[MAX_NUM_OF_REF_PIC_LIST][MAX_TMVP_CAND_PER_LCU];
         EbPredDirection  prediction_direction[MAX_TMVP_CAND_PER_LCU];
-        EbBool              availabilityFlag[MAX_TMVP_CAND_PER_LCU];
+        EbBool              availability_flag[MAX_TMVP_CAND_PER_LCU];
 
         //*Note- list 1 motion info will be added when B-slices are ready
 
-    } TmvpUnit_t;
+    } TmvpUnit;
 
     extern EbErrorType clip_mv(
-        uint32_t                   cu_origin_x,
-        uint32_t                   cu_origin_y,
-        int16_t                  *MVx,
-        int16_t                  *MVy,
-        uint32_t                   picture_width,
-        uint32_t                   picture_height,
-        uint32_t                   tbSize);
+        uint32_t  cu_origin_x,
+        uint32_t  cu_origin_y,
+        int16_t  *mv_x,
+        int16_t  *mv_y,
+        uint32_t  picture_width,
+        uint32_t  picture_height,
+        uint32_t  tb_size);
 
     void generate_av1_mvp_table(
-        TileInfo                              *tile,
-      struct ModeDecisionContext            *context_ptr,
-        CodingUnit                     *cu_ptr,
-        const BlockGeom                   * blk_geom,
-        uint16_t                            cu_origin_x,
-        uint16_t                            cu_origin_y,
-        MvReferenceFrame                *refFrames,
-        uint32_t                            TotRefs,
-        PictureControlSet              *picture_control_set_ptr);
+        TileInfo                   *tile,
+        struct ModeDecisionContext *context_ptr,
+        CodingUnit                 *cu_ptr,
+        const BlockGeom            *blk_geom,
+        uint16_t                    cu_origin_x,
+        uint16_t                    cu_origin_y,
+        MvReferenceFrame           *ref_frames,
+        uint32_t                    tot_refs,
+        PictureControlSet          *picture_control_set_ptr);
 
     void get_av1_mv_pred_drl(
-        struct ModeDecisionContext            *context_ptr,
-        CodingUnit      *cu_ptr,
-        MvReferenceFrame ref_frame,
-        uint8_t              is_compound,
-        PredictionMode    mode,
-        uint8_t              drl_index,    //valid value of drl_index
-        IntMv             nearestmv[2],
-        IntMv             nearmv[2],
-        IntMv             ref_mv[2]);
+        struct ModeDecisionContext *context_ptr,
+        CodingUnit                 *cu_ptr,
+        MvReferenceFrame            ref_frame,
+        uint8_t                     is_compound,
+        PredictionMode              mode,
+        uint8_t                     drl_index,
+        IntMv                       nearestmv[2],
+        IntMv                       nearmv[2],
+        IntMv                       ref_mv[2]);
 
     void enc_pass_av1_mv_pred(
-        TileInfo                               *tile,
-
-         struct ModeDecisionContext            *md_context_ptr,
-        CodingUnit                     *cu_ptr,
-        const BlockGeom                   * blk_geom,
-        uint16_t                            cu_origin_x,
-        uint16_t                            cu_origin_y,
-        PictureControlSet              *picture_control_set_ptr,
-        MvReferenceFrame                ref_frame,
-        uint8_t                             is_compound,
-        PredictionMode                   mode,
-        IntMv                            ref_mv[2] //[OUT]
-    );
+        TileInfo                   *tile,
+        struct ModeDecisionContext *md_context_ptr,
+        CodingUnit                 *cu_ptr,
+        const BlockGeom            *blk_geom,
+        uint16_t                    cu_origin_x,
+        uint16_t                    cu_origin_y,
+        PictureControlSet          *picture_control_set_ptr,
+        MvReferenceFrame            ref_frame,
+        uint8_t                     is_compound,
+        PredictionMode              mode,
+        IntMv                       ref_mv[2]);
 
     void update_mi_map(
         struct ModeDecisionContext   *context_ptr,

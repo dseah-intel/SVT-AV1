@@ -183,7 +183,7 @@ EbErrorType eb_reference_object_ctor(
 
 
     // Allocate SB based TMVP map
-    EB_MALLOC(TmvpUnit_t *, referenceObject->tmvp_map, (sizeof(TmvpUnit_t) * (((pictureBufferDescInitDataPtr->max_width + (64 - 1)) >> 6) * ((pictureBufferDescInitDataPtr->max_height + (64 - 1)) >> 6))), EB_N_PTR);
+    EB_MALLOC(TmvpUnit *, referenceObject->tmvp_map, (sizeof(TmvpUnit) * (((pictureBufferDescInitDataPtr->max_width + (64 - 1)) >> 6) * ((pictureBufferDescInitDataPtr->max_height + (64 - 1)) >> 6))), EB_N_PTR);
 
     //RESTRICT THIS TO M4
     {

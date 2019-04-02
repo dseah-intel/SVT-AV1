@@ -76,7 +76,7 @@ extern "C" {
         uint32_t                               cu_origin_x,
         uint32_t                               cu_origin_y,
         uint32_t                               pu_index,
-        uint32_t                               tbSize,
+        uint32_t                               tb_size,
         int16_t                               *ref0_amvp_cand_array_x,
         int16_t                               *ref0_amvp_cand_array_y,
         uint32_t                               ref0_num_available_amvp_cand,
