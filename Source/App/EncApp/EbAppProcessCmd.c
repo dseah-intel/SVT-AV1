@@ -34,10 +34,10 @@ extern volatile int32_t keepRunning;
 ***************************************/
 void LogErrorOutput(
     FILE                     *error_log_file,
-    uint32_t                  errorCode)
+    uint32_t                  error_code)
 {
 
-    switch (errorCode) {
+    switch (error_code) {
 
         // EB_ENC_AMVP_ERRORS:
     case EB_ENC_AMVP_ERROR1:

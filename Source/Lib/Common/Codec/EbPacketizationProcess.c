@@ -395,8 +395,8 @@ void* packetization_kernel(void *input_ptr)
         // Calling callback functions to release the memory allocated for data linked list in the application
         while (picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr != EB_NULL) {
             appDataLLHeadTempPtr = picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr->next;
-            if (picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr->releaseCbFncPtr != EB_NULL) {
-                picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr->releaseCbFncPtr(picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr);
+            if (picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr->release_cb_fnc_ptr != EB_NULL) {
+                picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr->release_cb_fnc_ptr(picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr);
             }
 
             picture_control_set_ptr->parent_pcs_ptr->data_ll_head_ptr = appDataLLHeadTempPtr;

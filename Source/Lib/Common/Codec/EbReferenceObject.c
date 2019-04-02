@@ -76,7 +76,7 @@ void InitializeSamplesNeighboringReferencePicture8Bit(
 void InitializeSamplesNeighboringReferencePicture(
     EbReferenceObject              *referenceObject,
     EbPictureBufferDescInitData    *pictureBufferDescInitDataPtr,
-    EB_BITDEPTH                       bit_depth) {
+    EbBitDepth                       bit_depth) {
 
     if (bit_depth == EB_10BIT) {
 

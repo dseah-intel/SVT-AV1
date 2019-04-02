@@ -2014,7 +2014,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     if (use16x16Stat)
         usedDepth = 2;
 
-    uint32_t cuIndexInRaterScan = MD_SCAN_TO_RASTER_SCAN[cu_index];
+    uint32_t cuIndexInRaterScan = md_scan_to_raster_scan[cu_index];
 
     EbBool                         acEnergyBasedAntiContouring = picture_control_set_ptr->slice_type == I_SLICE ? EB_TRUE : EB_FALSE;
     uint8_t                           lowerQPClass;
@@ -2065,7 +2065,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 
 
             if (use16x16Stat) {
-                uint32_t cuIndexRScan = MD_SCAN_TO_RASTER_SCAN[ParentBlockIndex[cu_index]];
+                uint32_t cuIndexRScan = md_scan_to_raster_scan[ParentBlockIndex[cu_index]];
 
                 distortion = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index][cuIndexRScan].distortion_direction[0].distortion;
 

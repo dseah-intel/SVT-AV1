@@ -71,8 +71,8 @@ EbBool CheckMvForPanHighAmp(
     int32_t    *xCandidateMv)
 {
     if (*xCurrentMv * *xCandidateMv > 0                        // both negative or both positives and both different than 0 i.e. same direction and non Stationary)
-        && ABS(*xCurrentMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
-        && ABS(*xCandidateMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*xCurrentMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*xCandidateMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
         && ABS(*xCurrentMv - *xCandidateMv) < LOW_AMPLITUDE_TH) {    // close amplitude
 
         return(EB_TRUE);
@@ -91,8 +91,8 @@ EbBool CheckMvForTiltHighAmp(
     int32_t    *yCandidateMv)
 {
     if (*yCurrentMv * *yCandidateMv > 0                        // both negative or both positives and both different than 0 i.e. same direction and non Stationary)
-        && ABS(*yCurrentMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
-        && ABS(*yCandidateMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*yCurrentMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*yCandidateMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
         && ABS(*yCurrentMv - *yCandidateMv) < LOW_AMPLITUDE_TH) {    // close amplitude
 
         return(EB_TRUE);
@@ -115,8 +115,8 @@ EbBool CheckMvForPan(
     if (*yCurrentMv < LOW_AMPLITUDE_TH
         && *yCandidateMv < LOW_AMPLITUDE_TH
         && *xCurrentMv * *xCandidateMv        > 0                        // both negative or both positives and both different than 0 i.e. same direction and non Stationary)
-        && ABS(*xCurrentMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
-        && ABS(*xCandidateMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*xCurrentMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*xCandidateMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
         && ABS(*xCurrentMv - *xCandidateMv) < LOW_AMPLITUDE_TH) {    // close amplitude
 
         return(EB_TRUE);
@@ -139,8 +139,8 @@ EbBool CheckMvForTilt(
     if (*xCurrentMv < LOW_AMPLITUDE_TH
         && *xCandidateMv < LOW_AMPLITUDE_TH
         && *yCurrentMv * *yCandidateMv        > 0                        // both negative or both positives and both different than 0 i.e. same direction and non Stationary)
-        && ABS(*yCurrentMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
-        && ABS(*yCandidateMv) >= GLOBAL_MOTION_THRESHOLD[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*yCurrentMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
+        && ABS(*yCandidateMv) >= global_motion_threshold[hierarchical_levels][temporal_layer_index]    // high amplitude
         && ABS(*yCurrentMv - *yCandidateMv) < LOW_AMPLITUDE_TH) {    // close amplitude
 
         return(EB_TRUE);
@@ -1377,7 +1377,7 @@ void QpmGatherStatisticsSW(
         cu_depth = 3;
         for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_8x8_0; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_8x8_63; rasterScanCuIndex++) {
             if (sb_params.raster_scan_cu_validity[rasterScanCuIndex]) {
-                mdScanCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex];
+                mdScanCuIndex = raster_scan_to_md_scan[rasterScanCuIndex];
 
 
 
@@ -1415,7 +1415,7 @@ void QpmGatherStatisticsSW(
     for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_16x16_0; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_16x16_15; rasterScanCuIndex++) {
         if (sb_params.raster_scan_cu_validity[rasterScanCuIndex]) {
             
-            mdScanCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex];
+            mdScanCuIndex = raster_scan_to_md_scan[rasterScanCuIndex];
 
             ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
             ois_candidate_t *ois_cu_ptr = ois_sb_results_ptr->ois_candidate_array[mdScanCuIndex];
@@ -1440,7 +1440,7 @@ void QpmGatherStatisticsSW(
     for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_32x32_0; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_32x32_3; rasterScanCuIndex++) {
         if (sb_params.raster_scan_cu_validity[rasterScanCuIndex]) {
 
-             mdScanCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex];
+             mdScanCuIndex = raster_scan_to_md_scan[rasterScanCuIndex];
 
             ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
             ois_candidate_t *ois_cu_ptr = ois_sb_results_ptr->ois_candidate_array[mdScanCuIndex];

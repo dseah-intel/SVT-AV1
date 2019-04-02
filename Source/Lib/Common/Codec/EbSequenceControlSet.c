@@ -273,8 +273,8 @@ EbErrorType copy_sequence_control_set(
     dst->cropping_bottom_offset = src->cropping_bottom_offset;                    writeCount += sizeof(int32_t);
     dst->conformance_window_flag = src->conformance_window_flag;                   writeCount += sizeof(uint32_t);
     dst->frame_rate = src->frame_rate;                               writeCount += sizeof(uint32_t);
-    dst->input_bitdepth = src->input_bitdepth;                           writeCount += sizeof(EB_BITDEPTH);
-    dst->output_bitdepth = src->output_bitdepth;                          writeCount += sizeof(EB_BITDEPTH);
+    dst->input_bitdepth = src->input_bitdepth;                           writeCount += sizeof(EbBitDepth);
+    dst->output_bitdepth = src->output_bitdepth;                          writeCount += sizeof(EbBitDepth);
     dst->pred_struct_ptr = src->pred_struct_ptr;                           writeCount += sizeof(PredictionStructure*);
     dst->intra_period_length = src->intra_period_length;                       writeCount += sizeof(int32_t);
     dst->intra_refresh_type = src->intra_refresh_type;                        writeCount += sizeof(uint32_t);
@@ -500,7 +500,7 @@ extern EbErrorType sb_params_init(
 
         for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_64x64; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_8x8_63; rasterScanCuIndex++) {
 
-            sequence_control_set_ptr->sb_params_array[sb_index].raster_scan_cu_validity[rasterScanCuIndex] = ((sequence_control_set_ptr->sb_params_array[sb_index].origin_x + RASTER_SCAN_CU_X[rasterScanCuIndex] + RASTER_SCAN_CU_SIZE[rasterScanCuIndex] > sequence_control_set_ptr->luma_width) || (sequence_control_set_ptr->sb_params_array[sb_index].origin_y + RASTER_SCAN_CU_Y[rasterScanCuIndex] + RASTER_SCAN_CU_SIZE[rasterScanCuIndex] > sequence_control_set_ptr->luma_height)) ?
+            sequence_control_set_ptr->sb_params_array[sb_index].raster_scan_cu_validity[rasterScanCuIndex] = ((sequence_control_set_ptr->sb_params_array[sb_index].origin_x + raster_scan_cu_x[rasterScanCuIndex] + raster_scan_cu_size[rasterScanCuIndex] > sequence_control_set_ptr->luma_width) || (sequence_control_set_ptr->sb_params_array[sb_index].origin_y + raster_scan_cu_y[rasterScanCuIndex] + raster_scan_cu_size[rasterScanCuIndex] > sequence_control_set_ptr->luma_height)) ?
                 EB_FALSE :
                 EB_TRUE;
         }

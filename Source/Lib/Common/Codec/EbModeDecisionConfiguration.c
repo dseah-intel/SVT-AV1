@@ -337,7 +337,7 @@ void RefinementPredictionLoop(
     sb_ptr->pred64 = EB_FALSE;
     while (cu_index < CU_MAX_COUNT)
     {
-        if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]] && (local_cu_array[cu_index].early_split_flag == EB_FALSE))
+        if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]] && (local_cu_array[cu_index].early_split_flag == EB_FALSE))
         {
             local_cu_array[cu_index].selected_cu = EB_TRUE;
             sb_ptr->pred64 = (cu_index == 0) ? EB_TRUE : sb_ptr->pred64;
@@ -487,7 +487,7 @@ void ForwardCuToModeDecision(
     while (cu_index < CU_MAX_COUNT)
     {
         split_flag = EB_TRUE;
-        if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
+        if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]])
         {
             cuStatsPtr = get_coded_unit_stats(cu_index);
 
@@ -798,7 +798,7 @@ void PredictionPartitionLoop(
         local_cu_array[cu_index].stop_split = EB_FALSE;
 
         cu_ptr = &local_cu_array[cu_index];
-        cuIndexInRaterScan = MD_SCAN_TO_RASTER_SCAN[cu_index];
+        cuIndexInRaterScan = md_scan_to_raster_scan[cu_index];
         if (sb_params->raster_scan_cu_validity[cuIndexInRaterScan])
         {
             uint32_t depth;

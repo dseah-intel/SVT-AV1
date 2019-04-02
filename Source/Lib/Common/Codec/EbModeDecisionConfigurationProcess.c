@@ -694,7 +694,7 @@ void AdaptiveDlfParameterComputation(
         refObjL0 = (EbReferenceObject*)picture_control_set_ptr->ref_pic_ptr_array[REF_LIST_0]->object_ptr;
         refObjL1 = (EbReferenceObject*)picture_control_set_ptr->ref_pic_ptr_array[REF_LIST_1]->object_ptr;
 
-        if ((refObjL0->intra_coded_area > INTRA_AREA_TH_CLASS_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][refObjL0->tmp_layer_idx]) && (refObjL1->intra_coded_area > INTRA_AREA_TH_CLASS_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][refObjL1->tmp_layer_idx]))
+        if ((refObjL0->intra_coded_area > intra_area_th_class_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][refObjL0->tmp_layer_idx]) && (refObjL1->intra_coded_area > intra_area_th_class_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][refObjL1->tmp_layer_idx]))
 
             highIntra = 1;
         else
@@ -708,7 +708,7 @@ void AdaptiveDlfParameterComputation(
             refObjL1 = (EbReferenceObject*)picture_control_set_ptr->ref_pic_ptr_array[REF_LIST_1]->object_ptr;
 
             if (picture_control_set_ptr->temporal_layer_index == 0) {
-                highIntra = (picture_control_set_ptr->parent_pcs_ptr->intra_coded_block_probability > INTRA_AREA_TH_CLASS_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index]) ? 1 : 0;
+                highIntra = (picture_control_set_ptr->parent_pcs_ptr->intra_coded_block_probability > intra_area_th_class_1[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index]) ? 1 : 0;
             }
             else {
                 highIntra = (refObjL0->penalize_skipflag || refObjL1->penalize_skipflag) ? 1 : 0;
@@ -826,7 +826,7 @@ void Forward85CuToModeDecisionLCU(
     {
         split_flag = EB_TRUE;
         cuStatsPtr = get_coded_unit_stats(cu_index);
-        if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
+        if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]])
         {
             switch (cuStatsPtr->depth) {
 
@@ -837,7 +837,7 @@ void Forward85CuToModeDecisionLCU(
 
                 break;
             case 1:
-                cuIndexInRaterScan = MD_SCAN_TO_RASTER_SCAN[cu_index];
+                cuIndexInRaterScan = md_scan_to_raster_scan[cu_index];
                 cuVar = (picture_control_set_ptr->parent_pcs_ptr->variance[sb_index][cuIndexInRaterScan]);
                 if (picture_control_set_ptr->slice_type == I_SLICE && cuVar > 40)
                     split_flag = EB_TRUE;
@@ -892,7 +892,7 @@ void Forward84CuToModeDecisionLCU(
     {
         split_flag = EB_TRUE;
         cuStatsPtr = get_coded_unit_stats(cu_index);
-        if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
+        if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]])
         {
             switch (cuStatsPtr->depth) {
 
@@ -902,7 +902,7 @@ void Forward84CuToModeDecisionLCU(
 
                 break;
             case 1:
-                cuIndexInRaterScan = MD_SCAN_TO_RASTER_SCAN[cu_index];
+                cuIndexInRaterScan = md_scan_to_raster_scan[cu_index];
                 cuVar = (picture_control_set_ptr->parent_pcs_ptr->variance[sb_index][cuIndexInRaterScan]);
                 if (picture_control_set_ptr->slice_type == I_SLICE && cuVar > 40)
                     split_flag = EB_TRUE;
@@ -1126,7 +1126,7 @@ void Forward85CuToModeDecision(
         {
             split_flag = EB_TRUE;
             cuStatsPtr = get_coded_unit_stats(cu_index);
-            if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
+            if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]])
             {
                 switch (cuStatsPtr->depth) {
 
@@ -1189,7 +1189,7 @@ void Forward84CuToModeDecision(
         {
             split_flag = EB_TRUE;
             cuStatsPtr = get_coded_unit_stats(cu_index);
-            if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[cu_index]])
+            if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[cu_index]])
             {
                 switch (cuStatsPtr->depth) {
 
@@ -1206,7 +1206,7 @@ void Forward84CuToModeDecision(
                 case 1:
 
                     //OMK To revisit : add Varpart flag and move to MD
-                    cuIndexInRaterScan = MD_SCAN_TO_RASTER_SCAN[cu_index];
+                    cuIndexInRaterScan = md_scan_to_raster_scan[cu_index];
                     cuVar = (picture_control_set_ptr->parent_pcs_ptr->variance[sb_index][cuIndexInRaterScan]);
                     if ((picture_control_set_ptr->slice_type == I_SLICE && cuVar > 40) || (sequence_control_set_ptr->input_resolution < INPUT_SIZE_4K_RANGE&& picture_control_set_ptr->slice_type == I_SLICE && cuVar>40))
                         split_flag = EB_TRUE;
@@ -1392,10 +1392,10 @@ EbAuraStatus AuraDetection64x64Gold(
 
         if ((currDist > 64 * 64) &&
             // Only mark a block as aura when it is moving (MV amplitude higher than X; X is temporal layer dependent)
-            (abs(xMv0) > GLOBAL_MOTION_THRESHOLD[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
-                abs(yMv0) > GLOBAL_MOTION_THRESHOLD[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
-                abs(xMv1) > GLOBAL_MOTION_THRESHOLD[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
-                abs(yMv1) > GLOBAL_MOTION_THRESHOLD[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index]))
+            (abs(xMv0) > global_motion_threshold[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
+                abs(yMv0) > global_motion_threshold[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
+                abs(xMv1) > global_motion_threshold[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index] ||
+                abs(yMv1) > global_motion_threshold[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index]))
         {
 
 

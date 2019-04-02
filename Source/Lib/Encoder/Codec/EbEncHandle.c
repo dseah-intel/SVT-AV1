@@ -155,10 +155,10 @@ EbMemoryMapEntry                 *memory_map;
 uint32_t                         *memory_map_index;
 uint64_t                         *total_lib_memory;
 
-uint32_t                         libMallocCount = 0;
+uint32_t                         lib_malloc_count = 0;
 uint32_t                         lib_thread_count = 0;
-uint32_t                         libSemaphoreCount = 0;
-uint32_t                         libMutexCount = 0;
+uint32_t                         lib_semaphore_count = 0;
+uint32_t                         lib_mutex_count = 0;
 
 uint8_t                          num_groups = 0;
 #ifdef _WIN32
@@ -665,7 +665,7 @@ static uint32_t EncDecPortTotalCount(void){
 
 void lib_svt_encoder_send_error_exit(
     EbPtr                    hComponent,
-    uint32_t                 errorCode);
+    uint32_t                 error_code);
 
 /**********************************
 * Encoder Library Handle Constructor
@@ -690,10 +690,10 @@ static EbErrorType eb_enc_handle_ctor(
     total_lib_memory = &encHandlePtr->total_lib_memory;
     memory_map = encHandlePtr->memory_map;
     memory_map_index = &encHandlePtr->memory_map_index;
-    libMallocCount = 0;
+    lib_malloc_count = 0;
     lib_thread_count = 0;
-    libMutexCount = 0;
-    libSemaphoreCount = 0;
+    lib_mutex_count = 0;
+    lib_semaphore_count = 0;
 
     if (memory_map == (EbMemoryMapEntry*)EB_NULL) {
         return EB_ErrorInsufficientResources;
@@ -807,10 +807,10 @@ static EbErrorType eb_enc_handle_ctor(
     encHandlePtr->entropyCodingResultsConsumerFifoPtrArray = (EbFifo**)EB_NULL;
 
     // Initialize Callbacks
-    EB_MALLOC(EbCallback_t**, encHandlePtr->app_callback_ptr_array, sizeof(EbCallback_t*) * encHandlePtr->encodeInstanceTotalCount, EB_N_PTR);
+    EB_MALLOC(EbCallback**, encHandlePtr->app_callback_ptr_array, sizeof(EbCallback*) * encHandlePtr->encodeInstanceTotalCount, EB_N_PTR);
 
     for (instance_index = 0; instance_index < encHandlePtr->encodeInstanceTotalCount; ++instance_index) {
-        EB_MALLOC(EbCallback_t*, encHandlePtr->app_callback_ptr_array[instance_index], sizeof(EbCallback_t), EB_N_PTR);
+        EB_MALLOC(EbCallback*, encHandlePtr->app_callback_ptr_array[instance_index], sizeof(EbCallback), EB_N_PTR);
         encHandlePtr->app_callback_ptr_array[instance_index]->ErrorHandler = lib_svt_encoder_send_error_exit;
         encHandlePtr->app_callback_ptr_array[instance_index]->handle = ebHandlePtr;
     }
@@ -3293,7 +3293,7 @@ EB_API EbErrorType eb_svt_get_recon(
 **********************************/
 void lib_svt_encoder_send_error_exit(
     EbPtr                    hComponent,
-    uint32_t                 errorCode)
+    uint32_t                 error_code)
 {
     EbComponentType      *svt_enc_component = (EbComponentType*)hComponent;
     EbEncHandle_t          *pEncCompData = (EbEncHandle_t*)svt_enc_component->p_component_private;
@@ -3307,7 +3307,7 @@ void lib_svt_encoder_send_error_exit(
     outputPacket            = (EbBufferHeaderType*)ebWrapperPtr->object_ptr;
 
     outputPacket->size     = 0;
-    outputPacket->flags    = errorCode;
+    outputPacket->flags    = error_code;
     outputPacket->p_buffer   = NULL;
 
     eb_post_full_object(ebWrapperPtr);
@@ -3358,7 +3358,7 @@ static EbErrorType allocate_frame_buffer(
     // Init Picture Init data
     input_picture_buffer_desc_init_data.max_width = (uint16_t)sequence_control_set_ptr->max_input_luma_width;
     input_picture_buffer_desc_init_data.max_height = (uint16_t)sequence_control_set_ptr->max_input_luma_height;
-    input_picture_buffer_desc_init_data.bit_depth = (EB_BITDEPTH)config->encoder_bit_depth;
+    input_picture_buffer_desc_init_data.bit_depth = (EbBitDepth)config->encoder_bit_depth;
 
     if (config->compressed_ten_bit_format == 1) {
         input_picture_buffer_desc_init_data.buffer_enable_mask = 0;
@@ -3429,7 +3429,7 @@ EbErrorType EbOutputBufferHeaderCtor(
     EbPtr objectInitDataPtr)
 {
     EbSvtAv1EncConfiguration   * config = (EbSvtAv1EncConfiguration*)objectInitDataPtr;
-    uint32_t nStride = (uint32_t)(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width * config->source_height));  //TBC
+    uint32_t n_stride = (uint32_t)(EB_OUTPUTSTREAMBUFFERSIZE_MACRO(config->source_width * config->source_height));  //TBC
     EbBufferHeaderType* outBufPtr;
 
     EB_MALLOC(EbBufferHeaderType*, outBufPtr, sizeof(EbBufferHeaderType), EB_N_PTR);
@@ -3438,9 +3438,9 @@ EbErrorType EbOutputBufferHeaderCtor(
     // Initialize Header
     outBufPtr->size = sizeof(EbBufferHeaderType);
 
-    EB_MALLOC(uint8_t*, outBufPtr->p_buffer, nStride, EB_N_PTR);
+    EB_MALLOC(uint8_t*, outBufPtr->p_buffer, n_stride, EB_N_PTR);
 
-    outBufPtr->n_alloc_len = nStride;
+    outBufPtr->n_alloc_len = n_stride;
     outBufPtr->p_app_private = NULL;
 
     (void)objectInitDataPtr;

@@ -7720,8 +7720,8 @@ EbErrorType motion_estimate_lcu(
                                 &(hmeLevel0Sad[searchRegionNumberInWidth][searchRegionNumberInHeight]),
                                 &(xHmeLevel0SearchCenter[searchRegionNumberInWidth][searchRegionNumberInHeight]),
                                 &(yHmeLevel0SearchCenter[searchRegionNumberInWidth][searchRegionNumberInHeight]),
-                                HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_X[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
-                                HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_Y[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
+                                hme_level_0_search_area_multiplier_x[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
+                                hme_level_0_search_area_multiplier_y[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
                                 asm_type);
 
 
@@ -7751,8 +7751,8 @@ EbErrorType motion_estimate_lcu(
                                             &(hmeLevel0Sad[searchRegionNumberInWidth][searchRegionNumberInHeight]),
                                             &(xHmeLevel0SearchCenter[searchRegionNumberInWidth][searchRegionNumberInHeight]),
                                             &(yHmeLevel0SearchCenter[searchRegionNumberInWidth][searchRegionNumberInHeight]),
-                                            HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_X[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
-                                            HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_Y[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
+                                            hme_level_0_search_area_multiplier_x[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
+                                            hme_level_0_search_area_multiplier_y[picture_control_set_ptr->hierarchical_levels][picture_control_set_ptr->temporal_layer_index],
                                             asm_type);
 
 
@@ -8720,7 +8720,7 @@ EbErrorType open_loop_intra_search_sb(
             const CodedUnitStats  *blk_stats_ptr;
             blk_stats_ptr = get_coded_unit_stats(pa_blk_index);
             uint8_t bsize = blk_stats_ptr->size;
-            if (sb_params->raster_scan_cu_validity[MD_SCAN_TO_RASTER_SCAN[pa_blk_index]]) {
+            if (sb_params->raster_scan_cu_validity[md_scan_to_raster_scan[pa_blk_index]]) {
 
                 ois_candidate_t *ois_blk_ptr = ois_sb_results_ptr->ois_candidate_array[pa_blk_index];
                 cu_origin_x = sb_params->origin_x + blk_stats_ptr->origin_x;

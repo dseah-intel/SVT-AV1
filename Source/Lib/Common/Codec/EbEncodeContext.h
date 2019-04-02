@@ -43,7 +43,7 @@
 typedef struct EncodeContext
 {
     // Callback Functions
-    EbCallback_t                                    *app_callback_ptr;
+    EbCallback                                    *app_callback_ptr;
 
     EbBool                                           statistics_port_active;
     EbHandle                                         total_number_of_recon_frame_mutex;

@@ -1813,12 +1813,13 @@ static const EbWarpedMotionParams default_warp_params = {
 #define EB_NORMAL_LATENCY        0
 #define EB_LOW_LATENCY           1
 
-typedef enum EB_BITFIELD_MASKS {
+typedef enum EbBitFieldMasks 
+{
     BITMASK_0 = 1,
     BITMASK_1 = 2,
     BITMASK_2 = 4,
     BITMASK_3 = 8
-} EB_BITFIELD_MASKS;
+} EbBitFieldMasks;
 
 // CLEAN_BASIS_FUNCTIONS
 #define CLEAN_BASIS_FUNCTIONS_VAR_TRSHLD 10
@@ -1939,11 +1940,11 @@ API.  This is a 32 bit pointer and is aligned on a 32 bit word boundary.
 */
 typedef void *EbPtr;
 
-/** The EB_STRING type is intended to be used to pass "C" type strings to and
-from the eBrisk API.  The EB_STRING type is a 32 bit pointer to a zero terminated
+/** The EbString type is intended to be used to pass "C" type strings to and
+from the eBrisk API.  The EbString type is a 32 bit pointer to a zero terminated
 string.  The pointer is word aligned and the string is byte aligned.
 */
-typedef char * EB_STRING;
+typedef char * EbString;
 
 /** The EbByte type is intended to be used to pass arrays of bytes such as
 buffers to and from the eBrisk API.  The EbByte type is a 32 bit pointer.
@@ -1956,9 +1957,10 @@ buffers to and from the eBrisk API.  The EbByte type is a 32 bit pointer.
 The pointer is word aligned and the buffer is byte aligned.
 */
 
-/** The EB_BITDEPTH type is used to describe the bitdepth of video data.
+/** The EbBitDepthEnum type is used to describe the bitdepth of video data.
 */
-typedef enum EB_BITDEPTH {
+typedef enum EbBitDepthEnum 
+{
     EB_8BIT = 8,
     EB_10BIT = 10,
     EB_12BIT = 12,
@@ -1966,7 +1968,7 @@ typedef enum EB_BITDEPTH {
     EB_16BIT = 16,
     EB_32BIT = 32
 
-} EB_BITDEPTH;
+} EbBitDepthEnum;
 
 /** The EB_GOP type is used to describe the hierarchical coding structure of
 Groups of Pictures (GOP) units.
@@ -1998,23 +2000,17 @@ Groups of Pictures (GOP) units.
 #define BOTTOM_FIELD_PICT_STRUCT 2
 
 
-/** The EB_MODETYPE type is used to describe the PU type.
+/** The EbModeType type is used to describe the PU type.
 */
-typedef uint8_t EB_MODETYPE;
+typedef uint8_t EbModeType;
 #define INTER_MODE 1
 #define INTRA_MODE 2
 
 #define INVALID_MODE 0xFFu
 
-/** INTRA_4x4 offsets
+/** The EbPartMode type is used to describe the CU partition size.
 */
-static const uint8_t INTRA_4x4_OFFSET_X[4] = { 0, 4, 0, 4 };
-static const uint8_t INTRA_4x4_OFFSET_Y[4] = { 0, 0, 4, 4 };
-
-
-/** The EB_PART_MODE type is used to describe the CU partition size.
-*/
-typedef uint8_t EB_PART_MODE;
+typedef uint8_t EbPartMode;
 #define SIZE_2Nx2N 0
 #define SIZE_2NxN  1
 #define SIZE_Nx2N  2
@@ -2025,13 +2021,14 @@ typedef uint8_t EB_PART_MODE;
 #define SIZE_nRx2N 7
 #define SIZE_PART_MODE 8
 
-/** The EB_INTRA_REFRESH_TYPE is used to describe the intra refresh type.
+/** The EbIntraRefreshType is used to describe the intra refresh type.
 */
-typedef enum EB_INTRA_REFRESH_TYPE {
+typedef enum EbIntraRefreshType 
+{
     NO_REFRESH = 0,
     CRA_REFRESH = 1,
     IDR_REFRESH = 2
-}EB_INTRA_REFRESH_TYPE;
+}EbIntraRefreshType;
 
 #define SIZE_2Nx2N_PARTITION_MASK   (1 << SIZE_2Nx2N)
 #define SIZE_2NxN_PARTITION_MASK    (1 << SIZE_2NxN)
@@ -2065,18 +2062,19 @@ typedef enum EB_INTRA_REFRESH_TYPE {
 #define SPEED_CONTROL_INIT_MOD ENC_M4;
 /** The EB_TUID type is used to identify a TU within a CU.
 */
-typedef enum EB_TUSIZE {
-    TU_2Nx2N = 0,
-    TU_NxN_0 = 1,
-    TU_NxN_1 = 2,
-    TU_NxN_2 = 3,
-    TU_NxN_3 = 4,
-    TU_N2xN2_0 = 5,
-    TU_N2xN2_1 = 6,
-    TU_N2xN2_2 = 7,
-    TU_N2xN2_3 = 8,
+typedef enum EbTuSize 
+{
+    TU_2Nx2N       = 0,
+    TU_NxN_0       = 1,
+    TU_NxN_1       = 2,
+    TU_NxN_2       = 3,
+    TU_NxN_3       = 4,
+    TU_N2xN2_0     = 5,
+    TU_N2xN2_1     = 6,
+    TU_N2xN2_2     = 7,
+    TU_N2xN2_3     = 8,
     INVALID_TUSIZE = ~0
-}EB_TUSIZE;
+}EbTuSize;
 
 #define TU_2Nx2N_PARTITION_MASK     (1 << TU_2Nx2N)
 #define TU_NxN_0_PARTITION_MASK     (1 << TU_NxN_0)
@@ -2117,15 +2115,10 @@ typedef enum EB_TUSIZE {
 #define EB_FRAME_CARAC_3           3
 #define EB_FRAME_CARAC_4           4
 
-static const uint8_t QP_OFFSET_WEIGHT[3][4] = { // [Slice Type][QP Offset Weight Level]
-    { 9, 8, 7, 6 },
-    { 9, 8, 7, 6 },
-    { 10, 9, 8, 7 }
-};
-
 /** Assembly Types
 */
-typedef enum EbAsm {
+typedef enum EbAsm 
+{
     ASM_NON_AVX2,
     ASM_AVX2,
     ASM_TYPE_TOTAL,
@@ -2141,18 +2134,18 @@ semaphores, mutexs, etc.
 */
 typedef void * EbHandle;
 
-/** The EB_CTOR type is used to define the eBrisk object constructors.
+/** The EbCtor type is used to define the eBrisk object constructors.
 object_ptr is a EbPtr to the object being constructed.
 object_init_data_ptr is a EbPtr to a data structure used to initialize the object.
 */
-typedef EbErrorType(*EB_CTOR)(
+typedef EbErrorType(*EbCtor)(
     EbPtr *object_dbl_ptr,
     EbPtr object_init_data_ptr);
 
-/** The EB_DTOR type is used to define the eBrisk object destructors.
+/** The EbDtor type is used to define the eBrisk object destructors.
 object_ptr is a EbPtr to the object being constructed.
 */
-typedef void(*EB_DTOR)(
+typedef void(*EbDtor)(
     EbPtr object_ptr);
 
 #define INVALID_MV            0xFFFFFFFF    //ICOPY They changed this to 0x80008000
@@ -2173,18 +2166,17 @@ typedef void(*EB_DTOR)(
 #define       EB_TYPE_HIERARCHICAL_LEVELS  100
 #define       EB_TYPE_PRED_STRUCTURE       101
 
-typedef int32_t   EB_LINKED_LIST_TYPE;
+typedef int32_t EbLinkedListType;
 
 typedef struct EbLinkedListNode
 {
     void*                     app;                       // points to an application object this node is associated
                                                             // with. this is an opaque pointer to the encoder lib, but
-                                                            // releaseCbFncPtr may need to access it.
-
-    EB_LINKED_LIST_TYPE       type;                      // type of data pointed by "data" member variable
+                                                            // release_cb_fnc_ptr may need to access it.
+    EbLinkedListType       type;                      // type of data pointed by "data" member variable
     uint32_t                    size;                      // size of (data)
     EbBool                   passthrough;               // whether this is passthrough data from application
-    void(*releaseCbFncPtr)(struct EbLinkedListNode*); // callback to be executed by encoder when picture reaches end of pipeline, or
+    void(*release_cb_fnc_ptr)(struct EbLinkedListNode*); // callback to be executed by encoder when picture reaches end of pipeline, or
                                                         // when aborting. However, at end of pipeline encoder shall
                                                         // NOT invoke this callback if passthrough is TRUE (but
                                                         // still needs to do so when aborting)
@@ -2192,12 +2184,15 @@ typedef struct EbLinkedListNode
     struct EbLinkedListNode  *next;                      // pointer to next node (null when last)
 } EbLinkedListNode;
 
-typedef enum DIST_CALC_TYPE {
+typedef enum DistCalcType 
+{
     DIST_CALC_RESIDUAL = 0,    // SSE(Coefficients - ReconCoefficients)
     DIST_CALC_PREDICTION = 1,    // SSE(Coefficients) *Note - useful in modes that don't send residual coeff bits
     DIST_CALC_TOTAL = 2
-} DIST_CALC_TYPE;
-typedef enum EbPtrType {
+} DistCalcType;
+
+typedef enum EbPtrType 
+{
     EB_N_PTR = 0,                                   // malloc'd pointer
     EB_A_PTR = 1,                                   // malloc'd pointer aligned
     EB_MUTEX = 2,                                   // mutex
@@ -2238,10 +2233,10 @@ extern    EbMemoryMapEntry        *memory_map;               // library Memory t
 extern    uint32_t                  *memory_map_index;          // library memory index
 extern    uint64_t                  *total_lib_memory;          // library Memory malloc'd
 
-extern    uint32_t                   libMallocCount;
+extern    uint32_t                   lib_malloc_count;
 extern    uint32_t                   lib_thread_count;
-extern    uint32_t                   libSemaphoreCount;
-extern    uint32_t                   libMutexCount;
+extern    uint32_t                   lib_semaphore_count;
+extern    uint32_t                   lib_mutex_count;
 
 extern    uint32_t                   app_malloc_count;
 
@@ -2311,7 +2306,7 @@ if (pointer == (type)EB_NULL) { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
 } \
-libMallocCount++;
+lib_malloc_count++;
 
 #else
 #define EB_ALLIGN_MALLOC(type, pointer, n_elements, pointer_class) \
@@ -2332,7 +2327,7 @@ if (posix_memalign((void**)(&(pointer)), ALVALUE, n_elements) != 0) { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
     } \
-libMallocCount++;
+lib_malloc_count++;
 #endif
 
 
@@ -2354,7 +2349,7 @@ if (pointer == (type)EB_NULL) { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
 } \
-libMallocCount++;
+lib_malloc_count++;
 
 #define EB_CALLOC(type, pointer, count, size, pointer_class) \
 pointer = (type) calloc(count, size); \
@@ -2374,7 +2369,7 @@ else { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
 } \
-libMallocCount++;
+lib_malloc_count++;
 
 #define EB_CREATESEMAPHORE(type, pointer, n_elements, pointer_class, initial_count, max_count) \
 pointer = eb_create_semaphore(initial_count, max_count); \
@@ -2394,7 +2389,7 @@ else { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
 } \
-libSemaphoreCount++;
+lib_semaphore_count++;
 
 #define EB_CREATEMUTEX(type, pointer, n_elements, pointer_class) \
 pointer = eb_create_mutex(); \
@@ -2414,13 +2409,13 @@ else { \
 if (*(memory_map_index) >= MAX_NUM_PTR) { \
     return EB_ErrorInsufficientResources; \
 } \
-libMutexCount++;
+lib_mutex_count++;
 
 #define EB_MEMORY() \
-printf("Total Number of Mallocs in Library: %d\n", libMallocCount); \
+printf("Total Number of Mallocs in Library: %d\n", lib_malloc_count); \
 printf("Total Number of Threads in Library: %d\n", lib_thread_count); \
-printf("Total Number of Semaphore in Library: %d\n", libSemaphoreCount); \
-printf("Total Number of Mutex in Library: %d\n", libMutexCount); \
+printf("Total Number of Semaphore in Library: %d\n", lib_semaphore_count); \
+printf("Total Number of Mutex in Library: %d\n", lib_mutex_count); \
 printf("Total Library Memory: %.2lf KB\n\n",*total_lib_memory/(double)1024);
 
 
@@ -2555,52 +2550,17 @@ strnlen_ss(target, max_size)
 //#endif // __cplusplus
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-typedef struct EB_PARAM_PORTDEFINITIONTYPE {
-uint32_t nFrameWidth;
-uint32_t nFrameHeight;
-int32_t  nStride;
-uint32_t size;
-} EB_PARAM_PORTDEFINITIONTYPE;
-
 /**************************************
 * Callback Functions
 **************************************/
-typedef struct EbCallback_s
+typedef struct EbCallback
 {
-EbPtr                                 appPrivateData;
-EbPtr                                 handle;
+EbPtr appPrivateData;
+EbPtr handle;
 void(*ErrorHandler)(
     EbPtr handle,
     uint32_t errorCode);
-} EbCallback_t;
+} EbCallback;
 
 // DEBUG MACROS
 #define LIB_PRINTF_ENABLE                1
@@ -2886,7 +2846,7 @@ void(*ErrorHandler)(
 
 #define FAILING_MOTION_DELTA_QP            -5
 #define FAILING_MOTION_VAR_THRSLHD        50
-static const uint8_t INTRA_AREA_TH_CLASS_1[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
+static const uint8_t intra_area_th_class_1[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
     { 20 },
     { 30, 20 },
     { 40, 30, 20 },
@@ -2999,30 +2959,34 @@ static const uint8_t INTRA_AREA_TH_CLASS_1[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_
 #define CHROMA_MODE_1  1 // Chroma blind @ MD + CFL @ EP
 #define CHROMA_MODE_2  2 // Chroma blind @ MD + no CFL @ EP
 
-typedef enum EbSbComplexityStatus {
+typedef enum EbSbComplexityStatus 
+{
     SB_COMPLEXITY_STATUS_0 = 0,
     SB_COMPLEXITY_STATUS_1 = 1,
     SB_COMPLEXITY_STATUS_2 = 2,
     SB_COMPLEXITY_STATUS_INVALID = (uint8_t)~0
 } EbSbComplexityStatus;
 
-typedef enum EB_CLEAN_UP_MODE {
+typedef enum EbCleanUpMode 
+{
     CLEAN_UP_MODE_0 = 0,
     CLEAN_UP_MODE_1 = 1
-} EB_CLEAN_UP_MODE;
+} EbCleanUpMode;
 
-typedef enum EB_SAO_MODE {
+typedef enum EbSaoMode 
+{
     SAO_MODE_0 = 0,
     SAO_MODE_1 = 1
-} EB_SAO_MODE;
+} EbSaoMode;
 
-typedef enum EbCu8x8Mode {
+typedef enum EbCu8x8Mode 
+{
     CU_8x8_MODE_0 = 0,  // Perform OIS, Full_Search, Fractional_Search & Bipred for CU_8x8
     CU_8x8_MODE_1 = 1   // Perform OIS and only Full_Search for CU_8x8
 } EbCu8x8Mode;
 
-typedef enum EbPictureDepthMode {
-
+typedef enum EbPictureDepthMode 
+{
     PIC_ALL_DEPTH_MODE          = 0, // ALL sq and nsq:  SB size -> 4x4 
     PIC_ALL_C_DEPTH_MODE        = 1, // ALL sq and nsq with control :  SB size -> 4x4 
     PIC_SQ_DEPTH_MODE           = 2, // ALL sq:  SB size -> 4x4 
@@ -3040,13 +3004,14 @@ typedef enum EbPictureDepthMode {
 #define SB_FAST_OPEN_LOOP_DEPTH_MODE        4
 #define SB_PRED_OPEN_LOOP_DEPTH_MODE        5
 
-typedef enum EB_INTRA4x4_SEARCH_METHOD {
+typedef enum EbIntrA4x4SearchMethod 
+{
     INTRA4x4_OFF = 0,
     INTRA4x4_INLINE_SEARCH = 1,
     INTRA4x4_REFINEMENT_SEARCH = 2,
-} EB_INTRA4x4_SEARCH_METHOD;
+} EbIntrA4x4SearchMethod;
 
-static const int32_t GLOBAL_MOTION_THRESHOLD[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
+static const int32_t global_motion_threshold[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
     { 2 },
     { 4, 2 },
     { 8, 4, 2 },
@@ -3055,7 +3020,7 @@ static const int32_t GLOBAL_MOTION_THRESHOLD[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORA
     { 64, 32, 16, 8, 4, 2 }
 };
 
-static const int32_t HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_X[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
+static const int32_t hme_level_0_search_area_multiplier_x[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
     { 100 },
     { 100, 100 },
     { 100, 100, 100 },
@@ -3064,7 +3029,7 @@ static const int32_t HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_X[MAX_HIERARCHICAL_LEVEL
     { 525, 350, 200, 100, 100, 100 }
 };
 
-static const int32_t HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_Y[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
+static const int32_t hme_level_0_search_area_multiplier_y[MAX_HIERARCHICAL_LEVEL][MAX_TEMPORAL_LAYERS] = { // [Highest Temporal Layer] [Temporal Layer Index]
     { 100 },
     { 100, 100 },
     { 100, 100, 100 },
@@ -3073,8 +3038,8 @@ static const int32_t HME_LEVEL_0_SEARCH_AREA_MULTIPLIER_Y[MAX_HIERARCHICAL_LEVEL
     { 525, 350, 200, 100, 100, 100 }
 };
 
-typedef enum RASTER_SCAN_CU_INDEX {
-
+typedef enum RasterScanCuIndex 
+{
     // 2Nx2N [85 partitions]
     RASTER_SCAN_CU_INDEX_64x64 = 0,
     RASTER_SCAN_CU_INDEX_32x32_0 = 1,
@@ -3161,9 +3126,9 @@ typedef enum RASTER_SCAN_CU_INDEX {
     RASTER_SCAN_CU_INDEX_8x8_61 = 82,
     RASTER_SCAN_CU_INDEX_8x8_62 = 83,
     RASTER_SCAN_CU_INDEX_8x8_63 = 84
-} RASTER_SCAN_CU_INDEX;
+} RasterScanCuIndex;
 
-static const uint32_t RASTER_SCAN_CU_X[CU_MAX_COUNT] =
+static const uint32_t raster_scan_cu_x[CU_MAX_COUNT] =
 {
     0,
     0, 32,
@@ -3182,7 +3147,7 @@ static const uint32_t RASTER_SCAN_CU_X[CU_MAX_COUNT] =
     0, 8, 16, 24, 32, 40, 48, 56
 };
 
-static const uint32_t RASTER_SCAN_CU_Y[CU_MAX_COUNT] =
+static const uint32_t raster_scan_cu_y[CU_MAX_COUNT] =
 {
     0,
     0, 0,
@@ -3201,7 +3166,7 @@ static const uint32_t RASTER_SCAN_CU_Y[CU_MAX_COUNT] =
     56, 56, 56, 56, 56, 56, 56, 56
 };
 
-static const uint32_t RASTER_SCAN_CU_SIZE[CU_MAX_COUNT] =
+static const uint32_t raster_scan_cu_size[CU_MAX_COUNT] =
 {   64,
     32, 32,
     32, 32,
@@ -3219,25 +3184,7 @@ static const uint32_t RASTER_SCAN_CU_SIZE[CU_MAX_COUNT] =
     8, 8, 8, 8, 8, 8, 8, 8
 };
 
-static const uint32_t RASTER_SCAN_CU_DEPTH[CU_MAX_COUNT] =
-{   0,
-    1, 1,
-    1, 1,
-    2, 2, 2, 2,
-    2, 2, 2, 2,
-    2, 2, 2, 2,
-    2, 2, 2, 2,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3,
-    3, 3, 3, 3, 3, 3, 3, 3
-};
-
-static const uint32_t RASTER_SCAN_TO_MD_SCAN[CU_MAX_COUNT] =
+static const uint32_t raster_scan_to_md_scan[CU_MAX_COUNT] =
 {
     0,
     1, 22,
@@ -3261,7 +3208,7 @@ static const uint32_t ParentBlockIndex[85] = { 0, 0, 0, 2, 2, 2, 2, 0, 7, 7, 7, 
     44, 44, 44, 44, 0, 49, 49, 49, 49, 0, 54, 54, 54, 54, 0, 59, 59, 59, 59, 0, 0,
     65, 65, 65, 65, 0, 70, 70, 70, 70, 0, 75, 75, 75, 75, 0, 80, 80, 80, 80 };
 
-static const uint32_t MD_SCAN_TO_RASTER_SCAN[CU_MAX_COUNT] =
+static const uint32_t md_scan_to_raster_scan[CU_MAX_COUNT] =
 {
     0,
     1,
@@ -3286,7 +3233,7 @@ static const uint32_t MD_SCAN_TO_RASTER_SCAN[CU_MAX_COUNT] =
     20, 75, 76, 83, 84
 };
 
-static const uint32_t RASTER_SCAN_CU_PARENT_INDEX[CU_MAX_COUNT] =
+static const uint32_t raster_scan_cu_parent_index[CU_MAX_COUNT] =
 {   0,
     0, 0,
     0, 0,
@@ -3306,95 +3253,6 @@ static const uint32_t RASTER_SCAN_CU_PARENT_INDEX[CU_MAX_COUNT] =
 
 
 #define UNCOMPRESS_SAD(x) ( ((x) & 0x1FFF)<<(((x)>>13) & 7) )
-
-static const uint32_t MD_SCAN_TO_OIS_32x32_SCAN[CU_MAX_COUNT] =
-{
-    /*0  */0,
-    /*1  */0,
-    /*2  */0,
-    /*3  */0,
-    /*4  */0,
-    /*5  */0,
-    /*6  */0,
-    /*7  */0,
-    /*8  */0,
-    /*9  */0,
-    /*10 */0,
-    /*11 */0,
-    /*12 */0,
-    /*13 */0,
-    /*14 */0,
-    /*15 */0,
-    /*16 */0,
-    /*17 */0,
-    /*18 */0,
-    /*19 */0,
-    /*20 */0,
-    /*21 */0,
-    /*22 */1,
-    /*23 */1,
-    /*24 */1,
-    /*25 */1,
-    /*26 */1,
-    /*27 */1,
-    /*28 */1,
-    /*29 */1,
-    /*30 */1,
-    /*31 */1,
-    /*32 */1,
-    /*33 */1,
-    /*34 */1,
-    /*35 */1,
-    /*36 */1,
-    /*37 */1,
-    /*38 */1,
-    /*39 */1,
-    /*40 */1,
-    /*41 */1,
-    /*42 */1,
-    /*43 */2,
-    /*44 */2,
-    /*45 */2,
-    /*46 */2,
-    /*47 */2,
-    /*48 */2,
-    /*49 */2,
-    /*50 */2,
-    /*51 */2,
-    /*52 */2,
-    /*53 */2,
-    /*54 */2,
-    /*55 */2,
-    /*56 */2,
-    /*57 */2,
-    /*58 */2,
-    /*59 */2,
-    /*60 */2,
-    /*61 */2,
-    /*62 */2,
-    /*63 */2,
-    /*64 */3,
-    /*65 */3,
-    /*66 */3,
-    /*67 */3,
-    /*68 */3,
-    /*69 */3,
-    /*70 */3,
-    /*71 */3,
-    /*72 */3,
-    /*73 */3,
-    /*74 */3,
-    /*75 */3,
-    /*76 */3,
-    /*77 */3,
-    /*78 */3,
-    /*79 */3,
-    /*80 */3,
-    /*81 */3,
-    /*82 */3,
-    /*83 */3,
-    /*84 */3,
-};
 
 
 #if SCENE_CONTENT_SETTINGS
@@ -3425,7 +3283,7 @@ static const uint16_t hme_level0_total_search_area_width[SC_MAX_LEVEL][INPUT_SIZ
     }
 };
 
-static const uint16_t HmeLevel0SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_width_array_left[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24 },
         {  56,   56,   56,   56,   56,   56,   32,   32,   32,   32,   32,   32,   32 },
@@ -3438,7 +3296,7 @@ static const uint16_t HmeLevel0SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SI
         {  64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64 }
     }
 };
-static const uint16_t HmeLevel0SearchAreaInWidthArrayRight[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_width_array_right[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24 },
         {  56,   56,   56,   56,   56,   56,   32,   32,   32,   32,   32,   32,   32 },
@@ -3464,7 +3322,7 @@ static const uint16_t hme_level0_total_search_area_height[SC_MAX_LEVEL][INPUT_SI
         {  80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80 }
     }
 };
-static const uint16_t HmeLevel0SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_height_array_top[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 },
         {  32,   32,   32,   32,   32,   32,   24,   24,   24,   24,   24,   24,   24 },
@@ -3477,7 +3335,7 @@ static const uint16_t HmeLevel0SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SI
         {  40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40 }
     }
 };
-static const uint16_t HmeLevel0SearchAreaInHeightArrayBottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_height_array_bottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 },
         {  32,   32,   32,   32,   32,   32,   24,   24,   24,   24,   24,   24,   24 },
@@ -3499,7 +3357,7 @@ static const uint8_t enable_hme_level1_flag[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 },      // INPUT_SIZE_1080p_RANGE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 }       // INPUT_SIZE_4K_RANGE
 };
-static const uint16_t HmeLevel1SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_width_array_left[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
@@ -3512,7 +3370,7 @@ static const uint16_t HmeLevel1SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SI
         {  16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,    8,     8 }
     }
 };
-static const uint16_t HmeLevel1SearchAreaInWidthArrayRight[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_width_array_right[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
@@ -3525,7 +3383,7 @@ static const uint16_t HmeLevel1SearchAreaInWidthArrayRight[SC_MAX_LEVEL][INPUT_S
         {  16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,    8,     8 }
     }
 };
-static const uint16_t HmeLevel1SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_height_array_top[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
@@ -3538,7 +3396,7 @@ static const uint16_t HmeLevel1SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SI
         {  16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,    8,     8 }
     }
 };
-static const uint16_t HmeLevel1SearchAreaInHeightArrayBottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_height_array_bottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
         {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
@@ -3559,7 +3417,7 @@ static const uint8_t enable_hme_level2_flag[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 },      // INPUT_SIZE_1080p_RANGE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 }       // INPUT_SIZE_4K_RANGE
 };
-static const uint16_t HmeLevel2SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_width_array_left[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
@@ -3572,7 +3430,7 @@ static const uint16_t HmeLevel2SearchAreaInWidthArrayLeft[SC_MAX_LEVEL][INPUT_SI
         {   8,    8,    8,    8,    8,    4,    4,    4,    4,    4,    4,     4,    4 }
     }
 };
-static const uint16_t HmeLevel2SearchAreaInWidthArrayRight[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_width_array_right[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
@@ -3585,7 +3443,7 @@ static const uint16_t HmeLevel2SearchAreaInWidthArrayRight[SC_MAX_LEVEL][INPUT_S
         {   8,    8,    8,    8,    8,    4,    4,    4,    4,    4,    4,     4,    4 }
     }
 };
-static const uint16_t HmeLevel2SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_height_array_top[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
@@ -3598,7 +3456,7 @@ static const uint16_t HmeLevel2SearchAreaInHeightArrayTop[SC_MAX_LEVEL][INPUT_SI
         {   8,    8,    8,    8,    8,    4,    4,    4,    4,    4,    4,     4,    4 }
     }
 };
-static const uint16_t HmeLevel2SearchAreaInHeightArrayBottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_height_array_bottom[SC_MAX_LEVEL][INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
         {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
@@ -3660,13 +3518,13 @@ static const uint16_t hme_level0_total_search_area_width[INPUT_SIZE_COUNT][MAX_S
     { 128,  128,  128,  128,  128,  128,  128,  128,  128,  128,  128,  128,  128 }
 };
 
-static const uint16_t HmeLevel0SearchAreaInWidthArrayLeft[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_width_array_left[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24 },
     {  56,   56,   56,   56,   56,   56,   32,   32,   32,   32,   32,   32,   32 },
     {  64,   64,   64,   64,   64,   64,   48,   48,   48,   48,   48,   48,   48 },
     {  64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64,   64 }
 };
-static const uint16_t HmeLevel0SearchAreaInWidthArrayRight[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_width_array_right[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24,   24 },
     {  56,   56,   56,   56,   56,   56,   32,   32,   32,   32,   32,   32,   32 },
     {  64,   64,   64,   64,   64,   64,   48,   48,   48,   48,   48,   48,   48 },
@@ -3678,13 +3536,13 @@ static const uint16_t hme_level0_total_search_area_height[INPUT_SIZE_COUNT][MAX_
     {  80,   80,   80,   80,   80,   80,   48,   48,   48,   48,   48,   48,   48 },
     {  80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80,   80 }
 };
-static const uint16_t HmeLevel0SearchAreaInHeightArrayTop[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_height_array_top[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 },
     {  32,   32,   32,   32,   32,   32,   24,   24,   24,   24,   24,   24,   24 },
     {  40,   40,   40,   40,   40,   40,   24,   24,   24,   24,   24,   24,   24 },
     {  40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40 }
 };
-static const uint16_t HmeLevel0SearchAreaInHeightArrayBottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level0_search_area_in_height_array_bottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 },
     {  32,   32,   32,   32,   32,   32,   24,   24,   24,   24,   24,   24,   24 },
     {  40,   40,   40,   40,   40,   40,   24,   24,   24,   24,   24,   24,   24 },
@@ -3699,25 +3557,25 @@ static const uint8_t enable_hme_level1_flag[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 },      // INPUT_SIZE_1080p_RANGE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 }       // INPUT_SIZE_4K_RANGE
 };
-static const uint16_t HmeLevel1SearchAreaInWidthArrayLeft[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_width_array_left[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 }
 };
-static const uint16_t HmeLevel1SearchAreaInWidthArrayRight[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_width_array_right[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 }
 };
-static const uint16_t HmeLevel1SearchAreaInHeightArrayTop[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_height_array_top[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 }
 };
-static const uint16_t HmeLevel1SearchAreaInHeightArrayBottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level1_search_area_in_height_array_bottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
     {  16,   16,   16,   16,   16,   16,    8,    8,    8,    8,    8,    8,     8 },
@@ -3731,25 +3589,25 @@ static const uint8_t enable_hme_level2_flag[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 },      // INPUT_SIZE_1080p_RANGE
     {   1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,     1,    1 }       // INPUT_SIZE_4K_RANGE
 };
-static const uint16_t HmeLevel2SearchAreaInWidthArrayLeft[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_width_array_left[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 }
 };
-static const uint16_t HmeLevel2SearchAreaInWidthArrayRight[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_width_array_right[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 }
 };
-static const uint16_t HmeLevel2SearchAreaInHeightArrayTop[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_height_array_top[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 }
 };
-static const uint16_t HmeLevel2SearchAreaInHeightArrayBottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
+static const uint16_t hme_level2_search_area_in_height_array_bottom[INPUT_SIZE_COUNT][MAX_SUPPORTED_MODES] = {
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },
     {   8,    8,    8,    8,    8,    8,    4,    4,    4,    4,    4,     4,    4 },

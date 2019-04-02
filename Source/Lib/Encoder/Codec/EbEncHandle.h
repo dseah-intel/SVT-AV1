@@ -158,7 +158,7 @@ typedef struct EbEncHandle_s
     EbFifo                              **restResultsConsumerFifoPtrArray;
 
     // Callbacks
-    EbCallback_t                          **app_callback_ptr_array;
+    EbCallback                          **app_callback_ptr_array;
 
     // Memory Map
     EbMemoryMapEntry                       *memory_map;

@@ -29,7 +29,7 @@ EbErrorType encode_context_ctor(
         EB_ENC_EC_ERROR29);
 
     // Callback Functions
-    encode_context_ptr->app_callback_ptr = (EbCallback_t*)EB_NULL;
+    encode_context_ptr->app_callback_ptr = (EbCallback*)EB_NULL;
 
     EB_CREATEMUTEX(EbHandle, encode_context_ptr->total_number_of_recon_frame_mutex, sizeof(EbHandle), EB_MUTEX);
     encode_context_ptr->total_number_of_recon_frames = 0;

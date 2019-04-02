@@ -198,8 +198,8 @@ void FailingMotionLcu(
 
 
             ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
-            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex]];
-            sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex]]].distortion;
+            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
+            sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[raster_scan_to_md_scan[rasterScanCuIndex]]].distortion;
 
 
 
@@ -253,15 +253,15 @@ void DetectUncoveredLcu(
 
 
             ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
-            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex]];
-            sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex]]].distortion;
+            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
+            sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[raster_scan_to_md_scan[rasterScanCuIndex]]].distortion;
 
 
                 int64_t  meToOisSadDiff = (int32_t)cuMeSAD - (int32_t)sortedcuOisSAD;
                 meToOisSadDeviation = (sortedcuOisSAD == 0) || (meToOisSadDiff < 0) ? 0 : (meToOisSadDiff * 100) / sortedcuOisSAD;
 
 
-                if (RASTER_SCAN_CU_SIZE[rasterScanCuIndex] > 16) {
+                if (raster_scan_cu_size[rasterScanCuIndex] > 16) {
 
                     if (meToOisSadDeviation > SAD_DEVIATION_LCU_NON_M4_TH) {
                         uncovered_area_sb_flag += 1;
@@ -428,9 +428,9 @@ void GrassLcu(
 
     for (rasterScanCuIndex = RASTER_SCAN_CU_INDEX_16x16_0; rasterScanCuIndex <= RASTER_SCAN_CU_INDEX_16x16_15; rasterScanCuIndex++) {
         if (sb_params->raster_scan_cu_validity[rasterScanCuIndex]) {
-            const uint32_t mdScanCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanCuIndex];
-            const uint32_t rasterScanParentCuIndex = RASTER_SCAN_CU_PARENT_INDEX[rasterScanCuIndex];
-            const uint32_t mdScanParentCuIndex = RASTER_SCAN_TO_MD_SCAN[rasterScanParentCuIndex];
+            const uint32_t mdScanCuIndex = raster_scan_to_md_scan[rasterScanCuIndex];
+            const uint32_t rasterScanParentCuIndex = raster_scan_cu_parent_index[rasterScanCuIndex];
+            const uint32_t mdScanParentCuIndex = raster_scan_to_md_scan[rasterScanParentCuIndex];
             CuStat *cuStatPtr = &(sb_stat_ptr->cu_stat_array[mdScanCuIndex]);
 
 
