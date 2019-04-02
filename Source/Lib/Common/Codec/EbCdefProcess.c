@@ -40,18 +40,18 @@ int32_t sb_all_skip(PictureControlSet   *picture_control_set_ptr, const Av1Commo
 int32_t sb_compute_cdef_list(PictureControlSet   *picture_control_set_ptr, const Av1Common *const cm, int32_t mi_row, int32_t mi_col,
     cdef_list *dlist, block_size bs);
 void finish_cdef_search(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *picture_control_set_ptr
     ,int32_t                         selected_strength_cnt[64]
 
    );
 void av1_cdef_frame16bit(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *pCs);
 void av1_cdef_frame(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *pCs);
 void av1_loop_restoration_save_boundary_lines(const Yv12BufferConfig *frame, Av1Common *cm, int32_t after_cdef);

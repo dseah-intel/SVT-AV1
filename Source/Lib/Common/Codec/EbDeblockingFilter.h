@@ -105,7 +105,7 @@ extern "C" {
         int32_t partial_frame*/);
 
     void av1_pick_filter_level(
-        DlfContext_t            *context_ptr,
+        DlfContext            *context_ptr,
         EbPictureBufferDesc   *srcBuffer, // source input
         PictureControlSet     *pcs_ptr,
         LPF_PICK_METHOD          method);

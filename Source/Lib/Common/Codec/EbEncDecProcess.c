@@ -25,19 +25,19 @@
 #include "grainSynthesis.h"
 
 void av1_cdef_search(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *picture_control_set_ptr
 );
 
 void av1_cdef_frame(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *pCs
 );
 
 void av1_cdef_search16bit(
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     SequenceControlSet           *sequence_control_set_ptr,
     PictureControlSet            *picture_control_set_ptr
 );
@@ -78,7 +78,7 @@ const int8_t  encMaxDeltaQpTab[4][MAX_TEMPORAL_LAYERS] = {
  * Enc Dec Context Constructor
  ******************************************************/
 EbErrorType enc_dec_context_ctor(
-    EncDecContext_t        **context_dbl_ptr,
+    EncDecContext        **context_dbl_ptr,
     EbFifo                *mode_decision_configuration_input_fifo_ptr,
     EbFifo                *packetization_output_fifo_ptr,
     EbFifo                *feedback_fifo_ptr,
@@ -90,8 +90,8 @@ EbErrorType enc_dec_context_ctor(
     (void)max_input_luma_width;
     (void)max_input_luma_height;
     EbErrorType return_error = EB_ErrorNone;
-    EncDecContext_t *context_ptr;
-    EB_MALLOC(EncDecContext_t*, context_ptr, sizeof(EncDecContext_t), EB_N_PTR);
+    EncDecContext *context_ptr;
+    EB_MALLOC(EncDecContext*, context_ptr, sizeof(EncDecContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     context_ptr->is16bit = is16bit;
@@ -242,7 +242,7 @@ static void ResetEncodePassNeighborArrays(PictureControlSet *picture_control_set
  * Reset Coding Loop
  **************************************************/
 static void ResetEncDec(
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     uint32_t                   segment_index)
@@ -309,7 +309,7 @@ static void ResetEncDec(
  * EncDec Configure LCU
  ******************************************************/
 static void EncDecConfigureLcu(
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     LargestCodingUnit_t     *sb_ptr,
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
@@ -1159,7 +1159,7 @@ void CopyStatisticsToRefObject(
 
 EbErrorType QpmDeriveWeightsMinAndMax(
     PictureControlSet                    *picture_control_set_ptr,
-    EncDecContext_t                        *context_ptr)
+    EncDecContext                        *context_ptr)
 {
     EbErrorType                    return_error = EB_ErrorNone;
     uint32_t cu_depth;
@@ -1442,10 +1442,10 @@ void move_cu_data(
 /******************************************************
  * EncDec Kernel
  ******************************************************/
-void* EncDecKernel(void *input_ptr)
+void* enc_dec_kernel(void *input_ptr)
 {
     // Context & SCS & PCS
-    EncDecContext_t                         *context_ptr = (EncDecContext_t*)input_ptr;
+    EncDecContext                         *context_ptr = (EncDecContext*)input_ptr;
     PictureControlSet                     *picture_control_set_ptr;
     SequenceControlSet                    *sequence_control_set_ptr;
 

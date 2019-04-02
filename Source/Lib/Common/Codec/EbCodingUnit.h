@@ -222,8 +222,8 @@ extern "C" {
 
         int subsampling_x;
         int subsampling_y;
-        struct buf_2d dst;
-        struct buf_2d pre[2];
+        struct Buf2D dst;
+        struct Buf2D pre[2];
         // block size in pixels
         uint8_t width, height;
 
@@ -237,7 +237,7 @@ extern "C" {
         uint16_t *eobs;
         uint8_t *txb_entropy_ctx;
 #endif
-        struct buf_2d src;
+        struct Buf2D src;
 #if 0
         // Quantizer setings
         // These are used/accessed only in the quantization process

@@ -141,7 +141,7 @@ void init_fn_ptr(void)
 
 // #define NEW_DIAMOND_SEARCH
 
-static INLINE const uint8_t *get_buf_from_mv(const struct buf_2d *buf,
+static INLINE const uint8_t *get_buf_from_mv(const struct Buf2D *buf,
                                              const MV *mv) {
   return &buf->buf[mv->row * buf->stride + mv->col];
 }
@@ -253,8 +253,8 @@ int av1_get_mvpred_var(const IntraBcContext *x, const MV *best_mv,
                        const MV *center_mv, const aom_variance_fn_ptr_t *vfp,
                        int use_mvcost) {
    
-  const struct buf_2d *const what = &x->plane[0].src;
-  const struct buf_2d *const in_what = &x->xdplane[0].pre[0];
+  const struct Buf2D *const what = &x->plane[0].src;
+  const struct Buf2D *const in_what = &x->xdplane[0].pre[0];
   const MV mv = { best_mv->row * 8, best_mv->col * 8 };
   unsigned int unused;
 
@@ -272,8 +272,8 @@ static int exhuastive_mesh_search(IntraBcContext  *x, MV *ref_mv, MV *best_mv,
                                   const aom_variance_fn_ptr_t *fn_ptr,
                                   const MV *center_mv) {
    
-  const struct buf_2d *const what = &x->plane[0].src;
-  const struct buf_2d *const in_what = &x->xdplane[0].pre[0];
+  const struct Buf2D *const what = &x->plane[0].src;
+  const struct Buf2D *const in_what = &x->xdplane[0].pre[0];
   MV fcenter_mv = { center_mv->row, center_mv->col };
   unsigned int best_sad = INT_MAX;
   int r, c, i;
@@ -644,8 +644,8 @@ int av1_refining_search_sad(IntraBcContext  *x, MV *ref_mv, int error_per_bit,
                             const MV *center_mv) {
   
   const MV neighbors[4] = { { -1, 0 }, { 0, -1 }, { 0, 1 }, { 1, 0 } };
-  const struct buf_2d *const what = &x->plane[0].src;
-  const struct buf_2d *const in_what = &x->xdplane[0].pre[0];
+  const struct Buf2D *const what = &x->plane[0].src;
+  const struct Buf2D *const in_what = &x->xdplane[0].pre[0];
   const MV fcenter_mv = { center_mv->row >> 3, center_mv->col >> 3 };
   const uint8_t *best_address = get_buf_from_mv(in_what, ref_mv);
   unsigned int best_sad =

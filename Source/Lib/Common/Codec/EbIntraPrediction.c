@@ -4336,7 +4336,7 @@ extern void av1_predict_intra_block(
 void av1_predict_intra_block_16bit(
     TileInfo * tile,
 
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     const Av1Common *cm,
     int32_t wpx,
     int32_t hpx,

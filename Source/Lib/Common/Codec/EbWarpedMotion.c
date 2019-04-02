@@ -472,7 +472,7 @@ void av1_highbd_warp_affine_c(const int32_t *mat, const uint16_t *ref,
           }
 
           if (conv_params->is_compound) {
-            CONV_BUF_TYPE *p =
+            ConvBufType *p =
                 &conv_params
                      ->dst[(i - p_row + k + 4) * conv_params->dst_stride +
                            (j - p_col + l + 4)];
@@ -760,7 +760,7 @@ void av1_warp_affine_c(const int32_t *mat, const uint8_t *ref, int width,
           }
 
           if (conv_params->is_compound) {
-            CONV_BUF_TYPE *p =
+            ConvBufType *p =
                 &conv_params
                      ->dst[(i - p_row + k + 4) * conv_params->dst_stride +
                            (j - p_col + l + 4)];

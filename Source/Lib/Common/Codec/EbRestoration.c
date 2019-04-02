@@ -70,11 +70,11 @@ void *aom_memset16(void *dest, int32_t val, size_t length);
 ///---convolve.h
 #define FILTER_BITS 7
 
-//typedef uint16_t CONV_BUF_TYPE;
+//typedef uint16_t ConvBufType;
 //typedef struct ConvolveParams {
 //    int32_t ref;
 //    int32_t do_average;
-//    CONV_BUF_TYPE *dst;
+//    ConvBufType *dst;
 //    int32_t dst_stride;
 //    int32_t round_0;
 //    int32_t round_1;

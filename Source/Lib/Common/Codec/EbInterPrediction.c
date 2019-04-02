@@ -172,7 +172,7 @@ void av1_convolve_2d_sr_c(const uint8_t *src, int32_t src_stride, uint8_t *dst,
                 sum += y_filter[k] * src_vert[(y - fo_vert + k) * im_stride + x];
             }
             assert(0 <= sum && sum < (1 << (offset_bits + 2)));
-            int16_t res = (CONV_BUF_TYPE)(ROUND_POWER_OF_TWO(sum, conv_params->round_1) -
+            int16_t res = (ConvBufType)(ROUND_POWER_OF_TWO(sum, conv_params->round_1) -
                 ((1 << (offset_bits - conv_params->round_1)) +
                 (1 << (offset_bits - conv_params->round_1 - 1))));
             dst[y * dst_stride + x] = (uint8_t)clip_pixel_highbd(ROUND_POWER_OF_TWO(res, bits), 8);
@@ -271,7 +271,7 @@ void av1_jnt_convolve_2d_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params)
 {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     int16_t im_block[(MAX_SB_SIZE + MAX_FILTER_TAP - 1) * MAX_SB_SIZE];
     int32_t im_h = h + filter_params_y->taps - 1;
@@ -310,7 +310,7 @@ void av1_jnt_convolve_2d_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8
                 sum += y_filter[k] * src_vert[(y - fo_vert + k) * im_stride + x];
             }
             assert(0 <= sum && sum < (1 << (offset_bits + 2)));
-            CONV_BUF_TYPE res = (CONV_BUF_TYPE)ROUND_POWER_OF_TWO(sum, conv_params->round_1);
+            ConvBufType res = (ConvBufType)ROUND_POWER_OF_TWO(sum, conv_params->round_1);
             if (conv_params->do_average) {
                 int32_t tmp = dst[y * dst_stride + x];
                 if (conv_params->use_jnt_comp_avg) {
@@ -342,7 +342,7 @@ void av1_jnt_convolve_y_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params)
 {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t fo_vert = filter_params_y->taps / 2 - 1;
     const int32_t bits = FILTER_BITS - conv_params->round_0;
@@ -382,7 +382,7 @@ void av1_jnt_convolve_y_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8,
                     (uint8_t)clip_pixel_highbd(ROUND_POWER_OF_TWO(tmp, round_bits), 8);
             }
             else {
-                dst[y * dst_stride + x] = (CONV_BUF_TYPE)res;
+                dst[y * dst_stride + x] = (ConvBufType)res;
             }
 
         }
@@ -396,7 +396,7 @@ void av1_jnt_convolve_x_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params)
 {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t fo_horiz = filter_params_x->taps / 2 - 1;
     const int32_t bits = FILTER_BITS - conv_params->round_1;
@@ -437,7 +437,7 @@ void av1_jnt_convolve_x_c(const uint8_t *src, int32_t src_stride, uint8_t *dst8,
                     (uint8_t)clip_pixel_highbd(ROUND_POWER_OF_TWO(tmp, round_bits), 8);
             }
             else {
-                dst[y * dst_stride + x] = (CONV_BUF_TYPE)res;
+                dst[y * dst_stride + x] = (ConvBufType)res;
             }
         }
     }
@@ -450,7 +450,7 @@ void av1_jnt_convolve_2d_copy_c(const uint8_t *src, int32_t src_stride,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params)
 {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t bits =
         FILTER_BITS * 2 - conv_params->round_1 - conv_params->round_0;
@@ -465,8 +465,8 @@ void av1_jnt_convolve_2d_copy_c(const uint8_t *src, int32_t src_stride,
 
     for (int32_t y = 0; y < h; ++y) {
         for (int32_t x = 0; x < w; ++x) {
-            CONV_BUF_TYPE res = src[y * src_stride + x] << bits;
-            res += (CONV_BUF_TYPE)round_offset;
+            ConvBufType res = src[y * src_stride + x] << bits;
+            res += (ConvBufType)round_offset;
 
             if (conv_params->do_average) {
                 int32_t tmp = dst[y * dst_stride + x];
@@ -593,7 +593,7 @@ void av1_highbd_convolve_2d_sr_c(const uint16_t *src, int32_t src_stride,
                 sum += x_filter[k] * src_horiz[y * src_stride + x - fo_horiz + k];
             }
             assert(0 <= sum && sum < (1 << (bd + FILTER_BITS + 1)));
-            im_block[y * im_stride + x] = (CONV_BUF_TYPE)
+            im_block[y * im_stride + x] = (ConvBufType)
                 ROUND_POWER_OF_TWO(sum, conv_params->round_0);
         }
     }
@@ -625,7 +625,7 @@ void av1_highbd_jnt_convolve_x_c(const uint16_t *src, int32_t src_stride,
     const InterpFilterParams *filter_params_y,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params, int32_t bd) {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t fo_horiz = filter_params_x->taps / 2 - 1;
     const int32_t bits = FILTER_BITS - conv_params->round_1;
@@ -665,7 +665,7 @@ void av1_highbd_jnt_convolve_x_c(const uint16_t *src, int32_t src_stride,
                     clip_pixel_highbd(ROUND_POWER_OF_TWO(tmp, round_bits), bd);
             }
             else {
-                dst[y * dst_stride + x] = (CONV_BUF_TYPE)res;
+                dst[y * dst_stride + x] = (ConvBufType)res;
             }
         }
     }
@@ -677,7 +677,7 @@ void av1_highbd_jnt_convolve_y_c(const uint16_t *src, int32_t src_stride,
     const InterpFilterParams *filter_params_y,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params, int32_t bd) {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t fo_vert = filter_params_y->taps / 2 - 1;
     const int32_t bits = FILTER_BITS - conv_params->round_0;
@@ -717,7 +717,7 @@ void av1_highbd_jnt_convolve_y_c(const uint16_t *src, int32_t src_stride,
                     clip_pixel_highbd(ROUND_POWER_OF_TWO(tmp, round_bits), bd);
             }
             else {
-                dst[y * dst_stride + x] = (CONV_BUF_TYPE)res;
+                dst[y * dst_stride + x] = (ConvBufType)res;
             }
         }
     }
@@ -728,7 +728,7 @@ void av1_highbd_jnt_convolve_2d_copy_c(
     int32_t w, int32_t h, const InterpFilterParams *filter_params_x,
     const InterpFilterParams *filter_params_y, const int32_t subpel_x_q4,
     const int32_t subpel_y_q4, ConvolveParams *conv_params, int32_t bd) {
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     const int32_t bits =
         FILTER_BITS * 2 - conv_params->round_1 - conv_params->round_0;
@@ -743,8 +743,8 @@ void av1_highbd_jnt_convolve_2d_copy_c(
 
     for (int32_t y = 0; y < h; ++y) {
         for (int32_t x = 0; x < w; ++x) {
-            CONV_BUF_TYPE res = src[y * src_stride + x] << bits;
-            res += (CONV_BUF_TYPE)round_offset;
+            ConvBufType res = src[y * src_stride + x] << bits;
+            res += (ConvBufType)round_offset;
             if (conv_params->do_average) {
                 int32_t tmp = dst[y * dst_stride + x];
                 if (conv_params->use_jnt_comp_avg) {
@@ -776,7 +776,7 @@ void av1_highbd_jnt_convolve_2d_c(const uint16_t *src, int32_t src_stride,
 {
     int32_t x, y, k;
     int16_t im_block[(MAX_SB_SIZE + MAX_FILTER_TAP - 1) * MAX_SB_SIZE];
-    CONV_BUF_TYPE *dst = conv_params->dst;
+    ConvBufType *dst = conv_params->dst;
     int32_t dst_stride = conv_params->dst_stride;
     int32_t im_h = h + filter_params_y->taps - 1;
     int32_t im_stride = w;
@@ -817,7 +817,7 @@ void av1_highbd_jnt_convolve_2d_c(const uint16_t *src, int32_t src_stride,
                 sum += y_filter[k] * src_vert[(y - fo_vert + k) * im_stride + x];
             }
             assert(0 <= sum && sum < (1 << (offset_bits + 2)));
-            CONV_BUF_TYPE res = (CONV_BUF_TYPE)ROUND_POWER_OF_TWO(sum, conv_params->round_1);
+            ConvBufType res = (ConvBufType)ROUND_POWER_OF_TWO(sum, conv_params->round_1);
             if (conv_params->do_average) {
                 int32_t tmp = dst[y * dst_stride + x];
                 if (conv_params->use_jnt_comp_avg) {

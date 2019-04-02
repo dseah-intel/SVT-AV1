@@ -2347,7 +2347,7 @@ EbErrorType av1_split_flag_rate(
 *   at the level of the encode pass
 ********************************************/
 EbErrorType av1_encode_tu_calc_cost(
-    EncDecContext_t          *context_ptr,
+    EncDecContext          *context_ptr,
     uint32_t                   *count_non_zero_coeffs,
     uint64_t                    y_tu_distortion[DIST_CALC_TOTAL],
     uint64_t                   *y_tu_coeff_bits,

@@ -59,7 +59,7 @@ extern void av1_predict_intra_block(
 void av1_predict_intra_block_16bit(
     TileInfo               *tile,
 
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     const Av1Common *cm,
     int32_t wpx,
     int32_t hpx,
@@ -98,7 +98,7 @@ typedef void(*EB_AV1_ENCODE_LOOP_FUNC_PTR)(
 #if ENCDEC_TX_SEARCH
     PictureControlSet    *picture_control_set_ptr,
 #endif
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
@@ -119,7 +119,7 @@ typedef void(*EB_AV1_ENCODE_LOOP_FUNC_PTR)(
 
 
 typedef void(*EB_AV1_GENERATE_RECON_FUNC_PTR)(
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
     EbPictureBufferDesc *predSamples,     // no basis/offset
@@ -131,7 +131,7 @@ typedef void(*EB_AV1_GENERATE_RECON_FUNC_PTR)(
 
 
 typedef void(*EB_GENERATE_RECON_FUNC_PTR)(
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
     EbPictureBufferDesc *predSamples,     // no basis/offset
@@ -140,7 +140,7 @@ typedef void(*EB_GENERATE_RECON_FUNC_PTR)(
     EbAsm                 asm_type);
 
 typedef void(*EB_GENERATE_RECON_INTRA_4x4_FUNC_PTR)(
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
     EbPictureBufferDesc *predSamples,     // no basis/offset
@@ -508,7 +508,7 @@ void PfZeroOutUselessQuadrants(
 
 void encode_pass_tx_search(
     PictureControlSet            *picture_control_set_ptr,
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cb_qp,
     EbPictureBufferDesc          *coeffSamplesTB,
@@ -546,7 +546,7 @@ static void Av1EncodeLoop(
 #if ENCDEC_TX_SEARCH
     PictureControlSet    *picture_control_set_ptr,
 #endif
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
     uint32_t                 origin_x,   //pic based tx org x
     uint32_t                 origin_y,   //pic based tx org y
@@ -981,7 +981,7 @@ static void Av1EncodeLoop(
 
 void encode_pass_tx_search_hbd(
     PictureControlSet            *picture_control_set_ptr,
-    EncDecContext_t                *context_ptr,
+    EncDecContext                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
     uint32_t                       cb_qp,
     EbPictureBufferDesc          *coeffSamplesTB,
@@ -1021,7 +1021,7 @@ static void Av1EncodeLoop16bit(
 #if ENCDEC_TX_SEARCH
     PictureControlSet    *picture_control_set_ptr,
 #endif
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     LargestCodingUnit_t   *sb_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
@@ -1406,7 +1406,7 @@ static void Av1EncodeLoop16bit(
 *
 **********************************************************/
 static void Av1EncodeGenerateRecon(
-    EncDecContext_t       *context_ptr,
+    EncDecContext       *context_ptr,
     uint32_t               origin_x,
     uint32_t               origin_y,
     EbPictureBufferDesc *predSamples,     // no basis/offset
@@ -1524,7 +1524,7 @@ static void Av1EncodeGenerateRecon(
 *
 **********************************************************/
 static void Av1EncodeGenerateRecon16bit(
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     uint32_t                 origin_x,
     uint32_t                 origin_y,
     EbPictureBufferDesc   *predSamples,     // no basis/offset
@@ -1643,7 +1643,7 @@ EB_AV1_GENERATE_RECON_FUNC_PTR   Av1EncodeGenerateReconFunctionPtr[2] =
 *******************************************/
 static void EncodePassUpdateQp(
     PictureControlSet     *picture_control_set_ptr,
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     EbBool                  availableCoeff,
     EbBool                  isDeltaQpEnable,
     EbBool                 *isDeltaQpNotCoded,
@@ -1749,7 +1749,7 @@ EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
     PictureControlSet                    *picture_control_set_ptr,
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                 sb_index,
-    EncDecContext_t                        *context_ptr)
+    EncDecContext                        *context_ptr)
 {
 
     EbErrorType                    return_error = EB_ErrorNone;
@@ -1766,7 +1766,7 @@ EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
 #endif
 
 
-    context_ptr->qpmQp = picture_qp;
+    context_ptr->qpm_qp = picture_qp;
 
     SbStat *sb_stat_ptr = &(picture_control_set_ptr->parent_pcs_ptr->sb_stat_array[sb_index]);
 
@@ -1799,9 +1799,9 @@ EbErrorType QpmDeriveBeaAndSkipQpmFlagLcu(
     if (context_ptr->skip_qpm_flag == EB_FALSE) {
         if (picture_control_set_ptr->parent_pcs_ptr->pic_homogenous_over_time_sb_percentage > 30 && picture_control_set_ptr->slice_type != I_SLICE) {
 #if ADD_DELTA_QP_SUPPORT
-            context_ptr->qpmQp = CLIP3(min_qp_allowed, max_qp_allowed, picture_qp + deltaQpRes);
+            context_ptr->qpm_qp = CLIP3(min_qp_allowed, max_qp_allowed, picture_qp + deltaQpRes);
 #else
-            context_ptr->qpmQp = CLIP3(min_qp_allowed, max_qp_allowed, picture_qp + 1);
+            context_ptr->qpm_qp = CLIP3(min_qp_allowed, max_qp_allowed, picture_qp + 1);
 #endif
         }
     }
@@ -1820,13 +1820,13 @@ EbErrorType Av1QpModulationLcu(
     LargestCodingUnit_t                    *sb_ptr,
     uint32_t                                  sb_index,
     uint8_t                                   type,
-    EncDecContext_t                        *context_ptr)
+    EncDecContext                        *context_ptr)
 {
     EbErrorType                            return_error = EB_ErrorNone;
 
     int64_t                                  complexityDistance;
     int8_t                                   delta_qp = 0;
-    uint16_t                                  qpmQp = context_ptr->qpmQp;
+    uint16_t                                  qpm_qp = context_ptr->qpm_qp;
     uint16_t                                  min_qp_allowed = 0;
     uint16_t                                  max_qp_allowed = 255;
     uint16_t                                  cu_qp;
@@ -1838,8 +1838,8 @@ EbErrorType Av1QpModulationLcu(
 
     uint8_t   deltaQpRes = picture_control_set_ptr->parent_pcs_ptr->delta_q_res;
 
-    cu_qp = qpmQp;
-    sb_ptr->qp = qpmQp;
+    cu_qp = qpm_qp;
+    sb_ptr->qp = qpm_qp;
 
     uint32_t  distortion = 0;
 
@@ -1941,15 +1941,15 @@ EbErrorType Av1QpModulationLcu(
 
         if (sequence_control_set_ptr->static_config.rate_control_mode == 1 || sequence_control_set_ptr->static_config.rate_control_mode == 2) {
 
-            if (qpmQp > (RC_QPMOD_MAXQP * deltaQpRes)) {
+            if (qpm_qp > (RC_QPMOD_MAXQP * deltaQpRes)) {
                 delta_qp = MIN(0, delta_qp);
             }
 
 
-            cu_qp = (uint32_t)(qpmQp + delta_qp);
+            cu_qp = (uint32_t)(qpm_qp + delta_qp);
 
 
-            if ((qpmQp <= (RC_QPMOD_MAXQP *deltaQpRes))) {
+            if ((qpm_qp <= (RC_QPMOD_MAXQP *deltaQpRes))) {
                 cu_qp = (uint8_t)CLIP3(
                     min_qp_allowed,
                     RC_QPMOD_MAXQP*deltaQpRes,
@@ -1957,7 +1957,7 @@ EbErrorType Av1QpModulationLcu(
             }
         }
         else {
-            cu_qp = (uint8_t)(qpmQp + delta_qp);
+            cu_qp = (uint8_t)(qpm_qp + delta_qp);
         }
 
         cu_qp = (uint8_t)CLIP3(
@@ -1968,10 +1968,10 @@ EbErrorType Av1QpModulationLcu(
 
     }
 
-    sb_ptr->qp = sequence_control_set_ptr->static_config.improve_sharpness ? cu_qp : qpmQp;
+    sb_ptr->qp = sequence_control_set_ptr->static_config.improve_sharpness ? cu_qp : qpm_qp;
 
 
-    sb_ptr->delta_qp = (int16_t)sb_ptr->qp - (int16_t)qpmQp;
+    sb_ptr->delta_qp = (int16_t)sb_ptr->qp - (int16_t)qpm_qp;
 
     sb_ptr->org_delta_qp = sb_ptr->delta_qp;
 
@@ -1995,7 +1995,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     uint32_t                                  cu_size,
     uint8_t                                   type,
     uint8_t                                   parent32x32_index,
-    EncDecContext_t                        *context_ptr)
+    EncDecContext                        *context_ptr)
 {
     EbErrorType                    return_error = EB_ErrorNone;
 
@@ -2003,7 +2003,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     //LcuParameters                        sb_params;
     int64_t                          complexityDistance;
     int8_t                           delta_qp = 0;
-    uint8_t                           qpmQp = (uint8_t)context_ptr->qpmQp;
+    uint8_t                           qpm_qp = (uint8_t)context_ptr->qpm_qp;
     uint8_t                           min_qp_allowed = (uint8_t)sequence_control_set_ptr->static_config.min_qp_allowed;
     uint8_t                           max_qp_allowed = (uint8_t)sequence_control_set_ptr->static_config.max_qp_allowed;
     uint8_t                           cu_qp;
@@ -2022,8 +2022,8 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
     int8_t    non_moving_delta_qp = context_ptr->non_moving_delta_qp;
     int8_t    bea64x64DeltaQp;
 
-    cu_qp = qpmQp;
-    cu_ptr->qp = qpmQp;
+    cu_qp = qpm_qp;
+    cu_ptr->qp = qpm_qp;
 
     uint32_t  distortion = 0;
 
@@ -2133,14 +2133,14 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 
         if (sequence_control_set_ptr->static_config.rate_control_mode == 1 || sequence_control_set_ptr->static_config.rate_control_mode == 2) {
 
-            if (qpmQp > RC_QPMOD_MAXQP) {
+            if (qpm_qp > RC_QPMOD_MAXQP) {
                 delta_qp = MIN(0, delta_qp);
             }
 
-            cu_qp = (uint32_t)(qpmQp + delta_qp);
+            cu_qp = (uint32_t)(qpm_qp + delta_qp);
 
 
-            if ((qpmQp <= RC_QPMOD_MAXQP)) {
+            if ((qpm_qp <= RC_QPMOD_MAXQP)) {
                 cu_qp = (uint8_t)CLIP3(
                     min_qp_allowed,
                     RC_QPMOD_MAXQP,
@@ -2148,7 +2148,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
             }
         }
         else {
-            cu_qp = (uint8_t)(qpmQp + delta_qp);
+            cu_qp = (uint8_t)(qpm_qp + delta_qp);
         }
 
         cu_qp = (uint8_t)CLIP3(
@@ -2159,12 +2159,12 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 
     }
 
-    cu_ptr->qp = sequence_control_set_ptr->static_config.improve_sharpness ? cu_qp : qpmQp;
+    cu_ptr->qp = sequence_control_set_ptr->static_config.improve_sharpness ? cu_qp : qpm_qp;
 
     sb_ptr->qp = (cu_size == 64) ? (uint8_t)cu_ptr->qp : sb_ptr->qp;
 
 
-    cu_ptr->delta_qp = (int16_t)cu_ptr->qp - (int16_t)qpmQp;
+    cu_ptr->delta_qp = (int16_t)cu_ptr->qp - (int16_t)qpm_qp;
 
     cu_ptr->org_delta_qp = cu_ptr->delta_qp;
 
@@ -2173,7 +2173,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 }
 
 void Store16bitInputSrc(
-    EncDecContext_t         *context_ptr,
+    EncDecContext         *context_ptr,
     PictureControlSet     *picture_control_set_ptr,
     uint32_t                 lcuX,
     uint32_t                 lcuY,
@@ -2254,7 +2254,7 @@ EB_EXTERN void AV1EncodePass(
     uint32_t                   sb_origin_x,
     uint32_t                   sb_origin_y,
     uint32_t                   sb_qp,
-    EncDecContext_t           *context_ptr)
+    EncDecContext           *context_ptr)
 {
 
     EbBool                    is16bit = context_ptr->is16bit;
@@ -2635,8 +2635,8 @@ EB_EXTERN void AV1EncodePass(
                 }
 
 #else
-                cu_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpmQp : picture_control_set_ptr->picture_qp;
-                sb_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpmQp : picture_control_set_ptr->picture_qp;
+                cu_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpm_qp : picture_control_set_ptr->picture_qp;
+                sb_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpm_qp : picture_control_set_ptr->picture_qp;
                 cu_ptr->org_delta_qp = cu_ptr->delta_qp;
 #endif
 #if !ADD_DELTA_QP_SUPPORT
@@ -3656,7 +3656,7 @@ EB_EXTERN void no_enc_dec_pass(
     uint32_t                   sb_origin_x,
     uint32_t                   sb_origin_y,
     uint32_t                   sb_qp,
-    EncDecContext_t         *context_ptr)
+    EncDecContext         *context_ptr)
 {
 
     context_ptr->coded_area_sb = 0;
@@ -3691,8 +3691,8 @@ EB_EXTERN void no_enc_dec_pass(
 
 
                 cu_ptr->delta_qp = 0;
-                cu_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpmQp : picture_control_set_ptr->picture_qp;
-                sb_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpmQp : picture_control_set_ptr->picture_qp;
+                cu_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpm_qp : picture_control_set_ptr->picture_qp;
+                sb_ptr->qp = (sequence_control_set_ptr->static_config.improve_sharpness) ? context_ptr->qpm_qp : picture_control_set_ptr->picture_qp;
                 cu_ptr->org_delta_qp = cu_ptr->delta_qp;
 
 

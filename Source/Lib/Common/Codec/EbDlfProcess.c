@@ -30,7 +30,7 @@ void av1_loop_restoration_save_boundary_lines(const Yv12BufferConfig *frame, Av1
  * Dlf Context Constructor
  ******************************************************/
 EbErrorType dlf_context_ctor(
-    DlfContext_t **context_dbl_ptr,
+    DlfContext **context_dbl_ptr,
     EbFifo                *dlf_input_fifo_ptr,
     EbFifo                *dlf_output_fifo_ptr ,
     EbBool                  is16bit,
@@ -39,8 +39,8 @@ EbErrorType dlf_context_ctor(
    )
 {
     EbErrorType return_error = EB_ErrorNone;
-    DlfContext_t *context_ptr;
-    EB_MALLOC(DlfContext_t*, context_ptr, sizeof(DlfContext_t), EB_N_PTR);
+    DlfContext *context_ptr;
+    EB_MALLOC(DlfContext*, context_ptr, sizeof(DlfContext), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     // Input/Output System Resource Manager FIFOs
@@ -86,7 +86,7 @@ EbErrorType dlf_context_ctor(
 void* dlf_kernel(void *input_ptr)
 {
     // Context & SCS & PCS
-    DlfContext_t                            *context_ptr = (DlfContext_t*)input_ptr;
+    DlfContext                            *context_ptr = (DlfContext*)input_ptr;
     PictureControlSet                     *picture_control_set_ptr;
     SequenceControlSet                    *sequence_control_set_ptr;
 

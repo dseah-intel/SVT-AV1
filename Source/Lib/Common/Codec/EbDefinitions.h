@@ -134,14 +134,16 @@ extern "C" {
 #define RC_FEEDBACK                                     1 // Feedback from previous base layer is received before starting the next base layer frame
 #endif
 
-struct buf_2d {
+struct Buf2D 
+{
     uint8_t *buf;
     uint8_t *buf0;
     int width;
     int height;
     int stride;
 };
-typedef struct {
+typedef struct MvLimits
+{
     int col_min;
     int col_max;
     int row_min;
@@ -412,11 +414,13 @@ static __inline void mem_put_le32(void *vmem, MEM_VALUE_T val) {
 /* clang-format on */
 //#endif  // AOM_PORTS_MEM_OPS_H_
 
-typedef uint16_t CONV_BUF_TYPE;
-typedef struct ConvolveParams {
+typedef uint16_t ConvBufType;
+
+typedef struct ConvolveParams 
+{
     int32_t ref;
     int32_t do_average;
-    CONV_BUF_TYPE *dst;
+    ConvBufType *dst;
     int32_t dst_stride;
     int32_t round_0;
     int32_t round_1;
@@ -484,29 +488,33 @@ typedef enum ATTRIBUTE_PACKED
 }InterpFilter;
 
 
-typedef struct InterpFilterParams {
+typedef struct InterpFilterParams 
+{
     const int16_t *filter_ptr;
     uint16_t taps;
     uint16_t subpel_shifts;
     InterpFilter interp_filter;
 } InterpFilterParams;
 
-typedef enum TX_SEARCH_LEVEL {
+typedef enum TxSearchLevel 
+{
     TX_SEARCH_OFF,
     TX_SEARCH_ENC_DEC,
     TX_SEARCH_INTER_DEPTH,
     TX_SEARCH_FULL_LOOP
-} TX_SEARCH_LEVEL;
+} TxSearchLevel;
 
-typedef enum INTERPOLATION_SEARCH_LEVEL {
+typedef enum InterpolationSearchLevel 
+{
     IT_SEARCH_OFF,
     IT_SEARCH_INTER_DEPTH,
     IT_SEARCH_FULL_LOOP,
     IT_SEARCH_FAST_LOOP_UV_BLIND,
     IT_SEARCH_FAST_LOOP,
-} INTERPOLATION_SEARCH_LEVEL;
+} InterpolationSearchLevel;
 
-typedef enum NSQ_SEARCH_LEVEL {
+typedef enum NsqSearchLevel 
+{
     NSQ_SEARCH_OFF,
     NSQ_SEARCH_LEVEL1,
     NSQ_SEARCH_LEVEL2,
@@ -515,24 +523,24 @@ typedef enum NSQ_SEARCH_LEVEL {
     NSQ_SEARCH_LEVEL5,
     NSQ_SEARCH_LEVEL6,
     NSQ_SEARCH_FULL
-} NSQ_SEARCH_LEVEL;
+} NsqSearchLevel;
 
 #define MAX_PARENT_SQ     6
-typedef enum COMPOUND_DIST_WEIGHT_MODE {
+typedef enum CompoundDistWeightMode {
     DIST,
-} COMPOUND_DIST_WEIGHT_MODE;
+} CompoundDistWeightMode;
 
 
 // Profile 0.  8-bit and 10-bit 4:2:0 and 4:0:0 only.
 // Profile 1.  8-bit and 10-bit 4:4:4
 // Profile 2.  8-bit and 10-bit 4:2:2
 //            12 bit  4:0:0, 4:2:2 and 4:4:4
-typedef enum BITSTREAM_PROFILE {
+typedef enum BitstreamProfile {
     PROFILE_0,
     PROFILE_1,
     PROFILE_2,
     MAX_PROFILES
-} BITSTREAM_PROFILE;
+} BitstreamProfile;
 // Note: Some enums use the attribute 'packed' to use smallest possible integer
 // type, so that we can save memory when they are used in structs/arrays.
 

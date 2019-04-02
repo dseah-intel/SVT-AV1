@@ -2041,7 +2041,7 @@ void  inject_intra_candidates_ois(
 
 double av1_convert_qindex_to_q(int32_t qindex, aom_bit_depth_t bit_depth);
 
-static INLINE void setup_pred_plane(struct buf_2d *dst, block_size bsize,
+static INLINE void setup_pred_plane(struct Buf2D *dst, block_size bsize,
     uint8_t *src, int width, int height,
     int stride, int mi_row, int mi_col,
     int subsampling_x, int subsampling_y) {
@@ -2060,7 +2060,7 @@ static INLINE void setup_pred_plane(struct buf_2d *dst, block_size bsize,
     dst->stride = stride;
 }
 void av1_setup_pred_block(block_size sb_type,
-    struct buf_2d dst[MAX_MB_PLANE],
+    struct Buf2D dst[MAX_MB_PLANE],
     const Yv12BufferConfig *src, int mi_row, int mi_col) {
     int i;
 
@@ -2198,7 +2198,7 @@ void  intra_bc_search(
     link_Eb_to_aom_buffer_desc_8bit(
         pcs->parent_pcs_ptr->enhanced_picture_ptr,
         &cur_buf);
-    struct buf_2d yv12_mb[MAX_MB_PLANE];
+    struct Buf2D yv12_mb[MAX_MB_PLANE];
     av1_setup_pred_block(bsize, yv12_mb, &cur_buf, mi_row, mi_col);
     for (int i = 0; i < num_planes; ++i) {
         x->xdplane[i].pre[0] = yv12_mb[i];  //ref in ME

@@ -1684,7 +1684,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->enc_dec_process_init_count; ++processIndex) {
         return_error = enc_dec_context_ctor(
-            (EncDecContext_t**)&encHandlePtr->encDecContextPtrArray[processIndex],
+            (EncDecContext**)&encHandlePtr->encDecContextPtrArray[processIndex],
             encHandlePtr->encDecTasksConsumerFifoPtrArray[processIndex],
             encHandlePtr->encDecResultsProducerFifoPtrArray[processIndex],
             encHandlePtr->encDecTasksProducerFifoPtrArray[EncDecPortLookup(ENCDEC_INPUT_PORT_ENCDEC, processIndex)],
@@ -1707,7 +1707,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->dlf_process_init_count; ++processIndex) {
         return_error = dlf_context_ctor(
-            (DlfContext_t**)&encHandlePtr->dlfContextPtrArray[processIndex],
+            (DlfContext**)&encHandlePtr->dlfContextPtrArray[processIndex],
             encHandlePtr->encDecResultsConsumerFifoPtrArray[processIndex],
             encHandlePtr->dlfResultsProducerFifoPtrArray[processIndex],             //output to EC
             is16bit,
@@ -1836,7 +1836,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     EB_MALLOC(EbHandle*, encHandlePtr->encDecThreadHandleArray, sizeof(EbHandle) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->enc_dec_process_init_count, EB_N_PTR);
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->enc_dec_process_init_count; ++processIndex) {
-        EB_CREATETHREAD(EbHandle, encHandlePtr->encDecThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, EncDecKernel, encHandlePtr->encDecContextPtrArray[processIndex]);
+        EB_CREATETHREAD(EbHandle, encHandlePtr->encDecThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, enc_dec_kernel, encHandlePtr->encDecContextPtrArray[processIndex]);
     }
 
     // Dlf Process

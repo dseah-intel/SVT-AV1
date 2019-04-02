@@ -3097,7 +3097,7 @@ static void write_frame_size(PictureParentControlSet *pcs_ptr,
 
 }
 
-static void WriteProfile(BITSTREAM_PROFILE profile,
+static void WriteProfile(BitstreamProfile profile,
     struct AomWriteBitBuffer *wb) {
     assert(profile >= PROFILE_0 && profile < MAX_PROFILES);
     aom_wb_write_literal(wb, profile, PROFILE_BITS);
@@ -4124,7 +4124,7 @@ static uint32_t WriteSequenceHeaderObu(
 
     SetBitstreamLevelTier(scs_ptr);
 
-    WriteProfile((BITSTREAM_PROFILE)scs_ptr->static_config.profile, &wb);
+    WriteProfile((BitstreamProfile)scs_ptr->static_config.profile, &wb);
 
     // Still picture or not
     aom_wb_write_bit(&wb, scs_ptr->still_picture);

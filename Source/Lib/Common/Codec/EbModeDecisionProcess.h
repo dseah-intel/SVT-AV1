@@ -121,7 +121,7 @@ extern "C" {
 
         // Transform and Quantization Buffers
         EbTransQuantBuffers          *trans_quant_buffers_ptr;
-        struct EncDecContext_s         *enc_dec_context_ptr;
+        struct EncDecContext         *enc_dec_context_ptr;
 
         uint64_t                       *fast_cost_array;
         uint64_t                       *full_cost_array;

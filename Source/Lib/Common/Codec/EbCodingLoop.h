@@ -74,7 +74,7 @@ extern "C" {
 
     extern EbErrorType QpmDeriveWeightsMinAndMax(
         PictureControlSet                    *picture_control_set_ptr,
-        EncDecContext_t                        *context_ptr);
+        EncDecContext                        *context_ptr);
 
     uint8_t get_skip_tx_search_flag(
         int32_t                  sq_size,
@@ -90,7 +90,7 @@ extern "C" {
         uint32_t                   sb_origin_x,
         uint32_t                   sb_origin_y,
         uint32_t                   sb_qp,
-        EncDecContext_t         *context_ptr);
+        EncDecContext         *context_ptr);
 
 
 #if NO_ENCDEC
@@ -103,7 +103,7 @@ extern "C" {
         uint32_t                   sb_origin_x,
         uint32_t                   sb_origin_y,
         uint32_t                   sb_qp,
-        EncDecContext_t         *context_ptr);
+        EncDecContext         *context_ptr);
 #endif
 
 #ifdef __cplusplus
