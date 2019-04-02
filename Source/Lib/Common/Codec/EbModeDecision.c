@@ -580,9 +580,9 @@ void Unipred3x3CandidatesInjection(
             /**************
             NEWMV L1
             ************* */
-        if (context_ptr->unipred3x3_injection >= 2)
-            if (ALLOW_REFINEMENT_FLAG[bipredIndex] == 0)
-                continue;
+            if (context_ptr->unipred3x3_injection >= 2)
+                if (ALLOW_REFINEMENT_FLAG[bipredIndex] == 0)
+                    continue;
             int16_t to_inject_mv_x = use_close_loop_me ? (inloop_me_context->inloop_me_mv[1][0][close_loop_me_index][0] + BIPRED_3x3_X_POS[bipredIndex]) << 1 : (mePuResult->x_mv_l1 + BIPRED_3x3_X_POS[bipredIndex]) << 1;
             int16_t to_inject_mv_y = use_close_loop_me ? (inloop_me_context->inloop_me_mv[1][0][close_loop_me_index][1] + BIPRED_3x3_Y_POS[bipredIndex]) << 1 : (mePuResult->y_mv_l1 + BIPRED_3x3_Y_POS[bipredIndex]) << 1;
             if (context_ptr->injected_mv_count_l1 == 0 || is_already_injected_mv_l1(context_ptr, to_inject_mv_x, to_inject_mv_y) == EB_FALSE) {
@@ -594,13 +594,13 @@ void Unipred3x3CandidatesInjection(
                 candidateArray[canTotalCnt].inter_mode = NEWMV;
                 candidateArray[canTotalCnt].pred_mode = NEWMV;
                 candidateArray[canTotalCnt].motion_mode = SIMPLE_TRANSLATION;
-
+            
                 candidateArray[canTotalCnt].is_compound = 0;
                 candidateArray[canTotalCnt].is_new_mv = 1;
                 candidateArray[canTotalCnt].is_zero_mv = 0;
-
+            
                 candidateArray[canTotalCnt].drl_index = 0;
-
+            
                 // Set the MV to ME result
                 candidateArray[canTotalCnt].motion_vector_xl1 = to_inject_mv_x;
                 candidateArray[canTotalCnt].motion_vector_yl1 = to_inject_mv_y;
@@ -608,11 +608,11 @@ void Unipred3x3CandidatesInjection(
                 candidateArray[canTotalCnt].ref_mv_index = 0;
                 candidateArray[canTotalCnt].pred_mv_weight = 0;
                 candidateArray[canTotalCnt].ref_frame_type = BWDREF_FRAME;
-
-
+            
+            
                 candidateArray[canTotalCnt].transform_type[PLANE_TYPE_Y] = DCT_DCT;
                 candidateArray[canTotalCnt].transform_type[PLANE_TYPE_UV] = DCT_DCT;
-
+            
                 ChooseBestAv1MvPred(
                     context_ptr,
                     candidateArray[canTotalCnt].md_rate_estimation_ptr,
@@ -625,10 +625,10 @@ void Unipred3x3CandidatesInjection(
                     0, 0,
                     &candidateArray[canTotalCnt].drl_index,
                     bestPredmv);
-
+            
                 candidateArray[canTotalCnt].motion_vector_pred_x[REF_LIST_1] = bestPredmv[0].as_mv.col;
                 candidateArray[canTotalCnt].motion_vector_pred_y[REF_LIST_1] = bestPredmv[0].as_mv.row;
-
+            
                 ++canTotalCnt;
                 context_ptr->injected_mv_x_l1_array[context_ptr->injected_mv_count_l1] = to_inject_mv_x;
                 context_ptr->injected_mv_y_l1_array[context_ptr->injected_mv_count_l1] = to_inject_mv_y;
