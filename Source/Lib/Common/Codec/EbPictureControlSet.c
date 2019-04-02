@@ -181,7 +181,7 @@ EbErrorType picture_control_set_ctor(
 
     // Packetization process Bitstream
     return_error = bitstream_ctor(
-        &object_ptr->bitstreamPtr,
+        &object_ptr->bitstream_ptr,
         PACKETIZATION_PROCESS_BUFFER_SIZE);
 
     if (return_error == EB_ErrorInsufficientResources) {
@@ -838,7 +838,7 @@ EbErrorType picture_control_set_ctor(
     object_ptr->constrained_intra_flag = EB_FALSE;
 
     // Segments
-    return_error = EncDecSegmentsCtor(
+    return_error = enc_dec_segments_ctor(
         &object_ptr->enc_dec_segment_ctrl,
         initDataPtr->enc_dec_segment_col,
         initDataPtr->enc_dec_segment_row);

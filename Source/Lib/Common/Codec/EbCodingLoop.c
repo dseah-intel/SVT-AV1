@@ -2291,7 +2291,7 @@ EB_EXTERN void AV1EncodePass(
     uint64_t                  y_tu_coeff_bits;
     uint64_t                  cb_tu_coeff_bits;
     uint64_t                  cr_tu_coeff_bits;
-    EncodeContext_t          *encode_context_ptr;
+    EncodeContext          *encode_context_ptr;
     uint32_t                  lcuRowIndex = sb_origin_y / BLOCK_SIZE_64;
 
     // Dereferencing early
@@ -3312,7 +3312,7 @@ EB_EXTERN void AV1EncodePass(
 
                                     const uint32_t coeff1dOffset = context_ptr->coded_area_sb;
 
-                                    Av1TuEstimateCoeffBits(
+                                    av1_tu_estimate_coeff_bits(
                                         picture_control_set_ptr,
                                         candidateBuffer,
                                         cu_ptr,

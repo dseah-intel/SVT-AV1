@@ -40,7 +40,7 @@
 #define RC_GROUP_IN_GOP_MAX_NUMBER                          512
 #define PICTURE_IN_RC_GROUP_MAX_NUMBER                      64
 
-typedef struct EncodeContext_s
+typedef struct EncodeContext
 {
     // Callback Functions
     EbCallback_t                                    *app_callback_ptr;
@@ -147,11 +147,11 @@ typedef struct EncodeContext_s
     EbObjectWrapper                                *previous_picture_control_set_wrapper_ptr;
     EbHandle                                          shared_reference_mutex;
 
-} EncodeContext_t;
+} EncodeContext;
 
-typedef struct EncodeContextInitData_s {
+typedef struct EncodeContextInitData {
     int32_t junk;
-} EncodeContextInitData_t;
+} EncodeContextInitData;
 
 /**************************************
  * Extern Function Declarations

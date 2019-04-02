@@ -21,9 +21,9 @@
 #include "EbRateControlTasks.h"
 #include "EbSvtAv1ErrorCodes.h"
 
-void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcsPtr, int col);
-void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcsPtr, int row);
-void set_tile_info(PictureParentControlSet * pcsPtr);
+void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcs_ptr, int col);
+void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcs_ptr, int row);
+void set_tile_info(PictureParentControlSet * pcs_ptr);
 
 
 /************************************************
@@ -35,21 +35,21 @@ void set_tile_info(PictureParentControlSet * pcsPtr);
   * Configure Picture edges
   ************************************************/
 static void ConfigurePictureEdges(
-    SequenceControlSet *scsPtr,
+    SequenceControlSet *scs_ptr,
     PictureControlSet  *ppsPtr)
 {
     // Tiles Initialisation
-    const uint16_t picture_width_in_sb = (scsPtr->luma_width + scsPtr->sb_size_pix - 1) / scsPtr->sb_size_pix;
-    const uint16_t picture_height_in_sb = (scsPtr->luma_height + scsPtr->sb_size_pix - 1) / scsPtr->sb_size_pix;
-    unsigned xLcuIndex, yLcuIndex, sb_index;
+    const uint16_t picture_width_in_sb = (scs_ptr->luma_width + scs_ptr->sb_size_pix - 1) / scs_ptr->sb_size_pix;
+    const uint16_t picture_height_in_sb = (scs_ptr->luma_height + scs_ptr->sb_size_pix - 1) / scs_ptr->sb_size_pix;
+    unsigned x_lcu_index, y_lcu_index, sb_index;
 
     // LCU-loops
-    for (yLcuIndex = 0; yLcuIndex < picture_height_in_sb; ++yLcuIndex) {
-        for (xLcuIndex = 0; xLcuIndex < picture_width_in_sb; ++xLcuIndex) {
-            sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
-            ppsPtr->sb_ptr_array[sb_index]->picture_left_edge_flag = (xLcuIndex == 0) ? EB_TRUE : EB_FALSE;
-            ppsPtr->sb_ptr_array[sb_index]->picture_top_edge_flag = (yLcuIndex == 0) ? EB_TRUE : EB_FALSE;
-            ppsPtr->sb_ptr_array[sb_index]->picture_right_edge_flag = (xLcuIndex == (unsigned)(picture_width_in_sb - 1)) ? EB_TRUE : EB_FALSE;
+    for (y_lcu_index = 0; y_lcu_index < picture_height_in_sb; ++y_lcu_index) {
+        for (x_lcu_index = 0; x_lcu_index < picture_width_in_sb; ++x_lcu_index) {
+            sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
+            ppsPtr->sb_ptr_array[sb_index]->picture_left_edge_flag = (x_lcu_index == 0) ? EB_TRUE : EB_FALSE;
+            ppsPtr->sb_ptr_array[sb_index]->picture_top_edge_flag = (y_lcu_index == 0) ? EB_TRUE : EB_FALSE;
+            ppsPtr->sb_ptr_array[sb_index]->picture_right_edge_flag = (x_lcu_index == (unsigned)(picture_width_in_sb - 1)) ? EB_TRUE : EB_FALSE;
         }
     }
 
@@ -109,7 +109,7 @@ void* picture_manager_kernel(void *input_ptr)
     PictureControlSet             *ChildPictureControlSetPtr;
     PictureParentControlSet       *picture_control_set_ptr;
     SequenceControlSet            *sequence_control_set_ptr;
-    EncodeContext_t                 *encode_context_ptr;
+    EncodeContext                 *encode_context_ptr;
 
 
     EbObjectWrapper               *inputPictureDemuxWrapperPtr;
@@ -564,7 +564,7 @@ void* picture_manager_kernel(void *input_ptr)
                 EB_ENC_PM_ERROR9);
 
             picture_control_set_ptr = (PictureParentControlSet*)EB_NULL;
-            encode_context_ptr = (EncodeContext_t*)EB_NULL;
+            encode_context_ptr = (EncodeContext*)EB_NULL;
 
             break;
         }
@@ -574,7 +574,7 @@ void* picture_manager_kernel(void *input_ptr)
         // *************************************
 
         // Walk the input queue and start all ready pictures.  Mark entry as null after started.  Increment the head as you go.
-        if (encode_context_ptr != (EncodeContext_t*)EB_NULL) {
+        if (encode_context_ptr != (EncodeContext*)EB_NULL) {
             inputQueueIndex = encode_context_ptr->input_picture_queue_head_index;
             while (inputQueueIndex != encode_context_ptr->input_picture_queue_tail_index) {
 
@@ -707,7 +707,7 @@ void* picture_manager_kernel(void *input_ptr)
                         picture_height_in_sb = (uint8_t)((entrySequenceControlSetPtr->luma_height + entrySequenceControlSetPtr->sb_size_pix - 1) / entrySequenceControlSetPtr->sb_size_pix);
 
                         // EncDec Segments
-                        EncDecSegmentsInit(
+                        enc_dec_segments_init(
                             ChildPictureControlSetPtr->enc_dec_segment_ctrl,
                             entrySequenceControlSetPtr->enc_dec_segment_col_count_array[entryPictureControlSetPtr->temporal_layer_index],
                             entrySequenceControlSetPtr->enc_dec_segment_row_count_array[entryPictureControlSetPtr->temporal_layer_index],

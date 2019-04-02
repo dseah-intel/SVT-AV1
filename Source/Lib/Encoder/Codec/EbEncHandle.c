@@ -1393,14 +1393,14 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
     // EncDec Tasks
     {
-        EncDecTasksInitData_t ModeDecisionResultInitData;
+        EncDecTasksInitData ModeDecisionResultInitData;
         unsigned i;
 
-        ModeDecisionResultInitData.encDecSegmentRowCount = 0;
+        ModeDecisionResultInitData.enc_dec_segment_row_count = 0;
 
         for (i = 0; i <= encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->static_config.hierarchical_levels; ++i) {
-            ModeDecisionResultInitData.encDecSegmentRowCount = MAX(
-                ModeDecisionResultInitData.encDecSegmentRowCount,
+            ModeDecisionResultInitData.enc_dec_segment_row_count = MAX(
+                ModeDecisionResultInitData.enc_dec_segment_row_count,
                 encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->enc_dec_segment_row_count_array[i]);
         }
 
@@ -1412,7 +1412,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             &encHandlePtr->encDecTasksProducerFifoPtrArray,
             &encHandlePtr->encDecTasksConsumerFifoPtrArray,
             EB_TRUE,
-            EncDecTasksCtor,
+            enc_dec_tasks_ctor,
             &ModeDecisionResultInitData);
         if (return_error == EB_ErrorInsufficientResources) {
             return EB_ErrorInsufficientResources;

@@ -13718,7 +13718,7 @@ extern "C" {
         EbObjectWrapper                    *picture_parent_control_set_wrapper_ptr;
         EntropyCoder                       *entropy_coder_ptr;
         // Packetization (used to encode SPS, PPS, etc)
-        Bitstream                          *bitstreamPtr;
+        Bitstream                          *bitstream_ptr;
 
         // Reference Lists
         EbObjectWrapper                    *ref_pic_ptr_array[MAX_NUM_OF_REF_PIC_LIST];
@@ -13730,7 +13730,7 @@ extern "C" {
         uint8_t                               temporal_layer_index;
         
         
-        EncDecSegments_t                     *enc_dec_segment_ctrl;
+        EncDecSegments                     *enc_dec_segment_ctrl;
 
         // Entropy Process Rows
         int8_t                                entropy_coding_current_available_row;

@@ -56,7 +56,7 @@ extern "C" {
     extern uint32_t d2_inter_depth_block_decision(
         ModeDecisionContext          *context_ptr,
         uint32_t                        blk_mds,
-        LargestCodingUnit_t            *tbPtr,
+        LargestCodingUnit_t            *tb_ptr,
         uint32_t                          lcuAddr,
         uint32_t                          tbOriginX,
         uint32_t                          tbOriginY,

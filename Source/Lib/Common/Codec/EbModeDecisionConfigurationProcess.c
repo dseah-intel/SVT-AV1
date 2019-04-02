@@ -1327,15 +1327,15 @@ void DetectComplexNonFlatMovingLcu(
 EbAuraStatus AuraDetection64x64Gold(
     PictureControlSet           *picture_control_set_ptr,
     uint8_t                          picture_qp,
-    uint32_t                         xLcuIndex,
-    uint32_t                         yLcuIndex
+    uint32_t                         x_lcu_index,
+    uint32_t                         y_lcu_index
 )
 {
 
     SequenceControlSet  *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     int32_t                 picture_width_in_sb = (sequence_control_set_ptr->luma_width + BLOCK_SIZE_64 - 1) >> LOG2_64_SIZE;
     int32_t                 picture_height_in_sb = (sequence_control_set_ptr->luma_height + BLOCK_SIZE_64 - 1) >> LOG2_64_SIZE;
-    uint32_t                 sb_index = yLcuIndex * picture_width_in_sb + xLcuIndex;
+    uint32_t                 sb_index = y_lcu_index * picture_width_in_sb + x_lcu_index;
     uint32_t                 currDist;
     uint32_t                 topDist, topLDist, topRDist;
     uint32_t                 localAvgDist, distThresh0, distThresh1;
@@ -1362,7 +1362,7 @@ EbAuraStatus AuraDetection64x64Gold(
         distThresh1 = distThresh1 << 2;
     }
 
-    if (xLcuIndex > 0 && xLcuIndex < (uint32_t)(picture_width_in_sb - 1) && yLcuIndex>0 && yLcuIndex < (uint32_t)(picture_height_in_sb - 1)) {
+    if (x_lcu_index > 0 && x_lcu_index < (uint32_t)(picture_width_in_sb - 1) && y_lcu_index>0 && y_lcu_index < (uint32_t)(picture_height_in_sb - 1)) {
 
         uint32_t k;
 
@@ -1416,7 +1416,7 @@ EbAuraStatus AuraDetection64x64Gold(
             topRDist = picture_control_set_ptr->parent_pcs_ptr->me_results[sb_index + lcuOffset]->distortion_direction[0].distortion;
 
 
-            topRDist = (xLcuIndex < (uint32_t)(picture_width_in_sb - 2)) ? topRDist : currDist;
+            topRDist = (x_lcu_index < (uint32_t)(picture_width_in_sb - 2)) ? topRDist : currDist;
 
             //left Distortion
             lcuOffset = -1;
@@ -1430,7 +1430,7 @@ EbAuraStatus AuraDetection64x64Gold(
 
 
 
-            rightDist = (xLcuIndex < (uint32_t)(picture_width_in_sb - 2)) ? topRDist : currDist;
+            rightDist = (x_lcu_index < (uint32_t)(picture_width_in_sb - 2)) ? topRDist : currDist;
 
             localAvgDist = MIN(MIN(MIN(topLDist, MIN(topRDist, topDist)), leftDist), rightDist);
 
@@ -2098,7 +2098,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
 
     // Output
     EbObjectWrapper                          *encDecTasksWrapperPtr;
-    EncDecTasks_t                              *encDecTasksPtr;
+    EncDecTasks                              *encDecTasksPtr;
 
     for (;;) {
 
@@ -2242,7 +2242,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
         entropyCodingQp = picture_control_set_ptr->parent_pcs_ptr->base_qindex;
 
         // Reset CABAC Contexts
-        ResetEntropyCoder(
+        reset_entropy_coder(
             sequence_control_set_ptr->encode_context_ptr,
             picture_control_set_ptr->coeff_est_entropy_coder_ptr,
             entropyCodingQp,
@@ -2458,9 +2458,9 @@ void* mode_decision_configuration_kernel(void *input_ptr)
             context_ptr->mode_decision_configuration_output_fifo_ptr,
             &encDecTasksWrapperPtr);
 
-        encDecTasksPtr = (EncDecTasks_t*)encDecTasksWrapperPtr->object_ptr;
+        encDecTasksPtr = (EncDecTasks*)encDecTasksWrapperPtr->object_ptr;
         encDecTasksPtr->picture_control_set_wrapper_ptr = rateControlResultsPtr->picture_control_set_wrapper_ptr;
-        encDecTasksPtr->inputType = ENCDEC_TASKS_MDC_INPUT;
+        encDecTasksPtr->input_type = ENCDEC_TASKS_MDC_INPUT;
 
         // Post the Full Results Object
         eb_post_full_object(encDecTasksWrapperPtr);

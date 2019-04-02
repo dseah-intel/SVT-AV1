@@ -3562,7 +3562,7 @@ static void PU_HalfPelRefinement(
 )
 {
 
-    EncodeContext_t         *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
+    EncodeContext         *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
     int32_t searchRegionIndex;
     uint64_t bestHalfSad = 0;

@@ -18,8 +18,8 @@ EbErrorType encode_context_ctor(
     uint32_t pictureIndex;
     EbErrorType return_error = EB_ErrorNone;
 
-    EncodeContext_t *encode_context_ptr;
-    EB_MALLOC(EncodeContext_t*, encode_context_ptr, sizeof(EncodeContext_t), EB_N_PTR);
+    EncodeContext *encode_context_ptr;
+    EB_MALLOC(EncodeContext*, encode_context_ptr, sizeof(EncodeContext), EB_N_PTR);
     *object_dbl_ptr = (EbPtr)encode_context_ptr;
 
     object_init_data_ptr = 0;

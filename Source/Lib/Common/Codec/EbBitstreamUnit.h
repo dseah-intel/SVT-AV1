@@ -30,19 +30,19 @@ extern "C" {
      * Extern Function Declarations
      **********************************/
     extern EbErrorType output_bitstream_unit_ctor(
-        OutputBitstreamUnit_t   *bitstreamPtr,
+        OutputBitstreamUnit_t   *bitstream_ptr,
         uint32_t                   buffer_size);
 
 
-    extern EbErrorType output_bitstream_reset(OutputBitstreamUnit_t *bitstreamPtr);
+    extern EbErrorType output_bitstream_reset(OutputBitstreamUnit_t *bitstream_ptr);
 
 
 
     extern EbErrorType output_bitstream_rbsp_to_payload(
-        OutputBitstreamUnit_t *bitstreamPtr,
-        EbByte                outputBuffer,
-        uint32_t                *outputBufferIndex,
-        uint32_t                *outputBufferSize,
+        OutputBitstreamUnit_t *bitstream_ptr,
+        EbByte                output_buffer,
+        uint32_t                *output_buffer_index,
+        uint32_t                *output_buffer_size,
         uint32_t                 startLocation);
 
     /********************************************************************************************************************************/

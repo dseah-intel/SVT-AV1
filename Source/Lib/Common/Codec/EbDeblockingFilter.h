@@ -83,16 +83,16 @@ extern "C" {
     struct macroblockd;
     struct AV1LfSyncData;
 
-    void av1_loop_filter_init(PictureControlSet *pcsPtr);
+    void av1_loop_filter_init(PictureControlSet *pcs_ptr);
 
-    void av1_loop_filter_frame_init(PictureControlSet *pcsPtr, int32_t plane_start,
+    void av1_loop_filter_frame_init(PictureControlSet *pcs_ptr, int32_t plane_start,
         int32_t plane_end);
 
 
     void loop_filter_sb(
         EbPictureBufferDesc *frame_buffer,//reconpicture,
         //Yv12BufferConfig *frame_buffer,
-        PictureControlSet *pcsPtr,
+        PictureControlSet *pcs_ptr,
         MacroBlockD *xd, int32_t mi_row, int32_t mi_col,
         int32_t plane_start, int32_t plane_end,
         uint8_t LastCol);
@@ -100,26 +100,26 @@ extern "C" {
     void av1_loop_filter_frame(
         EbPictureBufferDesc *frame_buffer,//reconpicture,
         //Yv12BufferConfig *frame_buffer,
-        PictureControlSet *pcsPtr,
+        PictureControlSet *pcs_ptr,
         /*MacroBlockD *xd,*/ int32_t plane_start, int32_t plane_end/*,
         int32_t partial_frame*/);
 
     void av1_pick_filter_level(
         DlfContext_t            *context_ptr,
         EbPictureBufferDesc   *srcBuffer, // source input
-        PictureControlSet     *pcsPtr,
+        PictureControlSet     *pcs_ptr,
         LPF_PICK_METHOD          method);
 
 
     void av1_filter_block_plane_vert(
-        const PictureControlSet *const  pcsPtr,
+        const PictureControlSet *const  pcs_ptr,
         const MacroBlockD *const xd,
         const int32_t plane,
         const MacroblockdPlane *const plane_ptr,
         const uint32_t mi_row, const uint32_t mi_col);
 
     void av1_filter_block_plane_horz(
-        const PictureControlSet *const  pcsPtr,
+        const PictureControlSet *const  pcs_ptr,
         const MacroBlockD *const xd, const int32_t plane,
         const MacroblockdPlane *const plane_ptr,
         const uint32_t mi_row, const uint32_t mi_col);
@@ -127,7 +127,7 @@ extern "C" {
     typedef struct LoopFilterWorkerData {
         EbPictureBufferDesc *frame_buffer;//reconpicture,
         //Yv12BufferConfig *frame_buffer;
-        PictureControlSet *pcsPtr;
+        PictureControlSet *pcs_ptr;
         struct MacroblockdPlane planes[MAX_MB_PLANE];
         // TODO(Ranjit): When the filter functions are modified to use xd->lossless
         // add lossless as a member here.

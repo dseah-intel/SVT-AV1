@@ -262,13 +262,13 @@ EbErrorType ComputeDecimatedZzSad(
 
     uint32_t decimatedLcuCollocatedSad;
 
-    uint32_t xLcuIndex;
-    uint32_t yLcuIndex;
+    uint32_t x_lcu_index;
+    uint32_t y_lcu_index;
 
-    for (yLcuIndex = yLcuStartIndex; yLcuIndex < yLcuEndIndex; ++yLcuIndex) {
-        for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
+    for (y_lcu_index = yLcuStartIndex; y_lcu_index < yLcuEndIndex; ++y_lcu_index) {
+        for (x_lcu_index = xLcuStartIndex; x_lcu_index < xLcuEndIndex; ++x_lcu_index) {
 
-            sb_index = xLcuIndex + yLcuIndex * sequence_control_set_ptr->picture_width_in_sb;
+            sb_index = x_lcu_index + y_lcu_index * sequence_control_set_ptr->picture_width_in_sb;
             LcuParameters *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
 
             sb_width = sb_params->width;
@@ -391,8 +391,8 @@ void* motion_estimation_kernel(void *input_ptr)
     uint32_t                       bufferIndex;
 
     uint32_t                       sb_index;
-    uint32_t                       xLcuIndex;
-    uint32_t                       yLcuIndex;
+    uint32_t                       x_lcu_index;
+    uint32_t                       y_lcu_index;
     uint32_t                       picture_width_in_sb;
     uint32_t                       picture_height_in_sb;
     uint32_t                       sb_origin_x;
@@ -490,12 +490,12 @@ void* motion_estimation_kernel(void *input_ptr)
         if (picture_control_set_ptr->slice_type != I_SLICE) {
 
             // SB Loop
-            for (yLcuIndex = yLcuStartIndex; yLcuIndex < yLcuEndIndex; ++yLcuIndex) {
-                for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
+            for (y_lcu_index = yLcuStartIndex; y_lcu_index < yLcuEndIndex; ++y_lcu_index) {
+                for (x_lcu_index = xLcuStartIndex; x_lcu_index < xLcuEndIndex; ++x_lcu_index) {
 
-                    sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
-                    sb_origin_x = xLcuIndex * sequence_control_set_ptr->sb_sz;
-                    sb_origin_y = yLcuIndex * sequence_control_set_ptr->sb_sz;
+                    sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
+                    sb_origin_x = x_lcu_index * sequence_control_set_ptr->sb_sz;
+                    sb_origin_y = y_lcu_index * sequence_control_set_ptr->sb_sz;
 
                     sb_width = (sequence_control_set_ptr->luma_width - sb_origin_x) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_width - sb_origin_x : BLOCK_SIZE_64;
                     sb_height = (sequence_control_set_ptr->luma_height - sb_origin_y) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_height - sb_origin_y : BLOCK_SIZE_64;
@@ -571,13 +571,13 @@ void* motion_estimation_kernel(void *input_ptr)
         {
 
             // SB Loop
-            for (yLcuIndex = yLcuStartIndex; yLcuIndex < yLcuEndIndex; ++yLcuIndex) {
-                for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
+            for (y_lcu_index = yLcuStartIndex; y_lcu_index < yLcuEndIndex; ++y_lcu_index) {
+                for (x_lcu_index = xLcuStartIndex; x_lcu_index < xLcuEndIndex; ++x_lcu_index) {
 
-                    sb_origin_x = xLcuIndex * sequence_control_set_ptr->sb_sz;
-                    sb_origin_y = yLcuIndex * sequence_control_set_ptr->sb_sz;
+                    sb_origin_x = x_lcu_index * sequence_control_set_ptr->sb_sz;
+                    sb_origin_y = y_lcu_index * sequence_control_set_ptr->sb_sz;
 
-                    sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
+                    sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
 
 
                     open_loop_intra_search_sb(
@@ -622,15 +622,15 @@ void* motion_estimation_kernel(void *input_ptr)
         if (sequence_control_set_ptr->static_config.rate_control_mode) {
             if (picture_control_set_ptr->slice_type != I_SLICE) {
                 uint16_t sadIntervalIndex;
-                for (yLcuIndex = yLcuStartIndex; yLcuIndex < yLcuEndIndex; ++yLcuIndex) {
-                    for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
+                for (y_lcu_index = yLcuStartIndex; y_lcu_index < yLcuEndIndex; ++y_lcu_index) {
+                    for (x_lcu_index = xLcuStartIndex; x_lcu_index < xLcuEndIndex; ++x_lcu_index) {
 
-                        sb_origin_x = xLcuIndex * sequence_control_set_ptr->sb_sz;
-                        sb_origin_y = yLcuIndex * sequence_control_set_ptr->sb_sz;
+                        sb_origin_x = x_lcu_index * sequence_control_set_ptr->sb_sz;
+                        sb_origin_y = y_lcu_index * sequence_control_set_ptr->sb_sz;
                         sb_width = (sequence_control_set_ptr->luma_width - sb_origin_x) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_width - sb_origin_x : BLOCK_SIZE_64;
                         sb_height = (sequence_control_set_ptr->luma_height - sb_origin_y) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_height - sb_origin_y : BLOCK_SIZE_64;
 
-                        sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
+                        sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
                         picture_control_set_ptr->inter_sad_interval_index[sb_index] = 0;
                         picture_control_set_ptr->intra_sad_interval_index[sb_index] = 0;
 
@@ -690,14 +690,14 @@ void* motion_estimation_kernel(void *input_ptr)
                 
 
 
-                for (yLcuIndex = yLcuStartIndex; yLcuIndex < yLcuEndIndex; ++yLcuIndex) {
-                    for (xLcuIndex = xLcuStartIndex; xLcuIndex < xLcuEndIndex; ++xLcuIndex) {
-                        sb_origin_x = xLcuIndex * sequence_control_set_ptr->sb_sz;
-                        sb_origin_y = yLcuIndex * sequence_control_set_ptr->sb_sz;
+                for (y_lcu_index = yLcuStartIndex; y_lcu_index < yLcuEndIndex; ++y_lcu_index) {
+                    for (x_lcu_index = xLcuStartIndex; x_lcu_index < xLcuEndIndex; ++x_lcu_index) {
+                        sb_origin_x = x_lcu_index * sequence_control_set_ptr->sb_sz;
+                        sb_origin_y = y_lcu_index * sequence_control_set_ptr->sb_sz;
                         sb_width = (sequence_control_set_ptr->luma_width - sb_origin_x) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_width - sb_origin_x : BLOCK_SIZE_64;
                         sb_height = (sequence_control_set_ptr->luma_height - sb_origin_y) < BLOCK_SIZE_64 ? sequence_control_set_ptr->luma_height - sb_origin_y : BLOCK_SIZE_64;
 
-                        sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
+                        sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
 
                         picture_control_set_ptr->inter_sad_interval_index[sb_index] = 0;
                         picture_control_set_ptr->intra_sad_interval_index[sb_index] = 0;

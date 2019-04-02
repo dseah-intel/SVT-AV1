@@ -885,7 +885,7 @@ void StationaryEdgeOverUpdateOverTimeLcu(
 ** LAD Window: min (8 or sliding window size)
 ************************************************/
 void UpdateGlobalMotionDetectionOverTime(
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
@@ -951,7 +951,7 @@ void UpdateGlobalMotionDetectionOverTime(
 ************************************************/
 
 void UpdateBeaInfoOverTime(
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
     InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
@@ -1035,7 +1035,7 @@ void InitZzCostInfo(
 ** LAD Window: min (2xmgpos+1 or sliding window size)
 ************************************************/
 void UpdateMotionFieldUniformityOverTime(
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
@@ -1093,7 +1093,7 @@ void UpdateMotionFieldUniformityOverTime(
 ** LAD Window: min (2xmgpos+1 or sliding window size)
 ************************************************/
 void UpdateHomogeneityOverTime(
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
     InitialRateControlReorderEntry   *temporaryQueueEntryPtr;
@@ -1187,7 +1187,7 @@ void ResetHomogeneityStructures(
 }
 
 InitialRateControlReorderEntry  * DeterminePictureOffsetInQueue(
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr,
     MotionEstimationResults         *inputResultsPtr)
 {
@@ -1209,7 +1209,7 @@ InitialRateControlReorderEntry  * DeterminePictureOffsetInQueue(
 
 void GetHistogramQueueData(
     SequenceControlSet              *sequence_control_set_ptr,
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
     PictureParentControlSet         *picture_control_set_ptr)
 {
     HlRateControlHistogramEntry     *histogramQueueEntryPtr;
@@ -1263,7 +1263,7 @@ void GetHistogramQueueData(
 
 void UpdateHistogramQueueEntry(
     SequenceControlSet              *sequence_control_set_ptr,
-    EncodeContext_t                   *encode_context_ptr,
+    EncodeContext                   *encode_context_ptr,
 #if RC
     PictureParentControlSet         *picture_control_set_ptr,
     uint32_t                           frames_in_sw)
@@ -1351,8 +1351,8 @@ void DeriveSimilarCollocatedFlag(
 EbAuraStatus AuraDetection64x64Gold(
     PictureControlSet           *picture_control_set_ptr,
     uint8_t                          picture_qp,
-    uint32_t                         xLcuIndex,
-    uint32_t                         yLcuIndex
+    uint32_t                         x_lcu_index,
+    uint32_t                         y_lcu_index
 );
 
 void QpmGatherStatisticsSW(
@@ -1642,7 +1642,7 @@ void* initial_rate_control_kernel(void *input_ptr)
     InitialRateControlContext       *context_ptr = (InitialRateControlContext*)input_ptr;
     PictureParentControlSet         *picture_control_set_ptr;
     PictureParentControlSet         *pictureControlSetPtrTemp;
-    EncodeContext_t                   *encode_context_ptr;
+    EncodeContext                   *encode_context_ptr;
     SequenceControlSet              *sequence_control_set_ptr;
 
     EbObjectWrapper                 *inputResultsWrapperPtr;
@@ -1685,7 +1685,7 @@ void* initial_rate_control_kernel(void *input_ptr)
         // If the picture is complete, proceed
         if (SEGMENT_COMPLETION_MASK_TEST(picture_control_set_ptr->me_segments_completion_mask, picture_control_set_ptr->me_segments_total_count)) {
             sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
-            encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
+            encode_context_ptr = (EncodeContext*)sequence_control_set_ptr->encode_context_ptr;
 
             // Mark picture when global motion is detected using ME results
             //reset intraCodedEstimationLcu

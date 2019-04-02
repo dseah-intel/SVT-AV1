@@ -114,7 +114,7 @@ extern "C" {
      //        EbPictureBufferDesc *dst);
 
      //void av1_film_grain_write_updated(const aom_film_grain_t *pars,
-     //  int32_t monochrome, struct aom_write_bit_buffer *wb);
+     //  int32_t monochrome, struct AomWriteBitBuffer *wb);
      //
      //void av1_film_grain_read_updated(aom_film_grain_t *pars,
      //                                 int32_t monochrome, struct aom_read_bit_buffer *wb,

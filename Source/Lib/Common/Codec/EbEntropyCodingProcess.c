@@ -23,8 +23,8 @@
 
 #define  AV1_MIN_TILE_SIZE_BYTES 1
 void av1_reset_loop_restoration(PictureControlSet     *piCSetPtr);
-void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcsPtr, int col);
-void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcsPtr, int row);
+void av1_tile_set_col(TileInfo *tile, PictureParentControlSet * pcs_ptr, int col);
+void av1_tile_set_row(TileInfo *tile, PictureParentControlSet * pcs_ptr, int row);
 
 
 /******************************************************
@@ -178,7 +178,7 @@ static void ResetEntropyCodingPicture(
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr)
 {
-    ResetBitstream(entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr));
+    reset_bitstream(entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr));
 
     uint32_t                       entropyCodingQp;
 
@@ -212,11 +212,11 @@ static void ResetEntropyCodingPicture(
     if (picture_control_set_ptr->parent_pcs_ptr->allow_intrabc)
         assert(picture_control_set_ptr->parent_pcs_ptr->delta_lf_present_flag == 0);
     /*else
-        aom_wb_write_bit(wb, pcsPtr->delta_lf_present_flag);*/
+        aom_wb_write_bit(wb, pcs_ptr->delta_lf_present_flag);*/
     if (picture_control_set_ptr->parent_pcs_ptr->delta_lf_present_flag) {
-        //aom_wb_write_literal(wb, OD_ILOG_NZ(pcsPtr->delta_lf_res) - 1, 2);
+        //aom_wb_write_literal(wb, OD_ILOG_NZ(pcs_ptr->delta_lf_res) - 1, 2);
         picture_control_set_ptr->parent_pcs_ptr->prev_delta_lf_from_base = 0;
-        //aom_wb_write_bit(wb, pcsPtr->delta_lf_multi);
+        //aom_wb_write_bit(wb, pcs_ptr->delta_lf_multi);
         const int32_t frame_lf_count =
             picture_control_set_ptr->parent_pcs_ptr->monochrome == 0 ? FRAME_LF_COUNT : FRAME_LF_COUNT - 2;
         for (int32_t lf_id = 0; lf_id < frame_lf_count; ++lf_id)
@@ -236,7 +236,7 @@ static void ResetEntropyCodingPicture(
 
     // ADD Reset here
 
-    ResetEntropyCoder(
+    reset_entropy_coder(
         sequence_control_set_ptr->encode_context_ptr,
         picture_control_set_ptr->entropy_coder_ptr,
         entropyCodingQp,
@@ -256,7 +256,7 @@ static void reset_ec_tile(
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr)
 {
-    ResetBitstream(entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr));
+    reset_bitstream(entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr));
 
     uint32_t                       entropy_coding_qp;
 
@@ -289,11 +289,11 @@ static void reset_ec_tile(
     if (picture_control_set_ptr->parent_pcs_ptr->allow_intrabc)
         assert(picture_control_set_ptr->parent_pcs_ptr->delta_lf_present_flag == 0);
     /*else
-        aom_wb_write_bit(wb, pcsPtr->delta_lf_present_flag);*/
+        aom_wb_write_bit(wb, pcs_ptr->delta_lf_present_flag);*/
     if (picture_control_set_ptr->parent_pcs_ptr->delta_lf_present_flag) {
-        //aom_wb_write_literal(wb, OD_ILOG_NZ(pcsPtr->delta_lf_res) - 1, 2);
+        //aom_wb_write_literal(wb, OD_ILOG_NZ(pcs_ptr->delta_lf_res) - 1, 2);
         picture_control_set_ptr->parent_pcs_ptr->prev_delta_lf_from_base = 0;
-        //aom_wb_write_bit(wb, pcsPtr->delta_lf_multi);
+        //aom_wb_write_bit(wb, pcs_ptr->delta_lf_multi);
         const int32_t frame_lf_count =
             picture_control_set_ptr->parent_pcs_ptr->monochrome == 0 ? FRAME_LF_COUNT : FRAME_LF_COUNT - 2;
         for (int32_t lf_id = 0; lf_id < frame_lf_count; ++lf_id)
@@ -318,7 +318,7 @@ static void reset_ec_tile(
     aom_start_encode(&picture_control_set_ptr->entropy_coder_ptr->ec_writer, data);
 
     //reset probabilities
-    ResetEntropyCoder(
+    reset_entropy_coder(
         sequence_control_set_ptr->encode_context_ptr,
         picture_control_set_ptr->entropy_coder_ptr,
         entropy_coding_qp,
@@ -522,8 +522,8 @@ void* entropy_coding_kernel(void *input_ptr)
     uint16_t                                   sb_index;
     uint8_t                                    sb_sz;
     uint8_t                                    lcuSizeLog2;
-    uint32_t                                   xLcuIndex;
-    uint32_t                                   yLcuIndex;
+    uint32_t                                   x_lcu_index;
+    uint32_t                                   y_lcu_index;
     uint32_t                                   sb_origin_x;
     uint32_t                                   sb_origin_y;
 #if !RC 
@@ -555,14 +555,14 @@ void* entropy_coding_kernel(void *input_ptr)
 
         {
             initialProcessCall = EB_TRUE;
-            yLcuIndex = encDecResultsPtr->completedLcuRowIndexStart;
+            y_lcu_index = encDecResultsPtr->completedLcuRowIndexStart;
 
             // LCU-loops
-            while (UpdateEntropyCodingRows(picture_control_set_ptr, &yLcuIndex, encDecResultsPtr->completedLcuRowCount, &initialProcessCall) == EB_TRUE)
+            while (UpdateEntropyCodingRows(picture_control_set_ptr, &y_lcu_index, encDecResultsPtr->completedLcuRowCount, &initialProcessCall) == EB_TRUE)
             {
                 uint32_t rowTotalBits = 0;
 
-                if (yLcuIndex == 0) {
+                if (y_lcu_index == 0) {
                     ResetEntropyCodingPicture(
                         context_ptr,
                         picture_control_set_ptr,
@@ -570,15 +570,15 @@ void* entropy_coding_kernel(void *input_ptr)
                     picture_control_set_ptr->entropy_coding_pic_done = EB_FALSE;
                 }
 
-                for (xLcuIndex = 0; xLcuIndex < picture_width_in_sb; ++xLcuIndex)
+                for (x_lcu_index = 0; x_lcu_index < picture_width_in_sb; ++x_lcu_index)
                 {
 
 
-                    sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
+                    sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
                     sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
 
-                    sb_origin_x = xLcuIndex << lcuSizeLog2;
-                    sb_origin_y = yLcuIndex << lcuSizeLog2;
+                    sb_origin_x = x_lcu_index << lcuSizeLog2;
+                    sb_origin_y = y_lcu_index << lcuSizeLog2;
                     context_ptr->sb_origin_x = sb_origin_x;
                     context_ptr->sb_origin_y = sb_origin_y;
 #if !RC   
@@ -631,7 +631,7 @@ void* entropy_coding_kernel(void *input_ptr)
                     rateControlTaskPtr = (RateControlTasks*)rateControlTaskWrapperPtr->object_ptr;
                     rateControlTaskPtr->task_type = RC_ENTROPY_CODING_ROW_FEEDBACK_RESULT;
                     rateControlTaskPtr->picture_number = picture_control_set_ptr->picture_number;
-                    rateControlTaskPtr->row_number = yLcuIndex;
+                    rateControlTaskPtr->row_number = y_lcu_index;
                     rateControlTaskPtr->bit_count = rowTotalBits;
 
                     rateControlTaskPtr->picture_control_set_wrapper_ptr = 0;
@@ -651,7 +651,7 @@ void* entropy_coding_kernel(void *input_ptr)
 
                         picture_control_set_ptr->entropy_coding_pic_done = EB_TRUE;
 
-                        EncodeSliceFinish(picture_control_set_ptr->entropy_coder_ptr);
+                        encode_slice_finish(picture_control_set_ptr->entropy_coder_ptr);
 
                         // Release the List 0 Reference Pictures
                         for (ref_idx = 0; ref_idx < picture_control_set_ptr->parent_pcs_ptr->ref_list0_count; ++ref_idx) {
@@ -727,15 +727,15 @@ void* entropy_coding_kernel(void *input_ptr)
    
                      av1_reset_loop_restoration(picture_control_set_ptr);
                    
-                     for (yLcuIndex = cm->tile_row_start_sb[tile_row]; yLcuIndex < (uint32_t)cm->tile_row_start_sb[tile_row + 1]; ++yLcuIndex)
+                     for (y_lcu_index = cm->tile_row_start_sb[tile_row]; y_lcu_index < (uint32_t)cm->tile_row_start_sb[tile_row + 1]; ++y_lcu_index)
                      {
-                         for (xLcuIndex = cm->tile_col_start_sb[tile_col]; xLcuIndex < (uint32_t)cm->tile_col_start_sb[tile_col + 1]; ++xLcuIndex)
+                         for (x_lcu_index = cm->tile_col_start_sb[tile_col]; x_lcu_index < (uint32_t)cm->tile_col_start_sb[tile_col + 1]; ++x_lcu_index)
                          {
                              
-                             int sb_index = (uint16_t)(xLcuIndex + yLcuIndex * picture_width_in_sb);
+                             int sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
                              sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
-                             sb_origin_x = xLcuIndex << lcuSizeLog2;
-                             sb_origin_y = yLcuIndex << lcuSizeLog2;
+                             sb_origin_x = x_lcu_index << lcuSizeLog2;
+                             sb_origin_y = y_lcu_index << lcuSizeLog2;
                              context_ptr->sb_origin_x = sb_origin_x;
                              context_ptr->sb_origin_y = sb_origin_y;
 #if !RC
@@ -774,7 +774,7 @@ void* entropy_coding_kernel(void *input_ptr)
                          }
                      }
                                          
-                     EncodeSliceFinish(picture_control_set_ptr->entropy_coder_ptr);
+                     encode_slice_finish(picture_control_set_ptr->entropy_coder_ptr);
                     
                      int tile_size = picture_control_set_ptr->entropy_coder_ptr->ec_writer.pos;
                      assert(tile_size >= AV1_MIN_TILE_SIZE_BYTES);

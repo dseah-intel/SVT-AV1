@@ -812,7 +812,7 @@ void AV1PerformInverseTransformReconLuma(
     uint32_t                              tu_height;
     uint32_t                              txb_origin_x;
     uint32_t                              txb_origin_y;
-    uint32_t                              tuOriginIndex;
+    uint32_t                              tu_origin_index;
     uint32_t                              tuTotalCount;
 
     uint32_t                              txb_itr;
@@ -829,13 +829,13 @@ void AV1PerformInverseTransformReconLuma(
             tu_width = context_ptr->blk_geom->tx_width[txb_itr];
             tu_height = context_ptr->blk_geom->tx_height[txb_itr];
 
-            tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->prediction_ptr->stride_y;
+            tu_origin_index = txb_origin_x + txb_origin_y * candidateBuffer->prediction_ptr->stride_y;
 
             uint32_t y_has_coeff = (candidateBuffer->candidate_ptr->y_has_coeff & (1 << txb_itr)) > 0;
 
             if (y_has_coeff) {
                 (void)context_ptr;
-                uint8_t     *predBuffer = &(candidateBuffer->prediction_ptr->buffer_y[tuOriginIndex]);
+                uint8_t     *predBuffer = &(candidateBuffer->prediction_ptr->buffer_y[tu_origin_index]);
                 uint8_t     *recBuffer = &(candidateBuffer->recon_ptr->buffer_y[recLumaOffset]);
 
                 uint32_t j;
@@ -858,11 +858,11 @@ void AV1PerformInverseTransformReconLuma(
 
                 picture_copy8_bit(
                     candidateBuffer->prediction_ptr,
-                    tuOriginIndex,
-                    0,//tuChromaOriginIndex,
+                    tu_origin_index,
+                    0,//tu_chroma_origin_index,
                     candidateBuffer->recon_ptr,
                     recLumaOffset,
-                    0,//tuChromaOriginIndex,
+                    0,//tu_chroma_origin_index,
                     tu_width,
                     tu_height,
                     0,//chromaTuSize,
@@ -889,7 +889,7 @@ void AV1PerformInverseTransformRecon(
     uint32_t                           tu_height;
     uint32_t                           txb_origin_x;
     uint32_t                           txb_origin_y;
-    uint32_t                           tuOriginIndex;
+    uint32_t                           tu_origin_index;
     uint32_t                           tuTotalCount;
     uint32_t                           tu_index;
     uint32_t                           txb_itr;
@@ -913,9 +913,9 @@ void AV1PerformInverseTransformRecon(
             recLumaOffset = context_ptr->blk_geom->tx_org_x[txb_itr] + context_ptr->blk_geom->tx_org_y[txb_itr] * candidateBuffer->recon_ptr->stride_y;
             recCbOffset = ((((context_ptr->blk_geom->tx_org_x[txb_itr] >> 3) << 3) + ((context_ptr->blk_geom->tx_org_y[txb_itr] >> 3) << 3) * candidateBuffer->recon_ptr->stride_cb) >> 1);
             recCrOffset = ((((context_ptr->blk_geom->tx_org_x[txb_itr] >> 3) << 3) + ((context_ptr->blk_geom->tx_org_y[txb_itr] >> 3) << 3) * candidateBuffer->recon_ptr->stride_cr) >> 1);
-            tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->prediction_ptr->stride_y;
+            tu_origin_index = txb_origin_x + txb_origin_y * candidateBuffer->prediction_ptr->stride_y;
             if (txb_ptr->y_has_coeff) {
-                uint8_t     *predBuffer = &(candidateBuffer->prediction_ptr->buffer_y[tuOriginIndex]);
+                uint8_t     *predBuffer = &(candidateBuffer->prediction_ptr->buffer_y[tu_origin_index]);
                 uint8_t     *recBuffer = &(candidateBuffer->recon_ptr->buffer_y[recLumaOffset]);
                 uint32_t     j;
 
@@ -934,11 +934,11 @@ void AV1PerformInverseTransformRecon(
             else {
                 picture_copy8_bit(
                     candidateBuffer->prediction_ptr,
-                    tuOriginIndex,
-                    0,//tuChromaOriginIndex,
+                    tu_origin_index,
+                    0,//tu_chroma_origin_index,
                     candidateBuffer->recon_ptr,
                     recLumaOffset,
-                    0,//tuChromaOriginIndex,
+                    0,//tu_chroma_origin_index,
                     tu_width,
                     tu_height,
                     0,//chromaTuSize,
@@ -3251,11 +3251,11 @@ void md_encode_block(
         //copy recon
         {
 
-            uint32_t  tuOriginIndex = context_ptr->blk_geom->origin_x + (context_ptr->blk_geom->origin_y * 128);
+            uint32_t  tu_origin_index = context_ptr->blk_geom->origin_x + (context_ptr->blk_geom->origin_y * 128);
             uint32_t  bwidth = context_ptr->blk_geom->bwidth;
             uint32_t  bheight = context_ptr->blk_geom->bheight;
 
-            uint8_t* src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_y)[tuOriginIndex]);
+            uint8_t* src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_y)[tu_origin_index]);
             uint8_t* dst_ptr = &(((uint8_t*)context_ptr->cu_ptr->recon_tmp->buffer_y)[0]);
 
             uint32_t j;
@@ -3268,12 +3268,12 @@ void md_encode_block(
             if (context_ptr->blk_geom->has_uv)
             {
 
-                uint32_t tuOriginIndex = ((((context_ptr->blk_geom->origin_x >> 3) << 3) + ((context_ptr->blk_geom->origin_y >> 3) << 3) * candidateBuffer->recon_ptr->stride_cb) >> 1);
+                uint32_t tu_origin_index = ((((context_ptr->blk_geom->origin_x >> 3) << 3) + ((context_ptr->blk_geom->origin_y >> 3) << 3) * candidateBuffer->recon_ptr->stride_cb) >> 1);
 
                 bwidth = context_ptr->blk_geom->bwidth_uv;
                 bheight = context_ptr->blk_geom->bheight_uv;
 
-                src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_cb)[tuOriginIndex]);
+                src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_cb)[tu_origin_index]);
                 dst_ptr = &(((uint8_t*)context_ptr->cu_ptr->recon_tmp->buffer_cb)[0]);
 
                 for (j = 0; j < bheight; j++)
@@ -3283,7 +3283,7 @@ void md_encode_block(
 
                 // Cr
 
-                src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_cr)[tuOriginIndex]);
+                src_ptr = &(((uint8_t*)candidateBuffer->recon_ptr->buffer_cr)[tu_origin_index]);
                 dst_ptr = &(((uint8_t*)context_ptr->cu_ptr->recon_tmp->buffer_cr)[0]);
 
                 for (j = 0; j < bheight; j++)
@@ -4747,7 +4747,7 @@ static void in_loop_me_halfpel_refinement_block(
 )
 {
 
-    EncodeContext_t         *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
+    EncodeContext         *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
 
     int32_t searchRegionIndex;
     uint64_t bestHalfSad = 0;

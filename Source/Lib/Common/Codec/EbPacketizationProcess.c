@@ -90,7 +90,7 @@ void update_rc_rate_tables(
     PictureControlSet            *picture_control_set_ptr,
     SequenceControlSet           *sequence_control_set_ptr) {
 
-    EncodeContext_t* encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
+    EncodeContext* encode_context_ptr = (EncodeContext*)sequence_control_set_ptr->encode_context_ptr;
 
     uint32_t  intra_sad_interval_index;
     uint32_t  sad_interval_index;
@@ -248,7 +248,7 @@ void* packetization_kernel(void *input_ptr)
     SequenceControlSet           *sequence_control_set_ptr;
 
     // Encoding Context
-    EncodeContext_t                *encode_context_ptr;
+    EncodeContext                *encode_context_ptr;
 
     // Input
     EbObjectWrapper              *entropyCodingResultsWrapperPtr;
@@ -277,7 +277,7 @@ void* packetization_kernel(void *input_ptr)
         entropyCodingResultsPtr = (EntropyCodingResults*)entropyCodingResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureControlSet*)entropyCodingResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
-        encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
+        encode_context_ptr = (EncodeContext*)sequence_control_set_ptr->encode_context_ptr;
 
         //****************************************************
         // Input Entropy Results into Reordering Queue
@@ -313,42 +313,42 @@ void* packetization_kernel(void *input_ptr)
 
         // slice_type = picture_control_set_ptr->slice_type;
          // Reset the bitstream before writing to it
-        ResetBitstream(
-            picture_control_set_ptr->bitstreamPtr->output_bitstream_ptr);
+        reset_bitstream(
+            picture_control_set_ptr->bitstream_ptr->output_bitstream_ptr);
 
         // Code the SPS
         if (picture_control_set_ptr->parent_pcs_ptr->av1_frame_type == KEY_FRAME) {
-            EncodeSPSAv1(
-                picture_control_set_ptr->bitstreamPtr,
+            encode_sps_av1(
+                picture_control_set_ptr->bitstream_ptr,
                 sequence_control_set_ptr);
         }
 
-        WriteFrameHeaderAv1(
-            picture_control_set_ptr->bitstreamPtr,
+        write_frame_header_av1(
+            picture_control_set_ptr->bitstream_ptr,
             sequence_control_set_ptr,
             picture_control_set_ptr,
             0);
 
         // Copy Slice Header to the Output Bitstream
-        CopyRbspBitstreamToPayload(
-            picture_control_set_ptr->bitstreamPtr,
+        copy_rbsp_bitstream_to_payload(
+            picture_control_set_ptr->bitstream_ptr,
             output_stream_ptr->p_buffer,
             (uint32_t*) &(output_stream_ptr->n_filled_len),
             (uint32_t*) &(output_stream_ptr->n_alloc_len),
             encode_context_ptr);
         if (picture_control_set_ptr->parent_pcs_ptr->has_show_existing) {
             // Reset the bitstream before writing to it
-            ResetBitstream(
-                picture_control_set_ptr->bitstreamPtr->output_bitstream_ptr);
-            WriteFrameHeaderAv1(
-                picture_control_set_ptr->bitstreamPtr,
+            reset_bitstream(
+                picture_control_set_ptr->bitstream_ptr->output_bitstream_ptr);
+            write_frame_header_av1(
+                picture_control_set_ptr->bitstream_ptr,
                 sequence_control_set_ptr,
                 picture_control_set_ptr,
                 1);
 
             // Copy Slice Header to the Output Bitstream
-            CopyRbspBitstreamToPayload(
-                picture_control_set_ptr->bitstreamPtr,
+            copy_rbsp_bitstream_to_payload(
+                picture_control_set_ptr->bitstream_ptr,
                 output_stream_ptr->p_buffer,
                 (uint32_t*)&(output_stream_ptr->n_filled_len),
                 (uint32_t*)&(output_stream_ptr->n_alloc_len),

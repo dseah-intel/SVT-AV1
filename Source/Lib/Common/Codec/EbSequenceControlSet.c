@@ -61,7 +61,7 @@ EbErrorType eb_sequence_control_set_ctor(
         sequence_control_set_ptr->encode_context_ptr = scsInitData->encode_context_ptr;
     }
     else {
-        sequence_control_set_ptr->encode_context_ptr = (EncodeContext_t *)EB_NULL;
+        sequence_control_set_ptr->encode_context_ptr = (EncodeContext *)EB_NULL;
     }
 
     sequence_control_set_ptr->conformance_window_flag = 0;
@@ -245,7 +245,7 @@ EbErrorType copy_sequence_control_set(
     uint32_t  writeCount = 0;
 
     dst->static_config = src->static_config;                            writeCount += sizeof(EbSvtAv1EncConfiguration);
-    dst->encode_context_ptr = src->encode_context_ptr;                        writeCount += sizeof(EncodeContext_t*);
+    dst->encode_context_ptr = src->encode_context_ptr;                        writeCount += sizeof(EncodeContext*);
     dst->sps_id = src->sps_id;                                   writeCount += sizeof(uint32_t);
     dst->vps_id = src->vps_id;                                   writeCount += sizeof(uint32_t);
     dst->profile_space = src->profile_space;                            writeCount += sizeof(uint32_t);

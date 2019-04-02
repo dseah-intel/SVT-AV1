@@ -361,7 +361,7 @@ EbErrorType rate_control_context_ctor(
 }
 #if RC
 uint64_t predict_bits(
-    EncodeContext_t                 *encode_context_ptr,
+    EncodeContext                 *encode_context_ptr,
     HlRateControlHistogramEntry   *hl_rate_control_histogram_ptr_temp,
     uint32_t                         qp,
     uint32_t                         area_in_pixel)
@@ -418,7 +418,7 @@ uint64_t predict_bits(
 void high_level_rc_input_picture_vbr(
     PictureParentControlSet     *picture_control_set_ptr,
     SequenceControlSet          *sequence_control_set_ptr,
-    EncodeContext_t               *encode_context_ptr,
+    EncodeContext               *encode_context_ptr,
     RateControlContext          *context_ptr,
     HighLevelRateControlContext *high_level_rate_control_ptr)
 {
@@ -1832,7 +1832,7 @@ void frame_level_rc_feedback_picture_vbr(
 void high_level_rc_input_picture_cvbr(
     PictureParentControlSet     *picture_control_set_ptr,
     SequenceControlSet          *sequence_control_set_ptr,
-    EncodeContext_t               *encode_context_ptr,
+    EncodeContext               *encode_context_ptr,
     RateControlContext          *context_ptr,
     HighLevelRateControlContext *high_level_rate_control_ptr)
 {
@@ -2469,7 +2469,7 @@ void frame_level_rc_input_picture_cvbr(
 
 
         HighLevelRateControlContext *high_level_rate_control_ptr = context_ptr->high_level_rate_control_ptr;
-        EncodeContext_t               *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
+        EncodeContext               *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
         HlRateControlHistogramEntry *hl_rate_control_histogram_ptr_temp;
         // Queue variables
         uint32_t                     queue_entry_index_temp;
@@ -4065,7 +4065,7 @@ void* rate_control_kernel(void *input_ptr)
                     rate_control_update_model(rc_model_ptr, parentpicture_control_set_ptr);
                 ReferenceQueueEntry           *reference_entry_ptr;
                 uint32_t                          reference_queue_index;
-                EncodeContext_t             *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
+                EncodeContext             *encode_context_ptr = sequence_control_set_ptr->encode_context_ptr;
                 reference_queue_index = encode_context_ptr->reference_picture_queue_head_index;
                 // Find the Reference in the Reference Queue 
                 do {

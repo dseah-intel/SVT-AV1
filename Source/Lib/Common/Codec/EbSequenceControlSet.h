@@ -36,7 +36,7 @@ extern "C" {
         EbSvtAv1EncConfiguration                static_config;
 
         // Encoding Context
-        EncodeContext_t                        *encode_context_ptr;
+        EncodeContext                        *encode_context_ptr;
 
         // Profile & ID
         uint32_t                                sps_id;
@@ -252,13 +252,13 @@ extern "C" {
 
     typedef struct EbSequenceControlSetInitData
     {
-        EncodeContext_t            *encode_context_ptr;
+        EncodeContext            *encode_context_ptr;
         int32_t                     sb_size;
     } EbSequenceControlSetInitData;
 
     typedef struct EbSequenceControlSetInstance
     {
-        EncodeContext_t            *encode_context_ptr;
+        EncodeContext            *encode_context_ptr;
         SequenceControlSet       *sequence_control_set_ptr;
         EbHandle                    config_mutex;
 
