@@ -70,7 +70,7 @@ extern "C" {
         uint16_t                               count_non_zero_coeffs;
         uint8_t                                type;
         // MD Rate Estimation Ptr
-        MdRateEstimationContext_t             *md_rate_estimation_ptr; // 64 bits
+        MdRateEstimationContext             *md_rate_estimation_ptr; // 64 bits
         uint64_t                               fast_luma_rate;
         uint64_t                               fast_chroma_rate;
         uint64_t                               chroma_distortion;

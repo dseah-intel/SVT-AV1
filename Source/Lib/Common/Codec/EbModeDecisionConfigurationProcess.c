@@ -741,7 +741,7 @@ EbErrorType mode_decision_configuration_context_ctor(
     context_ptr->rate_control_input_fifo_ptr = rate_control_input_fifo_ptr;
     context_ptr->mode_decision_configuration_output_fifo_ptr = mode_decision_configuration_output_fifo_ptr;
     // Rate estimation
-    EB_MALLOC(MdRateEstimationContext_t*, context_ptr->md_rate_estimation_ptr, sizeof(MdRateEstimationContext_t), EB_N_PTR);
+    EB_MALLOC(MdRateEstimationContext*, context_ptr->md_rate_estimation_ptr, sizeof(MdRateEstimationContext), EB_N_PTR);
 
     // Adaptive Depth Partitioning
     EB_MALLOC(uint32_t*, context_ptr->sb_score_array, sizeof(uint32_t) * sb_total_count, EB_N_PTR);
@@ -2202,7 +2202,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
             dequantsMd);
 
         // Hsan: collapse spare code 
-        MdRateEstimationContext_t   *md_rate_estimation_array;
+        MdRateEstimationContext   *md_rate_estimation_array;
         uint32_t                     entropyCodingQp;
 
         // QP
@@ -2229,7 +2229,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
             picture_control_set_ptr->slice_type;
 
         // Increment the MD Rate Estimation array pointer to point to the right address based on the QP and slice type
-        md_rate_estimation_array = (MdRateEstimationContext_t*)sequence_control_set_ptr->encode_context_ptr->md_rate_estimation_array;
+        md_rate_estimation_array = (MdRateEstimationContext*)sequence_control_set_ptr->encode_context_ptr->md_rate_estimation_array;
 #if ADD_DELTA_QP_SUPPORT
         md_rate_estimation_array += slice_type * TOTAL_NUMBER_OF_QP_VALUES + picture_control_set_ptr->parent_pcs_ptr->picture_qp;
 #else

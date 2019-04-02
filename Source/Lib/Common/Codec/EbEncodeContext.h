@@ -122,7 +122,7 @@ typedef struct EncodeContext_s
     PredictionStructureGroup                       *prediction_structure_group_ptr;
                                                      
     // MD Rate Estimation Table                      
-    MdRateEstimationContext_t                        *md_rate_estimation_array;
+    MdRateEstimationContext                        *md_rate_estimation_array;
 
     // Rate Control Bit Tables
     RateControlTables                              *rate_control_tables_array;

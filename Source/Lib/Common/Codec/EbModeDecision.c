@@ -51,7 +51,7 @@ int32_t av1_mv_bit_cost(const MV *mv, const MV *ref, const int32_t *mvjcost,
 
 void ChooseBestAv1MvPred(
     ModeDecisionContext            *context_ptr,
-    struct MdRateEstimationContext_s      *md_rate_estimation_ptr,
+    struct MdRateEstimationContext      *md_rate_estimation_ptr,
     CodingUnit_t      *cu_ptr,
     MvReferenceFrame ref_frame,
     uint8_t              is_compound,

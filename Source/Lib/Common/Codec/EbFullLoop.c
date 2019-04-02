@@ -2042,7 +2042,7 @@ uint32_t d2_inter_depth_block_decision(
     uint32_t                          tbOriginX,
     uint32_t                          tbOriginY,
     uint64_t                          full_lambda,
-    MdRateEstimationContext_t      *md_rate_estimation_ptr,
+    MdRateEstimationContext      *md_rate_estimation_ptr,
     PictureControlSet            *picture_control_set_ptr)
 {
     UNUSED(tbPtr);

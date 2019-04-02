@@ -3211,7 +3211,7 @@ int32_t av1_get_switchable_rate(
             const InterpFilter filter = av1_extract_interp_filter(/*mbmi*/candidate_buffer_ptr->candidate_ptr->interp_filters, dir);
             ASSERT(ctx < SWITCHABLE_FILTER_CONTEXTS);
             ASSERT(filter < SWITCHABLE_FILTERS);
-            inter_filter_cost +=  /*x->switchable_interp_costs*/md_context_ptr->md_rate_estimation_ptr->switchable_interp_FacBitss[ctx][filter];
+            inter_filter_cost +=  /*x->switchable_interp_costs*/md_context_ptr->md_rate_estimation_ptr->switchable_interp_fac_bitss[ctx][filter];
         }
         return SWITCHABLE_INTERP_RATE_FACTOR * inter_filter_cost;
     }

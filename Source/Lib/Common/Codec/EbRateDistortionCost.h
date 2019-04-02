@@ -82,7 +82,7 @@ extern "C" {
         PartitionType              partitionType,
         uint64_t                  *split_rate,
         uint64_t                   lambda,
-        MdRateEstimationContext_t *md_rate_estimation_ptr,
+        MdRateEstimationContext *md_rate_estimation_ptr,
         uint32_t                   tb_max_depth);
 
     extern EbErrorType av1_encode_tu_calc_cost(

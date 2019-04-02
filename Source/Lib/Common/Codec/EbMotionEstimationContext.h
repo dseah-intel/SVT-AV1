@@ -406,7 +406,7 @@ extern "C" {
         uint32_t                      p_eight_sad16x16[16][8];
         uint32_t                      p_eight_sad8x8[64][8];
 #endif
-        EB_BitFraction               *mvd_bits_array;
+        EbBitFraction               *mvd_bits_array;
         uint64_t                      lambda;
         uint8_t                       hme_search_type;
 
@@ -575,7 +575,7 @@ extern "C" {
         int16_t                       inloop_me_sad[MAX_NUM_OF_REF_PIC_LIST][MAX_REF_IDX][MAX_SS_ME_PU_COUNT];
         int16_t                       inloop_me_mv[MAX_NUM_OF_REF_PIC_LIST][MAX_REF_IDX][MAX_SS_ME_PU_COUNT][2];
 
-        EB_BitFraction               *mvd_bits_array;
+        EbBitFraction               *mvd_bits_array;
         uint64_t                      lambda;
         uint8_t                       hme_search_type;
         uint8_t                       fractional_search_method;

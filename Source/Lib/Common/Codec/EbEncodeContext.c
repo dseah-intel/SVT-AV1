@@ -187,11 +187,11 @@ EbErrorType encode_context_ctor(
     encode_context_ptr->prediction_structure_group_ptr = (PredictionStructureGroup*)EB_NULL;
 
     // MD Rate Estimation Array
-    EB_MALLOC(MdRateEstimationContext_t*, encode_context_ptr->md_rate_estimation_array, sizeof(MdRateEstimationContext_t) * TOTAL_NUMBER_OF_MD_RATE_ESTIMATION_CASE_BUFFERS, EB_N_PTR);
+    EB_MALLOC(MdRateEstimationContext*, encode_context_ptr->md_rate_estimation_array, sizeof(MdRateEstimationContext) * TOTAL_NUMBER_OF_MD_RATE_ESTIMATION_CASE_BUFFERS, EB_N_PTR);
 
-    memset(encode_context_ptr->md_rate_estimation_array, 0, sizeof(MdRateEstimationContext_t) * TOTAL_NUMBER_OF_MD_RATE_ESTIMATION_CASE_BUFFERS);
+    memset(encode_context_ptr->md_rate_estimation_array, 0, sizeof(MdRateEstimationContext) * TOTAL_NUMBER_OF_MD_RATE_ESTIMATION_CASE_BUFFERS);
 
-    return_error = MdRateEstimationContextCtor(encode_context_ptr->md_rate_estimation_array);
+    return_error = md_rate_estimation_context_ctor(encode_context_ptr->md_rate_estimation_array);
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }

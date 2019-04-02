@@ -37,7 +37,7 @@ extern "C" {
         EbFifo                              *rate_control_input_fifo_ptr;
         EbFifo                              *mode_decision_configuration_output_fifo_ptr;
 
-        MdRateEstimationContext_t           *md_rate_estimation_ptr;
+        MdRateEstimationContext           *md_rate_estimation_ptr;
 
         uint8_t                              qp;
         uint64_t                             lambda;
