@@ -186,13 +186,13 @@ EbErrorType enc_dec_context_ctor(
     }
 
     // Intra Reference Samples
-    return_error = IntraReferenceSamplesCtor(&context_ptr->intra_ref_ptr);
+    return_error = intra_reference_samples_ctor(&context_ptr->intra_ref_ptr);
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }
-    context_ptr->intra_ref_ptr16 = (IntraReference16bitSamples_t *)EB_NULL;
+    context_ptr->intra_ref_ptr16 = (IntraReference16bitSamples *)EB_NULL;
     if (is16bit) {
-        return_error = IntraReference16bitSamplesCtor(&context_ptr->intra_ref_ptr16);
+        return_error = intra_reference16bit_samples_ctor(&context_ptr->intra_ref_ptr16);
         if (return_error == EB_ErrorInsufficientResources) {
             return EB_ErrorInsufficientResources;
         }

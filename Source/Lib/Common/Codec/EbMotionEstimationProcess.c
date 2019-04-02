@@ -211,7 +211,7 @@ EbErrorType motion_estimation_context_ctor(
 
     context_ptr->picture_decision_results_input_fifo_ptr = picture_decision_results_input_fifo_ptr;
     context_ptr->motion_estimation_results_output_fifo_ptr = motion_estimation_results_output_fifo_ptr;
-    return_error = IntraOpenLoopReferenceSamplesCtor(&context_ptr->intra_ref_ptr);
+    return_error = intra_open_loop_reference_samples_ctor(&context_ptr->intra_ref_ptr);
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }

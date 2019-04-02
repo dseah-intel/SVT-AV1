@@ -89,7 +89,7 @@ EbErrorType mode_decision_context_ctor(
     }
 
     // Intra Reference Samples
-    return_error = IntraReferenceSamplesCtor(&context_ptr->intra_ref_ptr);
+    return_error = intra_reference_samples_ctor(&context_ptr->intra_ref_ptr);
     if (return_error == EB_ErrorInsufficientResources) {
         return EB_ErrorInsufficientResources;
     }

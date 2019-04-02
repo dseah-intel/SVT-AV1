@@ -60,33 +60,33 @@ PARTITION_SPLIT
 /**********************************************
  * Intra Reference Samples Ctor
  **********************************************/
-EbErrorType IntraReferenceSamplesCtor(
-    IntraReferenceSamples_t **context_dbl_ptr)
+EbErrorType intra_reference_samples_ctor(
+    IntraReferenceSamples **context_dbl_ptr)
 {
-    IntraReferenceSamples_t *context_ptr;
-    EB_MALLOC(IntraReferenceSamples_t*, context_ptr, sizeof(IntraReferenceSamples_t), EB_N_PTR);
+    IntraReferenceSamples *context_ptr;
+    EB_MALLOC(IntraReferenceSamples*, context_ptr, sizeof(IntraReferenceSamples), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     EB_MALLOC(uint8_t*, context_ptr->y_intra_reference_array, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->cbIntraReferenceArray, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->cb_intra_reference_array, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->crIntraReferenceArray, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->cr_intra_reference_array, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->yIntraFilteredReferenceArray, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->y_intra_filtered_reference_array, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
     EB_MALLOC(uint8_t*, context_ptr->y_intra_reference_array_reverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->yIntraFilteredReferenceArrayReverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->y_intra_filtered_reference_array_reverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->cbIntraReferenceArrayReverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->cb_intra_reference_array_reverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint8_t*, context_ptr->crIntraReferenceArrayReverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint8_t*, context_ptr->cr_intra_reference_array_reverse, sizeof(uint8_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
     context_ptr->y_intra_reference_array_reverse++;
-    context_ptr->yIntraFilteredReferenceArrayReverse++;
-    context_ptr->cbIntraReferenceArrayReverse++;
-    context_ptr->crIntraReferenceArrayReverse++;
+    context_ptr->y_intra_filtered_reference_array_reverse++;
+    context_ptr->cb_intra_reference_array_reverse++;
+    context_ptr->cr_intra_reference_array_reverse++;
 
     return EB_ErrorNone;
 }
@@ -94,33 +94,33 @@ EbErrorType IntraReferenceSamplesCtor(
 /**********************************************
  * Intra Reference Samples Ctor
  **********************************************/
-EbErrorType IntraReference16bitSamplesCtor(
-    IntraReference16bitSamples_t **context_dbl_ptr)
+EbErrorType intra_reference16bit_samples_ctor(
+    IntraReference16bitSamples **context_dbl_ptr)
 {
-    IntraReference16bitSamples_t *context_ptr;
-    EB_MALLOC(IntraReference16bitSamples_t*, context_ptr, sizeof(IntraReference16bitSamples_t), EB_N_PTR);
+    IntraReference16bitSamples *context_ptr;
+    EB_MALLOC(IntraReference16bitSamples*, context_ptr, sizeof(IntraReference16bitSamples), EB_N_PTR);
     *context_dbl_ptr = context_ptr;
 
     EB_MALLOC(uint16_t*, context_ptr->y_intra_reference_array, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->cbIntraReferenceArray, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->cb_intra_reference_array, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->crIntraReferenceArray, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->cr_intra_reference_array, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->yIntraFilteredReferenceArray, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->y_intra_filtered_reference_array, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 1), EB_N_PTR);
 
     EB_MALLOC(uint16_t*, context_ptr->y_intra_reference_array_reverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->yIntraFilteredReferenceArrayReverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->y_intra_filtered_reference_array_reverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->cbIntraReferenceArrayReverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->cb_intra_reference_array_reverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
-    EB_MALLOC(uint16_t*, context_ptr->crIntraReferenceArrayReverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
+    EB_MALLOC(uint16_t*, context_ptr->cr_intra_reference_array_reverse, sizeof(uint16_t) * (4 * BLOCK_SIZE_64 + 2), EB_N_PTR);
 
     context_ptr->y_intra_reference_array_reverse++;
-    context_ptr->yIntraFilteredReferenceArrayReverse++;
-    context_ptr->cbIntraReferenceArrayReverse++;
-    context_ptr->crIntraReferenceArrayReverse++;
+    context_ptr->y_intra_filtered_reference_array_reverse++;
+    context_ptr->cb_intra_reference_array_reverse++;
+    context_ptr->cr_intra_reference_array_reverse++;
 
     return EB_ErrorNone;
 }
@@ -1161,7 +1161,7 @@ void IntraModeAngular_AV1_Z3_16bit(
 /**********************************************
  * Intra Reference Samples Ctor
  **********************************************/
-EbErrorType IntraOpenLoopReferenceSamplesCtor(
+EbErrorType intra_open_loop_reference_samples_ctor(
     IntraReferenceSamplesOpenLoop **context_dbl_ptr)
 {
     IntraReferenceSamplesOpenLoop *context_ptr;
@@ -1826,11 +1826,11 @@ static int32_t has_bottom_left(const Av1Common *cm, block_size bsize, int32_t mi
 
 
 
-static intra_pred_fn pred[INTRA_MODES][TX_SIZES_ALL];
-static intra_pred_fn dc_pred[2][2][TX_SIZES_ALL];
+static IntraPredFn pred[INTRA_MODES][TX_SIZES_ALL];
+static IntraPredFn dc_pred[2][2][TX_SIZES_ALL];
 
-static intra_high_pred_fn pred_high[INTRA_MODES][TX_SIZES_ALL];
-static intra_high_pred_fn dc_pred_high[2][2][TX_SIZES_ALL];
+static IntraHighPredFn pred_high[INTRA_MODES][TX_SIZES_ALL];
+static IntraHighPredFn dc_pred_high[2][2][TX_SIZES_ALL];
 
 
 
@@ -2825,8 +2825,8 @@ intra_pred_highbd_sized(paeth, 64, 32)
 
 
 
-intra_pred_fn_c  dc_pred_c[2][2];
-intra_highbd_pred_fn_c  highbd_dc_pred_c[2][2];
+IntraPredFnC  dc_pred_c[2][2];
+IntraHighBdPredFnC  highbd_dc_pred_c[2][2];
 void init_intra_dc_predictors_c_internal(void)
 {
     dc_pred_c[0][0] = dc_128_predictor;
@@ -4573,7 +4573,7 @@ void av1_predict_intra_block_16bit(
 /** IntraPrediction()
 is the main function to compute intra prediction for a PU
 */
-EbErrorType AV1IntraPredictionCL(
+EbErrorType av1_intra_prediction_cl(
     ModeDecisionContext                  *md_context_ptr,
 
     PictureControlSet                    *picture_control_set_ptr,

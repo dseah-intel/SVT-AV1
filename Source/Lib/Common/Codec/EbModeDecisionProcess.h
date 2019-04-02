@@ -117,7 +117,7 @@ extern "C" {
         EbReferenceObject            *reference_object_write_ptr;
 
         // Intra Reference Samples
-        IntraReferenceSamples_t        *intra_ref_ptr;
+        IntraReferenceSamples        *intra_ref_ptr;
 
         // Transform and Quantization Buffers
         EbTransQuantBuffers          *trans_quant_buffers_ptr;

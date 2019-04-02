@@ -28,29 +28,30 @@ extern "C" {
 
     struct ModeDecisionContext;
 
-    typedef void(*intra_pred_fn_c)(uint8_t *dst, ptrdiff_t stride, int32_t w, int32_t h,
+    typedef void(*IntraPredFnC)(uint8_t *dst, ptrdiff_t stride, int32_t w, int32_t h,
         const uint8_t *above, const uint8_t *left);
-    typedef void(*intra_highbd_pred_fn_c)(uint16_t *dst, ptrdiff_t stride, int32_t w, int32_t h,
+    typedef void(*IntraHighBdPredFnC)(uint16_t *dst, ptrdiff_t stride, int32_t w, int32_t h,
         const uint16_t *above, const uint16_t *left, int32_t bd);
 
-    typedef void(*intra_pred_fn)(uint8_t *dst, ptrdiff_t stride,
+    typedef void(*IntraPredFn)(uint8_t *dst, ptrdiff_t stride,
         const uint8_t *above, const uint8_t *left);
 
-    typedef void(*intra_high_pred_fn)(uint16_t *dst, ptrdiff_t stride,
+    typedef void(*IntraHighPredFn)(uint16_t *dst, ptrdiff_t stride,
         const uint16_t *above, const uint16_t *left,
         int32_t bd);
 
-    typedef struct IntraReferenceSamples_s {
+    typedef struct IntraReferenceSamples 
+    {
 
         uint8_t                  *y_intra_reference_array;
-        uint8_t                  *cbIntraReferenceArray;
-        uint8_t                  *crIntraReferenceArray;
-        uint8_t                  *yIntraFilteredReferenceArray;
+        uint8_t                  *cb_intra_reference_array;
+        uint8_t                  *cr_intra_reference_array;
+        uint8_t                  *y_intra_filtered_reference_array;
 
         uint8_t                  *y_intra_reference_array_reverse;
-        uint8_t                  *yIntraFilteredReferenceArrayReverse;
-        uint8_t                  *cbIntraReferenceArrayReverse;
-        uint8_t                  *crIntraReferenceArrayReverse;
+        uint8_t                  *y_intra_filtered_reference_array_reverse;
+        uint8_t                  *cb_intra_reference_array_reverse;
+        uint8_t                  *cr_intra_reference_array_reverse;
 
         // Scratch buffers used in the interpolaiton process
         uint8_t                   reference_above_line_y[(MAX_PU_SIZE << 2) + 1];
@@ -58,29 +59,30 @@ extern "C" {
         EbBool                 above_ready_flag_y;
         EbBool                 left_ready_flag_y;
 
-        uint8_t                   ReferenceAboveLineCb[(MAX_PU_SIZE << 2) + 2];
-        uint8_t                   ReferenceLeftLineCb[(MAX_PU_SIZE << 2) + 2];
-        EbBool                 AboveReadyFlagCb;
-        EbBool                 LeftReadyFlagCb;
+        uint8_t                   reference_above_line_cb[(MAX_PU_SIZE << 2) + 2];
+        uint8_t                   reference_left_line_cb[(MAX_PU_SIZE << 2) + 2];
+        EbBool                 above_ready_flag_cb;
+        EbBool                 left_ready_flag_cb;
 
-        uint8_t                   ReferenceAboveLineCr[(MAX_PU_SIZE << 2) + 2];
-        uint8_t                   ReferenceLeftLineCr[(MAX_PU_SIZE << 2) + 2];
-        EbBool                 AboveReadyFlagCr;
-        EbBool                 LeftReadyFlagCr;
+        uint8_t                   reference_above_line_cr[(MAX_PU_SIZE << 2) + 2];
+        uint8_t                   reference_left_line_cr[(MAX_PU_SIZE << 2) + 2];
+        EbBool                 above_ready_flag_cr;
+        EbBool                 left_ready_flag_cr;
 
-    } IntraReferenceSamples_t;
+    } IntraReferenceSamples;
 
-    typedef struct IntraReference16bitSamples_s {
+    typedef struct IntraReference16bitSamples 
+    {
 
         uint16_t                  *y_intra_reference_array;
-        uint16_t                  *cbIntraReferenceArray;
-        uint16_t                  *crIntraReferenceArray;
-        uint16_t                  *yIntraFilteredReferenceArray;
+        uint16_t                  *cb_intra_reference_array;
+        uint16_t                  *cr_intra_reference_array;
+        uint16_t                  *y_intra_filtered_reference_array;
 
         uint16_t                  *y_intra_reference_array_reverse;
-        uint16_t                  *yIntraFilteredReferenceArrayReverse;
-        uint16_t                  *cbIntraReferenceArrayReverse;
-        uint16_t                  *crIntraReferenceArrayReverse;
+        uint16_t                  *y_intra_filtered_reference_array_reverse;
+        uint16_t                  *cb_intra_reference_array_reverse;
+        uint16_t                  *cr_intra_reference_array_reverse;
 
         // Scratch buffers used in the interpolaiton process
         uint16_t                   reference_above_line_y[(MAX_PU_SIZE << 2) + 1];
@@ -88,27 +90,23 @@ extern "C" {
         EbBool                  above_ready_flag_y;
         EbBool                  left_ready_flag_y;
 
-        uint16_t                   ReferenceAboveLineCb[(MAX_PU_SIZE << 2) + 2];
-        uint16_t                   ReferenceLeftLineCb[(MAX_PU_SIZE << 2) + 2];
-        EbBool                  AboveReadyFlagCb;
-        EbBool                  LeftReadyFlagCb;
+        uint16_t                   reference_above_line_cb[(MAX_PU_SIZE << 2) + 2];
+        uint16_t                   reference_left_line_cb[(MAX_PU_SIZE << 2) + 2];
+        EbBool                  above_ready_flag_cb;
+        EbBool                  left_ready_flag_cb;
 
-        uint16_t                   ReferenceAboveLineCr[(MAX_PU_SIZE << 2) + 2];
-        uint16_t                   ReferenceLeftLineCr[(MAX_PU_SIZE << 2) + 2];
-        EbBool                  AboveReadyFlagCr;
-        EbBool                  LeftReadyFlagCr;
+        uint16_t                   reference_above_line_cr[(MAX_PU_SIZE << 2) + 2];
+        uint16_t                   reference_left_line_cr[(MAX_PU_SIZE << 2) + 2];
+        EbBool                  above_ready_flag_cr;
+        EbBool                  left_ready_flag_cr;
 
-    } IntraReference16bitSamples_t;
+    } IntraReference16bitSamples;
 
-    extern EbErrorType IntraReferenceSamplesCtor(
-        IntraReferenceSamples_t **context_dbl_ptr);
+    extern EbErrorType intra_reference_samples_ctor(
+        IntraReferenceSamples **context_dbl_ptr);
 
-
-
-    extern EbErrorType IntraReference16bitSamplesCtor(
-        IntraReference16bitSamples_t **context_dbl_ptr);
-
-
+    extern EbErrorType intra_reference16bit_samples_ctor(
+        IntraReference16bitSamples **context_dbl_ptr);
 
 #define TOTAL_LUMA_MODES                   35
 #define TOTAL_CHROMA_MODES                  5
@@ -122,7 +120,7 @@ extern "C" {
 #define SMOOTHING_THRESHOLD_10BIT          32
 
 
-    extern EbErrorType AV1IntraPredictionCL(
+    extern EbErrorType av1_intra_prediction_cl(
         struct ModeDecisionContext           *context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionCandidateBuffer           *candidate_buffer_ptr,
@@ -138,10 +136,8 @@ extern "C" {
 
 
 
-    extern EbErrorType IntraOpenLoopReferenceSamplesCtor(
+    extern EbErrorType intra_open_loop_reference_samples_ctor(
         IntraReferenceSamplesOpenLoop **context_dbl_ptr);
-    extern void IntraOpenLoopReferenceSamplesDtor(
-        IntraReferenceSamplesOpenLoop  *context_ptr);
 
     extern EbErrorType update_neighbor_samples_array_open_loop(
         uint8_t                           *above_ref,

@@ -57,8 +57,8 @@ extern "C" {
         SsMeContext                         *ss_mecontext;
 
         // Intra Reference Samples
-        IntraReferenceSamples_t               *intra_ref_ptr;
-        IntraReference16bitSamples_t          *intra_ref_ptr16;  //We need a different buffer for ENC pass then the MD one.
+        IntraReferenceSamples               *intra_ref_ptr;
+        IntraReference16bitSamples          *intra_ref_ptr16;  //We need a different buffer for ENC pass then the MD one.
         
         // Coding Unit Workspace---------------------------
         EbPictureBufferDesc                 *residual_buffer;

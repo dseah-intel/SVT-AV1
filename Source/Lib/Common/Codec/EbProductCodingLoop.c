@@ -66,7 +66,7 @@ void PfZeroOutUselessQuadrants(
 *
 *******************************************/
 
-const EbPredictionFunc  ProductPredictionFunTable[3] = { NULL, inter_pu_prediction_av1, AV1IntraPredictionCL};
+const EbPredictionFunc  ProductPredictionFunTable[3] = { NULL, inter_pu_prediction_av1, av1_intra_prediction_cl};
 
 const EbFastCostFunc   Av1ProductFastCostFuncTable[3] =
 {
