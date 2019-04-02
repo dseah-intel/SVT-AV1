@@ -201,7 +201,7 @@ EbErrorType picture_control_set_ctor(
     // SB Array
     object_ptr->sb_max_depth = (uint8_t)initDataPtr->max_depth;
     object_ptr->sb_total_count = pictureLcuWidth * pictureLcuHeight;
-    EB_MALLOC(LargestCodingUnit_t**, object_ptr->sb_ptr_array, sizeof(LargestCodingUnit_t*) * object_ptr->sb_total_count, EB_N_PTR);
+    EB_MALLOC(LargestCodingUnit**, object_ptr->sb_ptr_array, sizeof(LargestCodingUnit*) * object_ptr->sb_total_count, EB_N_PTR);
 
     sb_origin_x = 0;
     sb_origin_y = 0;
@@ -229,9 +229,9 @@ EbErrorType picture_control_set_ctor(
     }
 
     // Copy SB array map
-    EB_MALLOC(LargestCodingUnit_t**, object_ptr->sb_ptr_array_copy, sizeof(LargestCodingUnit_t*) * object_ptr->sb_total_count, EB_N_PTR);
+    EB_MALLOC(LargestCodingUnit**, object_ptr->sb_ptr_array_copy, sizeof(LargestCodingUnit*) * object_ptr->sb_total_count, EB_N_PTR);
 
-    EB_MEMCPY(object_ptr->sb_ptr_array_copy, object_ptr->sb_ptr_array, object_ptr->sb_total_count * sizeof(sizeof(LargestCodingUnit_t*)));
+    EB_MEMCPY(object_ptr->sb_ptr_array_copy, object_ptr->sb_ptr_array, object_ptr->sb_total_count * sizeof(sizeof(LargestCodingUnit*)));
 
     // Mode Decision Control config
     EB_MALLOC(MdcLcuData*, object_ptr->mdc_sb_array, object_ptr->sb_total_count * sizeof(MdcLcuData), EB_N_PTR);
@@ -963,14 +963,14 @@ EbErrorType picture_parent_control_set_ctor(
             }
         }
     }
-        EB_MALLOC(ois_sb_results_t**, object_ptr->ois_sb_results, sizeof(ois_sb_results_t*) * object_ptr->sb_total_count, EB_N_PTR);
+        EB_MALLOC(OisSbResults**, object_ptr->ois_sb_results, sizeof(OisSbResults*) * object_ptr->sb_total_count, EB_N_PTR);
         
     for (sb_index = 0; sb_index < object_ptr->sb_total_count; ++sb_index) {
 
-        EB_MALLOC(ois_sb_results_t*, object_ptr->ois_sb_results[sb_index], sizeof(ois_sb_results_t), EB_N_PTR);
+        EB_MALLOC(OisSbResults*, object_ptr->ois_sb_results[sb_index], sizeof(OisSbResults), EB_N_PTR);
 
-        ois_candidate_t* contigousCand;
-        EB_MALLOC(ois_candidate_t*, contigousCand, sizeof(ois_candidate_t) * MAX_OIS_CANDIDATES * CU_MAX_COUNT, EB_N_PTR);
+        OisCandidate* contigousCand;
+        EB_MALLOC(OisCandidate*, contigousCand, sizeof(OisCandidate) * MAX_OIS_CANDIDATES * CU_MAX_COUNT, EB_N_PTR);
 
         uint32_t cuIdx;
         for (cuIdx = 0; cuIdx < CU_MAX_COUNT; ++cuIdx) {
@@ -1008,7 +1008,7 @@ EbErrorType picture_parent_control_set_ctor(
     EB_MALLOC(uint8_t*, object_ptr->sb_flat_noise_array, sizeof(uint8_t) * object_ptr->sb_total_count, EB_N_PTR);
     EB_MALLOC(uint64_t*, object_ptr->sb_variance_of_variance_over_time, sizeof(uint64_t) * object_ptr->sb_total_count, EB_N_PTR);
     EB_MALLOC(EbBool*, object_ptr->is_sb_homogeneous_over_time, sizeof(EbBool) * object_ptr->sb_total_count, EB_N_PTR);
-    EB_MALLOC(EdgeLcuResults_t*, object_ptr->edge_results_ptr, sizeof(EdgeLcuResults_t) * object_ptr->sb_total_count, EB_N_PTR);
+    EB_MALLOC(EdgeLcuResults*, object_ptr->edge_results_ptr, sizeof(EdgeLcuResults) * object_ptr->sb_total_count, EB_N_PTR);
 
     EB_MALLOC(uint8_t*, object_ptr->sharp_edge_sb_flag, sizeof(EbBool) * object_ptr->sb_total_count, EB_N_PTR);
 

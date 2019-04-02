@@ -176,89 +176,89 @@ uint64_t ComputeVariance32x32(
     // (0,0)
     blockIndex = inputLumaOriginIndex;
 
-    mean_of8x8_blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[0] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[0] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (0,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[1] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[1] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (0,2)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[2] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[2] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (0,3)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[3] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[3] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
 
 
     // (1,0)
     blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3);
-    mean_of8x8_blocks[4] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[4] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[4] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[4] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (1,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[5] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[5] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[5] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[5] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (1,2)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[6] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[6] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[6] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[6] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (1,3)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[7] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[7] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[7] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[7] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
 
 
     // (2,0)
     blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 4);
-    mean_of8x8_blocks[8] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[8] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[8] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[8] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (2,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[9] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[9] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[9] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[9] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (2,2)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[10] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[10] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[10] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[10] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (2,3)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[11] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[11] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[11] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[11] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
 
 
     // (3,0)
     blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 4);
-    mean_of8x8_blocks[12] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[12] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[12] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[12] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (3,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[13] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[13] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[13] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[13] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (3,2)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[14] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[14] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[14] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[14] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (3,3)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[15] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[15] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[15] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[15] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
 
     /////////////////////////////////////////////
@@ -320,23 +320,23 @@ uint64_t ComputeVariance16x16(
     // (0,0)
     blockIndex = inputLumaOriginIndex;
 
-    mean_of8x8_blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[0] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[0] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (0,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[1] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[1] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (1,0)
     blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3);
-    mean_of8x8_blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[2] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[2] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     // (1,1)
     blockIndex = blockIndex + 8;
-    mean_of8x8_blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-    meanOf8x8SquaredValuesBlocks[3] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    mean_of8x8_blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+    meanOf8x8SquaredValuesBlocks[3] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     variance8x8[0] = meanOf8x8SquaredValuesBlocks[0] - (mean_of8x8_blocks[0] * mean_of8x8_blocks[0]);
     variance8x8[1] = meanOf8x8SquaredValuesBlocks[1] - (mean_of8x8_blocks[1] * mean_of8x8_blocks[1]);
@@ -384,323 +384,323 @@ uint64_t ComputeVariance64x64(
     blockIndex = inputLumaOriginIndex;
     const uint16_t stride_y = input_padded_picture_ptr->stride_y;
     if (sequence_control_set_ptr->block_mean_calc_prec == BLOCK_MEAN_PREC_FULL) {
-        mean_of8x8_blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[0] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[0] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[1] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[1] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[2] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[2] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[3] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[3] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[4] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[4] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[4] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[4] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[5] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[5] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[5] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[5] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[6] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[6] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[6] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[6] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[7] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[7] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[7] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[7] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3);
-        mean_of8x8_blocks[8] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[8] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[8] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[8] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[9] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[9] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[9] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[9] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[10] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[10] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[10] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[10] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[11] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[11] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[11] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[11] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[12] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[12] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[12] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[12] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[13] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[13] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[13] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[13] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[14] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[14] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[14] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[14] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[15] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[15] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[15] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[15] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 4);
-        mean_of8x8_blocks[16] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[16] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[16] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[16] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[17] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[17] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[17] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[17] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[18] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[18] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[18] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[18] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[19] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[19] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[19] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[19] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         /// (2,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[20] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[20] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[20] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[20] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[21] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[21] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[21] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[21] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[22] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[22] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[22] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[22] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[23] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[23] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[23] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[23] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 4);
-        mean_of8x8_blocks[24] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[24] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[24] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[24] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[25] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[25] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[25] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[25] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[26] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[26] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[26] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[26] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[27] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[27] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[27] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[27] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[28] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[28] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[28] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[28] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[29] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[29] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[29] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[29] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[30] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[30] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[30] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[30] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[31] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[31] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[31] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[31] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[32] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[32] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[32] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[32] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[33] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[33] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[33] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[33] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[34] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[34] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[34] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[34] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[35] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[35] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[35] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[35] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[36] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[36] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[36] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[36] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[37] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[37] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[37] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[37] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[38] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[38] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[38] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[38] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[39] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[39] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[39] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[39] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[40] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[40] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[40] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[40] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[41] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[41] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[41] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[41] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[42] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[42] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[42] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[42] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[43] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[43] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[43] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[43] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[44] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[44] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[44] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[44] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[45] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[45] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[45] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[45] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[46] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[46] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[46] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[46] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[47] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[47] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[47] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[47] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 4) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[48] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[48] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[48] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[48] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[49] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[49] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[49] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[49] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[50] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[50] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[50] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[50] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[51] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[51] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[51] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[51] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[52] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[52] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[52] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[52] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[53] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[53] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[53] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[53] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[54] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[54] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[54] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[54] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[55] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[55] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[55] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[55] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 4) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[56] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[56] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[56] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[56] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[57] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[57] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[57] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[57] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[58] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[58] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[58] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[58] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[59] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[59] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[59] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[59] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[60] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[60] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[60] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[60] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[61] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[61] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[61] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[61] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[62] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[62] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[62] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[62] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[63] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[63] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[63] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[63] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
     }
 
@@ -1715,98 +1715,98 @@ EbErrorType ComputeChromaBlockMean(
     cbBlockIndex = inputCbOriginIndex;
     crBlockIndex = inputCrOriginIndex;
     if (sequence_control_set_ptr->block_mean_calc_prec == BLOCK_MEAN_PREC_FULL) {
-        cbMeanOf16x16Blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (0,1)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (0,2)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (0,3)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (1,0)
         cbBlockIndex = inputCbOriginIndex + (input_padded_picture_ptr->stride_cb << 3);
         crBlockIndex = inputCrOriginIndex + (input_padded_picture_ptr->stride_cr << 3);
-        cbMeanOf16x16Blocks[4] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[4] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[4] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[4] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (1,1)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[5] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[5] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[5] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[5] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (1,2)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[6] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[6] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[6] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[6] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (1,3)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[7] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[7] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[7] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[7] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (2,0)
         cbBlockIndex = inputCbOriginIndex + (input_padded_picture_ptr->stride_cb << 4);
         crBlockIndex = inputCrOriginIndex + (input_padded_picture_ptr->stride_cr << 4);
-        cbMeanOf16x16Blocks[8] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[8] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[8] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[8] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (2,1)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[9] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[9] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[9] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[9] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (2,2)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[10] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[10] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[10] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[10] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (2,3)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[11] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[11] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[11] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[11] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (3,0)
         cbBlockIndex = inputCbOriginIndex + (input_padded_picture_ptr->stride_cb * 24);
         crBlockIndex = inputCrOriginIndex + (input_padded_picture_ptr->stride_cr * 24);
-        cbMeanOf16x16Blocks[12] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[12] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[12] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[12] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (3,1)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[13] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[13] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[13] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[13] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (3,2)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[14] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[14] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[14] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[14] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
         // (3,3)
         cbBlockIndex = cbBlockIndex + 8;
         crBlockIndex = crBlockIndex + 8;
-        cbMeanOf16x16Blocks[15] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
-        crMeanOf16x16Blocks[15] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
+        cbMeanOf16x16Blocks[15] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cb[cbBlockIndex]), input_padded_picture_ptr->stride_cb, 8, 8);
+        crMeanOf16x16Blocks[15] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_cr[crBlockIndex]), input_padded_picture_ptr->stride_cr, 8, 8);
 
     }
     else {
@@ -2011,323 +2011,323 @@ EbErrorType ComputeBlockMeanComputeVariance(
     // (0,0)
     blockIndex = inputLumaOriginIndex;
     if (sequence_control_set_ptr->block_mean_calc_prec == BLOCK_MEAN_PREC_FULL) {
-        mean_of8x8_blocks[0] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[0] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[0] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[0] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[1] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[1] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[1] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[1] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[2] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[2] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[2] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[2] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[3] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[3] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[3] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[3] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[4] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[4] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[4] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[4] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[5] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[5] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[5] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[5] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[6] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[6] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[6] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[6] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (0,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[7] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[7] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[7] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[7] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3);
-        mean_of8x8_blocks[8] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[8] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[8] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[8] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[9] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[9] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[9] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[9] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[10] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[10] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[10] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[10] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[11] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[11] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[11] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[11] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[12] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[12] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[12] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[12] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[13] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[13] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[13] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[13] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[14] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[14] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[14] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[14] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (1,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[15] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[15] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[15] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[15] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 4);
-        mean_of8x8_blocks[16] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[16] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[16] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[16] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[17] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[17] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[17] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[17] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[18] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[18] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[18] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[18] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[19] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[19] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[19] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[19] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         /// (2,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[20] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[20] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[20] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[20] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[21] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[21] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[21] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[21] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[22] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[22] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[22] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[22] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (2,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[23] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[23] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[23] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[23] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 4);
-        mean_of8x8_blocks[24] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[24] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[24] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[24] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[25] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[25] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[25] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[25] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[26] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[26] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[26] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[26] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[27] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[27] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[27] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[27] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[28] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[28] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[28] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[28] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[29] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[29] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[29] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[29] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[30] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[30] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[30] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[30] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (3,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[31] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[31] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[31] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[31] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[32] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[32] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[32] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[32] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[33] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[33] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[33] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[33] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[34] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[34] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[34] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[34] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[35] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[35] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[35] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[35] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[36] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[36] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[36] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[36] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[37] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[37] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[37] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[37] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[38] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[38] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[38] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[38] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (4,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[39] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[39] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[39] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[39] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[40] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[40] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[40] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[40] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[41] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[41] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[41] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[41] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[42] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[42] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[42] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[42] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[43] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[43] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[43] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[43] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[44] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[44] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[44] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[44] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[45] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[45] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[45] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[45] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[46] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[46] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[46] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[46] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (5,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[47] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[47] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[47] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[47] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 4) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[48] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[48] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[48] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[48] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[49] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[49] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[49] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[49] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[50] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[50] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[50] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[50] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[51] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[51] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[51] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[51] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[52] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[52] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[52] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[52] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[53] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[53] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[53] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[53] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[54] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[54] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[54] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[54] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (6,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[55] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[55] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[55] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[55] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,0)
         blockIndex = inputLumaOriginIndex + (input_padded_picture_ptr->stride_y << 3) + (input_padded_picture_ptr->stride_y << 4) + (input_padded_picture_ptr->stride_y << 5);
-        mean_of8x8_blocks[56] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[56] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[56] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[56] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,1)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[57] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[57] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[57] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[57] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,2)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[58] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[58] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[58] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[58] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,3)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[59] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[59] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[59] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[59] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,4)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[60] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[60] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[60] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[60] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,5)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[61] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[61] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[61] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[61] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,6)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[62] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[62] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[62] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[62] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
 
         // (7,7)
         blockIndex = blockIndex + 8;
-        mean_of8x8_blocks[63] = ComputeMeanFunc[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
-        meanOf8x8SquaredValuesBlocks[63] = ComputeMeanFunc[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        mean_of8x8_blocks[63] = compute_mean_func[0][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
+        meanOf8x8SquaredValuesBlocks[63] = compute_mean_func[1][asm_type](&(input_padded_picture_ptr->buffer_y[blockIndex]), input_padded_picture_ptr->stride_y, 8, 8);
     }
     else {
         const uint16_t stride_y = input_padded_picture_ptr->stride_y;
@@ -4340,7 +4340,7 @@ void EdgeDetection(
         sb_x = sb_index % picture_width_in_sb;
         sb_y = sb_index / picture_width_in_sb;
 
-        EdgeLcuResults_t *edge_results_ptr = picture_control_set_ptr->edge_results_ptr;
+        EdgeLcuResults *edge_results_ptr = picture_control_set_ptr->edge_results_ptr;
         picture_control_set_ptr->edge_results_ptr[sb_index].edge_block_num = 0;
         picture_control_set_ptr->edge_results_ptr[sb_index].isolated_high_intensity_sb = 0;
         picture_control_set_ptr->sharp_edge_sb_flag[sb_index] = 0;
@@ -4641,7 +4641,7 @@ void CalculateInputAverageIntensity(
         if (sequence_control_set_ptr->block_mean_calc_prec == BLOCK_MEAN_PREC_FULL) {
             for (blockIndexInHeight = 0; blockIndexInHeight < input_picture_ptr->height >> 3; ++blockIndexInHeight) {
                 for (blockIndexInWidth = 0; blockIndexInWidth < input_picture_ptr->width >> 3; ++blockIndexInWidth) {
-                    mean += ComputeMeanFunc[0][asm_type](&(input_picture_ptr->buffer_y[(blockIndexInWidth << 3) + (blockIndexInHeight << 3) * input_picture_ptr->stride_y]), input_picture_ptr->stride_y, 8, 8);
+                    mean += compute_mean_func[0][asm_type](&(input_picture_ptr->buffer_y[(blockIndexInWidth << 3) + (blockIndexInHeight << 3) * input_picture_ptr->stride_y]), input_picture_ptr->stride_y, 8, 8);
                 }
             }
         }

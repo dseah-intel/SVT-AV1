@@ -4026,7 +4026,7 @@ void* rate_control_kernel(void *input_ptr)
             }
 
             picture_control_set_ptr->parent_pcs_ptr->average_qp = 0;
-            LargestCodingUnit_t         *sb_ptr;
+            LargestCodingUnit         *sb_ptr;
             uint32_t                       lcuCodingOrder;
             for (lcuCodingOrder = 0; lcuCodingOrder < sequence_control_set_ptr->sb_tot_cnt; ++lcuCodingOrder) {
 

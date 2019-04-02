@@ -52,7 +52,7 @@ int32_t av1_mv_bit_cost(const MV *mv, const MV *ref, const int32_t *mvjcost,
 void ChooseBestAv1MvPred(
     ModeDecisionContext            *context_ptr,
     struct MdRateEstimationContext      *md_rate_estimation_ptr,
-    CodingUnit_t      *cu_ptr,
+    CodingUnit      *cu_ptr,
     MvReferenceFrame ref_frame,
     uint8_t              is_compound,
     PredictionMode    mode,              //NEW or NEW_NEW
@@ -495,7 +495,7 @@ int8_t BIPRED_3x3_Y_POS[BIPRED_3x3_REFINMENT_POSITIONS] = { 0, 1, 1, 1, 0, -1, -
 void Unipred3x3CandidatesInjection(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext          *context_ptr,
-    LargestCodingUnit_t            *sb_ptr,
+    LargestCodingUnit            *sb_ptr,
     uint32_t                        me_sb_addr,
     SsMeContext                  *inloop_me_context,
     EbBool                          use_close_loop_me,
@@ -646,7 +646,7 @@ void Unipred3x3CandidatesInjection(
 void Bipred3x3CandidatesInjection(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext          *context_ptr,
-    LargestCodingUnit_t            *sb_ptr,
+    LargestCodingUnit            *sb_ptr,
     uint32_t                        me_sb_addr,
     SsMeContext                  *inloop_me_context,
     EbBool                          use_close_loop_me,
@@ -850,7 +850,7 @@ BIPred     : NEARST_NEARST  + upto 3x NEAR_NEAR
 **********************************************************************/
 void InjectAv1MvpCandidates(
     struct ModeDecisionContext     *context_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     MvReferenceFrame               *refFrames,
     PictureControlSet              *picture_control_set_ptr,
     uint32_t                            lcuAddr,
@@ -1117,7 +1117,7 @@ void InjectAv1MvpCandidates(
 void inject_warped_motion_candidates(
     PictureControlSet              *picture_control_set_ptr,
     struct ModeDecisionContext     *context_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     uint32_t                         *candTotCnt,
     SsMeContext                    *ss_mecontext,
     MeCuResults                    *mePuResult,
@@ -1321,7 +1321,7 @@ void  inject_inter_candidates(
     ModeDecisionContext          *context_ptr,
     SsMeContext                  *ss_mecontext,
     const SequenceControlSet     *sequence_control_set_ptr,
-    LargestCodingUnit_t            *sb_ptr,
+    LargestCodingUnit            *sb_ptr,
 #if M8_SKIP_BLK
     uint32_t                       *candidateTotalCnt){
 #else
@@ -1927,7 +1927,7 @@ static INLINE TxType av1_get_tx_type(
 void  inject_intra_candidates_ois(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext          *context_ptr,
-    LargestCodingUnit_t            *sb_ptr,
+    LargestCodingUnit            *sb_ptr,
     uint32_t                       *candidate_total_cnt){
 
     uint8_t                     intra_candidate_counter;
@@ -1941,8 +1941,8 @@ void  inject_intra_candidates_ois(
                                                     context_ptr->blk_geom->bheight == 4)    ? EB_TRUE : EB_FALSE;
 
 
-    ois_sb_results_t    *ois_sb_results_ptr = picture_control_set_ptr->parent_pcs_ptr->ois_sb_results[sb_ptr->index];
-    ois_candidate_t     *ois_blk_ptr = ois_sb_results_ptr->ois_candidate_array[ep_to_pa_block_index[context_ptr->blk_geom->blkidx_mds]];
+    OisSbResults    *ois_sb_results_ptr = picture_control_set_ptr->parent_pcs_ptr->ois_sb_results[sb_ptr->index];
+    OisCandidate     *ois_blk_ptr = ois_sb_results_ptr->ois_candidate_array[ep_to_pa_block_index[context_ptr->blk_geom->blkidx_mds]];
     uint8_t              total_intra_luma_mode = ois_sb_results_ptr-> total_ois_intra_candidate[ep_to_pa_block_index[context_ptr->blk_geom->blkidx_mds]];
     
 
@@ -2116,8 +2116,8 @@ void  intra_bc_search(
     PictureControlSet            *pcs,
     ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *scs,
-    LargestCodingUnit_t            *sb_ptr,
-    CodingUnit_t                   *cu_ptr,
+    LargestCodingUnit            *sb_ptr,
+    CodingUnit                   *cu_ptr,
     MV                             *dv_cand,
     uint8_t                        *num_dv_cand)
 {
@@ -2299,8 +2299,8 @@ void  inject_intra_bc_candidates(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
-    LargestCodingUnit_t            *sb_ptr,
-    CodingUnit_t                   *cu_ptr,
+    LargestCodingUnit            *sb_ptr,
+    CodingUnit                   *cu_ptr,
     uint32_t                       *cand_cnt)
 {
     MV dv_cand[2];
@@ -2362,7 +2362,7 @@ void  inject_intra_candidates(
     PictureControlSet            *picture_control_set_ptr,
     ModeDecisionContext          *context_ptr,
     const SequenceControlSet     *sequence_control_set_ptr,
-    LargestCodingUnit_t            *sb_ptr,
+    LargestCodingUnit            *sb_ptr,
 #if M8_SKIP_BLK
     uint32_t                       *candidateTotalCnt){
 #else
@@ -2549,7 +2549,7 @@ void ProductInitMdCandInjection(
 *   perform fast cost search on.
 ***************************************/
 EbErrorType ProductGenerateMdCandidatesCu(
-    LargestCodingUnit_t                 *sb_ptr,
+    LargestCodingUnit                 *sb_ptr,
     ModeDecisionContext             *context_ptr,
     SsMeContext                    *ss_mecontext,
 #if !M8_SKIP_BLK
@@ -2649,7 +2649,7 @@ EbErrorType ProductGenerateMdCandidatesCu(
 ***************************************/
 uint8_t product_full_mode_decision(
     struct ModeDecisionContext   *context_ptr,
-    CodingUnit_t                   *cu_ptr,
+    CodingUnit                   *cu_ptr,
     uint8_t                           bwidth,
     uint8_t                           bheight,
     ModeDecisionCandidateBuffer **buffer_ptr_array,

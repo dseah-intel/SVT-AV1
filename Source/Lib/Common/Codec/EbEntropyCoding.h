@@ -55,7 +55,7 @@ extern "C" {
     struct EntropyCodingContext;
     extern EbErrorType write_sb(
         struct EntropyCodingContext   *context_ptr,
-        LargestCodingUnit_t     *tb_ptr,
+        LargestCodingUnit     *tb_ptr,
         PictureControlSet     *picture_control_set_ptr,
         EntropyCoder          *entropy_coder_ptr,
         EbPictureBufferDesc   *coeff_ptr);
@@ -76,7 +76,7 @@ extern "C" {
     extern EbErrorType av1_tu_estimate_coeff_bits(
         PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
-        CodingUnit_t                           *cu_ptr,
+        CodingUnit                           *cu_ptr,
         uint32_t                                  tu_origin_index,
         uint32_t                                  tu_chroma_origin_index,
         EntropyCoder                         *entropy_coder_ptr,
@@ -199,7 +199,7 @@ extern "C" {
         NeighborArrayUnit     *inter_pred_dir_neighbor_array);
 
     extern void av1_collect_neighbors_ref_counts(
-        CodingUnit_t            *cu_ptr,
+        CodingUnit            *cu_ptr,
         uint32_t                   cu_origin_x,
         uint32_t                   cu_origin_y,
         NeighborArrayUnit     *mode_type_neighbor_array,
@@ -278,7 +278,7 @@ extern "C" {
 
     MotionMode motion_mode_allowed(
         const PictureControlSet       *picture_control_set_ptr,
-        const CodingUnit_t              *cu_ptr,
+        const CodingUnit              *cu_ptr,
         const BlockSize                 bsize,
         MvReferenceFrame                rf0,
         MvReferenceFrame                rf1,

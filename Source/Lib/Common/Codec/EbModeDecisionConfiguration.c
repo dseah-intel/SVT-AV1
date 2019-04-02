@@ -326,7 +326,7 @@ uint8_t derive_contouring_class(
 void RefinementPredictionLoop(
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr,
-    LargestCodingUnit_t                    *sb_ptr,
+    LargestCodingUnit                    *sb_ptr,
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext     *context_ptr)
 {
@@ -391,7 +391,7 @@ void RefinementPredictionLoop(
 void PrePredictionRefinement(
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr,
-    LargestCodingUnit_t                    *sb_ptr,
+    LargestCodingUnit                    *sb_ptr,
     uint32_t                                  sb_index,
     uint32_t                                 *startDepth,
     uint32_t                                 *endDepth
@@ -905,7 +905,7 @@ void PredictionPartitionLoop(
 EbErrorType early_mode_decision_lcu(
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr,
-    LargestCodingUnit_t                    *sb_ptr,
+    LargestCodingUnit                    *sb_ptr,
     uint32_t                                  sb_index,
     ModeDecisionConfigurationContext     *context_ptr){
 

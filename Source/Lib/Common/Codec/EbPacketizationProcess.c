@@ -95,7 +95,7 @@ void update_rc_rate_tables(
     uint32_t  intra_sad_interval_index;
     uint32_t  sad_interval_index;
 
-    LargestCodingUnit_t   *sb_ptr;
+    LargestCodingUnit   *sb_ptr;
     LcuParameters *sb_params_ptr;
 
     uint32_t  sb_index;

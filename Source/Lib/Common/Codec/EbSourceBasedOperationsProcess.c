@@ -197,8 +197,8 @@ void FailingMotionLcu(
             cuMeSAD = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortion_direction[0].distortion;
 
 
-            ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
-            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
+            OisSbResults        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
+            OisCandidate *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
             sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[raster_scan_to_md_scan[rasterScanCuIndex]]].distortion;
 
 
@@ -252,8 +252,8 @@ void DetectUncoveredLcu(
                 cuMeSAD = picture_control_set_ptr->me_results[sb_index][rasterScanCuIndex].distortion_direction[0].distortion;
 
 
-            ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
-            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
+            OisSbResults        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
+            OisCandidate *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[raster_scan_to_md_scan[rasterScanCuIndex]];
             sortedcuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[raster_scan_to_md_scan[rasterScanCuIndex]]].distortion;
 
 
@@ -360,8 +360,8 @@ void LumaContrastDetectorLcu(
         if (picture_control_set_ptr->slice_type != I_SLICE && picture_control_set_ptr->temporal_layer_index == 0) {
 
 
-            ois_sb_results_t        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
-            ois_candidate_t *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[0];
+            OisSbResults        *ois_sb_results_ptr = picture_control_set_ptr->ois_sb_results[sb_index];	
+            OisCandidate *OisCuPtr = ois_sb_results_ptr->ois_candidate_array[0];
             cuOisSAD = OisCuPtr[ois_sb_results_ptr->best_distortion_index[0]].distortion;
 
 

@@ -750,7 +750,7 @@ EbErrorType mode_decision_configuration_context_ctor(
     // Open Loop Partitioning 
     EB_MALLOC(ModeDecisionCandidate*, context_ptr->mdc_candidate_ptr, sizeof(ModeDecisionCandidate), EB_N_PTR);
     EB_MALLOC(CandidateMv*, context_ptr->mdc_ref_mv_stack, sizeof(CandidateMv), EB_N_PTR);
-    EB_MALLOC(CodingUnit_t*, context_ptr->mdc_cu_ptr, sizeof(CodingUnit_t), EB_N_PTR);
+    EB_MALLOC(CodingUnit*, context_ptr->mdc_cu_ptr, sizeof(CodingUnit), EB_N_PTR);
     EB_MALLOC(MacroBlockD*, context_ptr->mdc_cu_ptr->av1xd, sizeof(MacroBlockD), EB_N_PTR);
     return EB_ErrorNone;
 }
@@ -763,7 +763,7 @@ void PerformEarlyLcuPartitionning(
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr) {
 
-    LargestCodingUnit_t            *sb_ptr;
+    LargestCodingUnit            *sb_ptr;
     uint32_t                         sb_index;
     picture_control_set_ptr->parent_pcs_ptr->average_qp = (uint8_t)picture_control_set_ptr->parent_pcs_ptr->picture_qp;
 
@@ -791,7 +791,7 @@ void PerformEarlyLcuPartitionningLcu(
     PictureControlSet                    *picture_control_set_ptr,
     uint32_t                                    sb_index) {
 
-    LargestCodingUnit_t            *sb_ptr;
+    LargestCodingUnit            *sb_ptr;
 
     // SB Loop : Partitionnig Decision
     sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
@@ -1283,7 +1283,7 @@ void DetectComplexNonFlatMovingLcu(
     uint32_t                    picture_height_in_sb) {
 
 
-    LargestCodingUnit_t *sb_ptr;
+    LargestCodingUnit *sb_ptr;
     uint32_t               sb_index;
     uint32_t                 sb_x;
     uint32_t                 sb_y;
@@ -1468,7 +1468,7 @@ void AuraDetection(
     for (sb_index = 0; sb_index < picture_control_set_ptr->sb_total_count; ++sb_index) {
 
         LcuParameters    *sb_params = &sequence_control_set_ptr->sb_params_array[sb_index];
-        LargestCodingUnit_t*        sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
+        LargestCodingUnit*        sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
         sb_x = sb_params->horizontal_index;
         sb_y = sb_params->vertical_index;
         // Aura status intialization
@@ -1594,7 +1594,7 @@ void derive_search_method(
 void set_sb_budget(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    LargestCodingUnit_t                *sb_ptr,
+    LargestCodingUnit                *sb_ptr,
     ModeDecisionConfigurationContext *context_ptr)
 {
     const uint32_t sb_index = sb_ptr->index;
@@ -1675,7 +1675,7 @@ void  derive_optimal_budget_per_sb(
 
         for (sb_index = 0; sb_index < picture_control_set_ptr->parent_pcs_ptr->sequence_control_set_ptr->sb_tot_cnt; sb_index++) {
 
-            LargestCodingUnit_t* sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
+            LargestCodingUnit* sb_ptr = picture_control_set_ptr->sb_ptr_array[sb_index];
 
             set_sb_budget(
                 sequence_control_set_ptr,

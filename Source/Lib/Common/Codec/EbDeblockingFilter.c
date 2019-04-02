@@ -29,19 +29,19 @@
 /** setQpArrayBasedOnCU()
 is used to set qp in the qp_array on a CU basis.
 */
-void SetQpArrayBasedOnCU(
+void set_qp_array_based_on_cu(
     PictureControlSet *picture_control_set_ptr,          //input parameter
     uint32_t               cuPos_x,                       //input parameter, sample-based horizontal picture-wise locatin of the CU
     uint32_t               cuPos_y,                       //input parameter, sample-based vertical picture-wise locatin of the CU
-    uint32_t               cuSizeInMinCuSize,             //input parameter
-    uint32_t               cuQp)                          //input parameter, Qp of the CU
+    uint32_t               cu_size_in_min_cu_size,             //input parameter
+    uint32_t               cu_qp)                          //input parameter, Qp of the CU
 {
     uint32_t verticalIdx;
     uint32_t qpArrayIdx = (cuPos_y / MIN_BLOCK_SIZE) * picture_control_set_ptr->qp_array_stride + (cuPos_x / MIN_BLOCK_SIZE);
 
-    for (verticalIdx = 0; verticalIdx < cuSizeInMinCuSize; ++verticalIdx) {
+    for (verticalIdx = 0; verticalIdx < cu_size_in_min_cu_size; ++verticalIdx) {
         EB_MEMSET(picture_control_set_ptr->qp_array + qpArrayIdx + verticalIdx * picture_control_set_ptr->qp_array_stride,
-            cuQp, sizeof(uint8_t)*cuSizeInMinCuSize);
+            cu_qp, sizeof(uint8_t)*cu_size_in_min_cu_size);
     }
 
     return;
@@ -1354,7 +1354,7 @@ void av1_loop_filter_frame(
     int32_t plane_start, int32_t plane_end) {
 
     SequenceControlSet *scs_ptr = (SequenceControlSet*)picture_control_set_ptr->parent_pcs_ptr->sequence_control_set_wrapper_ptr->object_ptr;
-    //LargestCodingUnit_t                     *sb_ptr;
+    //LargestCodingUnit                     *sb_ptr;
     //uint16_t                                   sb_index;
     uint8_t                                   sb_size_Log2 = (uint8_t)Log2f(scs_ptr->sb_size_pix);
     uint32_t                                   x_lcu_index;
@@ -1852,7 +1852,7 @@ void av1_pick_filter_level(
     DlfContext            *context_ptr,
     EbPictureBufferDesc   *srcBuffer, // source input
     PictureControlSet     *pcs_ptr,
-    LPF_PICK_METHOD          method) {
+    LpfPickMethod          method) {
 
     SequenceControlSet *scs_ptr = (SequenceControlSet*)pcs_ptr->parent_pcs_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     const int32_t num_planes = 3;

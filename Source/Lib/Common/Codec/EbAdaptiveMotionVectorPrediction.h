@@ -49,7 +49,7 @@ extern "C" {
     void generate_av1_mvp_table(
         TileInfo                              *tile,
       struct ModeDecisionContext            *context_ptr,
-        CodingUnit_t                     *cu_ptr,
+        CodingUnit                     *cu_ptr,
         const BlockGeom                   * blk_geom,
         uint16_t                            cu_origin_x,
         uint16_t                            cu_origin_y,
@@ -59,7 +59,7 @@ extern "C" {
 
     void get_av1_mv_pred_drl(
         struct ModeDecisionContext            *context_ptr,
-        CodingUnit_t      *cu_ptr,
+        CodingUnit      *cu_ptr,
         MvReferenceFrame ref_frame,
         uint8_t              is_compound,
         PredictionMode    mode,
@@ -72,7 +72,7 @@ extern "C" {
         TileInfo                               *tile,
 
          struct ModeDecisionContext            *md_context_ptr,
-        CodingUnit_t                     *cu_ptr,
+        CodingUnit                     *cu_ptr,
         const BlockGeom                   * blk_geom,
         uint16_t                            cu_origin_x,
         uint16_t                            cu_origin_y,
@@ -85,7 +85,7 @@ extern "C" {
 
     void update_mi_map(
         struct ModeDecisionContext   *context_ptr,
-        CodingUnit_t                   *cu_ptr,
+        CodingUnit                   *cu_ptr,
         uint32_t                          cu_origin_x,
         uint32_t                          cu_origin_y,
         const BlockGeom               * blk_geom,
@@ -93,7 +93,7 @@ extern "C" {
         PictureControlSet            *picture_control_set_ptr);
 
     uint16_t wm_find_samples(
-        CodingUnit_t                       *cu_ptr,
+        CodingUnit                       *cu_ptr,
         const BlockGeom                    *blk_geom,
         uint16_t                            cu_origin_x,
         uint16_t                            cu_origin_y,
@@ -103,7 +103,7 @@ extern "C" {
         int32_t                            *pts_inref);
 
     void wm_count_samples(
-        CodingUnit_t                       *cu_ptr,
+        CodingUnit                       *cu_ptr,
         const BlockGeom                    *blk_geom,
         uint16_t                            cu_origin_x,
         uint16_t                            cu_origin_y,
@@ -113,7 +113,7 @@ extern "C" {
 
     EbBool warped_motion_parameters(
         PictureControlSet              *picture_control_set_ptr,
-        CodingUnit_t                     *cu_ptr,
+        CodingUnit                     *cu_ptr,
         MvUnit                         *mv_unit,
         const BlockGeom                  *blk_geom,
         uint16_t                          cu_origin_x,
@@ -133,7 +133,7 @@ extern "C" {
         return /*is_intrabc_block(mbmi) ||*/ mbmi->ref_frame[0] > INTRA_FRAME; // TODO: modify when add intra_bc
     }
 
-    static INLINE EbBool has_overlappable_candidates(const CodingUnit_t *cu_ptr)
+    static INLINE EbBool has_overlappable_candidates(const CodingUnit *cu_ptr)
     {
         return (cu_ptr->prediction_unit_array[0].overlappable_neighbors[0] != 0
              || cu_ptr->prediction_unit_array[0].overlappable_neighbors[1] != 0);
@@ -141,7 +141,7 @@ extern "C" {
 
     void av1_count_overlappable_neighbors(
         const PictureControlSet        *picture_control_set_ptr,
-        CodingUnit_t                     *cu_ptr,
+        CodingUnit                     *cu_ptr,
         const BlockSize                   bsize,
         int32_t                           mi_row,
         int32_t                           mi_col);

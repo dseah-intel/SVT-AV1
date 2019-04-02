@@ -1146,7 +1146,7 @@ void generate_av1_mvp_table(
     TileInfo                         *tile,
 
     ModeDecisionContext            *context_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
     uint16_t                          cu_origin_y,
@@ -1245,7 +1245,7 @@ void generate_av1_mvp_table(
 }
 void get_av1_mv_pred_drl(
     ModeDecisionContext            *context_ptr,
-    CodingUnit_t      *cu_ptr,
+    CodingUnit      *cu_ptr,
     MvReferenceFrame   ref_frame,
     uint8_t            is_compound,
     PredictionMode     mode,
@@ -1311,7 +1311,7 @@ void enc_pass_av1_mv_pred(
     TileInfo                         *tile,
 
     ModeDecisionContext            *md_context_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
     uint16_t                          cu_origin_y,
@@ -1348,7 +1348,7 @@ void enc_pass_av1_mv_pred(
 }
 
 void update_av1_mi_map(
-    CodingUnit_t                   *cu_ptr,
+    CodingUnit                   *cu_ptr,
     uint32_t                        cu_origin_x,
     uint32_t                        cu_origin_y,
     const BlockGeom                *blk_geom,
@@ -1418,7 +1418,7 @@ void update_av1_mi_map(
 void update_mi_map(
     struct ModeDecisionContext   *context_ptr,
 
-    CodingUnit_t                   *cu_ptr,
+    CodingUnit                   *cu_ptr,
     uint32_t                        cu_origin_x,
     uint32_t                        cu_origin_y,
     const BlockGeom                *blk_geom,
@@ -1712,7 +1712,7 @@ int av1_find_samples(
 
 
 void wm_count_samples(
-    CodingUnit_t                       *cu_ptr,
+    CodingUnit                       *cu_ptr,
     const BlockGeom                    *blk_geom,
     uint16_t                            cu_origin_x,
     uint16_t                            cu_origin_y,
@@ -1851,7 +1851,7 @@ void wm_count_samples(
 
 
 uint16_t wm_find_samples(
-    CodingUnit_t                       *cu_ptr,
+    CodingUnit                       *cu_ptr,
     const BlockGeom                    *blk_geom,
     uint16_t                            cu_origin_x,
     uint16_t                            cu_origin_y,
@@ -1875,7 +1875,7 @@ uint16_t wm_find_samples(
 
 EbBool warped_motion_parameters(
     PictureControlSet              *picture_control_set_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     MvUnit                         *mv_unit,
     const BlockGeom                  *blk_geom,
     uint16_t                          cu_origin_x,
@@ -2014,7 +2014,7 @@ int count_overlappable_nb_left(
 
 void av1_count_overlappable_neighbors(
     const PictureControlSet        *picture_control_set_ptr,
-    CodingUnit_t                     *cu_ptr,
+    CodingUnit                     *cu_ptr,
     const BlockSize                   bsize,
     int32_t                           mi_row,
     int32_t                           mi_col)
@@ -2092,7 +2092,7 @@ int av1_is_dv_valid(const MV dv,
     // Special case for sub 8x8 chroma cases, to prevent referring to chroma
     // pixels outside current tile.
     for (int plane = 1; plane < 3/* av1_num_planes(cm)*/; ++plane) {
-        //const struct macroblockd_plane *const pd = &xd->plane[plane];
+        //const struct MacroBlockDPlane *const pd = &xd->plane[plane];
 
         if (is_chroma_reference(mi_row, mi_col, bsize, 1, 1/* pd->subsampling_x,
             pd->subsampling_y*/)) {

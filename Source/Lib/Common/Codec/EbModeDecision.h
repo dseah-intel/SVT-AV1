@@ -136,7 +136,7 @@ extern "C" {
         struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
         EbAsm                                   asm_type);
     typedef uint64_t(*EbFastCostFunc)(
-        CodingUnit_t                           *cu_ptr,
+        CodingUnit                           *cu_ptr,
         struct ModeDecisionCandidate         *candidateBuffer,
         uint32_t                                qp,
         uint64_t                                luma_distortion,
@@ -155,7 +155,7 @@ extern "C" {
         PictureControlSet                    *picture_control_set_ptr,
         struct ModeDecisionContext           *context_ptr,
         struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
-        CodingUnit_t                           *cu_ptr,
+        CodingUnit                           *cu_ptr,
         uint64_t                               *y_distortion,
         uint64_t                               *cb_distortion,
         uint64_t                               *cr_distortion,
@@ -228,7 +228,7 @@ extern "C" {
     );
     uint8_t product_full_mode_decision(
         struct ModeDecisionContext   *context_ptr,
-        CodingUnit_t                   *cu_ptr,
+        CodingUnit                   *cu_ptr,
         uint8_t                         bwidth,
         uint8_t                         bheight,
         ModeDecisionCandidateBuffer **buffer_ptr_array,

@@ -23,7 +23,7 @@ extern "C" {
 #endif
     extern void coding_loop_context_generation(
         ModeDecisionContext   *context_ptr,
-        CodingUnit_t            *cu_ptr,
+        CodingUnit            *cu_ptr,
         uint32_t                 cu_origin_x,
         uint32_t                 cu_origin_y,
         uint32_t                 sb_sz,
@@ -77,7 +77,7 @@ extern "C" {
     extern EbErrorType av1_split_flag_rate(
         SequenceControlSet      *sequence_control_set_ptr,
         ModeDecisionContext     *context_ptr,
-        CodingUnit_t              *cu_ptr,
+        CodingUnit              *cu_ptr,
         uint32_t                   leaf_index,
         PartitionType              partitionType,
         uint64_t                  *split_rate,
@@ -93,7 +93,7 @@ extern "C" {
         uint32_t         component_mask);
 
     extern uint64_t av1_intra_fast_cost(
-        CodingUnit_t            *cu_ptr,
+        CodingUnit            *cu_ptr,
         ModeDecisionCandidate *candidate_ptr,
         uint32_t                 qp,
         uint64_t                 luma_distortion,
@@ -110,7 +110,7 @@ extern "C" {
 
 
     extern uint64_t av1_inter_fast_cost(
-        CodingUnit_t            *cu_ptr,
+        CodingUnit            *cu_ptr,
         ModeDecisionCandidate *candidate_ptr,
         uint32_t                 qp,
         uint64_t                 luma_distortion,
@@ -131,7 +131,7 @@ extern "C" {
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext                  *context_ptr,
         struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
-        CodingUnit_t                           *cu_ptr,
+        CodingUnit                           *cu_ptr,
         uint64_t                                 *y_distortion,
         uint64_t                                 *cb_distortion,
         uint64_t                                 *cr_distortion,
@@ -145,7 +145,7 @@ extern "C" {
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext                  *context_ptr,
         struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
-        CodingUnit_t                           *cu_ptr,
+        CodingUnit                           *cu_ptr,
         uint64_t                                 *y_distortion,
         uint64_t                                 *cb_distortion,
         uint64_t                                 *cr_distortion,

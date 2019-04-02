@@ -335,7 +335,7 @@ static void reset_ec_tile(
  ******************************************************/
 static void EntropyCodingConfigureLcu(
     EntropyCodingContext  *context_ptr,
-    LargestCodingUnit_t     *sb_ptr,
+    LargestCodingUnit     *sb_ptr,
     PictureControlSet     *picture_control_set_ptr)
 {
 #if ADD_DELTA_QP_SUPPORT
@@ -358,7 +358,7 @@ static void EntropyCodingConfigureLcu(
  ******************************************************/
 static void EntropyCodingLcu(
     EntropyCodingContext              *context_ptr,
-    LargestCodingUnit_t               *sb_ptr,
+    LargestCodingUnit               *sb_ptr,
     PictureControlSet               *picture_control_set_ptr,
     SequenceControlSet              *sequence_control_set_ptr,
     uint32_t                             sb_origin_x,
@@ -518,7 +518,7 @@ void* entropy_coding_kernel(void *input_ptr)
     EntropyCodingResults                  *entropyCodingResultsPtr;
 
     // SB Loop variables
-    LargestCodingUnit_t                     *sb_ptr;
+    LargestCodingUnit                     *sb_ptr;
     uint16_t                                   sb_index;
     uint8_t                                    sb_sz;
     uint8_t                                    lcuSizeLog2;

@@ -449,7 +449,7 @@ void Av1WriteTxType(
     PictureParentControlSet   *pcs_ptr,
     FRAME_CONTEXT               *frameContext,
     aom_writer                  *ec_writer,
-    CodingUnit_t                *cu_ptr,
+    CodingUnit                *cu_ptr,
     uint32_t                      intraDir,
     TxType                     txType,
     TxSize                      txSize) {
@@ -497,7 +497,7 @@ int32_t  Av1WriteCoeffsTxb1D(
     PictureParentControlSet   *parent_pcs_ptr,
     FRAME_CONTEXT               *frameContext,
     aom_writer                  *ec_writer,
-    CodingUnit_t                *cu_ptr,
+    CodingUnit                *cu_ptr,
     TxSize                     txSize,
     uint32_t                       pu_index,
     uint32_t                       tu_index,
@@ -688,7 +688,7 @@ static EbErrorType Av1EncodeCoeff1D(
     EntropyCodingContext  *context_ptr,
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ec_writer,
-    CodingUnit_t           *cu_ptr,
+    CodingUnit           *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
     uint32_t                  intraLumaDir,
@@ -1054,7 +1054,7 @@ static void EncodeSkipCoeffAv1(
 static void EncodeIntraLumaModeAv1(
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ec_writer,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
     uint32_t                  luma_mode,
@@ -1113,7 +1113,7 @@ static void EncodeIntraLumaModeAv1(
 static void EncodeIntraLumaModeNonKeyAv1(
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ec_writer,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
 
     BlockSize                bsize,
     uint32_t                  luma_mode)
@@ -1159,7 +1159,7 @@ static void write_cfl_alphas(FRAME_CONTEXT *const ec_ctx, int32_t idx,
 static void EncodeIntraChromaModeAv1(
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ec_writer,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     uint32_t                  luma_mode,
     uint32_t                  chroma_mode,
     uint8_t                   cflAllowed)
@@ -1294,7 +1294,7 @@ static INLINE int is_global_mv_block(
 
 MotionMode motion_mode_allowed(
     const PictureControlSet       *picture_control_set_ptr,
-    const CodingUnit_t              *cu_ptr,
+    const CodingUnit              *cu_ptr,
     const BlockSize                 bsize,
     MvReferenceFrame                rf0,
     MvReferenceFrame                rf1,
@@ -1341,7 +1341,7 @@ static void write_motion_mode(
     MotionMode               motion_mode,
     MvReferenceFrame          rf0,
     MvReferenceFrame          rf1,
-    CodingUnit_t             *cu_ptr,
+    CodingUnit             *cu_ptr,
     PictureControlSet      *picture_control_set_ptr)
 {
     const PredictionMode mode = cu_ptr->prediction_unit_array[0].inter_mode;
@@ -1641,7 +1641,7 @@ extern uint8_t av1_drl_ctx(const CandidateMv *ref_mv_stack, int32_t ref_idx);
 void WriteDrlIdx(
     FRAME_CONTEXT       *frameContext,
     aom_writer          *ec_writer,
-    CodingUnit_t        *cu_ptr) {
+    CodingUnit        *cu_ptr) {
 
     //uint8_t ref_frame_type = av1_ref_frame_type(mbmi->ref_frame);
     uint8_t ref_frame_type = cu_ptr->prediction_unit_array[0].ref_frame_type;
@@ -1868,7 +1868,7 @@ int32_t av1_get_pred_context_switchable_interp(
 /*INLINE*/ int32_t is_nontrans_global_motion_EC(
     MvReferenceFrame             rf0,
     MvReferenceFrame             rf1,
-    CodingUnit_t                  *cu_ptr,
+    CodingUnit                  *cu_ptr,
     BlockSize sb_type,
     PictureParentControlSet   *pcs_ptr) {
     int32_t ref;
@@ -1890,7 +1890,7 @@ int32_t av1_get_pred_context_switchable_interp(
 static int32_t av1_is_interp_needed(
     MvReferenceFrame            rf0,
     MvReferenceFrame            rf1,
-    CodingUnit_t               *cu_ptr,
+    CodingUnit               *cu_ptr,
     BlockSize                   bsize,
     PictureParentControlSet  *pcs_ptr)
 {
@@ -1913,7 +1913,7 @@ void write_mb_interp_filter(
     MvReferenceFrame rf1,
     PictureParentControlSet   *pcs_ptr,
     aom_writer                  *ec_writer,
-    CodingUnit_t             *cu_ptr,
+    CodingUnit             *cu_ptr,
     EntropyCoder *entropy_coder_ptr,
     NeighborArrayUnit32     *interpolation_type_neighbor_array,
     uint32_t blkOriginX,
@@ -2152,7 +2152,7 @@ int32_t av1_get_comp_reference_type_context(
 }
 
 void av1_collect_neighbors_ref_counts(
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     uint32_t                   cu_origin_x,
     uint32_t                   cu_origin_y,
     NeighborArrayUnit     *mode_type_neighbor_array,
@@ -2411,7 +2411,7 @@ static void WriteRefFrames(
     FRAME_CONTEXT               *frameContext,
     aom_writer                  *ec_writer,
     PictureParentControlSet   *pcs_ptr,
-    CodingUnit_t                *cu_ptr,
+    CodingUnit                *cu_ptr,
     BlockSize                   bsize,
     uint32_t                       cu_origin_x,
     uint32_t                       cu_origin_y,
@@ -4588,7 +4588,7 @@ EbErrorType ec_update_neighbors(
     EntropyCodingContext  *context_ptr,
     uint32_t                 blkOriginX,
     uint32_t                 blkOriginY,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     BlockSize                bsize,
     EbPictureBufferDesc   *coeff_ptr)
 {
@@ -4757,7 +4757,7 @@ static INLINE int av1_get_palette_bsize_ctx(BlockSize bsize) {
 }
 static void write_palette_mode_info(
     FRAME_CONTEXT           *ec_ctx,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     BlockSize bsize,
     int mi_row,
     int mi_col, aom_writer *w)
@@ -4826,7 +4826,7 @@ int av1_allow_intrabc(const Av1Common *const cm) {
 
 static void write_intrabc_info(
     FRAME_CONTEXT           *ec_ctx,
-    CodingUnit_t            *cu_ptr,
+    CodingUnit            *cu_ptr,
     aom_writer *w) {
 
 
@@ -4849,8 +4849,8 @@ EbErrorType write_modes_b(
     PictureControlSet     *picture_control_set_ptr,
     EntropyCodingContext  *context_ptr,
     EntropyCoder          *entropy_coder_ptr,
-    LargestCodingUnit_t     *tb_ptr,
-    CodingUnit_t            *cu_ptr,
+    LargestCodingUnit     *tb_ptr,
+    CodingUnit            *cu_ptr,
     EbPictureBufferDesc   *coeff_ptr)
 {
     UNUSED(tb_ptr);
@@ -5293,7 +5293,7 @@ EbErrorType write_modes_b(
 **********************************************/
 EB_EXTERN EbErrorType write_sb(
     EntropyCodingContext  *context_ptr,
-    LargestCodingUnit_t     *tb_ptr,
+    LargestCodingUnit     *tb_ptr,
     PictureControlSet     *picture_control_set_ptr,
     EntropyCoder          *entropy_coder_ptr,
     EbPictureBufferDesc   *coeff_ptr)
@@ -5306,7 +5306,7 @@ EB_EXTERN EbErrorType write_sb(
 
     // CU Varaiables
     const BlockGeom          *blk_geom;
-    CodingUnit_t             *cu_ptr;
+    CodingUnit             *cu_ptr;
     uint32_t                    cu_index = 0;
     uint32_t                    final_cu_index = 0;
     uint32_t                    cu_origin_x;

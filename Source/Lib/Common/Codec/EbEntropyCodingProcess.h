@@ -41,7 +41,7 @@ typedef struct EntropyCodingContext
     EbPictureBufferDesc           *coeff_buffer_sb;                              //Used to hold quantized coeff for one TB in EncPass.
 
     //  Context Variables---------------------------------
-    CodingUnit_t                     *cu_ptr;
+    CodingUnit                     *cu_ptr;
     const CodedUnitStats           *cu_stats;
     uint32_t                          cu_index;
     uint8_t                           cu_depth;

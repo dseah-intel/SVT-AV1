@@ -310,7 +310,7 @@ static void ResetEncDec(
  ******************************************************/
 static void EncDecConfigureLcu(
     EncDecContext         *context_ptr,
-    LargestCodingUnit_t     *sb_ptr,
+    LargestCodingUnit     *sb_ptr,
     PictureControlSet     *picture_control_set_ptr,
     SequenceControlSet    *sequence_control_set_ptr,
     uint8_t                    picture_qp,
@@ -1436,8 +1436,8 @@ EbErrorType signal_derivation_enc_dec_kernel_oq(
     return return_error;
 }
 void move_cu_data(
-    CodingUnit_t *src_cu,
-    CodingUnit_t *dst_cu);
+    CodingUnit *src_cu,
+    CodingUnit *dst_cu);
 
 /******************************************************
  * EncDec Kernel
@@ -1457,7 +1457,7 @@ void* enc_dec_kernel(void *input_ptr)
     EbObjectWrapper                       *encDecResultsWrapperPtr;
     EncDecResults                         *encDecResultsPtr;
     // SB Loop variables
-    LargestCodingUnit_t                     *sb_ptr;
+    LargestCodingUnit                     *sb_ptr;
     uint16_t                                 sb_index;
     uint8_t                                  sb_sz;
     uint8_t                                  lcuSizeLog2;

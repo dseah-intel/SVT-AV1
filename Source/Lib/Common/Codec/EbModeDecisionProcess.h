@@ -93,7 +93,7 @@ extern "C" {
         MdRateEstimationContext      *md_rate_estimation_ptr;
         InterPredictionContext       *inter_prediction_context;
         MdCodingUnit                  md_local_cu_unit[BLOCK_MAX_COUNT_SB_128];
-        CodingUnit_t                    md_cu_arr_nsq[BLOCK_MAX_COUNT_SB_128];
+        CodingUnit                    md_cu_arr_nsq[BLOCK_MAX_COUNT_SB_128];
 
         NeighborArrayUnit            *intra_luma_mode_neighbor_array;
         NeighborArrayUnit            *intra_chroma_mode_neighbor_array;
@@ -141,9 +141,9 @@ extern "C" {
         uint32_t                        full_chroma_lambda_sao;
 
         //  Context Variables---------------------------------
-        LargestCodingUnit_t            *sb_ptr;
+        LargestCodingUnit            *sb_ptr;
         TransformUnit                *txb_ptr;
-        CodingUnit_t                   *cu_ptr;
+        CodingUnit                   *cu_ptr;
         const BlockGeom                *blk_geom;
         PredictionUnit               *pu_ptr;
         const PredictionUnitStats    *pu_stats;
@@ -292,7 +292,7 @@ extern "C" {
 
     extern void mode_decision_configure_lcu(
         ModeDecisionContext   *context_ptr,
-        LargestCodingUnit_t     *sb_ptr,
+        LargestCodingUnit     *sb_ptr,
         PictureControlSet     *picture_control_set_ptr,
         SequenceControlSet    *sequence_control_set_ptr,
         uint8_t                  picture_qp,
@@ -302,7 +302,7 @@ extern "C" {
     extern void cfl_rd_pick_alpha(
         PictureControlSet             *picture_control_set_ptr,
         ModeDecisionCandidateBuffer   *candidateBuffer,
-        LargestCodingUnit_t             *sb_ptr,
+        LargestCodingUnit             *sb_ptr,
         ModeDecisionContext           *context_ptr,
         EbPictureBufferDesc           *input_picture_ptr,
         uint32_t                         inputCbOriginIndex,
