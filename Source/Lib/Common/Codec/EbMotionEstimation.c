@@ -6316,9 +6316,9 @@ static void QuarterPelCompensation(
 * Requirement: pu_height % 2 = 0
 * Requirement: skip         = 0 or 1
 * Requirement (x86 only): temp_buf % 16 = 0
-* Requirement (x86 only): (dst->buffer_y  + dstLumaIndex  ) % 16 = 0 when pu_width %16 = 0
-* Requirement (x86 only): (dst->buffer_cb + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
-* Requirement (x86 only): (dst->buffer_cr + dstChromaIndex) % 16 = 0 when pu_width %32 = 0
+* Requirement (x86 only): (dst->buffer_y  + dst_luma_index  ) % 16 = 0 when pu_width %16 = 0
+* Requirement (x86 only): (dst->buffer_cb + dst_chroma_index) % 16 = 0 when pu_width %32 = 0
+* Requirement (x86 only): (dst->buffer_cr + dst_chroma_index) % 16 = 0 when pu_width %32 = 0
 * Requirement (x86 only): dst->stride_y   % 16 = 0 when pu_width %16 = 0
 * Requirement (x86 only): dst->chromaStride % 16 = 0 when pu_width %32 = 0
 *******************************************************************************/

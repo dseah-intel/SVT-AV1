@@ -19,14 +19,15 @@ extern "C" {
 
 // User defined structures for passing data from application to the library should be added here
 
-    typedef struct RegistedUserData_s {
+    typedef struct RegistedUserData 
+    {
 
         uint8_t   *userData;    // First byte is itu_t_t35_country_code.
                               // If itu_t_t35_country_code  ==  0xFF, second byte is itu_t_t35_country_code_extension_byte.
                               // the rest are the payloadByte
         uint32_t   userDataSize;
 
-    } RegistedUserData_t;
+    } RegistedUserData;
 
     // SEI structures
     typedef struct AppHrdParameters_s {

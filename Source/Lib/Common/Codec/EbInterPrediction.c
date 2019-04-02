@@ -4533,8 +4533,8 @@ void RoundMvOnTheFly(
 ***************************************************/
 void UnPackReferenceLumaBlock(
     EbPictureBufferDesc *refFramePic,
-    uint32_t                 posX,
-    uint32_t                 posY,
+    uint32_t                 pos_x,
+    uint32_t                 pos_y,
     uint32_t                 pu_width,
     uint32_t                 pu_height,
     EbPictureBufferDesc *dst,
@@ -4544,8 +4544,8 @@ void UnPackReferenceLumaBlock(
 
     pu_width += 4;
     pu_height += 4;
-    uint32_t inPosx = (posX >> 2) - 2;
-    uint32_t inPosy = (posY >> 2) - 2;
+    uint32_t inPosx = (pos_x >> 2) - 2;
+    uint32_t inPosy = (pos_y >> 2) - 2;
     uint16_t *ptr16 = (uint16_t *)refFramePic->buffer_y + inPosx + inPosy * refFramePic->stride_y;
 
     extract8_bitdata_safe_sub(
