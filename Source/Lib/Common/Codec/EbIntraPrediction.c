@@ -4577,7 +4577,7 @@ EbErrorType AV1IntraPredictionCL(
     ModeDecisionContext                  *md_context_ptr,
 
     PictureControlSet                    *picture_control_set_ptr,
-    ModeDecisionCandidateBuffer_t           *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer           *candidate_buffer_ptr,
     EbAsm                                  asm_type)
 {
 

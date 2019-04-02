@@ -675,7 +675,7 @@ void set_reference_cdef_strength(
 * Compute Tc, and Beta offsets for a given picture
 ******************************************************/
 void AdaptiveDlfParameterComputation(
-    ModeDecisionConfigurationContext_t     *context_ptr,
+    ModeDecisionConfigurationContext     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr,
     EbBool                                    scene_transition_flag)
@@ -723,23 +723,23 @@ void AdaptiveDlfParameterComputation(
 /******************************************************
  * Mode Decision Configuration Context Constructor
  ******************************************************/
-EbErrorType ModeDecisionConfigurationContextCtor(
-    ModeDecisionConfigurationContext_t **context_dbl_ptr,
-    EbFifo                            *rateControlInputFifoPtr,
+EbErrorType mode_decision_configuration_context_ctor(
+    ModeDecisionConfigurationContext **context_dbl_ptr,
+    EbFifo                            *rate_control_input_fifo_ptr,
 
-    EbFifo                            *modeDecisionConfigurationOutputFifoPtr,
+    EbFifo                            *mode_decision_configuration_output_fifo_ptr,
     uint16_t                                 sb_total_count)
 
 {
-    ModeDecisionConfigurationContext_t *context_ptr;
+    ModeDecisionConfigurationContext *context_ptr;
 
-    EB_MALLOC(ModeDecisionConfigurationContext_t*, context_ptr, sizeof(ModeDecisionConfigurationContext_t), EB_N_PTR);
+    EB_MALLOC(ModeDecisionConfigurationContext*, context_ptr, sizeof(ModeDecisionConfigurationContext), EB_N_PTR);
 
     *context_dbl_ptr = context_ptr;
 
     // Input/Output System Resource Manager FIFOs
-    context_ptr->rateControlInputFifoPtr = rateControlInputFifoPtr;
-    context_ptr->modeDecisionConfigurationOutputFifoPtr = modeDecisionConfigurationOutputFifoPtr;
+    context_ptr->rate_control_input_fifo_ptr = rate_control_input_fifo_ptr;
+    context_ptr->mode_decision_configuration_output_fifo_ptr = mode_decision_configuration_output_fifo_ptr;
     // Rate estimation
     EB_MALLOC(MdRateEstimationContext_t*, context_ptr->md_rate_estimation_ptr, sizeof(MdRateEstimationContext_t), EB_N_PTR);
 
@@ -748,7 +748,7 @@ EbErrorType ModeDecisionConfigurationContextCtor(
     EB_MALLOC(uint8_t *, context_ptr->sb_cost_array, sizeof(uint8_t) * sb_total_count, EB_N_PTR);
 
     // Open Loop Partitioning 
-    EB_MALLOC(ModeDecisionCandidate_t*, context_ptr->mdc_candidate_ptr, sizeof(ModeDecisionCandidate_t), EB_N_PTR);
+    EB_MALLOC(ModeDecisionCandidate*, context_ptr->mdc_candidate_ptr, sizeof(ModeDecisionCandidate), EB_N_PTR);
     EB_MALLOC(CandidateMv*, context_ptr->mdc_ref_mv_stack, sizeof(CandidateMv), EB_N_PTR);
     EB_MALLOC(CodingUnit_t*, context_ptr->mdc_cu_ptr, sizeof(CodingUnit_t), EB_N_PTR);
     EB_MALLOC(MacroBlockD*, context_ptr->mdc_cu_ptr->av1xd, sizeof(MacroBlockD), EB_N_PTR);
@@ -759,7 +759,7 @@ EbErrorType ModeDecisionConfigurationContextCtor(
 * Predict the SB partitionning
 ******************************************************/
 void PerformEarlyLcuPartitionning(
-    ModeDecisionConfigurationContext_t     *context_ptr,
+    ModeDecisionConfigurationContext     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr) {
 
@@ -775,7 +775,7 @@ void PerformEarlyLcuPartitionning(
             sb_ptr->qp = (uint8_t)picture_control_set_ptr->parent_pcs_ptr->picture_qp;
         }
 
-        EarlyModeDecisionLcu(
+        early_mode_decision_lcu(
             sequence_control_set_ptr,
             picture_control_set_ptr,
             sb_ptr,
@@ -786,7 +786,7 @@ void PerformEarlyLcuPartitionning(
 
 }
 void PerformEarlyLcuPartitionningLcu(
-    ModeDecisionConfigurationContext_t     *context_ptr,
+    ModeDecisionConfigurationContext     *context_ptr,
     SequenceControlSet                   *sequence_control_set_ptr,
     PictureControlSet                    *picture_control_set_ptr,
     uint32_t                                    sb_index) {
@@ -799,7 +799,7 @@ void PerformEarlyLcuPartitionningLcu(
         sb_ptr->qp = (uint8_t)picture_control_set_ptr->parent_pcs_ptr->picture_qp;
     }
 
-    EarlyModeDecisionLcu(
+    early_mode_decision_lcu(
         sequence_control_set_ptr,
         picture_control_set_ptr,
         sb_ptr,
@@ -868,7 +868,7 @@ void Forward85CuToModeDecisionLCU(
             }
         }
 
-        cu_index += (split_flag == EB_TRUE) ? 1 : DepthOffset[cuStatsPtr->depth];
+        cu_index += (split_flag == EB_TRUE) ? 1 : depth_offset[cuStatsPtr->depth];
 
     } // End CU Loop
 }
@@ -933,7 +933,7 @@ void Forward84CuToModeDecisionLCU(
             }
         }
 
-        cu_index += (split_flag == EB_TRUE) ? 1 : DepthOffset[cuStatsPtr->depth];
+        cu_index += (split_flag == EB_TRUE) ? 1 : depth_offset[cuStatsPtr->depth];
 
     } // End CU Loop
 }
@@ -1160,7 +1160,7 @@ void Forward85CuToModeDecision(
                 }
             }
 
-            cu_index += (split_flag == EB_TRUE) ? 1 : DepthOffset[cuStatsPtr->depth];
+            cu_index += (split_flag == EB_TRUE) ? 1 : depth_offset[cuStatsPtr->depth];
 
         } // End CU Loop
     }
@@ -1239,7 +1239,7 @@ void Forward84CuToModeDecision(
                 }
             }
 
-            cu_index += (split_flag == EB_TRUE) ? 1 : DepthOffset[cuStatsPtr->depth];
+            cu_index += (split_flag == EB_TRUE) ? 1 : depth_offset[cuStatsPtr->depth];
 
         } // End CU Loop
     }
@@ -1496,7 +1496,7 @@ void AuraDetection(
 ******************************************************/
 void configure_adp(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr){
+    ModeDecisionConfigurationContext *context_ptr){
 
     UNUSED(picture_control_set_ptr);
     context_ptr->cost_depth_mode[SB_SQ_BLOCKS_DEPTH_MODE      - 1]       = SQ_BLOCKS_SEARCH_COST;
@@ -1525,7 +1525,7 @@ void configure_adp(
 ******************************************************/
 void derive_search_method(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr)
+    ModeDecisionConfigurationContext *context_ptr)
 {
     uint32_t sb_index;
 
@@ -1595,7 +1595,7 @@ void set_sb_budget(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
     LargestCodingUnit_t                *sb_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr)
+    ModeDecisionConfigurationContext *context_ptr)
 {
     const uint32_t sb_index = sb_ptr->index;
     uint32_t max_to_min_score, score_to_min;
@@ -1645,7 +1645,7 @@ void set_sb_budget(
 void  derive_optimal_budget_per_sb(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr)
+    ModeDecisionConfigurationContext *context_ptr)
 {
     uint32_t sb_index;
     // Initialize the deviation between the picture predicted cost & the target budget to 100, 
@@ -1713,7 +1713,7 @@ void  derive_optimal_budget_per_sb(
 
 EbErrorType derive_default_segments(
     SequenceControlSet               *sequence_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr){
+    ModeDecisionConfigurationContext *context_ptr){
 
     EbErrorType return_error = EB_ErrorNone;
 
@@ -1762,7 +1762,7 @@ EbErrorType derive_default_segments(
 void derive_sb_score(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr)
+    ModeDecisionConfigurationContext *context_ptr)
 {
     uint32_t  sb_index;
     uint32_t  sb_score = 0;
@@ -1818,7 +1818,7 @@ Output  : budget per picture
 void set_target_budget_oq(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr)
+    ModeDecisionConfigurationContext *context_ptr)
 {
     uint32_t budget;
 
@@ -1868,7 +1868,7 @@ void set_target_budget_oq(
 void derive_sb_md_mode(
     SequenceControlSet               *sequence_control_set_ptr,
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr) {
+    ModeDecisionConfigurationContext *context_ptr) {
 
     // Configure ADP 
     configure_adp(
@@ -1911,7 +1911,7 @@ Output  : EncDec Kernel signal(s)
 ******************************************************/
 EbErrorType signal_derivation_mode_decision_config_kernel_oq(
     PictureControlSet                *picture_control_set_ptr,
-    ModeDecisionConfigurationContext_t *context_ptr) {
+    ModeDecisionConfigurationContext *context_ptr) {
 
     EbErrorType return_error = EB_ErrorNone;
 
@@ -2085,10 +2085,10 @@ void forward_all_c_blocks_to_md(
 /******************************************************
  * Mode Decision Configuration Kernel
  ******************************************************/
-void* ModeDecisionConfigurationKernel(void *input_ptr)
+void* mode_decision_configuration_kernel(void *input_ptr)
 {
     // Context & SCS & PCS
-    ModeDecisionConfigurationContext_t         *context_ptr = (ModeDecisionConfigurationContext_t*)input_ptr;
+    ModeDecisionConfigurationContext         *context_ptr = (ModeDecisionConfigurationContext*)input_ptr;
     PictureControlSet                        *picture_control_set_ptr;
     SequenceControlSet                       *sequence_control_set_ptr;
 
@@ -2104,7 +2104,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
 
         // Get RateControl Results
         eb_get_full_object(
-            context_ptr->rateControlInputFifoPtr,
+            context_ptr->rate_control_input_fifo_ptr,
             &rateControlResultsWrapperPtr);
 
         rateControlResultsPtr = (RateControlResults*)rateControlResultsWrapperPtr->object_ptr;
@@ -2455,7 +2455,7 @@ void* ModeDecisionConfigurationKernel(void *input_ptr)
 
         // Post the results to the MD processes
         eb_get_empty_object(
-            context_ptr->modeDecisionConfigurationOutputFifoPtr,
+            context_ptr->mode_decision_configuration_output_fifo_ptr,
             &encDecTasksWrapperPtr);
 
         encDecTasksPtr = (EncDecTasks_t*)encDecTasksWrapperPtr->object_ptr;

@@ -1657,8 +1657,8 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
         EB_MALLOC(EbPtr*, encHandlePtr->modeDecisionConfigurationContextPtrArray, sizeof(EbPtr) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->mode_decision_configuration_process_init_count, EB_N_PTR);
 
         for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->mode_decision_configuration_process_init_count; ++processIndex) {
-            return_error = ModeDecisionConfigurationContextCtor(
-                (ModeDecisionConfigurationContext_t**)&encHandlePtr->modeDecisionConfigurationContextPtrArray[processIndex],
+            return_error = mode_decision_configuration_context_ctor(
+                (ModeDecisionConfigurationContext**)&encHandlePtr->modeDecisionConfigurationContextPtrArray[processIndex],
                 encHandlePtr->rateControlResultsConsumerFifoPtrArray[processIndex],
 
                 encHandlePtr->encDecTasksProducerFifoPtrArray[EncDecPortLookup(ENCDEC_INPUT_PORT_MDC, processIndex)],
@@ -1829,7 +1829,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     EB_MALLOC(EbHandle*, encHandlePtr->modeDecisionConfigurationThreadHandleArray, sizeof(EbHandle) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->mode_decision_configuration_process_init_count, EB_N_PTR);
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->mode_decision_configuration_process_init_count; ++processIndex) {
-        EB_CREATETHREAD(EbHandle, encHandlePtr->modeDecisionConfigurationThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, ModeDecisionConfigurationKernel, encHandlePtr->modeDecisionConfigurationContextPtrArray[processIndex]);
+        EB_CREATETHREAD(EbHandle, encHandlePtr->modeDecisionConfigurationThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, mode_decision_configuration_kernel, encHandlePtr->modeDecisionConfigurationContextPtrArray[processIndex]);
     }
 
     // EncDec Process

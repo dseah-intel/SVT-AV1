@@ -74,7 +74,7 @@ extern "C" {
 
     extern EbErrorType Av1TuEstimateCoeffBits(
         PictureControlSet                    *picture_control_set_ptr,
-        struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+        struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint32_t                                  tuOriginIndex,
         uint32_t                                  tuChromaOriginIndex,

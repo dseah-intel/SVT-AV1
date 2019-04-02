@@ -600,7 +600,7 @@ static void Av1EncodeLoop(
 
 
     //uint8_t enable_contouring_qc_update_flag;
-    //enable_contouring_qc_update_flag = DeriveContouringClass(
+    //enable_contouring_qc_update_flag = derive_contouring_class(
     //    sb_ptr->picture_control_set_ptr->parent_pcs_ptr,
     //    sb_ptr->index,
     //    cu_ptr->leaf_index) && (cu_ptr->qp < sb_ptr->picture_control_set_ptr->picture_qp);
@@ -757,7 +757,7 @@ static void Av1EncodeLoop(
             {
                 // 3: Loop over alphas and find the best or choose DC
                 // Use the 1st spot of the candidate buffer to hold cfl settings: (1) to use same kernel as MD for CFL evaluation: cfl_rd_pick_alpha() (toward unification), (2) to avoid dedicated buffers for CFL evaluation @ EP (toward less memory)
-                ModeDecisionCandidateBuffer_t  *candidateBuffer = &(context_ptr->md_context->candidate_buffer_ptr_array[0][0]);
+                ModeDecisionCandidateBuffer  *candidateBuffer = &(context_ptr->md_context->candidate_buffer_ptr_array[0][0]);
 
                 // Input(s)
                 candidateBuffer->candidate_ptr->type = INTRA_MODE;
@@ -1918,7 +1918,7 @@ EbErrorType Av1QpModulationLcu(
 
         if (acEnergyBasedAntiContouring) {
 
-            lowerQPClass = DeriveContouringClass(
+            lowerQPClass = derive_contouring_class(
                 sb_ptr->picture_control_set_ptr->parent_pcs_ptr,
                 sb_ptr->index,
                 (uint8_t)1/*cu_index*/);
@@ -2113,7 +2113,7 @@ EbErrorType EncQpmDeriveDeltaQPForEachLeafLcu(
 
         if (acEnergyBasedAntiContouring) {
 
-            lowerQPClass = DeriveContouringClass(
+            lowerQPClass = derive_contouring_class(
                 sb_ptr->picture_control_set_ptr->parent_pcs_ptr,
                 sb_ptr->index,
                 (uint8_t)cu_index);
@@ -3299,9 +3299,9 @@ EB_EXTERN void AV1EncodePass(
 
                                 if (!zeroLumaCbfMD) {
 
-                                    ModeDecisionCandidateBuffer_t         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
-                                    ModeDecisionCandidateBuffer_t         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
-                                    ModeDecisionCandidateBuffer_t          *candidateBuffer;
+                                    ModeDecisionCandidateBuffer         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
+                                    ModeDecisionCandidateBuffer         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
+                                    ModeDecisionCandidateBuffer          *candidateBuffer;
 
                                     // Set the Candidate Buffer
                                     candidateBuffer = candidate_buffer_ptr_array[0];

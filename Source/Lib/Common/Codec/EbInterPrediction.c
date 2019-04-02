@@ -3182,7 +3182,7 @@ extern int32_t av1_get_pred_context_switchable_interp(
 
 
 int32_t av1_get_switchable_rate(
-    ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer *candidate_buffer_ptr,
     const Av1Common *const cm,
     ModeDecisionContext *md_context_ptr//,
     // Macroblock *x,
@@ -3530,7 +3530,7 @@ extern /*static*/ void model_rd_for_sb(
 
 /*static*/ /*INLINE*/ int32_t is_nontrans_global_motion(
     block_size sb_type,
-    ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer *candidate_buffer_ptr,
     PictureControlSet *picture_control_set_ptr
 ) {
     int32_t ref;
@@ -3552,7 +3552,7 @@ extern /*static*/ void model_rd_for_sb(
     return 1;
 }
 static INLINE int32_t av1_is_interp_needed(
-    ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer *candidate_buffer_ptr,
     PictureControlSet *picture_control_set_ptr,
     block_size bsize)
 {
@@ -3579,7 +3579,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
     PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc *prediction_ptr,
     ModeDecisionContext *md_context_ptr,
-    ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer *candidate_buffer_ptr,
     MvUnit mv_unit,
     EbPictureBufferDesc  *ref_pic_list0,
     EbPictureBufferDesc  *ref_pic_list1,
@@ -3921,7 +3921,7 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
     PictureControlSet *picture_control_set_ptr,
     EbPictureBufferDesc *prediction_ptr,
     ModeDecisionContext *md_context_ptr,
-    ModeDecisionCandidateBuffer_t *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer *candidate_buffer_ptr,
     MvUnit mv_unit,
     EbPictureBufferDesc  *ref_pic_list0,
     EbPictureBufferDesc  *ref_pic_list1,
@@ -4266,20 +4266,20 @@ static const int32_t filter_sets[DUAL_FILTER_SET_SIZE][2] = {
 EbErrorType inter_pu_prediction_av1(
     ModeDecisionContext                  *md_context_ptr,
     PictureControlSet                    *picture_control_set_ptr,
-    ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
+    ModeDecisionCandidateBuffer          *candidate_buffer_ptr,
     EbAsm                                   asm_type)
 {
     EbErrorType            return_error = EB_ErrorNone;
     EbPictureBufferDesc  *ref_pic_list0;
     EbPictureBufferDesc  *ref_pic_list1 = NULL;
-    ModeDecisionCandidate_t *const candidate_ptr = candidate_buffer_ptr->candidate_ptr;
+    ModeDecisionCandidate *const candidate_ptr = candidate_buffer_ptr->candidate_ptr;
 
     MvUnit mv_unit;
     mv_unit.pred_direction = candidate_buffer_ptr->candidate_ptr->prediction_direction[md_context_ptr->pu_itr];
-    mv_unit.mv[0].x = candidate_buffer_ptr->candidate_ptr->motionVector_x_L0;
-    mv_unit.mv[0].y = candidate_buffer_ptr->candidate_ptr->motionVector_y_L0;
-    mv_unit.mv[1].x = candidate_buffer_ptr->candidate_ptr->motionVector_x_L1;
-    mv_unit.mv[1].y = candidate_buffer_ptr->candidate_ptr->motionVector_y_L1;
+    mv_unit.mv[0].x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl0;
+    mv_unit.mv[0].y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl0;
+    mv_unit.mv[1].x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl1;
+    mv_unit.mv[1].y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl1;
 
     SequenceControlSet* sequence_control_set_ptr = ((SequenceControlSet*)(picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr));
     EbBool  is16bit = (EbBool)(sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
@@ -4410,7 +4410,7 @@ EbErrorType inter_pu_prediction_av1(
             if (md_context_ptr->blk_geom->bwidth > capped_size && md_context_ptr->blk_geom->bheight > capped_size)
                 interpolation_filter_search_HBD(
                     picture_control_set_ptr,
-                    candidate_buffer_ptr->predictionPtrTemp,
+                    candidate_buffer_ptr->prediction_ptr_temp,
                     md_context_ptr,
                     candidate_buffer_ptr,
                     mv_unit,
@@ -4454,7 +4454,7 @@ EbErrorType inter_pu_prediction_av1(
             if (md_context_ptr->blk_geom->bwidth > capped_size && md_context_ptr->blk_geom->bheight > capped_size)
                 interpolation_filter_search(
                     picture_control_set_ptr,
-                    candidate_buffer_ptr->predictionPtrTemp,
+                    candidate_buffer_ptr->prediction_ptr_temp,
                     md_context_ptr,
                     candidate_buffer_ptr,
                     mv_unit,
@@ -4573,7 +4573,7 @@ void UnPackReferenceLumaBlock(
     @param ref1NumAvailableAMVPCand(input)
  */
 EbErrorType choose_mvp_idx_v2(
-    ModeDecisionCandidate_t  *candidate_ptr,
+    ModeDecisionCandidate  *candidate_ptr,
     uint32_t                    cu_origin_x,
     uint32_t                    cu_origin_y,
     uint32_t                    pu_index,
@@ -4602,8 +4602,8 @@ EbErrorType choose_mvp_idx_v2(
         clip_mv(
             cu_origin_x,
             cu_origin_y,
-            &candidate_ptr->motionVector_x_L0,
-            &candidate_ptr->motionVector_y_L0,
+            &candidate_ptr->motion_vector_xl0,
+            &candidate_ptr->motion_vector_yl0,
             picture_width,
             picture_height,
             tbSize);
@@ -4619,11 +4619,11 @@ EbErrorType choose_mvp_idx_v2(
             break;
         case 2:
 
-            mvd0 = EB_ABS_DIFF(ref0_amvp_cand_array_x[0], candidate_ptr->motionVector_x_L0) +
-                EB_ABS_DIFF(ref0_amvp_cand_array_y[0], candidate_ptr->motionVector_y_L0);
+            mvd0 = EB_ABS_DIFF(ref0_amvp_cand_array_x[0], candidate_ptr->motion_vector_xl0) +
+                EB_ABS_DIFF(ref0_amvp_cand_array_y[0], candidate_ptr->motion_vector_yl0);
 
-            mvd1 = EB_ABS_DIFF(ref0_amvp_cand_array_x[1], candidate_ptr->motionVector_x_L0) +
-                EB_ABS_DIFF(ref0_amvp_cand_array_y[1], candidate_ptr->motionVector_y_L0);
+            mvd1 = EB_ABS_DIFF(ref0_amvp_cand_array_x[1], candidate_ptr->motion_vector_xl0) +
+                EB_ABS_DIFF(ref0_amvp_cand_array_y[1], candidate_ptr->motion_vector_yl0);
 
             mvpRef0Idx = ((mvd0) <= (mvd1)) ? 0 : 1;
 
@@ -4643,8 +4643,8 @@ EbErrorType choose_mvp_idx_v2(
         clip_mv(
             cu_origin_x,
             cu_origin_y,
-            &candidate_ptr->motionVector_x_L1,
-            &candidate_ptr->motionVector_y_L1,
+            &candidate_ptr->motion_vector_xl1,
+            &candidate_ptr->motion_vector_yl1,
             picture_width,
             picture_height,
             tbSize);
@@ -4660,11 +4660,11 @@ EbErrorType choose_mvp_idx_v2(
             break;
         case 2:
 
-            mvd0 = EB_ABS_DIFF(ref1_amvp_cand_array_x[0], candidate_ptr->motionVector_x_L1) +
-                EB_ABS_DIFF(ref1_amvp_cand_array_y[0], candidate_ptr->motionVector_y_L1);
+            mvd0 = EB_ABS_DIFF(ref1_amvp_cand_array_x[0], candidate_ptr->motion_vector_xl1) +
+                EB_ABS_DIFF(ref1_amvp_cand_array_y[0], candidate_ptr->motion_vector_yl1);
 
-            mvd1 = EB_ABS_DIFF(ref1_amvp_cand_array_x[1], candidate_ptr->motionVector_x_L1) +
-                EB_ABS_DIFF(ref1_amvp_cand_array_y[1], candidate_ptr->motionVector_y_L1);
+            mvd1 = EB_ABS_DIFF(ref1_amvp_cand_array_x[1], candidate_ptr->motion_vector_xl1) +
+                EB_ABS_DIFF(ref1_amvp_cand_array_y[1], candidate_ptr->motion_vector_yl1);
 
             mvpRef1Idx = ((mvd0) <= (mvd1)) ? 0 : 1;
 
@@ -4693,8 +4693,8 @@ EbErrorType choose_mvp_idx_v2(
         clip_mv(
             cu_origin_x,
             cu_origin_y,
-            &candidate_ptr->motionVector_x_L0,
-            &candidate_ptr->motionVector_y_L0,
+            &candidate_ptr->motion_vector_xl0,
+            &candidate_ptr->motion_vector_yl0,
             picture_width,
             picture_height,
             tbSize);
@@ -4710,11 +4710,11 @@ EbErrorType choose_mvp_idx_v2(
             break;
         case 2:
 
-            mvd0 = EB_ABS_DIFF(ref0_amvp_cand_array_x[0], candidate_ptr->motionVector_x_L0) +
-                EB_ABS_DIFF(ref0_amvp_cand_array_y[0], candidate_ptr->motionVector_y_L0);
+            mvd0 = EB_ABS_DIFF(ref0_amvp_cand_array_x[0], candidate_ptr->motion_vector_xl0) +
+                EB_ABS_DIFF(ref0_amvp_cand_array_y[0], candidate_ptr->motion_vector_yl0);
 
-            mvd1 = EB_ABS_DIFF(ref0_amvp_cand_array_x[1], candidate_ptr->motionVector_x_L0) +
-                EB_ABS_DIFF(ref0_amvp_cand_array_y[1], candidate_ptr->motionVector_y_L0);
+            mvd1 = EB_ABS_DIFF(ref0_amvp_cand_array_x[1], candidate_ptr->motion_vector_xl0) +
+                EB_ABS_DIFF(ref0_amvp_cand_array_y[1], candidate_ptr->motion_vector_yl0);
 
             mvpRef0Idx = ((mvd0) <= (mvd1)) ? 0 : 1;
 
@@ -4733,8 +4733,8 @@ EbErrorType choose_mvp_idx_v2(
         clip_mv(
             cu_origin_x,
             cu_origin_y,
-            &candidate_ptr->motionVector_x_L1,
-            &candidate_ptr->motionVector_y_L1,
+            &candidate_ptr->motion_vector_xl1,
+            &candidate_ptr->motion_vector_yl1,
             picture_width,
             picture_height,
             tbSize);
@@ -4750,11 +4750,11 @@ EbErrorType choose_mvp_idx_v2(
             break;
         case 2:
 
-            mvd0 = EB_ABS_DIFF(ref1_amvp_cand_array_x[0], candidate_ptr->motionVector_x_L1) +
-                EB_ABS_DIFF(ref1_amvp_cand_array_y[0], candidate_ptr->motionVector_y_L1);
+            mvd0 = EB_ABS_DIFF(ref1_amvp_cand_array_x[0], candidate_ptr->motion_vector_xl1) +
+                EB_ABS_DIFF(ref1_amvp_cand_array_y[0], candidate_ptr->motion_vector_yl1);
 
-            mvd1 = EB_ABS_DIFF(ref1_amvp_cand_array_x[1], candidate_ptr->motionVector_x_L1) +
-                EB_ABS_DIFF(ref1_amvp_cand_array_y[1], candidate_ptr->motionVector_y_L1);
+            mvd1 = EB_ABS_DIFF(ref1_amvp_cand_array_x[1], candidate_ptr->motion_vector_xl1) +
+                EB_ABS_DIFF(ref1_amvp_cand_array_y[1], candidate_ptr->motion_vector_yl1);
 
             mvpRef1Idx = ((mvd0) <= (mvd1)) ? 0 : 1;
 

@@ -87,9 +87,9 @@ extern "C" {
         EbFifo                       *mode_decision_output_fifo_ptr;
         int16_t                        *transform_inner_array_ptr;
 
-        ModeDecisionCandidate_t       **fast_candidate_ptr_array;
-        ModeDecisionCandidate_t        *fast_candidate_array;
-        ModeDecisionCandidateBuffer_t **candidate_buffer_ptr_array;
+        ModeDecisionCandidate       **fast_candidate_ptr_array;
+        ModeDecisionCandidate        *fast_candidate_array;
+        ModeDecisionCandidateBuffer **candidate_buffer_ptr_array;
         MdRateEstimationContext_t      *md_rate_estimation_ptr;
         InterPredictionContext_t       *inter_prediction_context;
         MdCodingUnit                  md_local_cu_unit[BLOCK_MAX_COUNT_SB_128];
@@ -301,7 +301,7 @@ extern "C" {
 
     extern void cfl_rd_pick_alpha(
         PictureControlSet             *picture_control_set_ptr,
-        ModeDecisionCandidateBuffer_t   *candidateBuffer,
+        ModeDecisionCandidateBuffer   *candidateBuffer,
         LargestCodingUnit_t             *sb_ptr,
         ModeDecisionContext           *context_ptr,
         EbPictureBufferDesc           *input_picture_ptr,

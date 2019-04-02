@@ -40,7 +40,7 @@ extern "C" {
         NeighborArrayUnit     *leaf_partition_neighbor_array);
 
     extern EbErrorType av1_tu_calc_cost(
-        ModeDecisionCandidate_t *candidate_ptr,                         // input parameter, prediction result Ptr
+        ModeDecisionCandidate *candidate_ptr,                         // input parameter, prediction result Ptr
         int16_t                  txb_skip_ctx,
         uint32_t                 tu_index,                              // input parameter, TU index inside the CU
         uint32_t                 y_count_non_zero_coeffs,               // input parameter, number of non zero Y quantized coefficients
@@ -58,7 +58,7 @@ extern "C" {
 
     extern EbErrorType av1_tu_calc_cost_luma(
         int16_t                  txb_skip_ctx,
-        ModeDecisionCandidate_t *candidate_ptr,                        // input parameter, prediction result Ptr
+        ModeDecisionCandidate *candidate_ptr,                        // input parameter, prediction result Ptr
         uint32_t                 tu_index,                             // input parameter, TU index inside the CU
         TxSize                   txSize,
         uint32_t                 y_count_non_zero_coeffs,                 // input parameter, number of non zero Y quantized coefficients
@@ -94,7 +94,7 @@ extern "C" {
 
     extern uint64_t av1_intra_fast_cost(
         CodingUnit_t            *cu_ptr,
-        ModeDecisionCandidate_t *candidate_ptr,
+        ModeDecisionCandidate *candidate_ptr,
         uint32_t                 qp,
         uint64_t                 luma_distortion,
         uint64_t                 chroma_distortion,
@@ -111,7 +111,7 @@ extern "C" {
 
     extern uint64_t av1_inter_fast_cost(
         CodingUnit_t            *cu_ptr,
-        ModeDecisionCandidate_t *candidate_ptr,
+        ModeDecisionCandidate *candidate_ptr,
         uint32_t                 qp,
         uint64_t                 luma_distortion,
         uint64_t                 chroma_distortion,
@@ -130,7 +130,7 @@ extern "C" {
     extern EbErrorType av1_intra_full_cost(
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext                  *context_ptr,
-        struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+        struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint64_t                                 *y_distortion,
         uint64_t                                 *cb_distortion,
@@ -144,7 +144,7 @@ extern "C" {
     extern EbErrorType av1_inter_full_cost(
         PictureControlSet                    *picture_control_set_ptr,
         ModeDecisionContext                  *context_ptr,
-        struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+        struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
         CodingUnit_t                           *cu_ptr,
         uint64_t                                 *y_distortion,
         uint64_t                                 *cb_distortion,

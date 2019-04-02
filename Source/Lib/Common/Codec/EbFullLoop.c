@@ -722,7 +722,7 @@ void av1_quantize_inv_quantize(
  ************  Full loop ****************
 ****************************************/
 void ProductFullLoop(
-    ModeDecisionCandidateBuffer_t  *candidateBuffer,
+    ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint32_t                          qp,
@@ -781,8 +781,8 @@ void ProductFullLoop(
             picture_control_set_ptr,
             &(((int32_t*)context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr->buffer_y)[txb_1d_offset]),
             NOT_USED_VALUE,
-            &(((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_y)[txb_1d_offset]),
-            &(((int32_t*)candidateBuffer->reconCoeffPtr->buffer_y)[txb_1d_offset]),
+            &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_y)[txb_1d_offset]),
+            &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_y)[txb_1d_offset]),
             qp,
             context_ptr->blk_geom->tx_width[txb_itr],
             context_ptr->blk_geom->tx_height[txb_itr],
@@ -800,7 +800,7 @@ void ProductFullLoop(
             candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_Y],
             clean_sparse_coeff_flag);
 
-        candidateBuffer->candidate_ptr->quantized_dc[0] = (((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_y)[txb_1d_offset]);
+        candidateBuffer->candidate_ptr->quantized_dc[0] = (((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_y)[txb_1d_offset]);
 
 
 
@@ -809,7 +809,7 @@ void ProductFullLoop(
             context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr,
             txb_1d_offset,
             0,
-            candidateBuffer->reconCoeffPtr,
+            candidateBuffer->recon_coeff_ptr,
             txb_1d_offset,
             0,
             context_ptr->blk_geom->tx_width[txb_itr],
@@ -843,7 +843,7 @@ void ProductFullLoop(
             txb_1d_offset,
             0,
             context_ptr->coeff_est_entropy_coder_ptr,
-            candidateBuffer->residualQuantCoeffPtr,
+            candidateBuffer->residual_quant_coeff_ptr,
             y_count_non_zero_coeffs[txb_itr],
             0,
             0,
@@ -925,7 +925,7 @@ uint8_t allowed_tx_set_b[TX_SIZES_ALL][TX_TYPES] = {
 };
 
 void ProductFullLoopTxSearch(
-    ModeDecisionCandidateBuffer_t  *candidateBuffer,
+    ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr)
 {
@@ -1008,8 +1008,8 @@ void ProductFullLoopTxSearch(
                 picture_control_set_ptr,
                 &(((int32_t*)context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr->buffer_y)[tuOriginIndex]),
                 NOT_USED_VALUE,
-                &(((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_y)[tuOriginIndex]),
-                &(((int32_t*)candidateBuffer->reconCoeffPtr->buffer_y)[tuOriginIndex]),
+                &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_y)[tuOriginIndex]),
+                &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_y)[tuOriginIndex]),
                 context_ptr->cu_ptr->qp,
                 context_ptr->blk_geom->bwidth,
                 context_ptr->blk_geom->bheight,
@@ -1027,7 +1027,7 @@ void ProductFullLoopTxSearch(
                 tx_type,
                 clean_sparse_coeff_flag);
 
-            candidateBuffer->candidate_ptr->quantized_dc[0] = (((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_y)[tuOriginIndex]);
+            candidateBuffer->candidate_ptr->quantized_dc[0] = (((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_y)[tuOriginIndex]);
 
 
             //tx_type not equal to DCT_DCT and no coeff is not an acceptable option in AV1.
@@ -1043,7 +1043,7 @@ void ProductFullLoopTxSearch(
                 context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr,
                 tuOriginIndex,
                 0,
-                candidateBuffer->reconCoeffPtr,
+                candidateBuffer->recon_coeff_ptr,
                 tuOriginIndex,
                 0,
                 context_ptr->blk_geom->bwidth,
@@ -1074,7 +1074,7 @@ void ProductFullLoopTxSearch(
                 tuOriginIndex,
                 0,
                 context_ptr->coeff_est_entropy_coder_ptr,
-                candidateBuffer->residualQuantCoeffPtr,
+                candidateBuffer->residual_quant_coeff_ptr,
                 yCountNonZeroCoeffsTemp,
                 0,
                 0,
@@ -1261,9 +1261,9 @@ void encode_pass_tx_search(
 
         //LUMA-ONLY
 
-        ModeDecisionCandidateBuffer_t         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
-        ModeDecisionCandidateBuffer_t         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
-        ModeDecisionCandidateBuffer_t          *candidateBuffer;
+        ModeDecisionCandidateBuffer         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
+        ModeDecisionCandidateBuffer         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
+        ModeDecisionCandidateBuffer          *candidateBuffer;
 
         // Set the Candidate Buffer
         candidateBuffer = candidate_buffer_ptr_array[0];
@@ -1461,9 +1461,9 @@ void encode_pass_tx_search_hbd(
 
         //LUMA-ONLY
 
-        ModeDecisionCandidateBuffer_t         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
-        ModeDecisionCandidateBuffer_t         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
-        ModeDecisionCandidateBuffer_t          *candidateBuffer;
+        ModeDecisionCandidateBuffer         **candidateBufferPtrArrayBase = context_ptr->md_context->candidate_buffer_ptr_array;
+        ModeDecisionCandidateBuffer         **candidate_buffer_ptr_array = &(candidateBufferPtrArrayBase[0]);
+        ModeDecisionCandidateBuffer          *candidateBuffer;
 
         // Set the Candidate Buffer
         candidateBuffer = candidate_buffer_ptr_array[0];
@@ -1528,7 +1528,7 @@ void encode_pass_tx_search_hbd(
 ****************************************/
 void FullLoop_R(
     LargestCodingUnit_t            *sb_ptr,
-    ModeDecisionCandidateBuffer_t  *candidateBuffer,
+    ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     EbPictureBufferDesc          *input_picture_ptr,
     PictureControlSet            *picture_control_set_ptr,
@@ -1571,9 +1571,9 @@ void FullLoop_R(
 
 
         // NADER - TU
-        tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->residualQuantCoeffPtr->stride_y;
-        tuCbOriginIndex = (((txb_origin_x >> 3) << 3) + (((txb_origin_y >> 3) << 3) * candidateBuffer->residualQuantCoeffPtr->stride_cb)) >> 1;
-        tuCrOriginIndex = (((txb_origin_x >> 3) << 3) + (((txb_origin_y >> 3) << 3) * candidateBuffer->residualQuantCoeffPtr->stride_cr)) >> 1;
+        tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->residual_quant_coeff_ptr->stride_y;
+        tuCbOriginIndex = (((txb_origin_x >> 3) << 3) + (((txb_origin_y >> 3) << 3) * candidateBuffer->residual_quant_coeff_ptr->stride_cb)) >> 1;
+        tuCrOriginIndex = (((txb_origin_x >> 3) << 3) + (((txb_origin_y >> 3) << 3) * candidateBuffer->residual_quant_coeff_ptr->stride_cr)) >> 1;
 
         //    This function replaces the previous Intra Chroma mode if the LM fast
             //    cost is better.
@@ -1620,8 +1620,8 @@ void FullLoop_R(
                 picture_control_set_ptr,
                 &(((int32_t*)context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr->buffer_cb)[txb_1d_offset]),
                 NOT_USED_VALUE,
-                &(((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_cb)[txb_1d_offset]),
-                &(((int32_t*)candidateBuffer->reconCoeffPtr->buffer_cb)[txb_1d_offset]),
+                &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cb)[txb_1d_offset]),
+                &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_cb)[txb_1d_offset]),
                 cbQp,
                 context_ptr->blk_geom->tx_width_uv[txb_itr],
                 context_ptr->blk_geom->tx_height_uv[txb_itr],
@@ -1638,7 +1638,7 @@ void FullLoop_R(
                 BIT_INCREMENT_8BIT,
                 candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_UV],
                 clean_sparse_coeff_flag);
-            candidateBuffer->candidate_ptr->quantized_dc[1] = (((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_cb)[txb_1d_offset]);
+            candidateBuffer->candidate_ptr->quantized_dc[1] = (((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cb)[txb_1d_offset]);
         }
 
 
@@ -1681,8 +1681,8 @@ void FullLoop_R(
                 picture_control_set_ptr,
                 &(((int32_t*)context_ptr->trans_quant_buffers_ptr->tu_trans_coeff2_nx2_n_ptr->buffer_cr)[txb_1d_offset]),
                 NOT_USED_VALUE,
-                &(((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_cr)[txb_1d_offset]),
-                &(((int32_t*)candidateBuffer->reconCoeffPtr->buffer_cr)[txb_1d_offset]),
+                &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cr)[txb_1d_offset]),
+                &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_cr)[txb_1d_offset]),
                 cbQp,
                 context_ptr->blk_geom->tx_width_uv[txb_itr],
                 context_ptr->blk_geom->tx_height_uv[txb_itr],
@@ -1697,7 +1697,7 @@ void FullLoop_R(
                 BIT_INCREMENT_8BIT,
                 candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_UV],
                 clean_sparse_coeff_flag);
-            candidateBuffer->candidate_ptr->quantized_dc[2] = (((int32_t*)candidateBuffer->residualQuantCoeffPtr->buffer_cr)[txb_1d_offset]);
+            candidateBuffer->candidate_ptr->quantized_dc[2] = (((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cr)[txb_1d_offset]);
         }
 
         txb_1d_offset += context_ptr->blk_geom->tx_width_uv[txb_itr] * context_ptr->blk_geom->tx_height_uv[txb_itr];
@@ -1714,9 +1714,9 @@ void FullLoop_R(
 //****************************************/
 void CuFullDistortionFastTuMode_R(
     LargestCodingUnit_t            *sb_ptr,
-    ModeDecisionCandidateBuffer_t  *candidateBuffer,
+    ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext            *context_ptr,
-    ModeDecisionCandidate_t           *candidate_ptr,
+    ModeDecisionCandidate           *candidate_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint64_t                          cbFullDistortion[DIST_CALC_TOTAL],
     uint64_t                          crFullDistortion[DIST_CALC_TOTAL],
@@ -1759,7 +1759,7 @@ void CuFullDistortionFastTuMode_R(
 
 
 
-        tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->residualQuantCoeffPtr->stride_y;
+        tuOriginIndex = txb_origin_x + txb_origin_y * candidateBuffer->residual_quant_coeff_ptr->stride_y;
         tuChromaOriginIndex = txb_1d_offset;
         // Reset the Bit Costs
         y_tu_coeff_bits = 0;
@@ -1783,7 +1783,7 @@ void CuFullDistortionFastTuMode_R(
                 transform_buffer,
                 NOT_USED_VALUE,
                 tuChromaOriginIndex,
-                candidateBuffer->reconCoeffPtr,
+                candidateBuffer->recon_coeff_ptr,
                 NOT_USED_VALUE,
                 tuChromaOriginIndex,
                 NOT_USED_VALUE,
@@ -1818,7 +1818,7 @@ void CuFullDistortionFastTuMode_R(
                 tuOriginIndex,
                 tuChromaOriginIndex,
                 context_ptr->coeff_est_entropy_coder_ptr,
-                candidateBuffer->residualQuantCoeffPtr,
+                candidateBuffer->residual_quant_coeff_ptr,
                 count_non_zero_coeffs[0][currentTuIndex],
                 count_non_zero_coeffs[1][currentTuIndex],
                 count_non_zero_coeffs[2][currentTuIndex],

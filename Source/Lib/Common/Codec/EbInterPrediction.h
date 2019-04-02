@@ -50,7 +50,7 @@ extern "C" {
     EbErrorType inter_pu_prediction_av1(
         struct ModeDecisionContext           *md_context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
-        ModeDecisionCandidateBuffer_t          *candidate_buffer_ptr,
+        ModeDecisionCandidateBuffer          *candidate_buffer_ptr,
         EbAsm                                   asm_type);
 
     EbErrorType av1_inter_prediction_hbd(
@@ -72,7 +72,7 @@ extern "C" {
         EbAsm                                   asm_type);
 
     EbErrorType choose_mvp_idx_v2(
-        ModeDecisionCandidate_t               *candidate_ptr,
+        ModeDecisionCandidate               *candidate_ptr,
         uint32_t                               cu_origin_x,
         uint32_t                               cu_origin_y,
         uint32_t                               pu_index,

@@ -1165,7 +1165,7 @@ EbErrorType QpmDeriveWeightsMinAndMax(
     uint32_t cu_depth;
     context_ptr->min_delta_qp_weight = encMinDeltaQpWeightTab[picture_control_set_ptr->temporal_layer_index];
     context_ptr->max_delta_qp_weight = encMaxDeltaQpWeightTab[picture_control_set_ptr->temporal_layer_index];
-    //QpmDeriveDeltaQpMapWeights
+    //qpm_derive_delta_qp_map_weights
 
 
     EbBool adjust_min_qp_flag = EB_FALSE;

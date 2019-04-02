@@ -37,9 +37,9 @@ EbErrorType mode_decision_context_ctor(
     EB_MALLOC(MdRateEstimationContext_t*, context_ptr->md_rate_estimation_ptr, sizeof(MdRateEstimationContext_t), EB_N_PTR);
 
     // Fast Candidate Array
-    EB_MALLOC(ModeDecisionCandidate_t*, context_ptr->fast_candidate_array, sizeof(ModeDecisionCandidate_t) * MODE_DECISION_CANDIDATE_MAX_COUNT, EB_N_PTR);
+    EB_MALLOC(ModeDecisionCandidate*, context_ptr->fast_candidate_array, sizeof(ModeDecisionCandidate) * MODE_DECISION_CANDIDATE_MAX_COUNT, EB_N_PTR);
 
-    EB_MALLOC(ModeDecisionCandidate_t**, context_ptr->fast_candidate_ptr_array, sizeof(ModeDecisionCandidate_t*) * MODE_DECISION_CANDIDATE_MAX_COUNT, EB_N_PTR);
+    EB_MALLOC(ModeDecisionCandidate**, context_ptr->fast_candidate_ptr_array, sizeof(ModeDecisionCandidate*) * MODE_DECISION_CANDIDATE_MAX_COUNT, EB_N_PTR);
 
     for (candidateIndex = 0; candidateIndex < MODE_DECISION_CANDIDATE_MAX_COUNT; ++candidateIndex) {
         context_ptr->fast_candidate_ptr_array[candidateIndex] = &context_ptr->fast_candidate_array[candidateIndex];
@@ -63,7 +63,7 @@ EbErrorType mode_decision_context_ctor(
     EB_MALLOC(uint64_t*, context_ptr->full_cost_skip_ptr, sizeof(uint64_t) * (MAX_NFL + 1 + 1), EB_N_PTR);
     EB_MALLOC(uint64_t*, context_ptr->full_cost_merge_ptr, sizeof(uint64_t) * (MAX_NFL + 1 + 1), EB_N_PTR);
     // Candidate Buffers
-    EB_MALLOC(ModeDecisionCandidateBuffer_t**, context_ptr->candidate_buffer_ptr_array, sizeof(ModeDecisionCandidateBuffer_t*) * (MAX_NFL + 1 + 1), EB_N_PTR);
+    EB_MALLOC(ModeDecisionCandidateBuffer**, context_ptr->candidate_buffer_ptr_array, sizeof(ModeDecisionCandidateBuffer*) * (MAX_NFL + 1 + 1), EB_N_PTR);
 
     for (bufferIndex = 0; bufferIndex < (MAX_NFL + 1 + 1); ++bufferIndex) {
 

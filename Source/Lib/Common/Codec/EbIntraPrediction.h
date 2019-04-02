@@ -125,7 +125,7 @@ extern "C" {
     extern EbErrorType AV1IntraPredictionCL(
         struct ModeDecisionContext           *context_ptr,
         PictureControlSet                    *picture_control_set_ptr,
-        ModeDecisionCandidateBuffer_t           *candidate_buffer_ptr,
+        ModeDecisionCandidateBuffer           *candidate_buffer_ptr,
         EbAsm                                  asm_type);
 
     extern void intra_mode_angular_horizontal_kernel_ssse3_intrin(

@@ -153,7 +153,7 @@ static const PredictionMode fimode_to_intradir[FILTER_INTRA_MODES] = {
 };
 // TODO(angiebird): use this function whenever it's possible
 int32_t Av1TransformTypeRateEstimation(
-    struct ModeDecisionCandidateBuffer_s    *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer    *candidate_buffer_ptr,
     EbBool                                  is_inter,
     EbBool                                  useFilterIntraFlag,
     TxSize                                  transform_size,
@@ -399,7 +399,7 @@ static INLINE int32_t get_br_ctx(const uint8_t *const levels,
 }
 
 static INLINE int32_t av1_cost_skip_txb(
-    struct ModeDecisionCandidateBuffer_s    *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer    *candidate_buffer_ptr,
     TxSize                                  transform_size,
     PLANE_TYPE                               plane_type,
     int16_t                                   txb_skip_ctx)
@@ -410,7 +410,7 @@ static INLINE int32_t av1_cost_skip_txb(
 }
 // Note: don't call this function when eob is 0.
 uint64_t av1_cost_coeffs_txb(
-    struct ModeDecisionCandidateBuffer_s    *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer    *candidate_buffer_ptr,
     const tran_low_t                        *const qcoeff,
     uint16_t                                   eob,
     PLANE_TYPE                               plane_type,
@@ -530,7 +530,7 @@ uint64_t av1_cost_coeffs_txb(
 
 uint64_t av1_intra_fast_cost(
     CodingUnit_t            *cu_ptr,
-    ModeDecisionCandidate_t *candidate_ptr,
+    ModeDecisionCandidate *candidate_ptr,
     uint32_t                 qp,
     uint64_t                 luma_distortion,
     uint64_t                 chroma_distortion,
@@ -564,8 +564,8 @@ uint64_t av1_intra_fast_cost(
         EbReflist refListIdx = 0;
         int16_t predRefX = candidate_ptr->motion_vector_pred_x[refListIdx];
         int16_t predRefY = candidate_ptr->motion_vector_pred_y[refListIdx];
-        int16_t mvRefX = candidate_ptr->motionVector_x_L0;
-        int16_t mvRefY = candidate_ptr->motionVector_y_L0;
+        int16_t mvRefX = candidate_ptr->motion_vector_xl0;
+        int16_t mvRefY = candidate_ptr->motion_vector_yl0;
         MV mv;
         mv.row = mvRefY;
         mv.col = mvRefX;
@@ -740,7 +740,7 @@ extern void av1_set_ref_frame(MvReferenceFrame *rf,
 // This function encodes the reference frame
 uint64_t EstimateRefFramesNumBits(
     PictureControlSet                    *picture_control_set_ptr,
-    ModeDecisionCandidate_t                *candidate_ptr,
+    ModeDecisionCandidate                *candidate_ptr,
     CodingUnit_t                           *cu_ptr,
     uint32_t                                 bwidth,
     uint32_t                                 bheight,
@@ -970,7 +970,7 @@ static INLINE int16_t Av1ModeContextAnalyzer(
 
 uint64_t av1_inter_fast_cost(  
     CodingUnit_t            *cu_ptr,
-    ModeDecisionCandidate_t *candidate_ptr,
+    ModeDecisionCandidate *candidate_ptr,
     uint32_t                 qp,
     uint64_t                 luma_distortion,
     uint64_t                 chroma_distortion,
@@ -1099,8 +1099,8 @@ uint64_t av1_inter_fast_cost(
 
                     predRefX = candidate_ptr->motion_vector_pred_x[refListIdx];
                     predRefY = candidate_ptr->motion_vector_pred_y[refListIdx];
-                    mvRefX = refListIdx == REF_LIST_1 ? candidate_ptr->motionVector_x_L1 : candidate_ptr->motionVector_x_L0;
-                    mvRefY = refListIdx == REF_LIST_1 ? candidate_ptr->motionVector_y_L1 : candidate_ptr->motionVector_y_L0;
+                    mvRefX = refListIdx == REF_LIST_1 ? candidate_ptr->motion_vector_xl1 : candidate_ptr->motion_vector_xl0;
+                    mvRefY = refListIdx == REF_LIST_1 ? candidate_ptr->motion_vector_yl1 : candidate_ptr->motion_vector_yl0;
 
 
                     MV mv;
@@ -1124,8 +1124,8 @@ uint64_t av1_inter_fast_cost(
 
                 predRefX = candidate_ptr->motion_vector_pred_x[REF_LIST_1];
                 predRefY = candidate_ptr->motion_vector_pred_y[REF_LIST_1];
-                mvRefX = candidate_ptr->motionVector_x_L1;
-                mvRefY = candidate_ptr->motionVector_y_L1;
+                mvRefX = candidate_ptr->motion_vector_xl1;
+                mvRefY = candidate_ptr->motion_vector_yl1;
 
 
                 MV mv;
@@ -1149,8 +1149,8 @@ uint64_t av1_inter_fast_cost(
 
                 predRefX = candidate_ptr->motion_vector_pred_x[REF_LIST_0];
                 predRefY = candidate_ptr->motion_vector_pred_y[REF_LIST_0];
-                mvRefX = candidate_ptr->motionVector_x_L0;
-                mvRefY = candidate_ptr->motionVector_y_L0;
+                mvRefX = candidate_ptr->motion_vector_xl0;
+                mvRefY = candidate_ptr->motion_vector_yl0;
 
                 MV mv;
                 mv.row = mvRefY;
@@ -1177,8 +1177,8 @@ uint64_t av1_inter_fast_cost(
             predRefX = candidate_ptr->motion_vector_pred_x[refListIdx];
             predRefY = candidate_ptr->motion_vector_pred_y[refListIdx];
 
-            mvRefX = refListIdx == 0 ? candidate_ptr->motionVector_x_L0 : candidate_ptr->motionVector_x_L1;
-            mvRefY = refListIdx == 0 ? candidate_ptr->motionVector_y_L0 : candidate_ptr->motionVector_y_L1;
+            mvRefX = refListIdx == 0 ? candidate_ptr->motion_vector_xl0 : candidate_ptr->motion_vector_xl1;
+            mvRefY = refListIdx == 0 ? candidate_ptr->motion_vector_yl0 : candidate_ptr->motion_vector_yl1;
 
             MV mv;
             mv.row = mvRefY;
@@ -1320,7 +1320,7 @@ uint64_t av1_inter_fast_cost(
 
 EbErrorType Av1TuEstimateCoeffBits(
     PictureControlSet                    *picture_control_set_ptr,
-    struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
     CodingUnit_t                           *cu_ptr,
     uint32_t                                  tuOriginIndex,
     uint32_t                                  tuChromaOriginIndex,
@@ -1456,7 +1456,7 @@ EbErrorType Av1TuEstimateCoeffBits(
 EbErrorType Av1FullCost(
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionContext                  *context_ptr,
-    struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
     CodingUnit_t                           *cu_ptr,
     uint64_t                               *y_distortion,
     uint64_t                               *cb_distortion,
@@ -1551,7 +1551,7 @@ EbErrorType Av1FullCost(
 EbErrorType  Av1MergeSkipFullCost(
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionContext                  *context_ptr,
-    struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
     CodingUnit_t                           *cu_ptr,
     uint64_t                               *y_distortion,
     uint64_t                               *cb_distortion,
@@ -1708,7 +1708,7 @@ EbErrorType  Av1MergeSkipFullCost(
 EbErrorType av1_intra_full_cost(
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionContext                  *context_ptr,
-    struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
     CodingUnit_t                           *cu_ptr,
     uint64_t                                 *y_distortion,
     uint64_t                                 *cb_distortion,
@@ -1761,7 +1761,7 @@ EbErrorType av1_intra_full_cost(
 EbErrorType av1_inter_full_cost(
     PictureControlSet                    *picture_control_set_ptr,
     ModeDecisionContext                  *context_ptr,
-    struct ModeDecisionCandidateBuffer_s   *candidate_buffer_ptr,
+    struct ModeDecisionCandidateBuffer   *candidate_buffer_ptr,
     CodingUnit_t                           *cu_ptr,
     uint64_t                                 *y_distortion,
     uint64_t                                 *cb_distortion,
@@ -2021,7 +2021,7 @@ void coding_loop_context_generation(
 *   computes TU Cost and generetes TU Cbf
 ********************************************/
 EbErrorType av1_tu_calc_cost(
-    ModeDecisionCandidate_t *candidate_ptr,                        // input parameter, prediction result Ptr
+    ModeDecisionCandidate *candidate_ptr,                        // input parameter, prediction result Ptr
     int16_t                   txb_skip_ctx,
     uint32_t                   tu_index,                             // input parameter, TU index inside the CU
     uint32_t                   y_count_non_zero_coeffs,                 // input parameter, number of non zero Y quantized coefficients
@@ -2120,7 +2120,7 @@ EbErrorType av1_tu_calc_cost(
 EbErrorType av1_tu_calc_cost_luma(
 
     int16_t                   txb_skip_ctx,
-    ModeDecisionCandidate_t *candidate_ptr,                        // input parameter, prediction result Ptr
+    ModeDecisionCandidate *candidate_ptr,                        // input parameter, prediction result Ptr
     uint32_t                   tu_index,                             // input parameter, TU index inside the CU
     TxSize                  tx_size,
     uint32_t                   y_count_non_zero_coeffs,                 // input parameter, number of non zero Y quantized coefficients
