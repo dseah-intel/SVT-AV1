@@ -584,7 +584,7 @@ extern "C" {
         uint8_t                       search_area_width;
         uint8_t                       search_area_height;
                                       
-        block_size                     sb_size;
+        BlockSize                     sb_size;
         uint32_t                      sb_side;
 
     } SsMeContext;

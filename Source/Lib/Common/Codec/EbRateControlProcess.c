@@ -3332,12 +3332,12 @@ static const uint8_t quantizer_to_qindex[] = {
 #define MAX_Q_INDEX 255
 #define MIN_Q_INDEX 0
 
-extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth);
+extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, AomBitDepth bit_depth);
 // These functions use formulaic calculations to make playing with the
 // quantizer tables easier. If necessary they can be replaced by lookup
 // tables if and when things settle down in the experimental bitstream
 
-double av1_convert_qindex_to_q(int32_t qindex, aom_bit_depth_t bit_depth) {
+double av1_convert_qindex_to_q(int32_t qindex, AomBitDepth bit_depth) {
     // Convert the index to a real Q value (scaled down to match old Q values)
     switch (bit_depth) {
     case AOM_BITS_8: return av1_ac_quant_Q3(qindex, 0, bit_depth) / 4.0;
@@ -3349,7 +3349,7 @@ double av1_convert_qindex_to_q(int32_t qindex, aom_bit_depth_t bit_depth) {
     }
 }
 int32_t av1_compute_qdelta(double qstart, double qtarget,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int32_t start_index = MAX_Q_INDEX;
     int32_t target_index = MAX_Q_INDEX;
     int32_t i;
@@ -3386,7 +3386,7 @@ uint32_t qp_scaling_calc(
 
 
     int qindex = quantizer_to_qindex[base_qp];
-    const double q = av1_convert_qindex_to_q(qindex, (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth);
+    const double q = av1_convert_qindex_to_q(qindex, (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth);
     int delta_qindex;
 
     if (slice_type == I_SLICE) {
@@ -3394,7 +3394,7 @@ uint32_t qp_scaling_calc(
         delta_qindex = av1_compute_qdelta(
             q,
             q* 0.25,
-            (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth);
+            (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth);
 
     }
     else {
@@ -3402,7 +3402,7 @@ uint32_t qp_scaling_calc(
         delta_qindex = av1_compute_qdelta(
             q,
             q* delta_rate_new[0][temporal_layer_index], // RC does not support 5L
-            (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth);
+            (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth);
 
     }
 
@@ -3582,7 +3582,7 @@ static int kf_low = 400;
 // The formulae were derived from computing a 3rd order polynomial best
 // fit to the original data (after plotting real maxq vs minq (not q index))
 static int get_minq_index(double maxq, double x3, double x2, double x1,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int i;
     const double minqtarget = AOMMIN(((x3 * maxq + x2) * maxq + x1) * maxq, maxq);
 
@@ -3599,7 +3599,7 @@ static int get_minq_index(double maxq, double x3, double x2, double x1,
 
 static void init_minq_luts(int *kf_low_m, int *kf_high_m, int *arfgf_low,
     int *arfgf_high, int *inter, int *rtc,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int i;
     for (i = 0; i < QINDEX_RANGE; i++) {
         const double maxq = av1_convert_qindex_to_q(i, bit_depth);
@@ -3642,7 +3642,7 @@ static int get_active_quality(int q, int gfu_boost, int low, int high,
 }
 
 static int get_kf_active_quality(const RATE_CONTROL *const rc, int q,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int *kf_low_motion_minq;
     int *kf_high_motion_minq;
     ASSIGN_MINQ_TABLE(bit_depth, kf_low_motion_minq);
@@ -3652,7 +3652,7 @@ static int get_kf_active_quality(const RATE_CONTROL *const rc, int q,
 }
 
 static int get_gf_active_quality(const RATE_CONTROL *const rc, int q,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int *arfgf_low_motion_minq;
     int *arfgf_high_motion_minq;
     ASSIGN_MINQ_TABLE(bit_depth, arfgf_low_motion_minq);
@@ -3661,7 +3661,7 @@ static int get_gf_active_quality(const RATE_CONTROL *const rc, int q,
         arfgf_low_motion_minq, arfgf_high_motion_minq);
 }
 
-static int get_gf_high_motion_quality(int q, aom_bit_depth_t bit_depth) {
+static int get_gf_high_motion_quality(int q, AomBitDepth bit_depth) {
     int *arfgf_high_motion_minq;
     ASSIGN_MINQ_TABLE(bit_depth, arfgf_high_motion_minq);
     return arfgf_high_motion_minq[q];
@@ -3910,7 +3910,7 @@ void* rate_control_kernel(void *input_ptr)
                 picture_control_set_ptr->parent_pcs_ptr->base_qindex = quantizer_to_qindex[picture_control_set_ptr->picture_qp];
                 if (sequence_control_set_ptr->static_config.enable_qp_scaling_flag && picture_control_set_ptr->parent_pcs_ptr->qp_on_the_fly == EB_FALSE) {
                     const int32_t qindex = quantizer_to_qindex[(uint8_t)sequence_control_set_ptr->qp];
-                    const double q_val = av1_convert_qindex_to_q(qindex, (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth);
+                    const double q_val = av1_convert_qindex_to_q(qindex, (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth);
                     if (picture_control_set_ptr->slice_type == I_SLICE) {
                         int32_t new_qindex = adaptive_qindex_calc(
                             picture_control_set_ptr,
@@ -3932,7 +3932,7 @@ void* rate_control_kernel(void *input_ptr)
                             q_val,
                             q_val * delta_rate_new[picture_control_set_ptr->parent_pcs_ptr->hierarchical_levels == 4][picture_control_set_ptr->parent_pcs_ptr->temporal_layer_index],
     
-                            (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth);
+                            (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth);
 
                         picture_control_set_ptr->parent_pcs_ptr->base_qindex =
                             (uint8_t)CLIP3(

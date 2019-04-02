@@ -573,7 +573,7 @@ typedef enum ATTRIBUTE_PACKED {
     BlockSizeS = BLOCK_4X16,
     BLOCK_INVALID = 255,
     BLOCK_LARGEST = (BlockSizeS - 1)
-} block_size;
+} BlockSize;
 
 typedef enum ATTRIBUTE_PACKED {
     PARTITION_NONE,
@@ -616,7 +616,7 @@ static const uint8_t mi_size_high[BlockSizeS_ALL] = {
     1, 2, 1, 2, 4, 2, 4, 8, 4, 8, 16, 8, 16, 32, 16, 32, 4, 1, 8, 2, 16, 4
 };
 
-typedef char PARTITION_CONTEXT;
+typedef char PartitionContextType;
 #define PARTITION_PLOFFSET 4  // number of probability models per block size
 #define PARTITION_BlockSizeS 5
 #define PARTITION_CONTEXTS (PARTITION_BlockSizeS * PARTITION_PLOFFSET)
@@ -666,19 +666,21 @@ static const int32_t tx_size_high[TX_SIZES_ALL] = {
     4, 8, 16, 32, 64, 8, 4, 16, 8, 32, 16, 64, 32, 16, 4, 32, 8, 64, 16,
 };
 
- // tran_low_t  is the datatype used for final transform coefficients.
-typedef int32_t tran_low_t;
-typedef uint8_t qm_val_t;
+ // TranLow  is the datatype used for final transform coefficients.
+typedef int32_t TranLow;
+typedef uint8_t QmVal;
 
-typedef enum TX_CLASS {
+typedef enum TxClass 
+{
     TX_CLASS_2D = 0,
     TX_CLASS_HORIZ = 1,
     TX_CLASS_VERT = 2,
     TX_CLASSES = 3,
-} TX_CLASS;
+} TxClass;
 
 
-static INLINE TxSize av1_get_adjusted_tx_size(TxSize tx_size) {
+static INLINE TxSize av1_get_adjusted_tx_size(TxSize tx_size) 
+{
     switch (tx_size) {
     case TX_64X64:
     case TX_64X32:
@@ -715,15 +717,17 @@ static const int32_t tx_size_high_log2[TX_SIZES_ALL] = {
 
 
 // frame transform mode
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     ONLY_4X4,         // use only 4x4 transform
     TX_MODE_LARGEST,  // transform size is the largest possible for pu size
     TX_MODE_SELECT,   // transform specified for each block
     TX_MODES,
-} TX_MODE;
+} TxMode;
 
 // 1D tx types
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     DCT_1D,
     ADST_1D,
     FLIPADST_1D,
@@ -731,9 +735,10 @@ typedef enum ATTRIBUTE_PACKED {
     // TODO(sarahparker) need to eventually put something here for the
     // mrc experiment to make this work with the ext-tx pruning functions
     TX_TYPES_1D,
-} TX_TYPE_1D;
+} TxType1D;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     DCT_DCT,    // DCT  in both horizontal and vertical
     ADST_DCT,   // ADST in vertical, DCT in horizontal
     DCT_ADST,   // DCT  in vertical, ADST in horizontal
@@ -753,7 +758,8 @@ typedef enum ATTRIBUTE_PACKED {
     TX_TYPES,
 } TxType;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     // DCT only
     EXT_TX_SET_DCTONLY,
     // DCT + Identity only
@@ -769,7 +775,8 @@ typedef enum ATTRIBUTE_PACKED {
     EXT_TX_SET_TYPES
 } TxSetType;
 
-typedef struct txfm_param {
+typedef struct TxfmParam 
+{
     // for both forward and inverse transforms
     TxType tx_type;
     TxSize tx_size;
@@ -782,22 +789,25 @@ typedef struct txfm_param {
     // for inverse transforms only
     int32_t eob;
 } TxfmParam;
+
 #define IS_2D_TRANSFORM(tx_type) (tx_type < IDTX)
 #define EXT_TX_SIZES 4       // number of sizes that use extended transforms
 #define EXT_TX_SETS_INTER 4  // Sets of transform selections for INTER
 #define EXT_TX_SETS_INTRA 3  // Sets of transform selections for INTRA
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     UNIDIR_COMP_REFERENCE,
     BIDIR_COMP_REFERENCE,
     COMP_REFERENCE_TYPES,
-} COMP_REFERENCE_TYPE;
+} CompReferenceType;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     PLANE_TYPE_Y,
     PLANE_TYPE_UV,
     PLANE_TYPES
-} PLANE_TYPE;
+} PlaneType;
 
 #define CFL_ALPHABET_SIZE_LOG2 4
 #define CFL_ALPHABET_SIZE (1 << CFL_ALPHABET_SIZE_LOG2)
@@ -805,24 +815,27 @@ typedef enum ATTRIBUTE_PACKED {
 #define CFL_IDX_U(idx) (idx >> CFL_ALPHABET_SIZE_LOG2)
 #define CFL_IDX_V(idx) (idx & (CFL_ALPHABET_SIZE - 1))
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     CFL_PRED_U,
     CFL_PRED_V,
     CFL_PRED_PLANES
-} CFL_PRED_TYPE;
+} CflPredType;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     CFL_SIGN_ZERO,
     CFL_SIGN_NEG,
     CFL_SIGN_POS,
     CFL_SIGNS
-} CFL_SIGN_TYPE;
+} CflSignType;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     CFL_DISALLOWED,
     CFL_ALLOWED,
     CFL_ALLOWED_TYPES
-} CFL_ALLOWED_TYPE;
+} CflAllowedType;
 
 // CFL_SIGN_ZERO,CFL_SIGN_ZERO is invalid
 #define CFL_JOINT_SIGNS (CFL_SIGNS * CFL_SIGNS - 1)
@@ -839,12 +852,8 @@ typedef enum ATTRIBUTE_PACKED {
 #define CFL_CONTEXT_V(js) \
 (CFL_SIGN_V(js) * CFL_SIGNS + CFL_SIGN_U(js) - CFL_SIGNS)
 
-typedef enum ATTRIBUTE_PACKED {
-    PALETTE_MAP,
-    COLOR_MAP_TYPES,
-} COLOR_MAP_TYPE;
-
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     TWO_COLORS,
     THREE_COLORS,
     FOUR_COLORS,
@@ -853,9 +862,10 @@ typedef enum ATTRIBUTE_PACKED {
     SEVEN_COLORS,
     EIGHT_COLORS,
     PALETTE_SIZES
-} PALETTE_SIZE;
+} PaletteSize;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     PALETTE_COLOR_ONE,
     PALETTE_COLOR_TWO,
     PALETTE_COLOR_THREE,
@@ -865,11 +875,12 @@ typedef enum ATTRIBUTE_PACKED {
     PALETTE_COLOR_SEVEN,
     PALETTE_COLOR_EIGHT,
     PALETTE_COLORS
-} PALETTE_COLOR;
+} PaletteColor;
 
 // Note: All directional predictors must be between V_PRED and D67_PRED (both
 // inclusive).
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     DC_PRED,        // Average of above and left pixels
     V_PRED,         // Vertical
     H_PRED,         // Horizontal
@@ -916,7 +927,8 @@ typedef enum ATTRIBUTE_PACKED {
 
 // TODO(ltrudeau) Do we really want to pack this?
 // TODO(ltrudeau) Do we match with PredictionMode?
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     UV_DC_PRED,        // Average of above and left pixels
     UV_V_PRED,         // Vertical
     UV_H_PRED,         // Horizontal
@@ -933,38 +945,42 @@ typedef enum ATTRIBUTE_PACKED {
     UV_CFL_PRED,       // Chroma-from-Luma
     UV_INTRA_MODES,
     UV_MODE_INVALID,  // For uv_mode in inter blocks
-} UV_PredictionMode;
+} UvPredictionMode;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     SIMPLE_TRANSLATION,
     OBMC_CAUSAL,    // 2-sided OBMC
     WARPED_CAUSAL,  // 2-sided WARPED
     MOTION_MODES
-} MOTION_MODE;
+} MotionMode;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     II_DC_PRED,
     II_V_PRED,
     II_H_PRED,
     II_SMOOTH_PRED,
     INTERINTRA_MODES
-} INTERINTRA_MODE;
+} InterIntraMode;
 
-typedef enum {
+typedef enum 
+{
     COMPOUND_AVERAGE,
     COMPOUND_WEDGE,
     COMPOUND_DIFFWTD,
     COMPOUND_TYPES,
-} COMPOUND_TYPE;
+} CompoundType;
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     FILTER_DC_PRED,
     FILTER_V_PRED,
     FILTER_H_PRED,
     FILTER_D157_PRED,
     FILTER_PAETH_PRED,
     FILTER_INTRA_MODES,
-} FILTER_INTRA_MODE;
+} FilterIntraMode;
 
 #define DIRECTIONAL_MODES 8
 #define MAX_ANGLE_DELTA 3
@@ -1018,7 +1034,6 @@ typedef enum ATTRIBUTE_PACKED {
 #define UNI_COMP_REF_CONTEXTS 3
 
 #define TXFM_PARTITION_CONTEXTS ((TX_SIZES - TX_8X8) * 6 - 3)
-typedef uint8_t TXFM_CONTEXT;
 
 #define NONE_FRAME -1
 #define INTRA_FRAME 0
@@ -1042,7 +1057,8 @@ typedef uint8_t TXFM_CONTEXT;
 
 #define SINGLE_REFS (FWD_REFS + BWD_REFS)
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     LAST_LAST2_FRAMES,      // { LAST_FRAME, LAST2_FRAME }
     LAST_LAST3_FRAMES,      // { LAST_FRAME, LAST3_FRAME }
     LAST_GOLDEN_FRAMES,     // { LAST_FRAME, GOLDEN_FRAME }
@@ -1056,7 +1072,7 @@ typedef enum ATTRIBUTE_PACKED {
     // NOTE: UNIDIR_COMP_REFS is the number of uni-directional reference pairs
     //       that are explicitly signaled.
     UNIDIR_COMP_REFS = BWDREF_ALTREF_FRAMES + 1,
-} UNIDIR_COMP_REF;
+} UniDirCompRef;
 
 #define TOTAL_COMP_REFS (FWD_REFS * BWD_REFS + TOTAL_UNIDIR_COMP_REFS)
 
@@ -1067,7 +1083,8 @@ typedef enum ATTRIBUTE_PACKED {
 //       possible to have a reference pair not listed for explicit signaling.
 #define MODE_CTX_REF_FRAMES (TOTAL_REFS_PER_FRAME + TOTAL_COMP_REFS)
 
-typedef enum ATTRIBUTE_PACKED {
+typedef enum ATTRIBUTE_PACKED 
+{
     RESTORE_NONE,
     RESTORE_WIENER,
     RESTORE_SGRPROJ,
@@ -1129,7 +1146,8 @@ MAX_NUM_TEMPORAL_LAYERS * MAX_NUM_SPATIAL_LAYERS
 static INLINE int32_t is_valid_seq_level_idx(uint8_t seq_level_idx) {
     return seq_level_idx < 24 || seq_level_idx == 31;
 }
-typedef struct BitstreamLevel {
+typedef struct BitstreamLevel 
+{
     uint8_t major;
     uint8_t minor;
 } BitstreamLevel;
@@ -1139,14 +1157,16 @@ typedef struct BitstreamLevel {
 #define TXCOEFF_TIMER 0
 #define TXCOEFF_COST_TIMER 0
 
-typedef enum {
+typedef enum 
+{
     SINGLE_REFERENCE = 0,
     COMPOUND_REFERENCE = 1,
     REFERENCE_MODE_SELECT = 2,
     REFERENCE_MODES = 3,
 } ReferenceMode;
 
-typedef enum {
+typedef enum RefreshFrameContextMode 
+{
     /**
     * Frame context updates are disabled
     */
@@ -1162,7 +1182,8 @@ typedef enum {
 //**********************************************************************************************************************//
 // aom_codec.h
 /*!\brief Algorithm return codes */
-typedef enum {
+typedef enum AomCodecErr 
+{
     /*!\brief Operation completed without error */
     AOM_CODEC_OK,
 
@@ -1214,7 +1235,7 @@ typedef enum {
     */
     AOM_CODEC_LIST_END
 
-} aom_codec_err_t;
+} AomCodecErr;
 
 //**********************************************************************************************************************//
 // Common_data.h
@@ -1266,19 +1287,21 @@ static const TxSize txsize_sqr_up_map[TX_SIZES_ALL] = {
 };
 
 // above and left partition
-typedef struct PartitionContext {
-    PARTITION_CONTEXT above;
-    PARTITION_CONTEXT left;
+typedef struct PartitionContext 
+{
+    PartitionContextType above;
+    PartitionContextType left;
 }PartitionContext;
 // Generates 5 bit field in which each bit set to 1 represents
-// a block_size partition  11111 means we split 128x128, 64x64, 32x32, 16x16
+// a BlockSize partition  11111 means we split 128x128, 64x64, 32x32, 16x16
 // and 8x8.  10000 means we just split the 128x128 to 64x64
 /* clang-format off */
-static const struct {
-    PARTITION_CONTEXT above;
-    PARTITION_CONTEXT left;
+static const struct 
+{
+    PartitionContextType above;
+    PartitionContextType left;
 } partition_context_lookup[BlockSizeS_ALL] = {
-    { 31, 31 },  // 4X4   - {0b11111, 0b11111}
+{ 31, 31 },  // 4X4   - {0b11111, 0b11111}
 { 31, 30 },  // 4X8   - {0b11111, 0b11110}
 { 30, 31 },  // 8X4   - {0b11110, 0b11111}
 { 30, 30 },  // 8X8   - {0b11110, 0b11110}
@@ -1448,26 +1471,29 @@ static const uint8_t mi_size_high_log2[BlockSizeS_ALL] = {
     0, 1, 0, 1, 2, 1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 2, 0, 3, 1, 4, 2
 };
 
-typedef enum aom_bit_depth {
+typedef enum AomBitDepth 
+{
     AOM_BITS_8 = 8,   /**<  8 bits */
     AOM_BITS_10 = 10, /**< 10 bits */
     AOM_BITS_12 = 12, /**< 12 bits */
-} aom_bit_depth_t;
+} AomBitDepth;
 
-typedef struct {
+typedef struct SgrParamsType 
+{
     int32_t r[2];  // radii
     int32_t s[2];  // sgr parameters for r[0] and r[1], based on GenSgrprojVtable()
-} sgr_params_type;
+} SgrParamsType;
 
 //**********************************************************************************************************************//
 // blockd.h
-typedef enum {
+typedef enum FrameType 
+{
     KEY_FRAME = 0,
     INTER_FRAME = 1,
     INTRA_ONLY_FRAME = 2,  // replaces intra-only
     S_FRAME = 3,
     FRAME_TYPES,
-} FRAME_TYPE;
+} FrameType;
 
 typedef int8_t MvReferenceFrame;
 
@@ -1533,7 +1559,8 @@ static INLINE int32_t is_inter_compound_mode(PredictionMode mode) {
 
 //**********************************************************************************************************************//
 // encoder.h
-typedef enum {
+typedef enum FrameContextIndex 
+{
     // regular inter frame
     REGULAR_FRAME = 0,
     // alternate reference frame
@@ -1547,7 +1574,7 @@ typedef enum {
     // extra alternate reference frame
     EXT_ARF_FRAME = 5,
     FRAME_CONTEXT_INDEXES
-} FRAME_CONTEXT_INDEX;
+} FrameContextIndex;
 
 //**********************************************************************************************************************//
 // common.h
@@ -1582,7 +1609,7 @@ typedef enum {
 #define MAX_SHARPNESS 7
 #define SIMD_WIDTH 16
 
-struct loopfilter {
+struct LoopFilter {
     int32_t filter_level[2];
     int32_t filter_level_u;
     int32_t filter_level_v;
@@ -1610,16 +1637,18 @@ struct loopfilter {
 #define SIMD_WIDTH 16
 // Need to align this structure so when it is declared and
 // passed it can be loaded into vector registers.
-typedef struct {
+typedef struct LoopFilterThresh 
+{
     DECLARE_ALIGNED(SIMD_WIDTH, uint8_t, mblim[SIMD_WIDTH]);
     DECLARE_ALIGNED(SIMD_WIDTH, uint8_t, lim[SIMD_WIDTH]);
     DECLARE_ALIGNED(SIMD_WIDTH, uint8_t, hev_thr[SIMD_WIDTH]);
-} loop_filter_thresh;
+} LoopFilterThresh;
 
-typedef struct {
-    loop_filter_thresh lfthr[MAX_LOOP_FILTER + 1];
+typedef struct LoopFilterInfoN 
+{
+    LoopFilterThresh lfthr[MAX_LOOP_FILTER + 1];
     uint8_t lvl[MAX_MB_PLANE][MAX_SEGMENTS][2][REF_FRAMES][MAX_MODE_LF_DELTAS];
-} loop_filter_info_n;
+} LoopFilterInfoN;
 
 //**********************************************************************************************************************//
 // cdef.h
@@ -1686,7 +1715,8 @@ typedef struct {
 #define GM_ALPHA_MIN -GM_ALPHA_MAX
 #define GM_ROW3HOMO_MIN -GM_ROW3HOMO_MAX
 /* clang-format off */
-typedef enum {
+typedef enum TransformationType 
+{
     IDENTITY = 0,      // identity transformation, 0-parameter
     TRANSLATION = 1,   // translational motion 2-parameter
     ROTZOOM = 2,       // simplified affine with rotation + zoom only, 4-parameter
@@ -1698,7 +1728,8 @@ typedef enum {
 //      [x'     (m2 m3 m0   [x
 //  z .  y'  =   m4 m5 m1 *  y
 //       1]      m6 m7 1)    1]
-typedef struct {
+typedef struct EbWarpedMotionParams 
+{
     TransformationType wmtype;
     int32_t wmmat[8];
     int16_t alpha, beta, gamma, delta;

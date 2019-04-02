@@ -190,7 +190,7 @@ extern "C" {
         int32_t                                 frame_id_numbers_present_flag;
         int32_t                                 frame_id_length;
         int32_t                                 delta_frame_id_length;
-        block_size                               sb_size;                            // Size of the superblock used for this frame
+        BlockSize                               sb_size;                            // Size of the superblock used for this frame
         int32_t                                 mib_size;                           // Size of the superblock in units of MI blocks
         int32_t                                 mib_size_log2;                      // Log 2 of above.
         int32_t                                 order_hint_bits_minus1;

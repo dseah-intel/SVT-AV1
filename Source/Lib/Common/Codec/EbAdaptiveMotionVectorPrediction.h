@@ -123,7 +123,7 @@ extern "C" {
         uint16_t                         *num_samples);
 
 
-    static INLINE EbBool is_motion_variation_allowed_bsize(const block_size bsize)
+    static INLINE EbBool is_motion_variation_allowed_bsize(const BlockSize bsize)
     {
         return (block_size_wide[bsize] >= 8 && block_size_high[bsize] >= 8);
     }
@@ -142,7 +142,7 @@ extern "C" {
     void av1_count_overlappable_neighbors(
         const PictureControlSet        *picture_control_set_ptr,
         CodingUnit_t                     *cu_ptr,
-        const block_size                   bsize,
+        const BlockSize                   bsize,
         int32_t                           mi_row,
         int32_t                           mi_col);
 
@@ -156,7 +156,7 @@ extern "C" {
         int mib_size, int mi_row, int mi_col);
     int av1_is_dv_valid(const MV dv,
         const MacroBlockD *xd, int mi_row, int mi_col,
-        block_size bsize, int mib_size_log2);
+        BlockSize bsize, int mib_size_log2);
 
 #ifdef __cplusplus
 }

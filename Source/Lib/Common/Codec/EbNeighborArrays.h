@@ -185,7 +185,7 @@ extern "C" {
         uint8_t             *value,
         uint32_t             origin_x,
         uint32_t             origin_y,
-        uint32_t             block_size);
+        uint32_t             BlockSize);
 #ifdef __cplusplus
 }
 #endif

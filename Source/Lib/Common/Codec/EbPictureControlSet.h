@@ -71,7 +71,7 @@ extern "C" {
         512, 2048, 2048, 64, 64, 256, 256, 1024, 1024,
     };
 
-    static const qm_val_t wt_matrix_ref[NUM_QM_LEVELS][2][QM_TOTAL_SIZE] = {
+    static const QmVal wt_matrix_ref[NUM_QM_LEVELS][2][QM_TOTAL_SIZE] = {
         {
             { /* Luma */
                 /* Size 4x4 */
@@ -6704,7 +6704,7 @@ extern "C" {
     frequency domain according to different nominal viewing
     distances.
     */
-    static const qm_val_t iwt_matrix_ref[NUM_QM_LEVELS][2][QM_TOTAL_SIZE] = {
+    static const QmVal iwt_matrix_ref[NUM_QM_LEVELS][2][QM_TOTAL_SIZE] = {
         {
             { /* Luma */
                 /* Size 4x4 */
@@ -13546,8 +13546,8 @@ extern "C" {
 
     typedef struct MacroblockdPlane 
     {
-        //tran_low_t *dqcoeff;
-        PLANE_TYPE plane_type;
+        //TranLow *dqcoeff;
+        PlaneType plane_type;
         int32_t subsampling_x;
         int32_t subsampling_y;
         struct Buf2d dst;
@@ -13562,8 +13562,8 @@ extern "C" {
         //uint8_t *color_index_map;
         // block size in pixels
         //uint8_t width, height;
-        //qm_val_t *seg_iqmatrix[MAX_SEGMENTS][TX_SIZES_ALL];
-        //qm_val_t *seg_qmatrix[MAX_SEGMENTS][TX_SIZES_ALL];
+        //QmVal *seg_iqmatrix[MAX_SEGMENTS][TX_SIZES_ALL];
+        //QmVal *seg_qmatrix[MAX_SEGMENTS][TX_SIZES_ALL];
         // the 'dequantizers' below are not literal dequantizer values.
         // They're used by encoder RDO to generate ad-hoc lambda values.
         // They use a hardwired Q3 coeff shift and do not necessarily match
@@ -14148,7 +14148,7 @@ extern "C" {
         uint8_t                               skip_sub_blks;
 #endif
         //**********************************************************************************************************//
-        FRAME_TYPE                            av1_frame_type;
+        FrameType                            av1_frame_type;
         Av1RpsNode                          av1_ref_signal;
         EbBool                                show_frame;
         EbBool                                has_show_existing;
@@ -14172,7 +14172,7 @@ extern "C" {
         int32_t                               allow_warped_motion;
 
         /* profile settings */
-        TX_MODE                               tx_mode;
+        TxMode                               tx_mode;
 #if CONFIG_ENTROPY_STATS
         int32_t                               coef_cdf_category;
 #endif
@@ -14185,8 +14185,8 @@ extern "C" {
         int32_t                               separate_uv_delta_q;
 
         // Global quant matrix tables
-        const qm_val_t                       *giqmatrix[NUM_QM_LEVELS][3][TX_SIZES_ALL];
-        const qm_val_t                       *gqmatrix[NUM_QM_LEVELS][3][TX_SIZES_ALL];
+        const QmVal                       *giqmatrix[NUM_QM_LEVELS][3][TX_SIZES_ALL];
+        const QmVal                       *gqmatrix[NUM_QM_LEVELS][3][TX_SIZES_ALL];
         Quants                                quants;
         Dequants                              deq;
         Quants                                quantsMd;
@@ -14202,13 +14202,13 @@ extern "C" {
         // Whether to use previous frame's motion vectors for prediction.
         int32_t                               allow_ref_frame_mvs;
         int32_t                               switchable_motion_mode;
-        loop_filter_info_n                    lf_info;
+        LoopFilterInfoN                   lf_info;
 
         // Flag signaling how frame contexts should be updated at the end of
         // a frame decode
         RefreshFrameContextMode               refresh_frame_context;
         int32_t                               ref_frame_sign_bias[TOTAL_REFS_PER_FRAME]; /* Two state 0, 1 */
-        struct loopfilter                     lf;
+        struct LoopFilter                     lf;
         int32_t                               coded_lossless;  // frame is fully lossless at the coded resolution.
         int32_t                               all_lossless;
         int32_t                               reduced_tx_set_used;
@@ -14543,7 +14543,7 @@ extern "C" {
         //    int32_t arf_pos_in_gf[MAX_EXT_ARFS + 1];
         //    int32_t arf_pos_for_ovrly[MAX_EXT_ARFS + 1];
         //    int32_t global_motion_search_done;
-        //    tran_low_t *tcoeff_buf[MAX_MB_PLANE];
+        //    TranLow *tcoeff_buf[MAX_MB_PLANE];
         //    int32_t extra_arf_allowed;
         //    int32_t bwd_ref_allowed;
         //    // A flag to indicate if intrabc is ever used in current frame.

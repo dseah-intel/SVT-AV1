@@ -43,14 +43,14 @@ extern void av1_predict_intra_block(
     PredictionMode mode,
     int32_t angle_delta,
     int32_t use_palette,
-    FILTER_INTRA_MODE filter_intra_mode,
+    FilterIntraMode filter_intra_mode,
     uint8_t* topNeighArray,
     uint8_t* leftNeighArray,
     EbPictureBufferDesc  *recon_buffer,
     int32_t col_off,
     int32_t row_off,
     int32_t plane,
-    block_size bsize,
+    BlockSize bsize,
     uint32_t bl_org_x_pict,
     uint32_t bl_org_y_pict,
     uint32_t bl_org_x_mb,
@@ -67,14 +67,14 @@ void av1_predict_intra_block_16bit(
     PredictionMode mode,
     int32_t angle_delta,
     int32_t use_palette,
-    FILTER_INTRA_MODE filter_intra_mode,
+    FilterIntraMode filter_intra_mode,
     uint16_t* topNeighArray,
     uint16_t* leftNeighArray,
     EbPictureBufferDesc  *recon_buffer,
     int32_t col_off,
     int32_t row_off,
     int32_t plane,
-    block_size bsize,
+    BlockSize bsize,
     uint32_t bl_org_x_pict,
     uint32_t bl_org_y_pict);
 
@@ -655,7 +655,7 @@ static void Av1EncodeLoop(
         av1_estimate_transform(
             ((int16_t*)residual16bit->buffer_y) + scratchLumaOffset,
             residual16bit->stride_y,
-            ((tran_low_t*)transform16bit->buffer_y) + coeff1dOffset,
+            ((TranLow*)transform16bit->buffer_y) + coeff1dOffset,
             NOT_USED_VALUE,
             context_ptr->blk_geom->txsize[context_ptr->txb_itr],
             &context_ptr->three_quad_energy,
@@ -672,7 +672,7 @@ static void Av1EncodeLoop(
 
         av1_quantize_inv_quantize(
             sb_ptr->picture_control_set_ptr,
-            ((tran_low_t*)transform16bit->buffer_y) + coeff1dOffset,
+            ((TranLow*)transform16bit->buffer_y) + coeff1dOffset,
             NOT_USED_VALUE,
             ((int32_t*)coeffSamplesTB->buffer_y) + coeff1dOffset,
             ((int32_t*)inverse_quant_buffer->buffer_y) + coeff1dOffset,
@@ -880,7 +880,7 @@ static void Av1EncodeLoop(
         av1_estimate_transform(
             ((int16_t*)residual16bit->buffer_cb) + scratchCbOffset,
             residual16bit->stride_cb,
-            ((tran_low_t*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
+            ((TranLow*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
             NOT_USED_VALUE,
             context_ptr->blk_geom->txsize_uv[context_ptr->txb_itr],
             &context_ptr->three_quad_energy,
@@ -898,7 +898,7 @@ static void Av1EncodeLoop(
         av1_quantize_inv_quantize(
             sb_ptr->picture_control_set_ptr,
 
-            ((tran_low_t*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
+            ((TranLow*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
             NOT_USED_VALUE,
             ((int32_t*)coeffSamplesTB->buffer_cb) + context_ptr->coded_area_sb_uv,
             ((int32_t*)inverse_quant_buffer->buffer_cb) + context_ptr->coded_area_sb_uv,
@@ -929,7 +929,7 @@ static void Av1EncodeLoop(
         av1_estimate_transform(
             ((int16_t*)residual16bit->buffer_cr) + scratchCbOffset,
             residual16bit->stride_cr,
-            ((tran_low_t*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
+            ((TranLow*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
             NOT_USED_VALUE,
             context_ptr->blk_geom->txsize_uv[context_ptr->txb_itr],
             &context_ptr->three_quad_energy,
@@ -946,10 +946,10 @@ static void Av1EncodeLoop(
 
         av1_quantize_inv_quantize(
             sb_ptr->picture_control_set_ptr,
-            ((tran_low_t*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
+            ((TranLow*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
             NOT_USED_VALUE,
             ((int32_t*)coeffSamplesTB->buffer_cr) + context_ptr->coded_area_sb_uv,
-            ((tran_low_t*)inverse_quant_buffer->buffer_cr) + context_ptr->coded_area_sb_uv,
+            ((TranLow*)inverse_quant_buffer->buffer_cr) + context_ptr->coded_area_sb_uv,
             qp,
             context_ptr->blk_geom->tx_width_uv[context_ptr->txb_itr],
             context_ptr->blk_geom->tx_height_uv[context_ptr->txb_itr],
@@ -1123,7 +1123,7 @@ static void Av1EncodeLoop16bit(
             av1_estimate_transform(
                 ((int16_t*)residual16bit->buffer_y) + scratchLumaOffset,
                 residual16bit->stride_y,
-                ((tran_low_t*)transform16bit->buffer_y) + coeff1dOffset,
+                ((TranLow*)transform16bit->buffer_y) + coeff1dOffset,
                 NOT_USED_VALUE,
                 context_ptr->blk_geom->txsize[context_ptr->txb_itr],
                 &context_ptr->three_quad_energy,
@@ -1280,7 +1280,7 @@ static void Av1EncodeLoop16bit(
                 ((int16_t*)residual16bit->buffer_cb) + scratchCbOffset,
                 residual16bit->stride_cb,
 
-                ((tran_low_t*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
+                ((TranLow*)transform16bit->buffer_cb) + context_ptr->coded_area_sb_uv,
                 NOT_USED_VALUE,
                 context_ptr->blk_geom->txsize_uv[context_ptr->txb_itr],
                 &context_ptr->three_quad_energy,
@@ -1330,7 +1330,7 @@ static void Av1EncodeLoop16bit(
 
                 residual16bit->stride_cr,
 
-                ((tran_low_t*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
+                ((TranLow*)transform16bit->buffer_cr) + context_ptr->coded_area_sb_uv,
                 NOT_USED_VALUE,
 
 
@@ -2835,7 +2835,7 @@ EB_EXTERN void AV1EncodePass(
                                         mode,                                                       //PredictionMode mode,
                                         plane ? 0 : pu_ptr->angle_delta[PLANE_TYPE_Y],                //int32_t angle_delta,
                                         0,                                                          //int32_t use_palette,
-                                        FILTER_INTRA_MODES,                                         //CHKN FILTER_INTRA_MODE filter_intra_mode,
+                                        FILTER_INTRA_MODES,                                         //CHKN FilterIntraMode filter_intra_mode,
                                         topNeighArray + 1,
                                         leftNeighArray + 1,
                                         recon_buffer,                                                //uint8_t *dst,
@@ -2910,7 +2910,7 @@ EB_EXTERN void AV1EncodePass(
                                         mode,                                                       //PredictionMode mode,
                                         plane ? 0 : pu_ptr->angle_delta[PLANE_TYPE_Y],                //int32_t angle_delta,
                                         0,                                                          //int32_t use_palette,
-                                        FILTER_INTRA_MODES,                                         //CHKN FILTER_INTRA_MODE filter_intra_mode,
+                                        FILTER_INTRA_MODES,                                         //CHKN FilterIntraMode filter_intra_mode,
                                         topNeighArray + 1,
                                         leftNeighArray + 1,
                                         recon_buffer,                                                //uint8_t *dst,

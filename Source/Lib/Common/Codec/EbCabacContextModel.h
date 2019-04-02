@@ -815,7 +815,7 @@ extern "C" {
 
     //**********************************************************************************************************************//
     // txb_Common.h
-    static const TX_CLASS tx_type_to_class[TX_TYPES] = {
+    static const TxClass tx_type_to_class[TX_TYPES] = {
         TX_CLASS_2D,     // DCT_DCT
         TX_CLASS_2D,     // ADST_DCT
         TX_CLASS_2D,     // DCT_ADST

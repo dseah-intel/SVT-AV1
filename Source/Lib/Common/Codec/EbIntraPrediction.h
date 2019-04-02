@@ -261,7 +261,7 @@ extern "C" {
 
 
     static INLINE int32_t cfl_idx_to_alpha(int32_t alpha_idx, int32_t joint_sign,
-        CFL_PRED_TYPE pred_type) {
+        CflPredType pred_type) {
         const int32_t alpha_sign = (pred_type == CFL_PRED_U) ? CFL_SIGN_U(joint_sign)
             : CFL_SIGN_V(joint_sign);
         if (alpha_sign == CFL_SIGN_ZERO) return 0;

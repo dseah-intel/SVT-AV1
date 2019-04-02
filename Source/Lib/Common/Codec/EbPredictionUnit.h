@@ -42,7 +42,7 @@ extern "C" {
         EbBool                       is_new_mv;
         EbBool                       is_zero_mv;
 
-        MOTION_MODE                   motion_mode;
+        MotionMode                   motion_mode;
         uint16_t                      num_proj_ref;
         EbWarpedMotionParams          wm_params;
         uint32_t                      overlappable_neighbors[2];

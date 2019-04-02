@@ -276,7 +276,7 @@ static const int16_t ac_qlookup_12_Q3[QINDEX_RANGE] = {
 };
 
 
-int16_t av1_dc_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth) {
+int16_t av1_dc_quant_Q3(int32_t qindex, int32_t delta, AomBitDepth bit_depth) {
     switch (bit_depth) {
     case AOM_BITS_8: return dc_qlookup_Q3[clamp(qindex + delta, 0, MAXQ)];
     case AOM_BITS_10: return dc_qlookup_10_Q3[clamp(qindex + delta, 0, MAXQ)];
@@ -286,7 +286,7 @@ int16_t av1_dc_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth
         return -1;
     }
 }
-int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth) {
+int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, AomBitDepth bit_depth) {
     switch (bit_depth) {
     case AOM_BITS_8: return ac_qlookup_Q3[clamp(qindex + delta, 0, MAXQ)];
     case AOM_BITS_10: return ac_qlookup_10_Q3[clamp(qindex + delta, 0, MAXQ)];
@@ -297,7 +297,7 @@ int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth
     }
 }
 
-static int32_t get_qzbin_factor(int32_t q, aom_bit_depth_t bit_depth) {
+static int32_t get_qzbin_factor(int32_t q, AomBitDepth bit_depth) {
     const int32_t quant = av1_dc_quant_Q3(q, 0, bit_depth);
     switch (bit_depth) {
     case AOM_BITS_8: return q == 0 ? 64 : (quant < 148 ? 84 : 80);
@@ -312,10 +312,10 @@ static int32_t get_qzbin_factor(int32_t q, aom_bit_depth_t bit_depth) {
 // In AV1 TX, the coefficients are always scaled up a factor of 8 (3
 // bits), so QTX == Q3.
 
-int16_t av1_dc_quant_QTX(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth) {
+int16_t av1_dc_quant_QTX(int32_t qindex, int32_t delta, AomBitDepth bit_depth) {
     return av1_dc_quant_Q3(qindex, delta, bit_depth);
 }
-int16_t av1_ac_quant_QTX(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth) {
+int16_t av1_ac_quant_QTX(int32_t qindex, int32_t delta, AomBitDepth bit_depth) {
     return av1_ac_quant_Q3(qindex, delta, bit_depth);
 }
 
@@ -427,7 +427,7 @@ void av1_set_quantizer(
 }
 
 void av1_build_quantizer(
-    aom_bit_depth_t bit_depth,
+    AomBitDepth bit_depth,
     int32_t y_dc_delta_q,
     int32_t u_dc_delta_q,
     int32_t u_ac_delta_q,
@@ -2180,7 +2180,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
             picture_control_set_ptr->parent_pcs_ptr,
             picture_control_set_ptr->parent_pcs_ptr->base_qindex);
         av1_build_quantizer(
-            (aom_bit_depth_t)sequence_control_set_ptr->static_config.encoder_bit_depth,
+            (AomBitDepth)sequence_control_set_ptr->static_config.encoder_bit_depth,
             picture_control_set_ptr->parent_pcs_ptr->y_dc_delta_q,
             picture_control_set_ptr->parent_pcs_ptr->u_dc_delta_q,
             picture_control_set_ptr->parent_pcs_ptr->u_ac_delta_q,
@@ -2192,7 +2192,7 @@ void* mode_decision_configuration_kernel(void *input_ptr)
         Quants *const quantsMd = &picture_control_set_ptr->parent_pcs_ptr->quantsMd;
         Dequants *const dequantsMd = &picture_control_set_ptr->parent_pcs_ptr->deqMd;
         av1_build_quantizer(
-            (aom_bit_depth_t)8,
+            (AomBitDepth)8,
             picture_control_set_ptr->parent_pcs_ptr->y_dc_delta_q,
             picture_control_set_ptr->parent_pcs_ptr->u_dc_delta_q,
             picture_control_set_ptr->parent_pcs_ptr->u_ac_delta_q,

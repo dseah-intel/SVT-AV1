@@ -740,7 +740,7 @@ void picture_addition_kernel(
         while (columnIndex < width) {
             //recon_ptr[columnIndex] = (uint8_t)CLIP3(0, maxValue, ((int32_t)residual_ptr[columnIndex]) + ((int32_t)pred_ptr[columnIndex]));
             uint16_t rec = (uint16_t)pred_ptr[columnIndex];
-            recon_ptr[columnIndex] = (uint8_t)highbd_clip_pixel_add(rec, (tran_low_t)residual_ptr[columnIndex], bd);
+            recon_ptr[columnIndex] = (uint8_t)highbd_clip_pixel_add(rec, (TranLow)residual_ptr[columnIndex], bd);
 
             //printf("%d\t", recon_ptr[columnIndex]);
             ++columnIndex;
@@ -782,7 +782,7 @@ void picture_addition_kernel16_bit(
         while (columnIndex < width) {
             //recon_ptr[columnIndex] = (uint8_t)CLIP3(0, maxValue, ((int32_t)residual_ptr[columnIndex]) + ((int32_t)pred_ptr[columnIndex]));
             uint16_t rec = (uint16_t)pred_ptr[columnIndex];
-            recon_ptr[columnIndex] = highbd_clip_pixel_add(rec, (tran_low_t)residual_ptr[columnIndex], bd);
+            recon_ptr[columnIndex] = highbd_clip_pixel_add(rec, (TranLow)residual_ptr[columnIndex], bd);
 
             //printf("%d\t", recon_ptr[columnIndex]);
             ++columnIndex;
@@ -2644,7 +2644,7 @@ void inter_depth_tx_search(
 * generate the the size in pixel for partition code
 ****************************************************/
 uint8_t get_part_side(
-    PARTITION_CONTEXT part) {
+    PartitionContextType part) {
     switch (part) {
     case 31:
         return 4;
@@ -2675,8 +2675,8 @@ uint8_t get_part_side(
 * left partitions
 ****************************************************/
 PART get_partition_shape(
-    PARTITION_CONTEXT above,
-    PARTITION_CONTEXT left,
+    PartitionContextType above,
+    PartitionContextType left,
     uint8_t           width,
     uint8_t           height) {
     uint8_t above_size = get_part_side(above);
@@ -2788,9 +2788,9 @@ void  order_nsq_table(
     uint32_t partition_above_neighbor_index = get_neighbor_array_unit_top_index(
         leaf_partition_neighbor_array,
         context_ptr->cu_origin_x);
-    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
+    const PartitionContextType above_ctx = (((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
         0 : ((PartitionContext*)leaf_partition_neighbor_array->top_array)[partition_above_neighbor_index].above;
-    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
+    const PartitionContextType left_ctx = (((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
         0 : ((PartitionContext*)leaf_partition_neighbor_array->left_array)[partition_left_neighbor_index].left;
 
     PART neighbor_part = get_partition_shape(

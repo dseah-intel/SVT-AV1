@@ -84,19 +84,19 @@ extern "C" {
     // TranHigh is the datatype used for intermediate transform stages.
     typedef int64_t TranHigh;
 
-    static const TX_TYPE_1D vtx_tab[TX_TYPES] = 
+    static const TxType1D vtx_tab[TX_TYPES] = 
     {
         DCT_1D, ADST_1D, DCT_1D, ADST_1D,
         FLIPADST_1D, DCT_1D, FLIPADST_1D, ADST_1D, FLIPADST_1D, IDTX_1D,
         DCT_1D, IDTX_1D, ADST_1D, IDTX_1D, FLIPADST_1D, IDTX_1D,
     };
-    static const TX_TYPE_1D htx_tab[TX_TYPES] = 
+    static const TxType1D htx_tab[TX_TYPES] = 
     {
         DCT_1D, DCT_1D, ADST_1D, ADST_1D,
         DCT_1D, FLIPADST_1D, FLIPADST_1D, FLIPADST_1D, ADST_1D, IDTX_1D,
         IDTX_1D, DCT_1D, IDTX_1D, ADST_1D, IDTX_1D, FLIPADST_1D,
     };
-    static const block_size txsize_to_bsize[TX_SIZES_ALL] = 
+    static const BlockSize txsize_to_bsize[TX_SIZES_ALL] = 
     {
         BLOCK_4X4,    // TX_4X4
         BLOCK_8X8,    // TX_8X8
@@ -318,8 +318,8 @@ extern "C" {
     {
         int32_t log_scale;
         TxSize tx_size;
-        const qm_val_t *qmatrix;
-        const qm_val_t *iqmatrix;
+        const QmVal *qmatrix;
+        const QmVal *iqmatrix;
     } QuantParam;
 
     static inline int32_t av1_get_tx_scale(const TxSize tx_size) {
@@ -3904,7 +3904,7 @@ extern "C" {
         uint32_t             bit_increment,
         TxType               transform_type,
         EbAsm                asm_type,
-        PLANE_TYPE           component_type,
+        PlaneType           component_type,
         EB_TRANS_COEFF_SHAPE trans_coeff_shape);
 
     extern void av1_quantize_inv_quantize(
@@ -3974,7 +3974,7 @@ extern "C" {
         TxSize      txsize,
         uint32_t    bit_increment,
         TxType      transform_type,
-        PLANE_TYPE  component_type,
+        PlaneType  component_type,
         uint32_t    eob);
 
     EbErrorType av1_inv_transform_recon8bit(
@@ -3983,7 +3983,7 @@ extern "C" {
         uint32_t    recon_stride,
         TxSize      txsize,
         TxType      transform_type,
-        PLANE_TYPE  component_type,
+        PlaneType  component_type,
         uint32_t    eob);
 
     extern EbErrorType encode_inv_transform(

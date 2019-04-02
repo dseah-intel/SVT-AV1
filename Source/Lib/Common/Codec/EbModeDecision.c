@@ -1821,7 +1821,7 @@ void  inject_inter_candidates(
 
 
 
-static INLINE PredictionMode get_uv_mode(UV_PredictionMode mode) {
+static INLINE PredictionMode get_uv_mode(UvPredictionMode mode) {
     assert(mode < UV_INTRA_MODES);
     static const PredictionMode uv2y[] = {
         DC_PRED,        // UV_DC_PRED
@@ -1844,7 +1844,7 @@ static INLINE PredictionMode get_uv_mode(UV_PredictionMode mode) {
     return uv2y[mode];
 }
 static TxType intra_mode_to_tx_type(const MbModeInfo *mbmi,
-    PLANE_TYPE plane_type) {
+    PlaneType plane_type) {
     static const TxType _intra_mode_to_tx_type[INTRA_MODES] = {
         DCT_DCT,    // DC
         ADST_DCT,   // V
@@ -1867,11 +1867,11 @@ static TxType intra_mode_to_tx_type(const MbModeInfo *mbmi,
 }
 
 static INLINE TxType av1_get_tx_type(
-    block_size  sb_type,
+    BlockSize  sb_type,
     int32_t   is_inter,
     PredictionMode pred_mode,
-    UV_PredictionMode pred_mode_uv,
-    PLANE_TYPE plane_type,
+    UvPredictionMode pred_mode_uv,
+    PlaneType plane_type,
     const MacroBlockD *xd, int32_t blk_row,
     int32_t blk_col, TxSize tx_size,
     int32_t reduced_tx_set)
@@ -1881,7 +1881,7 @@ static INLINE TxType av1_get_tx_type(
     UNUSED(blk_row);
     UNUSED(blk_col);
 
-    // block_size  sb_type = BLOCK_8X8;
+    // BlockSize  sb_type = BLOCK_8X8;
 
     MbModeInfo  mbmi;
     mbmi.mode = pred_mode;
@@ -1978,7 +1978,7 @@ void  inject_intra_candidates_ois(
                     context_ptr->blk_geom->bsize,
                     0,
                     (PredictionMode)candidate_array[can_total_cnt].intra_luma_mode,
-                    (UV_PredictionMode)candidate_array[can_total_cnt].intra_chroma_mode,
+                    (UvPredictionMode)candidate_array[can_total_cnt].intra_chroma_mode,
                     PLANE_TYPE_UV,
                     0,
                     0,
@@ -2017,7 +2017,7 @@ void  inject_intra_candidates_ois(
                     context_ptr->blk_geom->bsize,
                     0,
                     (PredictionMode)candidate_array[can_total_cnt].intra_luma_mode,
-                    (UV_PredictionMode)candidate_array[can_total_cnt].intra_chroma_mode,
+                    (UvPredictionMode)candidate_array[can_total_cnt].intra_chroma_mode,
                     PLANE_TYPE_UV,
                     0,
                     0,
@@ -2039,9 +2039,9 @@ void  inject_intra_candidates_ois(
     return;
 }
 
-double av1_convert_qindex_to_q(int32_t qindex, aom_bit_depth_t bit_depth);
+double av1_convert_qindex_to_q(int32_t qindex, AomBitDepth bit_depth);
 
-static INLINE void setup_pred_plane(struct Buf2D *dst, block_size bsize,
+static INLINE void setup_pred_plane(struct Buf2D *dst, BlockSize bsize,
     uint8_t *src, int width, int height,
     int stride, int mi_row, int mi_col,
     int subsampling_x, int subsampling_y) {
@@ -2059,7 +2059,7 @@ static INLINE void setup_pred_plane(struct Buf2D *dst, block_size bsize,
     dst->height = height;
     dst->stride = stride;
 }
-void av1_setup_pred_block(block_size sb_type,
+void av1_setup_pred_block(BlockSize sb_type,
     struct Buf2D dst[MAX_MB_PLANE],
     const Yv12BufferConfig *src, int mi_row, int mi_col) {
     int i;
@@ -2083,7 +2083,7 @@ static int sad_per_bit16lut_8[QINDEX_RANGE];
 static int sad_per_bit4lut_8[QINDEX_RANGE];
 
 static void init_me_luts_bd(int *bit16lut, int *bit4lut, int range,
-    aom_bit_depth_t bit_depth) {
+    AomBitDepth bit_depth) {
     int i;
     // Initialize the sad lut tables using a formulaic calculation for now.
     // This is to make it easier to resolve the impact of experimental changes
@@ -2133,7 +2133,7 @@ void  intra_bc_search(
     x->xd = cu_ptr->av1xd;
     x->nmv_vec_cost = context_ptr->md_rate_estimation_ptr->nmv_vec_cost;
     x->mv_cost_stack = context_ptr->md_rate_estimation_ptr->nmvcoststack;
-    block_size bsize = context_ptr->blk_geom->bsize;
+    BlockSize bsize = context_ptr->blk_geom->bsize;
     const Av1Common *const cm = pcs->parent_pcs_ptr->av1_cm;
     MvReferenceFrame ref_frame = INTRA_FRAME;
     generate_av1_mvp_table(
@@ -2463,7 +2463,7 @@ void  inject_intra_candidates(
                                 context_ptr->blk_geom->bsize,
                                 0,
                                 (PredictionMode)candidateArray[canTotalCnt].intra_luma_mode,
-                                (UV_PredictionMode)candidateArray[canTotalCnt].intra_chroma_mode,
+                                (UvPredictionMode)candidateArray[canTotalCnt].intra_chroma_mode,
                                 PLANE_TYPE_UV,
                                 0,
                                 0,
@@ -2510,7 +2510,7 @@ void  inject_intra_candidates(
                     context_ptr->blk_geom->bsize,
                     0,
                     (PredictionMode)candidateArray[canTotalCnt].intra_luma_mode,
-                    (UV_PredictionMode)candidateArray[canTotalCnt].intra_chroma_mode,
+                    (UvPredictionMode)candidateArray[canTotalCnt].intra_chroma_mode,
                     PLANE_TYPE_UV,
                     0,
                     0,

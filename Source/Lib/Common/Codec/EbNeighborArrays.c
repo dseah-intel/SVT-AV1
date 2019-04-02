@@ -1072,7 +1072,7 @@ void neighbor_array_unit_mv_write(
     uint8_t               *value,
     uint32_t               origin_x,
     uint32_t               origin_y,
-    uint32_t               block_size)
+    uint32_t               BlockSize)
 {
     uint32_t idx;
     uint8_t  *dst_ptr;
@@ -1111,7 +1111,7 @@ void neighbor_array_unit_mv_write(
         naOffset * naUnitSize;
 
     //dstStep = naUnitSize;
-    count = block_size >> 2;
+    count = BlockSize >> 2;
 
     for (idx = 0; idx < count; ++idx) {
 
@@ -1173,14 +1173,14 @@ void neighbor_array_unit_mv_write(
     naOffset = get_neighbor_array_unit_top_left_index(
         na_unit_ptr,
         origin_x,
-        origin_y + (block_size - 1));
+        origin_y + (BlockSize - 1));
 
     // Copy bottom-row + right-column
     // *Note - start from the bottom-left corner
     dst_ptr = naUnittopLeftArray +
         naOffset * naUnitSize;
 
-    count = ((block_size + block_size) >> 2) - 1;
+    count = ((BlockSize + BlockSize) >> 2) - 1;
 
     for (idx = 0; idx < count; ++idx) {
 

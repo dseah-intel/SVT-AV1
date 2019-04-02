@@ -120,7 +120,7 @@ extern "C" {
         uint32_t                               interp_filters;
         uint8_t                                tu_width;
         uint8_t                                tu_height;
-        MOTION_MODE                            motion_mode;
+        MotionMode                            motion_mode;
         uint16_t                               num_proj_ref;
         EbBool                                 local_warp_valid;
         EbWarpedMotionParams                   wm_params;
@@ -163,7 +163,7 @@ extern "C" {
         uint64_t                               *y_coeff_bits,
         uint64_t                               *cb_coeff_bits,
         uint64_t                               *cr_coeff_bits,
-        block_size                               bsize);
+        BlockSize                               bsize);
 
     /**************************************
     * Mode Decision Candidate Buffer

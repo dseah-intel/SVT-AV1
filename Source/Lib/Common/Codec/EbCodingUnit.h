@@ -150,7 +150,7 @@ extern "C" {
 
     typedef struct MbModeInfo {
         // Common for both INTER and INTRA blocks
-        block_size sb_type;
+        BlockSize sb_type;
         PredictionMode mode;
         //TxSize tx_size;
         //uint8_t inter_tx_size[INTER_TX_SIZE_BUF_LEN];
@@ -159,7 +159,7 @@ extern "C" {
         //int8_t segment_id;
         //int8_t seg_id_predicted;  // valid only when temporal_update is enabled
         // Only for INTRA blocks
-        UV_PredictionMode uv_mode;
+        UvPredictionMode uv_mode;
         //PALETTE_MODE_INFO palette_mode_info;
         uint8_t use_intrabc;
         // Only for INTER blocks
@@ -170,17 +170,17 @@ extern "C" {
         // The actual prediction angle is the base angle + (angle_delta * step).
         //int8_t angle_delta[PLANE_TYPES];
         // interintra members
-        //INTERINTRA_MODE interintra_mode;
+        //InterIntraMode interintra_mode;
         // TODO(debargha): Consolidate these flags
         //int32_t use_wedge_interintra;
         //int32_t interintra_wedge_index;
         //int32_t interintra_wedge_sign;
         // interinter members
-        //COMPOUND_TYPE interinter_compound_type;
+        //CompoundType interinter_compound_type;
         //int32_t wedge_index;
         //int32_t wedge_sign;
         //SEG_MASK_TYPE mask_type;
-        //MOTION_MODE motion_mode;
+        //MotionMode motion_mode;
         //int32_t overlappable_neighbors[2];
         IntMv mv[2];
         //IntMv pred_mv[2];
@@ -232,8 +232,8 @@ extern "C" {
     typedef struct macroblock_plane {
 #if 0
         DECLARE_ALIGNED(16, int16_t, src_diff[MAX_SB_SQUARE]);
-        tran_low_t *qcoeff;
-        tran_low_t *coeff;
+        TranLow *qcoeff;
+        TranLow *coeff;
         uint16_t *eobs;
         uint8_t *txb_entropy_ctx;
 #endif

@@ -25,12 +25,12 @@
 #define AV1_COST_PRECISION          0
 #define MV_COST_WEIGHT              108
 
-block_size GetBlockSize(uint8_t cu_size) {
+BlockSize GetBlockSize(uint8_t cu_size) {
     return (cu_size == 64 ? BLOCK_64X64 : cu_size == 32 ? BLOCK_32X32 : cu_size == 16 ? BLOCK_16X16 : cu_size == 8 ? BLOCK_8X8 : BLOCK_4X4);
 }
 
 int av1_allow_intrabc(const Av1Common *const cm);
-int32_t is_chroma_reference(int32_t mi_row, int32_t mi_col, block_size bsize,
+int32_t is_chroma_reference(int32_t mi_row, int32_t mi_col, BlockSize bsize,
     int32_t subsampling_x, int32_t subsampling_y) {
     const int32_t bw = mi_size_wide[bsize];
     const int32_t bh = mi_size_high[bsize];
@@ -123,7 +123,7 @@ static INLINE uint8_t *set_levels(uint8_t *const levels_buf, const int32_t width
 }
 
 void av1_txb_init_levels_c(
-    const tran_low_t *const coeff,
+    const TranLow *const coeff,
     const int32_t width,
     const int32_t height,
     uint8_t *const levels) {
@@ -369,7 +369,7 @@ static INLINE int32_t get_br_ctx(const uint8_t *const levels,
     const int32_t row = c >> bwl;
     const int32_t col = c - (row << bwl);
     const int32_t stride = (1 << bwl) + TX_PAD_HOR;
-    const TX_CLASS tx_class = tx_type_to_class[tx_type];
+    const TxClass tx_class = tx_type_to_class[tx_type];
     const int32_t pos = row * stride + col;
     int32_t mag = levels[pos + 1];
     mag += levels[pos + stride];
@@ -401,7 +401,7 @@ static INLINE int32_t get_br_ctx(const uint8_t *const levels,
 static INLINE int32_t av1_cost_skip_txb(
     struct ModeDecisionCandidateBuffer    *candidate_buffer_ptr,
     TxSize                                  transform_size,
-    PLANE_TYPE                               plane_type,
+    PlaneType                               plane_type,
     int16_t                                   txb_skip_ctx)
 {
     const TxSize txs_ctx = (TxSize)((txsize_sqr_map[transform_size] + txsize_sqr_up_map[transform_size] + 1) >> 1);
@@ -411,9 +411,9 @@ static INLINE int32_t av1_cost_skip_txb(
 // Note: don't call this function when eob is 0.
 uint64_t av1_cost_coeffs_txb(
     struct ModeDecisionCandidateBuffer    *candidate_buffer_ptr,
-    const tran_low_t                        *const qcoeff,
+    const TranLow                        *const qcoeff,
     uint16_t                                   eob,
-    PLANE_TYPE                               plane_type,
+    PlaneType                               plane_type,
     TxSize                                  transform_size,
     /*const uint32_t                             area_size,
     const uint32_t                             stride,*/
@@ -428,7 +428,7 @@ uint64_t av1_cost_coeffs_txb(
 
     const TxSize txs_ctx = (TxSize)((txsize_sqr_map[transform_size] + txsize_sqr_up_map[transform_size] + 1) >> 1);
     const TxType transform_type = candidate_buffer_ptr->candidate_ptr->transform_type[plane_type];
-    const TX_CLASS tx_class = tx_type_to_class[transform_type];
+    const TxClass tx_class = tx_type_to_class[transform_type];
     int32_t c, cost;
     const int32_t bwl = get_txb_bwl(transform_size);
     const int32_t width = get_txb_wide(transform_size);
@@ -476,7 +476,7 @@ uint64_t av1_cost_coeffs_txb(
     for (c = eob - 1; c >= 0; --c) {
 
         const int32_t pos = scan[c];
-        const tran_low_t v = qcoeff[pos];
+        const TranLow v = qcoeff[pos];
         const int32_t is_nz = (v != 0);
         const int32_t level = abs(v);
         const int32_t coeff_ctx = coeff_contexts[pos];
@@ -518,11 +518,11 @@ uint64_t av1_cost_coeffs_txb(
     return cost;
 }
 /*static*/ void model_rd_from_sse(
-    block_size bsize,
+    BlockSize bsize,
     int16_t quantizer,
     //const Av1Comp *const cpi,
     //const MacroBlockD *const xd,
-    //block_size bsize,
+    //BlockSize bsize,
     //int32_t plane,
     uint64_t sse,
     uint32_t *rate,
@@ -792,7 +792,7 @@ uint64_t EstimateRefFramesNumBits(
         }
         int32_t context = 0;
         if (is_compound) {
-            const COMP_REFERENCE_TYPE comp_ref_type = /*has_uni_comp_refs(mbmi)
+            const CompReferenceType comp_ref_type = /*has_uni_comp_refs(mbmi)
                                                       ? UNIDIR_COMP_REFERENCE
                                                       : */BIDIR_COMP_REFERENCE;
             MvReferenceFrame refType[2];
@@ -1206,10 +1206,10 @@ uint64_t av1_inter_fast_cost(
         && rf[1] != INTRA_FRAME)
     {
 
-        MOTION_MODE motion_mode_rd = candidate_ptr->motion_mode;
-        block_size bsize = blk_geom->bsize;
+        MotionMode motion_mode_rd = candidate_ptr->motion_mode;
+        BlockSize bsize = blk_geom->bsize;
         cu_ptr->prediction_unit_array[0].num_proj_ref = candidate_ptr->num_proj_ref;
-        MOTION_MODE last_motion_mode_allowed = motion_mode_allowed(
+        MotionMode last_motion_mode_allowed = motion_mode_allowed(
             picture_control_set_ptr,
             cu_ptr,
             bsize,
@@ -1465,7 +1465,7 @@ EbErrorType Av1FullCost(
     uint64_t                               *y_coeff_bits,
     uint64_t                               *cb_coeff_bits,
     uint64_t                               *cr_coeff_bits,
-    block_size                               bsize)
+    BlockSize                               bsize)
 {
     UNUSED(picture_control_set_ptr);
     UNUSED(bsize);
@@ -1560,7 +1560,7 @@ EbErrorType  Av1MergeSkipFullCost(
     uint64_t                               *y_coeff_bits,
     uint64_t                               *cb_coeff_bits,
     uint64_t                               *cr_coeff_bits,
-    block_size                               bsize)
+    BlockSize                               bsize)
 {
     UNUSED(bsize);
     UNUSED(context_ptr);
@@ -1717,7 +1717,7 @@ EbErrorType av1_intra_full_cost(
     uint64_t                                 *y_coeff_bits,
     uint64_t                                 *cb_coeff_bits,
     uint64_t                                 *cr_coeff_bits,
-    block_size                              bsize)
+    BlockSize                              bsize)
 
 
 {
@@ -1770,7 +1770,7 @@ EbErrorType av1_inter_full_cost(
     uint64_t                                 *y_coeff_bits,
     uint64_t                                 *cb_coeff_bits,
     uint64_t                                 *cr_coeff_bits,
-    block_size                              bsize
+    BlockSize                              bsize
 )
 {
     EbErrorType  return_error = EB_ErrorNone;
@@ -1943,7 +1943,7 @@ void coding_loop_context_generation(
 
     // Skip and Dc sign context generation
 
-    block_size plane_bsize = context_ptr->blk_geom->bsize;
+    BlockSize plane_bsize = context_ptr->blk_geom->bsize;
 
     cu_ptr->luma_txb_skip_context = 0;
     cu_ptr->luma_dc_sign_context = 0;
@@ -2193,7 +2193,7 @@ EbErrorType av1_tu_calc_cost_luma(
     return return_error;
     }
 
-static INLINE int32_t partition_cdf_length(block_size bsize) {
+static INLINE int32_t partition_cdf_length(BlockSize bsize) {
     if (bsize <= BLOCK_8X8)
         return PARTITION_TYPES;
     else if (bsize == BLOCK_128X128)
@@ -2208,7 +2208,7 @@ static int32_t cdf_element_prob(const int32_t *cdf,
     return (element > 0 ? cdf[element - 1] : CDF_PROB_TOP) - cdf[element];
 }
 static void partition_gather_horz_alike(int32_t *out,
-    block_size bsize,
+    BlockSize bsize,
     const int32_t *const in) {
     out[0] = CDF_PROB_TOP;
     out[0] -= cdf_element_prob(in, PARTITION_HORZ);
@@ -2222,7 +2222,7 @@ static void partition_gather_horz_alike(int32_t *out,
 }
 
 static void partition_gather_vert_alike(int32_t *out,
-    block_size bsize,
+    BlockSize bsize,
     const int32_t *const in) {
     out[0] = CDF_PROB_TOP;
     out[0] -= cdf_element_prob(in, PARTITION_VERT);
@@ -2236,9 +2236,9 @@ static void partition_gather_vert_alike(int32_t *out,
 }
 
 //static INLINE int32_t partition_plane_context(const MacroBlockD *xd, int32_t mi_row,
-//    int32_t mi_col, block_size bsize) {
-//    const PARTITION_CONTEXT *above_ctx = xd->above_seg_context + mi_col;
-//    const PARTITION_CONTEXT *left_ctx =
+//    int32_t mi_col, BlockSize bsize) {
+//    const PartitionContextType *above_ctx = xd->above_seg_context + mi_col;
+//    const PartitionContextType *left_ctx =
 //        xd->left_seg_context + (mi_row & MAX_MIB_MASK);
 //    // Minimum partition point is 8x8. Offset the bsl accordingly.
 //    const int32_t bsl = mi_size_wide_log2[bsize] - mi_size_wide_log2[BLOCK_8X8];
@@ -2289,7 +2289,7 @@ EbErrorType av1_split_flag_rate(
 
     uint32_t cu_depth = blk_geom->depth;
     UNUSED(cu_depth);
-    block_size bsize = blk_geom->bsize;
+    BlockSize bsize = blk_geom->bsize;
     ASSERT(bsize<BlockSizeS_ALL);
     const int32_t is_partition_point = blk_geom->bsize >= BLOCK_8X8;
 
@@ -2302,8 +2302,8 @@ EbErrorType av1_split_flag_rate(
 
         uint32_t contextIndex = 0;
 
-        const PARTITION_CONTEXT left_ctx = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition == (int8_t)(INVALID_NEIGHBOR_DATA) ? 0 : context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition;
-        const PARTITION_CONTEXT above_ctx = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition == (int8_t)(INVALID_NEIGHBOR_DATA) ? 0 : context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition;
+        const PartitionContextType left_ctx = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition == (int8_t)(INVALID_NEIGHBOR_DATA) ? 0 : context_ptr->md_local_cu_unit[cu_ptr->mds_idx].left_neighbor_partition;
+        const PartitionContextType above_ctx = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition == (int8_t)(INVALID_NEIGHBOR_DATA) ? 0 : context_ptr->md_local_cu_unit[cu_ptr->mds_idx].above_neighbor_partition;
 
         const int32_t bsl = mi_size_wide_log2[bsize] - mi_size_wide_log2[BLOCK_8X8];
 

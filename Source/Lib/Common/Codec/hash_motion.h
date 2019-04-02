@@ -53,7 +53,7 @@ void av1_generate_block_2x2_hash_value(const Yv12BufferConfig *picture,
                                        int8_t *pic_block_same_info[3],
                                       struct PictureControlSet * pcs);
 void av1_generate_block_hash_value(const Yv12BufferConfig *picture,
-                                   int block_size,
+                                   int BlockSize,
                                    uint32_t *src_pic_block_hash[2],
                                    uint32_t *dst_pic_block_hash[2],
                                    int8_t *src_pic_block_same_info[3],
@@ -63,17 +63,17 @@ void av1_add_to_hash_map_by_row_with_precal_data(hash_table *p_hash_table,
                                                  uint32_t *pic_hash[2],
                                                  int8_t *pic_is_same,
                                                  int pic_width, int pic_height,
-                                                 int block_size);
+                                                 int BlockSize);
 
 // check whether the block starts from (x_start, y_start) with the size of
-// block_size x block_size has the same color in all rows
+// BlockSize x BlockSize has the same color in all rows
 int av1_hash_is_horizontal_perfect(const Yv12BufferConfig *picture,
-                                   int block_size, int x_start, int y_start);
+                                   int BlockSize, int x_start, int y_start);
 // check whether the block starts from (x_start, y_start) with the size of
-// block_size x block_size has the same color in all columns
+// BlockSize x BlockSize has the same color in all columns
 int av1_hash_is_vertical_perfect(const Yv12BufferConfig *picture,
-                                 int block_size, int x_start, int y_start);
-void av1_get_block_hash_value(uint8_t *y_src, int stride, int block_size,
+                                 int BlockSize, int x_start, int y_start);
+void av1_get_block_hash_value(uint8_t *y_src, int stride, int BlockSize,
                               uint32_t *hash_value1, uint32_t *hash_value2,
                               int use_highbitdepth, struct PictureControlSet * pcs, struct IntraBcContext /*MACROBLOCK*/ *x);
 

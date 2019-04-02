@@ -2930,13 +2930,13 @@ void av1_lowbd_inv_txfm2d_add_ssse3(const int32_t *input, uint8_t *output,
         break;
     }
 }
-void av1_inv_txfm_add_ssse3(const tran_low_t *dqcoeff, uint8_t *dst, int32_t stride,
-    const TxfmParam *txfm_param) {
-    const TxType tx_type = txfm_param->tx_type;
-    //f (!txfm_param->lossless) {
+void av1_inv_txfm_add_ssse3(const TranLow *dqcoeff, uint8_t *dst, int32_t stride,
+    const TxfmParam *TxfmParam) {
+    const TxType tx_type = TxfmParam->tx_type;
+    //f (!TxfmParam->lossless) {
     av1_lowbd_inv_txfm2d_add_ssse3(dqcoeff, dst, stride, tx_type,
-        txfm_param->tx_size, txfm_param->eob);
+        TxfmParam->tx_size, TxfmParam->eob);
     //else {
-   // av1_inv_txfm_add_c(dqcoeff, dst, stride, txfm_param);
+   // av1_inv_txfm_add_c(dqcoeff, dst, stride, TxfmParam);
    // }
 }

@@ -72,8 +72,8 @@ extern "C" {
         unsigned                    full_distortion                 : 32;
         unsigned                    chroma_distortion               : 32;
         unsigned                    chroma_distortion_inter_depth   : 32;
-        PARTITION_CONTEXT           left_neighbor_partition;
-        PARTITION_CONTEXT           above_neighbor_partition;
+        PartitionContextType           left_neighbor_partition;
+        PartitionContextType           above_neighbor_partition;
         uint64_t                    cost;
         uint64_t                    cost_luma;
         CandidateMv ed_ref_mv_stack[MODE_CTX_REF_FRAMES][MAX_REF_MV_STACK_SIZE];//to be used in MD and EncDec

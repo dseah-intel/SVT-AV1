@@ -33,7 +33,7 @@
 #define S4  4*4
 
 int32_t av1_loop_restoration_corners_in_sb(Av1Common *cm, int32_t plane,
-    int32_t mi_row, int32_t mi_col, block_size bsize,
+    int32_t mi_row, int32_t mi_col, BlockSize bsize,
     int32_t *rcol0, int32_t *rcol1, int32_t *rrow0,
     int32_t *rrow1, int32_t *tile_tl_idx);
 
@@ -44,11 +44,11 @@ int32_t av1_loop_restoration_corners_in_sb(Av1Common *cm, int32_t plane,
 #define OD_ILOG_NZ(x) (OD_CLZ0 - OD_CLZ(x))
 #endif
 
-static INLINE int32_t is_comp_ref_allowed(block_size bsize) {
+static INLINE int32_t is_comp_ref_allowed(BlockSize bsize) {
     return AOMMIN(block_size_wide[bsize], block_size_high[bsize]) >= 8;
 }
 int32_t av1_loop_restoration_corners_in_sb(Av1Common *cm, int32_t plane,
-    int32_t mi_row, int32_t mi_col, block_size bsize,
+    int32_t mi_row, int32_t mi_col, BlockSize bsize,
     int32_t *rcol0, int32_t *rcol1, int32_t *rrow0,
     int32_t *rrow1, int32_t *tile_tl_idx);
 
@@ -292,7 +292,7 @@ static INLINE int16_t GetBrCtx(
     const int16_t row = c >> bwl;
     const int16_t col = c - (row << bwl);
     const int16_t stride = (1 << bwl) + TX_PAD_HOR;
-    const TX_CLASS tx_class = tx_type_to_class[tx_type];
+    const TxClass tx_class = tx_type_to_class[tx_type];
     const int16_t pos = row * stride + col;
     int16_t mag = levels[pos + 1];
     mag += levels[pos + stride];
@@ -329,7 +329,7 @@ void get_txb_ctx(
     NeighborArrayUnit     *dc_sign_level_coeff_neighbor_array,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
-    const block_size        plane_bsize,
+    const BlockSize        plane_bsize,
     const TxSize           tx_size,
     int16_t *const           txb_skip_ctx,
     int16_t *const           dc_sign_ctx) {
@@ -692,7 +692,7 @@ static EbErrorType Av1EncodeCoeff1D(
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
     uint32_t                  intraLumaDir,
-    block_size              plane_bsize,
+    BlockSize              plane_bsize,
     EbPictureBufferDesc  *coeff_ptr,
     NeighborArrayUnit     *luma_dc_sign_level_coeff_neighbor_array,
     NeighborArrayUnit     *cr_dc_sign_level_coeff_neighbor_array,
@@ -890,7 +890,7 @@ static EbErrorType Av1EncodeCoeff1D(
 *********************************************************************/
 // Return the number of elements in the partition CDF when
 // partitioning the (square) block with luma block size of bsize.
-static INLINE int32_t partition_cdf_length(block_size bsize) {
+static INLINE int32_t partition_cdf_length(BlockSize bsize) {
     if (bsize <= BLOCK_8X8)
         return PARTITION_TYPES;
     else if (bsize == BLOCK_128X128)
@@ -905,7 +905,7 @@ static int32_t cdf_element_prob(const aom_cdf_prob *const cdf,
 }
 static void partition_gather_horz_alike(aom_cdf_prob *out,
     const aom_cdf_prob *const in,
-    block_size bsize) {
+    BlockSize bsize) {
 
 
     out[0] = CDF_PROB_TOP;
@@ -920,7 +920,7 @@ static void partition_gather_horz_alike(aom_cdf_prob *out,
 }
 static void partition_gather_vert_alike(aom_cdf_prob *out,
     const aom_cdf_prob *const in,
-    block_size bsize) {
+    BlockSize bsize) {
     out[0] = CDF_PROB_TOP;
     out[0] -= cdf_element_prob(in, PARTITION_VERT);
     out[0] -= cdf_element_prob(in, PARTITION_SPLIT);
@@ -935,7 +935,7 @@ static void EncodePartitionAv1(
     SequenceControlSet    *sequence_control_set_ptr,
     FRAME_CONTEXT           *frameContext,
     aom_writer              *ec_writer,
-    block_size              bsize,
+    BlockSize              bsize,
     PartitionType          p,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -959,9 +959,9 @@ static void EncodePartitionAv1(
 
     uint32_t contextIndex = 0;
 
-    const PARTITION_CONTEXT above_ctx = (((PartitionContext*)partition_context_neighbor_array->top_array)[partitionContextTopNeighborIndex].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
+    const PartitionContextType above_ctx = (((PartitionContext*)partition_context_neighbor_array->top_array)[partitionContextTopNeighborIndex].above == (int8_t)INVALID_NEIGHBOR_DATA) ?
         0 : ((PartitionContext*)partition_context_neighbor_array->top_array)[partitionContextTopNeighborIndex].above;
-    const PARTITION_CONTEXT left_ctx = (((PartitionContext*)partition_context_neighbor_array->left_array)[partitionContextLeftNeighborIndex].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
+    const PartitionContextType left_ctx = (((PartitionContext*)partition_context_neighbor_array->left_array)[partitionContextLeftNeighborIndex].left == (int8_t)INVALID_NEIGHBOR_DATA) ?
         0 : ((PartitionContext*)partition_context_neighbor_array->left_array)[partitionContextLeftNeighborIndex].left;
 
     const int32_t bsl = mi_size_wide_log2[bsize] - mi_size_wide_log2[BLOCK_8X8];
@@ -1115,7 +1115,7 @@ static void EncodeIntraLumaModeNonKeyAv1(
     aom_writer              *ec_writer,
     CodingUnit_t            *cu_ptr,
 
-    block_size                bsize,
+    BlockSize                bsize,
     uint32_t                  luma_mode)
 {
 
@@ -1283,7 +1283,7 @@ static INLINE int is_inter_mode(PredictionMode mode)
 
 static INLINE int is_global_mv_block(
     const PredictionMode          mode,
-    const block_size               bsize,
+    const BlockSize               bsize,
     TransformationType            type)
 {
     return (mode == GLOBALMV || mode == GLOBAL_GLOBALMV)
@@ -1292,10 +1292,10 @@ static INLINE int is_global_mv_block(
 }
 
 
-MOTION_MODE motion_mode_allowed(
+MotionMode motion_mode_allowed(
     const PictureControlSet       *picture_control_set_ptr,
     const CodingUnit_t              *cu_ptr,
-    const block_size                 bsize,
+    const BlockSize                 bsize,
     MvReferenceFrame                rf0,
     MvReferenceFrame                rf1,
     PredictionMode                  mode)
@@ -1337,15 +1337,15 @@ MOTION_MODE motion_mode_allowed(
 static void write_motion_mode(
     FRAME_CONTEXT            *frame_context,
     aom_writer               *ec_writer,
-    block_size                 bsize,
-    MOTION_MODE               motion_mode,
+    BlockSize                 bsize,
+    MotionMode               motion_mode,
     MvReferenceFrame          rf0,
     MvReferenceFrame          rf1,
     CodingUnit_t             *cu_ptr,
     PictureControlSet      *picture_control_set_ptr)
 {
     const PredictionMode mode = cu_ptr->prediction_unit_array[0].inter_mode;
-    MOTION_MODE last_motion_mode_allowed =
+    MotionMode last_motion_mode_allowed =
         motion_mode_allowed(picture_control_set_ptr, cu_ptr, bsize, rf0, rf1, mode);
 
     switch (last_motion_mode_allowed) {
@@ -1869,7 +1869,7 @@ int32_t av1_get_pred_context_switchable_interp(
     MvReferenceFrame             rf0,
     MvReferenceFrame             rf1,
     CodingUnit_t                  *cu_ptr,
-    block_size sb_type,
+    BlockSize sb_type,
     PictureParentControlSet   *pcs_ptr) {
     int32_t ref;
 
@@ -1891,7 +1891,7 @@ static int32_t av1_is_interp_needed(
     MvReferenceFrame            rf0,
     MvReferenceFrame            rf1,
     CodingUnit_t               *cu_ptr,
-    block_size                   bsize,
+    BlockSize                   bsize,
     PictureParentControlSet  *pcs_ptr)
 {
     if (cu_ptr->skip_flag)
@@ -1908,7 +1908,7 @@ static int32_t av1_is_interp_needed(
 
 void write_mb_interp_filter(
     NeighborArrayUnit     *ref_frame_type_neighbor_array,
-    block_size bsize,
+    BlockSize bsize,
     MvReferenceFrame rf0,
     MvReferenceFrame rf1,
     PictureParentControlSet   *pcs_ptr,
@@ -2412,7 +2412,7 @@ static void WriteRefFrames(
     aom_writer                  *ec_writer,
     PictureParentControlSet   *pcs_ptr,
     CodingUnit_t                *cu_ptr,
-    block_size                   bsize,
+    BlockSize                   bsize,
     uint32_t                       cu_origin_x,
     uint32_t                       cu_origin_y,
     NeighborArrayUnit         *mode_type_neighbor_array,
@@ -2458,7 +2458,7 @@ static void WriteRefFrames(
 
         int32_t context = 0;
         if (is_compound) {
-            const COMP_REFERENCE_TYPE comp_ref_type = /*has_uni_comp_refs(mbmi)
+            const CompReferenceType comp_ref_type = /*has_uni_comp_refs(mbmi)
                                                       ? UNIDIR_COMP_REFERENCE
                                                       : */BIDIR_COMP_REFERENCE;
             MvReferenceFrame refType[2];
@@ -2687,7 +2687,7 @@ static void encode_loopfilter(PictureParentControlSet *pcs_ptr, struct AomWriteB
     if (pcs_ptr->allow_intrabc) return;
     const int32_t num_planes = 3;// av1_num_planes(pcs_ptr);
 
-    struct loopfilter *lf = &pcs_ptr->lf;
+    struct LoopFilter *lf = &pcs_ptr->lf;
 
     // Encode the loop filter level and type
     aom_wb_write_literal(wb, lf->filter_level[0], 6);
@@ -4488,7 +4488,7 @@ static void write_sgrproj_filter(const SgrprojInfo *sgrproj_info,
     SgrprojInfo *ref_sgrproj_info,
     aom_writer *wb) {
     aom_write_literal(wb, sgrproj_info->ep, SGRPROJ_PARAMS_BITS);
-    const sgr_params_type *params = &sgr_params[sgrproj_info->ep];
+    const SgrParamsType *params = &sgr_params[sgrproj_info->ep];
 
     if (params->r[0] == 0) {
         assert(sgrproj_info->xqd[0] == 0);
@@ -4589,7 +4589,7 @@ EbErrorType ec_update_neighbors(
     uint32_t                 blkOriginX,
     uint32_t                 blkOriginY,
     CodingUnit_t            *cu_ptr,
-    block_size                bsize,
+    BlockSize                bsize,
     EbPictureBufferDesc   *coeff_ptr)
 {
     UNUSED(coeff_ptr);
@@ -4743,22 +4743,22 @@ EbErrorType ec_update_neighbors(
     return return_error;
 
 }
-int32_t is_chroma_reference(int32_t mi_row, int32_t mi_col, block_size bsize,
+int32_t is_chroma_reference(int32_t mi_row, int32_t mi_col, BlockSize bsize,
     int32_t subsampling_x, int32_t subsampling_y);
 
 static INLINE int av1_allow_palette(int allow_screen_content_tools,
-    block_size sb_type) {
+    BlockSize sb_type) {
     return allow_screen_content_tools && block_size_wide[sb_type] <= 64 &&
         block_size_high[sb_type] <= 64 && sb_type >= BLOCK_8X8;
 }
 
-static INLINE int av1_get_palette_bsize_ctx(block_size bsize) {
+static INLINE int av1_get_palette_bsize_ctx(BlockSize bsize) {
     return num_pels_log2_lookup[bsize] - num_pels_log2_lookup[BLOCK_8X8];
 }
 static void write_palette_mode_info(
     FRAME_CONTEXT           *ec_ctx,
     CodingUnit_t            *cu_ptr,
-    block_size bsize,
+    BlockSize bsize,
     int mi_row,
     int mi_col, aom_writer *w)
 {
@@ -4873,7 +4873,7 @@ EbErrorType write_modes_b(
     const BlockGeom          *blk_geom = get_blk_geom_mds(cu_ptr->mds_idx);
     uint32_t blkOriginX = context_ptr->sb_origin_x + blk_geom->origin_x;
     uint32_t blkOriginY = context_ptr->sb_origin_y + blk_geom->origin_y;
-    block_size bsize = blk_geom->bsize;
+    BlockSize bsize = blk_geom->bsize;
     EbBool                   skipCoeff = EB_FALSE;
     skipCoeff = cu_ptr->block_has_coeff ? 0 : 1;
 
@@ -4904,7 +4904,7 @@ EbErrorType write_modes_b(
             int32_t super_block_upper_left = (((blkOriginY >> 2) & (sequence_control_set_ptr->mib_size - 1)) == 0) && (((blkOriginX >> 2) & (sequence_control_set_ptr->mib_size - 1)) == 0);
             /*((mi_row & (cm->seq_params.mib_size - 1)) == 0) && ((mi_col & (cm->seq_params.mib_size - 1)) == 0);*/
 
-            block_size bsize = cu_size == 64 ? BLOCK_64X64 : cu_size == 32 ? BLOCK_32X32 : cu_size == 16 ? BLOCK_16X16 : cu_size == 8 ? BLOCK_8X8 : BLOCK_4X4;
+            BlockSize bsize = cu_size == 64 ? BLOCK_64X64 : cu_size == 32 ? BLOCK_32X32 : cu_size == 16 ? BLOCK_16X16 : cu_size == 8 ? BLOCK_8X8 : BLOCK_4X4;
             if (cu_size == 8 && cu_ptr->prediction_mode_flag == INTRA_MODE && cu_ptr->pred_mode == INTRA_MODE_4x4) {
                 bsize = BLOCK_4X4;
             }
@@ -5035,7 +5035,7 @@ EbErrorType write_modes_b(
             int32_t super_block_upper_left = (((blkOriginY >> 2) & (sequence_control_set_ptr->mib_size - 1)) == 0) && (((blkOriginX >> 2) & (sequence_control_set_ptr->mib_size - 1)) == 0);
             /*((mi_row & (cm->seq_params.mib_size - 1)) == 0) && ((mi_col & (cm->seq_params.mib_size - 1)) == 0);*/
 
-            block_size bsize = cu_size == 64 ? BLOCK_64X64 : cu_size == 32 ? BLOCK_32X32 : cu_size == 16 ? BLOCK_16X16 : cu_size == 8 ? BLOCK_8X8 : BLOCK_4X4;
+            BlockSize bsize = cu_size == 64 ? BLOCK_64X64 : cu_size == 32 ? BLOCK_32X32 : cu_size == 16 ? BLOCK_16X16 : cu_size == 8 ? BLOCK_8X8 : BLOCK_4X4;
             if (cu_size == 8 && cu_ptr->prediction_mode_flag == INTRA_MODE && cu_ptr->pred_mode == INTRA_MODE_4x4) {
                 bsize = BLOCK_4X4;
             }
@@ -5311,7 +5311,7 @@ EB_EXTERN EbErrorType write_sb(
     uint32_t                    final_cu_index = 0;
     uint32_t                    cu_origin_x;
     uint32_t                    cu_origin_y;
-    block_size                bsize;
+    BlockSize                bsize;
 
     context_ptr->coded_area_sb = 0;
     context_ptr->coded_area_sb_uv = 0;

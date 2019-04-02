@@ -605,7 +605,7 @@ static const int32_t mode_lf_lut[] = {
     1, 1, 1, 1, 1, 1, 0, 1  // INTER_COMPOUND_MODES (GLOBAL_GLOBALMV == 0)
 };
 
-static void update_sharpness(loop_filter_info_n *lfi, int32_t sharpness_lvl) {
+static void update_sharpness(LoopFilterInfoN *lfi, int32_t sharpness_lvl) {
     int32_t lvl;
 
     // For each possible value for the loop filter fill out limits
@@ -627,7 +627,7 @@ static void update_sharpness(loop_filter_info_n *lfi, int32_t sharpness_lvl) {
 }
 static uint8_t get_filter_level(
     const PictureControlSet *pcs_ptr,
-    const loop_filter_info_n *lfi_n,
+    const LoopFilterInfoN *lfi_n,
     const int32_t dir_idx, int32_t plane,
     const MbModeInfo *mbmi) {
 
@@ -678,8 +678,8 @@ static uint8_t get_filter_level(
 
 void av1_loop_filter_init(PictureControlSet *pcs_ptr) {
     //assert(MB_MODE_COUNT == n_elements(mode_lf_lut));
-    loop_filter_info_n *lfi = &pcs_ptr->parent_pcs_ptr->lf_info;
-    struct loopfilter *lf = &pcs_ptr->parent_pcs_ptr->lf;
+    LoopFilterInfoN *lfi = &pcs_ptr->parent_pcs_ptr->lf_info;
+    struct LoopFilter *lf = &pcs_ptr->parent_pcs_ptr->lf;
     int32_t lvl;
 
     lf->combine_vert_horz_lf = 1;
@@ -703,8 +703,8 @@ void av1_loop_filter_frame_init(PictureControlSet *pcs_ptr, int32_t plane_start,
     // n_shift is the multiplier for lf_deltas
     // the multiplier is 1 for when filter_lvl is between 0 and 31;
     // 2 when filter_lvl is between 32 and 63
-    loop_filter_info_n *const lfi = &pcs_ptr->parent_pcs_ptr->lf_info;
-    struct loopfilter *const lf = &pcs_ptr->parent_pcs_ptr->lf;
+    LoopFilterInfoN *const lfi = &pcs_ptr->parent_pcs_ptr->lf_info;
+    struct LoopFilter *const lf = &pcs_ptr->parent_pcs_ptr->lf;
     // const struct segmentation *const seg = &pcs_ptr->parent_pcs_ptr->seg;
 
      // update sharpness limits
@@ -775,7 +775,7 @@ static INLINE int32_t scaled_buffer_offset(int32_t x_offset, int32_t y_offset, i
         /*sf ? sf->scale_value_y(y_offset, sf) >> SCALE_EXTRA_BITS :*/ y_offset;
     return y * stride + x;
 }
-static INLINE void setup_pred_plane(struct Buf2d *dst, block_size bsize,
+static INLINE void setup_pred_plane(struct Buf2d *dst, BlockSize bsize,
     uint8_t *src, int32_t width, int32_t height,
     int32_t stride, int32_t mi_row, int32_t mi_col,
     /*const struct scale_factors *scale,*/
@@ -795,7 +795,7 @@ static INLINE void setup_pred_plane(struct Buf2d *dst, block_size bsize,
     dst->height = height;
     dst->stride = stride;
 }
-void av1_setup_dst_planes(struct MacroblockdPlane *planes, block_size bsize,
+void av1_setup_dst_planes(struct MacroblockdPlane *planes, BlockSize bsize,
     //const Yv12BufferConfig *src,
     const EbPictureBufferDesc *src,
     int32_t mi_row, int32_t mi_col,
@@ -835,9 +835,9 @@ void av1_setup_dst_planes(struct MacroblockdPlane *planes, block_size bsize,
 
 
 static INLINE TxSize
-av1_get_max_uv_txsize(block_size bsize, const struct MacroblockdPlane *pd) {
+av1_get_max_uv_txsize(BlockSize bsize, const struct MacroblockdPlane *pd) {
 
-    const block_size plane_bsize = get_plane_block_size(bsize, pd->subsampling_x, pd->subsampling_y);
+    const BlockSize plane_bsize = get_plane_block_size(bsize, pd->subsampling_x, pd->subsampling_y);
 
     assert(plane_bsize < BlockSizeS_ALL);
     const TxSize uv_tx = max_txsize_rect_lookup[plane_bsize];
@@ -861,7 +861,7 @@ static TxSize get_transform_size(const MacroBlockD *const xd,
         : av1_get_max_uv_txsize(mbmi->sb_type, plane_ptr);
     assert(tx_size < TX_SIZES_ALL);
     //if ((plane == COMPONENT_LUMA) && is_inter_block(mbmi) && !mbmi->skip) {
-    //    const block_size sb_type = mbmi->sb_type;
+    //    const BlockSize sb_type = mbmi->sb_type;
     //    const int32_t blk_row = mi_row & (mi_size_high[sb_type] - 1);
     //    const int32_t blk_col = mi_col & (mi_size_wide[sb_type] - 1);
     //    const TxSize mb_tx_size =
@@ -963,7 +963,7 @@ static TxSize set_lpf_parameters(
 
                     const int32_t pv_skip = mi_prev->skip && is_inter_block(mi_prev);
 
-                    const block_size bsize =
+                    const BlockSize bsize =
                         get_plane_block_size(mbmi->sb_type, plane_ptr->subsampling_x, plane_ptr->subsampling_y);
                     ASSERT(bsize < BlockSizeS_ALL);
                     const int32_t prediction_masks = edge_dir == VERT_EDGE
@@ -1000,7 +1000,7 @@ static TxSize set_lpf_parameters(
             }
             // prepare common parameters
             if (params->filter_length) {
-                const loop_filter_thresh *const limits = pcs_ptr->parent_pcs_ptr->lf_info.lfthr + level;
+                const LoopFilterThresh *const limits = pcs_ptr->parent_pcs_ptr->lf_info.lfthr + level;
                 params->lim = limits->lim;
                 params->mblim = limits->mblim;
                 params->hev_thr = limits->hev_thr;
@@ -1388,7 +1388,7 @@ void av1_loop_filter_frame(
     }
 
 }
-extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, aom_bit_depth_t bit_depth);
+extern int16_t av1_ac_quant_Q3(int32_t qindex, int32_t delta, AomBitDepth bit_depth);
 
 void EbCopyBuffer(
     EbPictureBufferDesc  *srcBuffer,
@@ -1857,7 +1857,7 @@ void av1_pick_filter_level(
     SequenceControlSet *scs_ptr = (SequenceControlSet*)pcs_ptr->parent_pcs_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     const int32_t num_planes = 3;
     (void)srcBuffer;
-    struct loopfilter *const lf = &pcs_ptr->parent_pcs_ptr->lf;
+    struct LoopFilter *const lf = &pcs_ptr->parent_pcs_ptr->lf;
     lf->sharpness_level = pcs_ptr->parent_pcs_ptr->av1_frame_type == KEY_FRAME ? 0 : LF_SHARPNESS;
 
     if (method == LPF_PICK_MINIMAL_LPF) {
@@ -1867,7 +1867,7 @@ void av1_pick_filter_level(
     else if (method >= LPF_PICK_FROM_Q) {
         const int32_t min_filter_level = 0;
         const int32_t max_filter_level = MAX_LOOP_FILTER;// av1_get_max_filter_level(cpi);
-        const int32_t q = av1_ac_quant_Q3(pcs_ptr->parent_pcs_ptr->base_qindex, 0, (aom_bit_depth_t)scs_ptr->static_config.encoder_bit_depth);
+        const int32_t q = av1_ac_quant_Q3(pcs_ptr->parent_pcs_ptr->base_qindex, 0, (AomBitDepth)scs_ptr->static_config.encoder_bit_depth);
         // These values were determined by linear fitting the result of the
         // searched level for 8 bit depth:
         // Keyframes: filt_guess = q * 0.06699 - 1.60817
