@@ -476,7 +476,7 @@ void av1_dr_prediction_z2_c(uint8_t *dst, ptrdiff_t stride, int32_t bw, int32_t 
 
 
 /* clang-format on */
-void IntraModePlanar(
+void intra_mode_planar(
     const uint32_t   size,                       //input parameter, denotes the size of the current PU
     uint8_t         *ref_samples,                 //input parameter, pointer to the reference samples
     uint8_t         *dst,              //output parameter, pointer to the prediction
@@ -999,7 +999,7 @@ void h_predictor_16bit(uint16_t *dst, const uint32_t stride, int32_t bw, int32_t
     return;
 }
 
-void IntraModeAngular_AV1_Z1_16bit(
+void intra_mode_angular_av1_z1_16bit(
     const uint32_t   size,                    //input parameter, denotes the size of the current PU
     uint16_t         *ref_samples,             //input parameter, pointer to the reference samples
     uint16_t         *dst,                    //output parameter, pointer to the prediction
@@ -1053,7 +1053,7 @@ void IntraModeAngular_AV1_Z1_16bit(
 
     return;
 }
-void IntraModeAngular_AV1_Z2_16bit(
+void intra_mode_angular_av1_z2_16bit(
     const uint32_t   size,                       //input parameter, denotes the size of the current PU
     uint16_t         *ref_samples,                 //input parameter, pointer to the reference samples
     uint16_t         *dst,              //output parameter, pointer to the prediction
@@ -1108,7 +1108,7 @@ void IntraModeAngular_AV1_Z2_16bit(
 
     return;
 }
-void IntraModeAngular_AV1_Z3_16bit(
+void intra_mode_angular_av1_z3_16bit(
     const uint32_t   size,                        //input parameter, denotes the size of the current PU
     uint16_t         *ref_samples,                  //input parameter, pointer to the reference samples
     uint16_t         *dst,                         //output parameter, pointer to the prediction

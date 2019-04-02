@@ -158,69 +158,7 @@ extern "C" {
         uint8_t                         *left_col,
         MotionEstimationContext_t       *context_ptr);                  // input parameter, ME context
 
-    /***************************************
-    * Function Ptr Types
-    ***************************************/
-    typedef void(*EB_INTRA_NOANG_TYPE)(
-        const uint32_t      size,
-        uint8_t            *ref_samples,
-        uint8_t            *prediction_ptr,
-        const uint32_t      prediction_buffer_stride,
-        const EbBool        skip);
-
-    typedef void(*EB_INTRA_DC_AV1_TYPE)(
-        EbBool        is_left_availble,
-        EbBool        is_above_availble,
-        const uint32_t   size,                       //input parameter, denotes the size of the current PU
-        uint8_t         *ref_samples,                 //input parameter, pointer to the reference samples
-        uint8_t         *dst,              //output parameter, pointer to the prediction
-        const uint32_t   prediction_buffer_stride,     //input parameter, denotes the stride for the prediction ptr
-        const EbBool  skip);                       //skip half rows
-
-    typedef uint32_t(*EB_NEIGHBOR_DC_INTRA_TYPE)(
-        MotionEstimationContext_t       *context_ptr,
-        EbPictureBufferDesc           *input_ptr,
-        uint32_t                           src_origin_x,
-        uint32_t                           src_origin_y,
-        uint32_t                           block_size,
-        EbAsm                              asm_type);
-
-    typedef void(*EB_INTRA_NOANG_16bit_TYPE)(
-        const uint32_t   size,
-        uint16_t         *ref_samples,
-        uint16_t         *prediction_ptr,
-        const uint32_t   prediction_buffer_stride,
-        const EbBool  skip);
-
-
-    typedef void(*EB_INTRA_ANG_Z1_Z2_Z3_16bit_TYPE)(
-        const uint32_t   size,
-        uint16_t         *ref_samples,
-        uint16_t         *dst,
-        const uint32_t   prediction_buffer_stride,
-        const EbBool  skip,
-        uint16_t          dx,
-        uint16_t          dy,
-        uint16_t          bd);
-
-
-    typedef void(*EB_INTRA_ANG_TYPE)(
-        uint32_t            size,
-        uint8_t            *ref_samp_main,
-        uint8_t            *prediction_ptr,
-        uint32_t            prediction_buffer_stride,
-        const EbBool     skip,
-        int32_t            intra_pred_angle);
-
-    typedef void(*EB_INTRA_ANG_16BIT_TYPE)(
-        uint32_t          size,                       //input parameter, denotes the size of the current PU
-        uint16_t         *ref_samp_main,                //input parameter, pointer to the reference samples
-        uint16_t         *prediction_ptr,              //output parameter, pointer to the prediction
-        uint32_t            prediction_buffer_stride,     //input parameter, denotes the stride for the prediction ptr
-        const EbBool   skip,
-        int32_t   intra_pred_angle);
-
-    extern void IntraModePlanar(
+    extern void intra_mode_planar(
         const uint32_t   size,                       //input parameter, denotes the size of the current PU
         uint8_t         *ref_samples,                 //input parameter, pointer to the reference samples
         uint8_t         *dst,              //output parameter, pointer to the prediction
@@ -239,7 +177,7 @@ extern "C" {
         const uint32_t   prediction_buffer_stride,     //input parameter, denotes the stride for the prediction ptr
         const EbBool  skip);
 
-    void IntraModeAngular_AV1_Z1_16bit(
+    void intra_mode_angular_av1_z1_16bit(
         const uint32_t   size,                    //input parameter, denotes the size of the current PU
         uint16_t         *ref_samples,             //input parameter, pointer to the reference samples
         uint16_t         *dst,                    //output parameter, pointer to the prediction
@@ -249,7 +187,7 @@ extern "C" {
         uint16_t          dy,                      //output parameter, pointer to the prediction
         uint16_t          bd);
 
-    void IntraModeAngular_AV1_Z2_16bit(
+    void intra_mode_angular_av1_z2_16bit(
         const uint32_t   size,                       //input parameter, denotes the size of the current PU
         uint16_t         *ref_samples,                 //input parameter, pointer to the reference samples
         uint16_t         *dst,              //output parameter, pointer to the prediction
@@ -259,7 +197,7 @@ extern "C" {
         uint16_t          dy,              //output parameter, pointer to the prediction
         uint16_t          bd);
 
-    void IntraModeAngular_AV1_Z3_16bit(
+    void intra_mode_angular_av1_z3_16bit(
         const uint32_t   size,                       //input parameter, denotes the size of the current PU
         uint16_t         *ref_samples,                 //input parameter, pointer to the reference samples
         uint16_t         *dst,              //output parameter, pointer to the prediction
@@ -269,214 +207,6 @@ extern "C" {
         uint16_t          dy,              //output parameter, pointer to the prediction
         uint16_t          bd);
 
-    static EB_INTRA_NOANG_TYPE FUNC_TABLE IntraSmoothH_Av1_funcPtrArray[ASM_TYPE_TOTAL] = {
-        // NON_AVX2
-        ebav1_smooth_h_predictor,
-        // AVX2
-        ebav1_smooth_h_predictor,
-    };
-    static EB_INTRA_NOANG_TYPE FUNC_TABLE IntraSmoothV_Av1_funcPtrArray[ASM_TYPE_TOTAL] = {
-        // NON_AVX2
-        ebav1_smooth_v_predictor,
-        // AVX2
-        ebav1_smooth_v_predictor,
-    };
-
-    static EB_INTRA_ANG_Z1_Z2_Z3_16bit_TYPE FUNC_TABLE IntraModeAngular_AV1_Z1_16bit_funcPtrArray[9][ASM_TYPE_TOTAL] = {
-        // 4x4
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            intra_mode_angular_av1_z1_16bit_4x4_avx2,
-        },
-        // 8x8
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            intra_mode_angular_av1_z1_16bit_8x8_avx2,
-        },
-        // 16x16
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            intra_mode_angular_av1_z1_16bit_16x16_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-        },
-        // 32x32
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            intra_mode_angular_av1_z1_16bit_32x32_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-        },
-        // 64x64
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z1_16bit,
-            // AVX2
-            intra_mode_angular_av1_z1_16bit_64x64_avx2,
-        }
-    };
-    static EB_INTRA_ANG_Z1_Z2_Z3_16bit_TYPE FUNC_TABLE IntraModeAngular_AV1_Z2_16bit_funcPtrArray[9][ASM_TYPE_TOTAL] = {
-        // 4x4
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            intra_mode_angular_av1_z2_16bit_4x4_avx2,
-        },
-        // 8x8
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            intra_mode_angular_av1_z2_16bit_8x8_avx2,
-        },
-        // 16x16
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            intra_mode_angular_av1_z2_16bit_16x16_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-        },
-        // 32x32
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            intra_mode_angular_av1_z2_16bit_32x32_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-        },
-        // 64x64
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z2_16bit,
-            // AVX2
-            intra_mode_angular_av1_z2_16bit_64x64_avx2,
-        }
-    };
-    static EB_INTRA_ANG_Z1_Z2_Z3_16bit_TYPE FUNC_TABLE IntraModeAngular_AV1_Z3_16bit_funcPtrArray[9][ASM_TYPE_TOTAL] = {
-        // 4x4
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            intra_mode_angular_av1_z3_16bit_4x4_avx2,
-        },
-        // 8x8
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            intra_mode_angular_av1_z3_16bit_8x8_avx2,
-        },
-        // 16x16
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            intra_mode_angular_av1_z3_16bit_16x16_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-        },
-        // 32x32
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            intra_mode_angular_av1_z3_16bit_32x32_avx2,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-        },
-        // NxN
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-        },
-        // 64x64
-        {
-            // NON_AVX2
-            IntraModeAngular_AV1_Z3_16bit,
-            // AVX2
-            intra_mode_angular_av1_z3_16bit_64x64_avx2,
-        }
-    };
 
     extern void cfl_luma_subsampling_420_lbd_c(
         uint8_t *input, // AMIR-> Changed to 8 bit
@@ -493,78 +223,6 @@ extern "C" {
         int32_t round_offset,
         int32_t num_pel_log2);
 
-    // Declare a size-specific wrapper for the size-generic function. The compiler
-    // will inline the size generic function in here, the advantage is that the size
-    // will be constant allowing for loop unrolling and other constant propagated
-    // goodness.
-    //#define CFL_SUB_AVG_X(arch, width, height, round_offset, num_pel_log2)
-    //  void subtract_average_##width##x##height##_##arch(int16_t *pred_buf_q3) {
-    //    subtract_average_##arch(pred_buf_q3, width, height, round_offset,
-    //                            num_pel_log2);
-    //  }
-    //
-    //// Declare size-specific wrappers for all valid CfL sizes.
-    //#define CFL_SUB_AVG_FN(arch)
-    //  CFL_SUB_AVG_X(arch, 4, 4, 8, 4)
-    //  CFL_SUB_AVG_X(arch, 4, 8, 16, 5)
-    //  CFL_SUB_AVG_X(arch, 4, 16, 32, 6)
-    //  CFL_SUB_AVG_X(arch, 8, 4, 16, 5)
-    //  CFL_SUB_AVG_X(arch, 8, 8, 32, 6)
-    //  CFL_SUB_AVG_X(arch, 8, 16, 64, 7)
-    //  CFL_SUB_AVG_X(arch, 8, 32, 128, 8)
-    //  CFL_SUB_AVG_X(arch, 16, 4, 32, 6)
-    //  CFL_SUB_AVG_X(arch, 16, 8, 64, 7)
-    //  CFL_SUB_AVG_X(arch, 16, 16, 128, 8)
-    //  CFL_SUB_AVG_X(arch, 16, 32, 256, 9)
-    //  CFL_SUB_AVG_X(arch, 32, 8, 128, 8)
-    //  CFL_SUB_AVG_X(arch, 32, 16, 256, 9)
-    //  CFL_SUB_AVG_X(arch, 32, 32, 512, 10)
-    //  cfl_subtract_average_fn get_subtract_average_fn_c(TxSize tx_size) {
-    //    static const cfl_subtract_average_fn sub_avg[TX_SIZES_ALL] = {
-    //      subtract_average_4x4_##arch,   /* 4x4 */
-    //      subtract_average_8x8_##arch,   /* 8x8 */
-    //      subtract_average_16x16_##arch, /* 16x16 */
-    //      subtract_average_32x32_##arch, /* 32x32 */
-    //      cfl_subtract_average_null,     /* 64x64 (invalid CFL size) */
-    //      subtract_average_4x8_##arch,   /* 4x8 */
-    //      subtract_average_8x4_##arch,   /* 8x4 */
-    //      subtract_average_8x16_##arch,  /* 8x16 */
-    //      subtract_average_16x8_##arch,  /* 16x8 */
-    //      subtract_average_16x32_##arch, /* 16x32 */
-    //      subtract_average_32x16_##arch, /* 32x16 */
-    //      cfl_subtract_average_null,     /* 32x64 (invalid CFL size) */
-    //      cfl_subtract_average_null,     /* 64x32 (invalid CFL size) */
-    //      subtract_average_4x16_##arch,  /* 4x16 (invalid CFL size) */
-    //      subtract_average_16x4_##arch,  /* 16x4 (invalid CFL size) */
-    //      subtract_average_8x32_##arch,  /* 8x32 (invalid CFL size) */
-    //      subtract_average_32x8_##arch,  /* 32x8 (invalid CFL size) */
-    //      cfl_subtract_average_null,     /* 16x64 (invalid CFL size) */
-    //      cfl_subtract_average_null,     /* 64x16 (invalid CFL size) */
-    //    };
-    //    /* Modulo TX_SIZES_ALL to ensure that an attacker won't be able to */
-    //    /* index the function pointer array out of bounds. */
-    //    return sub_avg[tx_size % TX_SIZES_ALL];
-    //  }
-    //
-    //#define get_subtract_average_fn get_subtract_average_fn_c
-
-    // Can we use CfL for the current block?
-    //static INLINE CFL_ALLOWED_TYPE is_cfl_allowed(const MacroBlockD *xd) {
-    //    const MbModeInfo *mbmi = xd->mi[0];
-    //    const block_size bsize = mbmi->sb_type;
-    //    assert(bsize < BlockSizeS_ALL);
-    //    //if (0/*xd->lossless[mbmi->segment_id]*/) {
-    //    //    // In lossless, CfL is available when the partition size is equal to the
-    //    //    // transform size.
-    //    //    const int32_t plane_bsize =
-    //    //        get_plane_block_size(bsize, &xd->plane[AOM_PLANE_U]);
-    //    //    return (CFL_ALLOWED_TYPE)(plane_bsize == BLOCK_4X4);
-    //    //}
-    //    // Spec: CfL is available to luma partitions lesser than or equal to 32x32
-    //    return (CFL_ALLOWED_TYPE)(block_size_wide[bsize] <= 32 &&
-    //        block_size_high[bsize] <= 32);
-    //}
-    /* Shift down with rounding for signed integers, for use when n >= 0 */
 
 #define ROUND_POWER_OF_TWO_SIGNED(value, n)           \
   (((value) < 0) ? -ROUND_POWER_OF_TWO(-(value), (n)) \
