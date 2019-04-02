@@ -721,7 +721,7 @@ void av1_quantize_inv_quantize(
 /****************************************
  ************  Full loop ****************
 ****************************************/
-void ProductFullLoop(
+void product_full_loop(
     ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr,
@@ -924,7 +924,7 @@ uint8_t allowed_tx_set_b[TX_SIZES_ALL][TX_TYPES] = {
 {1,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0}
 };
 
-void ProductFullLoopTxSearch(
+void product_full_loop_tx_search(
     ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     PictureControlSet            *picture_control_set_ptr)
@@ -1128,7 +1128,7 @@ void encode_pass_tx_search(
     PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
-    uint32_t                       cbQp,
+    uint32_t                       cb_qp,
     EbPictureBufferDesc          *coeffSamplesTB,          
     EbPictureBufferDesc          *residual16bit,           
     EbPictureBufferDesc          *transform16bit,          
@@ -1144,7 +1144,7 @@ void encode_pass_tx_search(
 
     (void)dZoffset;
     (void)use_delta_qp;
-    (void)cbQp;
+    (void)cb_qp;
     UNUSED(count_non_zero_coeffs);
     UNUSED(component_mask);
 
@@ -1270,7 +1270,7 @@ void encode_pass_tx_search(
         // Rate estimation function uses the values from CandidatePtr. The right values are copied from cu_ptr to CandidatePtr
         candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_Y] = cu_ptr->transform_unit_array[context_ptr->txb_itr].transform_type[PLANE_TYPE_Y];
         candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_UV] = cu_ptr->transform_unit_array[context_ptr->txb_itr].transform_type[PLANE_TYPE_UV];
-        EntropyCoder_t  *coeff_est_entropy_coder_ptr = picture_control_set_ptr->coeff_est_entropy_coder_ptr;
+        EntropyCoder  *coeff_est_entropy_coder_ptr = picture_control_set_ptr->coeff_est_entropy_coder_ptr;
         candidateBuffer->candidate_ptr->type = cu_ptr->prediction_mode_flag;
         candidateBuffer->candidate_ptr->pred_mode = cu_ptr->pred_mode;
 
@@ -1326,7 +1326,7 @@ void encode_pass_tx_search_hbd(
     PictureControlSet            *picture_control_set_ptr,
     EncDecContext_t                *context_ptr,
     LargestCodingUnit_t            *sb_ptr,
-    uint32_t                       cbQp,
+    uint32_t                       cb_qp,
     EbPictureBufferDesc          *coeffSamplesTB,
     EbPictureBufferDesc          *residual16bit,
     EbPictureBufferDesc          *transform16bit,
@@ -1342,7 +1342,7 @@ void encode_pass_tx_search_hbd(
 
     (void)dZoffset;
     (void)use_delta_qp;
-    (void)cbQp;
+    (void)cb_qp;
     UNUSED(component_mask);
     UNUSED(count_non_zero_coeffs);
 
@@ -1470,7 +1470,7 @@ void encode_pass_tx_search_hbd(
         // Rate estimation function uses the values from CandidatePtr. The right values are copied from cu_ptr to CandidatePtr
         candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_Y] = cu_ptr->transform_unit_array[context_ptr->txb_itr].transform_type[PLANE_TYPE_Y];
         candidateBuffer->candidate_ptr->transform_type[PLANE_TYPE_UV] = cu_ptr->transform_unit_array[context_ptr->txb_itr].transform_type[PLANE_TYPE_UV];
-        EntropyCoder_t  *coeff_est_entropy_coder_ptr = picture_control_set_ptr->coeff_est_entropy_coder_ptr;
+        EntropyCoder  *coeff_est_entropy_coder_ptr = picture_control_set_ptr->coeff_est_entropy_coder_ptr;
         candidateBuffer->candidate_ptr->type = cu_ptr->prediction_mode_flag;
         candidateBuffer->candidate_ptr->pred_mode = cu_ptr->pred_mode;
 
@@ -1526,20 +1526,20 @@ void encode_pass_tx_search_hbd(
 /****************************************
  ************  Full loop ****************
 ****************************************/
-void FullLoop_R(
+void full_loop_r(
     LargestCodingUnit_t            *sb_ptr,
     ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext          *context_ptr,
     EbPictureBufferDesc          *input_picture_ptr,
     PictureControlSet            *picture_control_set_ptr,
     uint32_t                          component_mask,
-    uint32_t                          cbQp,
-    uint32_t                          crQp,
+    uint32_t                          cb_qp,
+    uint32_t                          cr_qp,
     uint32_t                          *cb_count_non_zero_coeffs,
     uint32_t                          *cr_count_non_zero_coeffs)
 {
     (void)sb_ptr;
-    (void)crQp;
+    (void)cr_qp;
     (void)input_picture_ptr;
     int16_t                *chromaResidualPtr;
     uint32_t                 tuOriginIndex;
@@ -1622,7 +1622,7 @@ void FullLoop_R(
                 NOT_USED_VALUE,
                 &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cb)[txb_1d_offset]),
                 &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_cb)[txb_1d_offset]),
-                cbQp,
+                cb_qp,
                 context_ptr->blk_geom->tx_width_uv[txb_itr],
                 context_ptr->blk_geom->tx_height_uv[txb_itr],
                 context_ptr->blk_geom->txsize_uv[txb_itr],
@@ -1683,7 +1683,7 @@ void FullLoop_R(
                 NOT_USED_VALUE,
                 &(((int32_t*)candidateBuffer->residual_quant_coeff_ptr->buffer_cr)[txb_1d_offset]),
                 &(((int32_t*)candidateBuffer->recon_coeff_ptr->buffer_cr)[txb_1d_offset]),
-                cbQp,
+                cb_qp,
                 context_ptr->blk_geom->tx_width_uv[txb_itr],
                 context_ptr->blk_geom->tx_height_uv[txb_itr],
                 context_ptr->blk_geom->txsize_uv[txb_itr],
@@ -1712,7 +1712,7 @@ void FullLoop_R(
 //****************************************
 // ************ CuFullDistortionFastTuMode ****************
 //****************************************/
-void CuFullDistortionFastTuMode_R(
+void cu_full_distortion_fast_tu_mode_r(
     LargestCodingUnit_t            *sb_ptr,
     ModeDecisionCandidateBuffer  *candidateBuffer,
     ModeDecisionContext            *context_ptr,

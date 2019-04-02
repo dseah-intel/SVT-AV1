@@ -51,24 +51,24 @@ extern "C" {
     /**************************************
      * Extern Function Declarations
      **************************************/
-    struct EntropyCodingContext_s;
+    struct EntropyCodingContext;
     extern EbErrorType write_sb(
-        struct EntropyCodingContext_s   *context_ptr,
+        struct EntropyCodingContext   *context_ptr,
         LargestCodingUnit_t     *tbPtr,
         PictureControlSet     *picture_control_set_ptr,
-        EntropyCoder_t          *entropy_coder_ptr,
+        EntropyCoder          *entropy_coder_ptr,
         EbPictureBufferDesc   *coeffPtr);
 
 
     extern EbErrorType EncodeSliceFinish(
-        EntropyCoder_t        *entropy_coder_ptr);
+        EntropyCoder        *entropy_coder_ptr);
 
     extern EbErrorType ResetBitstream(
         EbPtr                 bitstreamPtr);
 
     extern EbErrorType ResetEntropyCoder(
         EncodeContext_t       *encode_context_ptr,
-        EntropyCoder_t        *entropy_coder_ptr,
+        EntropyCoder        *entropy_coder_ptr,
         uint32_t                 qp,
         EB_SLICE               slice_type);
 
@@ -78,7 +78,7 @@ extern "C" {
         CodingUnit_t                           *cu_ptr,
         uint32_t                                  tuOriginIndex,
         uint32_t                                  tuChromaOriginIndex,
-        EntropyCoder_t                         *entropy_coder_ptr,
+        EntropyCoder                         *entropy_coder_ptr,
         EbPictureBufferDesc                  *coeff_buffer_sb,
         uint32_t                                 yEob,
         uint32_t                                 cbEob,
@@ -92,7 +92,7 @@ extern "C" {
         EbAsm                                  asm_type);
 
     extern EbErrorType CopyRbspBitstreamToPayload(
-        Bitstream_t *bitstreamPtr,
+        Bitstream *bitstreamPtr,
         EbByte      outputBuffer,
         uint32_t      *outputBufferIndex,
         uint32_t      *outputBufferSize,
@@ -291,14 +291,14 @@ extern "C" {
 
 
     extern EbErrorType WriteFrameHeaderAv1(
-        Bitstream_t *bitstreamPtr,
+        Bitstream *bitstreamPtr,
         SequenceControlSet *scsPtr,
         PictureControlSet *pcsPtr,
         uint8_t showExisting);
     extern EbErrorType encode_td_av1(
         uint8_t *bitstreamPtr);
     extern EbErrorType EncodeSPSAv1(
-        Bitstream_t *bitstreamPtr,
+        Bitstream *bitstreamPtr,
         SequenceControlSet *scsPtr);
 
     //*******************************************************************************************//

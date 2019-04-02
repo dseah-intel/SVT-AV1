@@ -22,7 +22,7 @@
 /**************************************
  * Enc Dec Context
  **************************************/
-typedef struct EntropyCodingContext_s
+typedef struct EntropyCodingContext
 {
     EbFifo                       *enc_dec_input_fifo_ptr;
     EbFifo                       *entropy_coding_output_fifo_ptr;  // to packetization
@@ -71,18 +71,18 @@ typedef struct EntropyCodingContext_s
     EbBool                            is16bit; //enable 10 bit encode in CL
     int32_t                           coded_area_sb;
     int32_t                           coded_area_sb_uv;
-} EntropyCodingContext_t;
+} EntropyCodingContext;
 
 /**************************************
  * Extern Function Declarations
  **************************************/
 extern EbErrorType entropy_coding_context_ctor(
-    EntropyCodingContext_t **context_dbl_ptr,
+    EntropyCodingContext **context_dbl_ptr,
     EbFifo                *enc_dec_input_fifo_ptr,
     EbFifo                *packetization_output_fifo_ptr,
     EbFifo                *rate_control_output_fifo_ptr,
     EbBool                   is16bit);
 
-extern void* EntropyCodingKernel(void *input_ptr);
+extern void* entropy_coding_kernel(void *input_ptr);
 
 #endif // EbEntropyCodingProcess_h

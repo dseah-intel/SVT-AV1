@@ -13716,9 +13716,9 @@ extern "C" {
 
         struct PictureParentControlSet     *parent_pcs_ptr;  //The parent of this PCS.
         EbObjectWrapper                    *picture_parent_control_set_wrapper_ptr;
-        EntropyCoder_t                       *entropy_coder_ptr;
+        EntropyCoder                       *entropy_coder_ptr;
         // Packetization (used to encode SPS, PPS, etc)
-        Bitstream_t                          *bitstreamPtr;
+        Bitstream                          *bitstreamPtr;
 
         // Reference Lists
         EbObjectWrapper                    *ref_pic_ptr_array[MAX_NUM_OF_REF_PIC_LIST];
@@ -13797,7 +13797,7 @@ extern "C" {
         uint8_t                               enc_prev_quant_group_coded_qp[50];
 
         // EncDec Entropy Coder (for rate estimation)
-        EntropyCoder_t                       *coeff_est_entropy_coder_ptr;
+        EntropyCoder                       *coeff_est_entropy_coder_ptr;
 
         // Mode Decision Neighbor Arrays
         NeighborArrayUnit                  *md_intra_luma_mode_neighbor_array[NEIGHBOR_ARRAY_TOTAL_COUNT];

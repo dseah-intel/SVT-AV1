@@ -838,7 +838,7 @@ uint64_t EstimateRefFramesNumBits(
             if (!bit) {
                 const int32_t bit1 = (refType[0] == LAST2_FRAME);
                 context = av1_get_pred_context_comp_ref_p1(cu_ptr->av1xd);
-                /*aom_write_symbol(ecWriter, bit1, frameContext->comp_ref_cdf[context][1],
+                /*aom_write_symbol(ec_writer, bit1, frameContext->comp_ref_cdf[context][1],
                     2);*/
                 assert(context >= 0 && context < 3);
                 refRateD = candidate_ptr->md_rate_estimation_ptr->comp_ref_fac_bits[context][1][bit1];
@@ -848,7 +848,7 @@ uint64_t EstimateRefFramesNumBits(
             else {
                 const int32_t bit2 = (refType[0] == GOLDEN_FRAME);
                 context = av1_get_pred_context_comp_ref_p2(cu_ptr->av1xd);
-                /*aom_write_symbol(ecWriter, bit2, frameContext->comp_ref_cdf[context][2],
+                /*aom_write_symbol(ec_writer, bit2, frameContext->comp_ref_cdf[context][2],
                     2);*/
                 assert(context >= 0 && context < 3);
                 refRateE = candidate_ptr->md_rate_estimation_ptr->comp_ref_fac_bits[context][2][bit2];
@@ -858,7 +858,7 @@ uint64_t EstimateRefFramesNumBits(
 
             const int32_t bit_bwd = (refType[1] == ALTREF_FRAME);
             context = av1_get_pred_context_comp_bwdref_p(cu_ptr->av1xd);
-            /*aom_write_symbol(ecWriter, bit_bwd, frameContext->comp_bwdref_cdf[context][0],
+            /*aom_write_symbol(ec_writer, bit_bwd, frameContext->comp_bwdref_cdf[context][0],
                 2);*/
             assert(context >= 0 && context < 3);
             refRateF = candidate_ptr->md_rate_estimation_ptr->comp_bwd_ref_fac_bits[context][0][bit_bwd];
@@ -867,7 +867,7 @@ uint64_t EstimateRefFramesNumBits(
 
             if (!bit_bwd) {
                 context = av1_get_pred_context_comp_bwdref_p1(cu_ptr->av1xd);
-                /*aom_write_symbol(ecWriter, refType[1] == ALTREF2_FRAME, frameContext->comp_bwdref_cdf[context][1],
+                /*aom_write_symbol(ec_writer, refType[1] == ALTREF2_FRAME, frameContext->comp_bwdref_cdf[context][1],
                     2);*/
                 assert(context >= 0 && context < 3);
                 refRateG = candidate_ptr->md_rate_estimation_ptr->comp_bwd_ref_fac_bits[context][1][refType[1] == ALTREF2_FRAME];
@@ -881,7 +881,7 @@ uint64_t EstimateRefFramesNumBits(
                 ref_frame_type >= BWDREF_FRAME);//0
 
             context = av1_get_pred_context_single_ref_p1(cu_ptr->av1xd);
-            /*aom_write_symbol(ecWriter, bit0, frameContext->single_ref_cdf[context][0],
+            /*aom_write_symbol(ec_writer, bit0, frameContext->single_ref_cdf[context][0],
                 2);*/
             assert(context >= 0 && context < 3);
             refRateH = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][0][bit0];
@@ -892,7 +892,7 @@ uint64_t EstimateRefFramesNumBits(
                 const int32_t bit1 = (ref_frame_type == ALTREF_FRAME);
                 context = av1_get_pred_context_single_ref_p2(cu_ptr->av1xd);
                 assert(context >= 0 && context < 3);
-                /*aom_write_symbol(ecWriter, bit1, frameContext->single_ref_cdf[context][1],
+                /*aom_write_symbol(ec_writer, bit1, frameContext->single_ref_cdf[context][1],
                     2);*/
                 refRateI = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][1][bit1];
                 //WRITE_REF_BIT(bit1, single_ref_p2);
@@ -900,7 +900,7 @@ uint64_t EstimateRefFramesNumBits(
 
                 if (!bit1) {
                     context = av1_get_pred_context_single_ref_p6(cu_ptr->av1xd);
-                    /*aom_write_symbol(ecWriter, cu_ptr->prediction_unit_array[0].ref_frame_type == ALTREF2_FRAME, frameContext->single_ref_cdf[context][5],
+                    /*aom_write_symbol(ec_writer, cu_ptr->prediction_unit_array[0].ref_frame_type == ALTREF2_FRAME, frameContext->single_ref_cdf[context][5],
                         2);*/
                     assert(context >= 0 && context < 3);
                     refRateJ = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][5][ref_frame_type == ALTREF2_FRAME];
@@ -912,7 +912,7 @@ uint64_t EstimateRefFramesNumBits(
                 const int32_t bit2 = (ref_frame_type == LAST3_FRAME ||
                     ref_frame_type == GOLDEN_FRAME); //0
                 context = av1_get_pred_context_single_ref_p3(cu_ptr->av1xd);
-                /*aom_write_symbol(ecWriter, bit2, frameContext->single_ref_cdf[context][2],
+                /*aom_write_symbol(ec_writer, bit2, frameContext->single_ref_cdf[context][2],
                     2);*/
                 assert(context >= 0 && context < 3);
                 refRateK = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][2][bit2];
@@ -922,7 +922,7 @@ uint64_t EstimateRefFramesNumBits(
                     const int32_t bit3 = (ref_frame_type != LAST_FRAME); //0;
                     context = av1_get_pred_context_single_ref_p4(cu_ptr->av1xd);
                     assert(context >= 0 && context < 3);
-                    /*aom_write_symbol(ecWriter, bit3, frameContext->single_ref_cdf[context][3],
+                    /*aom_write_symbol(ec_writer, bit3, frameContext->single_ref_cdf[context][3],
                         2);*/
                     refRateL = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][3][bit3];
                     //WRITE_REF_BIT(bit3, single_ref_p4);
@@ -931,7 +931,7 @@ uint64_t EstimateRefFramesNumBits(
                 else {
                     const int32_t bit4 = (ref_frame_type != LAST3_FRAME);
                     context = av1_get_pred_context_single_ref_p5(cu_ptr->av1xd);
-                    /*aom_write_symbol(ecWriter, bit4, frameContext->single_ref_cdf[context][4],
+                    /*aom_write_symbol(ec_writer, bit4, frameContext->single_ref_cdf[context][4],
                         2);*/
                     assert(context >= 0 && context < 3);
                     refRateM = candidate_ptr->md_rate_estimation_ptr->single_ref_fac_bits[context][4][bit4];
@@ -1042,15 +1042,15 @@ uint64_t av1_inter_fast_cost(
         //interModeBitsNum = candidate_buffer_ptr->candidate_ptr->md_rate_estimation_ptr->new_mv_mode_fac_bits[mode_ctx][0];
 
         int16_t newmv_ctx = modeCtx & NEWMV_CTX_MASK;
-        //aom_write_symbol(ecWriter, mode != NEWMV, frameContext->newmv_cdf[newmv_ctx], 2);
+        //aom_write_symbol(ec_writer, mode != NEWMV, frameContext->newmv_cdf[newmv_ctx], 2);
         interModeBitsNum += candidate_ptr->md_rate_estimation_ptr->new_mv_mode_fac_bits[newmv_ctx][inter_mode != NEWMV];
         if (inter_mode != NEWMV) {
             const int16_t zeromvCtx = (modeCtx >> GLOBALMV_OFFSET) & GLOBALMV_CTX_MASK;
-            //aom_write_symbol(ecWriter, mode != GLOBALMV, frameContext->zeromv_cdf[zeromvCtx], 2);
+            //aom_write_symbol(ec_writer, mode != GLOBALMV, frameContext->zeromv_cdf[zeromvCtx], 2);
             interModeBitsNum += candidate_ptr->md_rate_estimation_ptr->zero_mv_mode_fac_bits[zeromvCtx][inter_mode != GLOBALMV];
             if (inter_mode != GLOBALMV) {
                 int16_t refmvCtx = (modeCtx >> REFMV_OFFSET) & REFMV_CTX_MASK;
-                /*aom_write_symbol(ecWriter, mode != NEARESTMV, frameContext->refmv_cdf[refmv_ctx], 2);*/
+                /*aom_write_symbol(ec_writer, mode != NEARESTMV, frameContext->refmv_cdf[refmv_ctx], 2);*/
                 interModeBitsNum += candidate_ptr->md_rate_estimation_ptr->ref_mv_mode_fac_bits[refmvCtx][inter_mode != NEARESTMV];
             }
         }
@@ -1324,7 +1324,7 @@ EbErrorType Av1TuEstimateCoeffBits(
     CodingUnit_t                           *cu_ptr,
     uint32_t                                  tuOriginIndex,
     uint32_t                                  tuChromaOriginIndex,
-    EntropyCoder_t                         *entropy_coder_ptr,
+    EntropyCoder                         *entropy_coder_ptr,
     EbPictureBufferDesc                  *coeff_buffer_sb,
     uint32_t                                 yEob,
     uint32_t                                 cbEob,

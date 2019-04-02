@@ -71,9 +71,9 @@ extern void av1_set_ref_frame(MvReferenceFrame *rf,
 * CABAC Encoder Constructor
 ************************************************/
 void CabacCtor(
-    CabacEncodeContext_t *cabacEncContextPtr)
+    CabacEncodeContext *cabacEncContextPtr)
 {
-    EB_MEMSET(cabacEncContextPtr, 0, sizeof(CabacEncodeContext_t));
+    EB_MEMSET(cabacEncContextPtr, 0, sizeof(CabacEncodeContext));
 
     return;
 }
@@ -448,7 +448,7 @@ void GetTxbCtx(
 void Av1WriteTxType(
     PictureParentControlSet   *pcsPtr,
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ecWriter,
+    aom_writer                  *ec_writer,
     CodingUnit_t                *cu_ptr,
     uint32_t                      intraDir,
     TxType                     txType,
@@ -468,7 +468,7 @@ void Av1WriteTxType(
         assert(eset > 0);
         assert(av1_ext_tx_used[txSetType][txType]);
         if (isInter) {
-            aom_write_symbol(ecWriter, av1_ext_tx_ind[txSetType][txType],
+            aom_write_symbol(ec_writer, av1_ext_tx_ind[txSetType][txType],
                 frameContext->inter_ext_tx_cdf[eset][squareTxSize],
                 av1_num_ext_tx_set[txSetType]);
         }
@@ -476,7 +476,7 @@ void Av1WriteTxType(
 
 
             aom_write_symbol(
-                ecWriter, av1_ext_tx_ind[txSetType][txType],
+                ec_writer, av1_ext_tx_ind[txSetType][txType],
                 frameContext->intra_ext_tx_cdf[eset][squareTxSize][intraDir],
                 av1_num_ext_tx_set[txSetType]);
         }
@@ -496,7 +496,7 @@ static INLINE void set_dc_sign(int32_t *cul_level, int32_t dc_val) {
 int32_t  Av1WriteCoeffsTxb1D(
     PictureParentControlSet   *parent_pcs_ptr,
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ecWriter,
+    aom_writer                  *ec_writer,
     CodingUnit_t                *cu_ptr,
     TxSize                     txSize,
     uint32_t                       pu_index,
@@ -524,7 +524,7 @@ int32_t  Av1WriteCoeffsTxb1D(
     uint8_t *const levels = SetLevels(levelsBuf, width);
     DECLARE_ALIGNED(16, int8_t, coeffContexts[MAX_TX_SQUARE]);
 
-    aom_write_symbol(ecWriter, eob == 0,
+    aom_write_symbol(ec_writer, eob == 0,
 
         frameContext->txb_skip_cdf[txs_ctx][txb_skip_ctx], 2);
 
@@ -555,7 +555,7 @@ int32_t  Av1WriteCoeffsTxb1D(
         Av1WriteTxType(
             parent_pcs_ptr,
             frameContext,
-            ecWriter,
+            ec_writer,
             cu_ptr,
             intraLumaDir,
             txType,
@@ -568,31 +568,31 @@ int32_t  Av1WriteCoeffsTxb1D(
     const int16_t eobMultiCtx = (tx_type_to_class[txType] == TX_CLASS_2D) ? 0 : 1;
     switch (eobMultiSize) {
     case 0:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf16[component_type][eobMultiCtx], 5);
         break;
     case 1:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf32[component_type][eobMultiCtx], 6);
         break;
     case 2:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf64[component_type][eobMultiCtx], 7);
         break;
     case 3:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf128[component_type][eobMultiCtx], 8);
         break;
     case 4:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf256[component_type][eobMultiCtx], 9);
         break;
     case 5:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf512[component_type][eobMultiCtx], 10);
         break;
     default:
-        aom_write_symbol(ecWriter, eobPt - 1,
+        aom_write_symbol(ec_writer, eobPt - 1,
             frameContext->eob_flag_cdf1024[component_type][eobMultiCtx], 11);
         break;
     }
@@ -601,11 +601,11 @@ int32_t  Av1WriteCoeffsTxb1D(
     if (eobOffsetBits > 0) {
         int32_t eobShift = eobOffsetBits - 1;
         int32_t bit = (eobExtra & (1 << eobShift)) ? 1 : 0;
-        aom_write_symbol(ecWriter, bit, frameContext->eob_extra_cdf[txs_ctx][component_type][eobPt], 2);
+        aom_write_symbol(ec_writer, bit, frameContext->eob_extra_cdf[txs_ctx][component_type][eobPt], 2);
         for (int32_t i = 1; i < eobOffsetBits; i++) {
             eobShift = eobOffsetBits - 1 - i;
             bit = (eobExtra & (1 << eobShift)) ? 1 : 0;
-            aom_write_bit(ecWriter, bit);
+            aom_write_bit(ec_writer, bit);
         }
     }
 
@@ -620,11 +620,11 @@ int32_t  Av1WriteCoeffsTxb1D(
 
         if (c == eob - 1) {
             aom_write_symbol(
-                ecWriter, AOMMIN(level, 3) - 1,
+                ec_writer, AOMMIN(level, 3) - 1,
                 frameContext->coeff_base_eob_cdf[txs_ctx][component_type][coeffCtx], 3);
         }
         else {
-            aom_write_symbol(ecWriter, AOMMIN(level, 3),
+            aom_write_symbol(ec_writer, AOMMIN(level, 3),
                 frameContext->coeff_base_cdf[txs_ctx][component_type][coeffCtx],
                 4);
         }
@@ -636,7 +636,7 @@ int32_t  Av1WriteCoeffsTxb1D(
             for (int32_t idx = 0; idx < COEFF_BASE_RANGE; idx += BR_CDF_SIZE - 1) {
                 const int32_t k = AOMMIN(base_range - idx, BR_CDF_SIZE - 1);
                 aom_write_symbol(
-                    ecWriter, k,
+                    ec_writer, k,
                     frameContext->coeff_br_cdf[AOMMIN(txs_ctx, TX_32X32)][component_type][brCtx],
                     BR_CDF_SIZE);
                 if (k < BR_CDF_SIZE - 1) break;
@@ -659,13 +659,13 @@ int32_t  Av1WriteCoeffsTxb1D(
         if (level) {
             if (c == 0) {
                 aom_write_symbol(
-                    ecWriter, sign, frameContext->dc_sign_cdf[component_type][dcSignCtx], 2);
+                    ec_writer, sign, frameContext->dc_sign_cdf[component_type][dcSignCtx], 2);
             }
             else {
-                aom_write_bit(ecWriter, sign);
+                aom_write_bit(ec_writer, sign);
             }
             if (level > COEFF_BASE_RANGE + NUM_BASE_LEVELS) {
-                WriteGolomb(ecWriter,
+                WriteGolomb(ec_writer,
                     level - COEFF_BASE_RANGE - 1 - NUM_BASE_LEVELS);
             }
         }
@@ -685,9 +685,9 @@ int32_t  Av1WriteCoeffsTxb1D(
 **************************************/
 static EbErrorType Av1EncodeCoeff1D(
     PictureControlSet     *pcsPtr,
-    EntropyCodingContext_t  *context_ptr,
+    EntropyCodingContext  *context_ptr,
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     CodingUnit_t           *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -739,7 +739,7 @@ static EbErrorType Av1EncodeCoeff1D(
                 Av1WriteCoeffsTxb1D(
                     pcsPtr->parent_pcs_ptr,
                     frameContext,
-                    ecWriter,
+                    ec_writer,
                     cu_ptr,
                     tx_size,
                     0,
@@ -776,7 +776,7 @@ static EbErrorType Av1EncodeCoeff1D(
                     Av1WriteCoeffsTxb1D(
                         pcsPtr->parent_pcs_ptr,
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         cu_ptr,
                         chroma_tx_size,
                         0,
@@ -813,7 +813,7 @@ static EbErrorType Av1EncodeCoeff1D(
                     Av1WriteCoeffsTxb1D(
                         pcsPtr->parent_pcs_ptr,
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         cu_ptr,
                         chroma_tx_size,
                         0,
@@ -934,7 +934,7 @@ static void partition_gather_vert_alike(aom_cdf_prob *out,
 static void EncodePartitionAv1(
     SequenceControlSet    *sequence_control_set_ptr,
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     block_size              bsize,
     PartitionType          p,
     uint32_t                  cu_origin_x,
@@ -980,7 +980,7 @@ static void EncodePartitionAv1(
     if (hasRows && hasCols) {
 
         aom_write_symbol(
-            ecWriter,
+            ec_writer,
             p,
             frameContext->partition_cdf[contextIndex],
             partition_cdf_length(bsize));
@@ -990,7 +990,7 @@ static void EncodePartitionAv1(
         aom_cdf_prob cdf[CDF_SIZE(2)];
         partition_gather_vert_alike(cdf, frameContext->partition_cdf[contextIndex], bsize);
         aom_write_symbol(
-            ecWriter,
+            ec_writer,
             p == PARTITION_SPLIT,
             cdf,
             2);
@@ -999,7 +999,7 @@ static void EncodePartitionAv1(
         aom_cdf_prob cdf[CDF_SIZE(2)];
         partition_gather_horz_alike(cdf, frameContext->partition_cdf[contextIndex], bsize);
         aom_write_symbol(
-            ecWriter,
+            ec_writer,
             p == PARTITION_SPLIT,
             cdf,
             2);
@@ -1014,7 +1014,7 @@ static void EncodePartitionAv1(
 *********************************************************************/
 static void EncodeSkipCoeffAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     EbBool                 skipCoeffFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1040,7 +1040,7 @@ static void EncodeSkipCoeffAv1(
         (skip_coeff_neighbor_array->top_array[skipCoeffTopNeighborIndex]) ? 1 : 0;
 
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         skipCoeffFlag ? 1 : 0,
         frameContext->skip_cdfs[contextIndex],
         2);
@@ -1053,7 +1053,7 @@ static void EncodeSkipCoeffAv1(
 *********************************************************************/
 static void EncodeIntraLumaModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     CodingUnit_t            *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1089,7 +1089,7 @@ static void EncodeIntraLumaModeAv1(
     leftContext = intra_mode_context[left_neighbor_mode];
 
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         luma_mode,
         frameContext->kf_y_cdf[topContext][leftContext],
         INTRA_MODES);
@@ -1097,7 +1097,7 @@ static void EncodeIntraLumaModeAv1(
     if (cu_ptr->pred_mode != INTRA_MODE_4x4)
 
         if (cu_ptr->prediction_unit_array[0].use_angle_delta && cu_ptr->prediction_unit_array[0].is_directional_mode_flag) {
-            aom_write_symbol(ecWriter,
+            aom_write_symbol(ec_writer,
                 cu_ptr->prediction_unit_array[0].angle_delta[PLANE_TYPE_Y] + MAX_ANGLE_DELTA,
                 frameContext->angle_delta_cdf[luma_mode - V_PRED],
                 2 * MAX_ANGLE_DELTA + 1);
@@ -1112,7 +1112,7 @@ static void EncodeIntraLumaModeAv1(
 *********************************************************************/
 static void EncodeIntraLumaModeNonKeyAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     CodingUnit_t            *cu_ptr,
 
     block_size                bsize,
@@ -1120,7 +1120,7 @@ static void EncodeIntraLumaModeNonKeyAv1(
 {
 
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         luma_mode,
         frameContext->y_mode_cdf[size_group_lookup[bsize]],
         INTRA_MODES);
@@ -1128,7 +1128,7 @@ static void EncodeIntraLumaModeNonKeyAv1(
     if (cu_ptr->pred_mode != INTRA_MODE_4x4)
 
         if (cu_ptr->prediction_unit_array[0].use_angle_delta && cu_ptr->prediction_unit_array[0].is_directional_mode_flag) {
-            aom_write_symbol(ecWriter,
+            aom_write_symbol(ec_writer,
                 cu_ptr->prediction_unit_array[0].angle_delta[PLANE_TYPE_Y] + MAX_ANGLE_DELTA,
                 frameContext->angle_delta_cdf[luma_mode - V_PRED],
                 2 * MAX_ANGLE_DELTA + 1);
@@ -1158,24 +1158,24 @@ static void write_cfl_alphas(FRAME_CONTEXT *const ec_ctx, int32_t idx,
 *********************************************************************/
 static void EncodeIntraChromaModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     CodingUnit_t            *cu_ptr,
     uint32_t                  luma_mode,
     uint32_t                  chroma_mode,
     uint8_t                   cflAllowed)
 {
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         chroma_mode,
         frameContext->uv_mode_cdf[cflAllowed][luma_mode],
         UV_INTRA_MODES - !cflAllowed);
 
     if (chroma_mode == UV_CFL_PRED)
-        write_cfl_alphas(frameContext, cu_ptr->prediction_unit_array->cfl_alpha_idx, cu_ptr->prediction_unit_array->cfl_alpha_signs, ecWriter);
+        write_cfl_alphas(frameContext, cu_ptr->prediction_unit_array->cfl_alpha_idx, cu_ptr->prediction_unit_array->cfl_alpha_signs, ec_writer);
 
     if (cu_ptr->pred_mode != INTRA_MODE_4x4)
         if (cu_ptr->prediction_unit_array[0].use_angle_delta && cu_ptr->prediction_unit_array[0].is_directional_chroma_mode_flag) {
-            aom_write_symbol(ecWriter,
+            aom_write_symbol(ec_writer,
                 cu_ptr->prediction_unit_array[0].angle_delta[PLANE_TYPE_UV] + MAX_ANGLE_DELTA,
                 frameContext->angle_delta_cdf[chroma_mode - V_PRED],
                 2 * MAX_ANGLE_DELTA + 1);
@@ -1191,7 +1191,7 @@ static void EncodeIntraChromaModeAv1(
 *********************************************************************/
 static void EncodeSkipModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     EbBool                 skipModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1217,7 +1217,7 @@ static void EncodeSkipModeAv1(
         (skip_flag_neighbor_array->top_array[skipFlagTopNeighborIndex]) ? 1 : 0;
 
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         skipModeFlag ? 1 : 0,
         frameContext->skip_mode_cdfs[contextIndex],
         2);
@@ -1230,7 +1230,7 @@ static void EncodeSkipModeAv1(
 *********************************************************************/
 static void EncodePredModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ecWriter,
+    aom_writer              *ec_writer,
     EbBool                 predModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1261,7 +1261,7 @@ static void EncodePredModeAv1(
     }
 
     aom_write_symbol(
-        ecWriter,
+        ec_writer,
         predModeFlag == INTER_MODE ? 1 : 0,
         frameContext->intra_inter_cdf[contextIndex],
         2);
@@ -1395,11 +1395,11 @@ static int16_t Av1ModeContextAnalyzer(
 
 
 EbErrorType EncodeSliceFinish(
-    EntropyCoder_t        *entropy_coder_ptr)
+    EntropyCoder        *entropy_coder_ptr)
 {
     EbErrorType return_error = EB_ErrorNone;
 
-    aom_stop_encode(&entropy_coder_ptr->ecWriter);
+    aom_stop_encode(&entropy_coder_ptr->ec_writer);
 
     return return_error;
 }
@@ -1408,17 +1408,17 @@ EbErrorType ResetBitstream(
     EbPtr bitstreamPtr)
 {
     EbErrorType return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t *outputBitstreamPtr = (OutputBitstreamUnit_t*)bitstreamPtr;
+    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstreamPtr;
 
     output_bitstream_reset(
-        outputBitstreamPtr);
+        output_bitstream_ptr);
 
     return return_error;
 }
 
 EbErrorType ResetEntropyCoder(
     EncodeContext_t            *encode_context_ptr,
-    EntropyCoder_t             *entropy_coder_ptr,
+    EntropyCoder             *entropy_coder_ptr,
     uint32_t                      qp,
     EB_SLICE                    slice_type)
 {
@@ -1434,25 +1434,25 @@ EbErrorType ResetEntropyCoder(
 }
 
 EbErrorType CopyRbspBitstreamToPayload(
-    Bitstream_t *bitstreamPtr,
+    Bitstream *bitstreamPtr,
     EbByte      outputBuffer,
     uint32_t      *outputBufferIndex,
     uint32_t      *outputBufferSize,
     EncodeContext_t         *encode_context_ptr)
 {
     EbErrorType return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t *outputBitstreamPtr = (OutputBitstreamUnit_t*)bitstreamPtr->outputBitstreamPtr;
+    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstreamPtr->output_bitstream_ptr;
 
 
     CHECK_REPORT_ERROR(
-        ((outputBitstreamPtr->writtenBitsCount >> 3) + (*outputBufferIndex) < (*outputBufferSize)),
+        ((output_bitstream_ptr->writtenBitsCount >> 3) + (*outputBufferIndex) < (*outputBufferSize)),
         encode_context_ptr->app_callback_ptr,
         EB_ENC_EC_ERROR2);
 
 
 
     output_bitstream_rbsp_to_payload(
-        outputBitstreamPtr,
+        output_bitstream_ptr,
         outputBuffer,
         outputBufferIndex,
         outputBufferSize,
@@ -1462,18 +1462,18 @@ EbErrorType CopyRbspBitstreamToPayload(
 }
 
 
-EbErrorType BitstreamCtor(
-    Bitstream_t **bitstreamDblPtr,
-    uint32_t bufferSize)
+EbErrorType bitstream_ctor(
+    Bitstream **bitstream_dbl_ptr,
+    uint32_t buffer_size)
 {
     EbErrorType return_error = EB_ErrorNone;
-    EB_MALLOC(Bitstream_t*, *bitstreamDblPtr, sizeof(Bitstream_t), EB_N_PTR);
+    EB_MALLOC(Bitstream*, *bitstream_dbl_ptr, sizeof(Bitstream), EB_N_PTR);
 
-    EB_MALLOC(EbPtr, (*bitstreamDblPtr)->outputBitstreamPtr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
+    EB_MALLOC(EbPtr, (*bitstream_dbl_ptr)->output_bitstream_ptr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
 
     return_error = output_bitstream_unit_ctor(
-        (OutputBitstreamUnit_t *)(*bitstreamDblPtr)->outputBitstreamPtr,
-        bufferSize);
+        (OutputBitstreamUnit_t *)(*bitstream_dbl_ptr)->output_bitstream_ptr,
+        buffer_size);
 
     return return_error;
 }
@@ -1481,30 +1481,30 @@ EbErrorType BitstreamCtor(
 
 
 
-EbErrorType EntropyCoderCtor(
-    EntropyCoder_t **entropyCoderDblPtr,
-    uint32_t bufferSize)
+EbErrorType entropy_coder_ctor(
+    EntropyCoder **entropy_coder_dbl_ptr,
+    uint32_t buffer_size)
 {
     EbErrorType return_error = EB_ErrorNone;
-    EB_MALLOC(EntropyCoder_t*, *entropyCoderDblPtr, sizeof(EntropyCoder_t), EB_N_PTR);
+    EB_MALLOC(EntropyCoder*, *entropy_coder_dbl_ptr, sizeof(EntropyCoder), EB_N_PTR);
 
-    EB_MALLOC(EbPtr, (*entropyCoderDblPtr)->cabacEncodeContextPtr, sizeof(CabacEncodeContext_t), EB_N_PTR);
+    EB_MALLOC(EbPtr, (*entropy_coder_dbl_ptr)->cabac_encode_context_ptr, sizeof(CabacEncodeContext), EB_N_PTR);
 
-    EB_MALLOC(FRAME_CONTEXT*, (*entropyCoderDblPtr)->fc, sizeof(FRAME_CONTEXT), EB_N_PTR);
+    EB_MALLOC(FRAME_CONTEXT*, (*entropy_coder_dbl_ptr)->fc, sizeof(FRAME_CONTEXT), EB_N_PTR);
 
-    EB_MALLOC(EbPtr, (*entropyCoderDblPtr)->ecOutputBitstreamPtr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
+    EB_MALLOC(EbPtr, (*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
 
     return_error = output_bitstream_unit_ctor(
-        (OutputBitstreamUnit_t *)(*entropyCoderDblPtr)->ecOutputBitstreamPtr,
-        bufferSize);
+        (OutputBitstreamUnit_t *)(*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr,
+        buffer_size);
 
     CabacCtor(
-        (CabacEncodeContext_t *)(*entropyCoderDblPtr)->cabacEncodeContextPtr);
+        (CabacEncodeContext *)(*entropy_coder_dbl_ptr)->cabac_encode_context_ptr);
 
 
     return_error = output_bitstream_unit_ctor(
-        &((((CabacEncodeContext_t*)(*entropyCoderDblPtr)->cabacEncodeContextPtr)->bacEncContext).m_pcTComBitIf),
-        bufferSize);
+        &((((CabacEncodeContext*)(*entropy_coder_dbl_ptr)->cabac_encode_context_ptr)->bac_enc_context).m_pc_t_com_bit_if),
+        buffer_size);
 
     return return_error;
 }
@@ -1512,11 +1512,11 @@ EbErrorType EntropyCoderCtor(
 
 
 
-EbPtr EntropyCoderGetBitstreamPtr(
-    EntropyCoder_t *entropy_coder_ptr)
+EbPtr entropy_coder_get_bitstream_ptr(
+    EntropyCoder *entropy_coder_ptr)
 {
-    CabacEncodeContext_t *cabacEncCtxPtr = (CabacEncodeContext_t*)entropy_coder_ptr->cabacEncodeContextPtr;
-    EbPtr bitstreamPtr = (EbPtr)&(cabacEncCtxPtr->bacEncContext.m_pcTComBitIf);
+    CabacEncodeContext *cabacEncCtxPtr = (CabacEncodeContext*)entropy_coder_ptr->cabac_encode_context_ptr;
+    EbPtr bitstreamPtr = (EbPtr)&(cabacEncCtxPtr->bac_enc_context.m_pc_t_com_bit_if);
 
     return bitstreamPtr;
 }
@@ -1608,7 +1608,7 @@ void aom_wb_write_inv_signed_literal(struct aom_write_bit_buffer *wb, int32_t da
 
 static void WriteInterMode(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ecWriter,
+    aom_writer          *ec_writer,
     PredictionMode     mode,
     const int16_t       mode_ctx,
     uint32_t                  cu_origin_x,
@@ -1619,17 +1619,17 @@ static void WriteInterMode(
     (void)cu_origin_y;
     int16_t newmv_ctx = mode_ctx & NEWMV_CTX_MASK;
     ASSERT(newmv_ctx<NEWMV_MODE_CONTEXTS);
-    aom_write_symbol(ecWriter, mode != NEWMV, frameContext->newmv_cdf[newmv_ctx], 2);
+    aom_write_symbol(ec_writer, mode != NEWMV, frameContext->newmv_cdf[newmv_ctx], 2);
 
     if (mode != NEWMV) {
         const int16_t zeromv_ctx =
             (mode_ctx >> GLOBALMV_OFFSET) & GLOBALMV_CTX_MASK;
-        aom_write_symbol(ecWriter, mode != GLOBALMV, frameContext->zeromv_cdf[zeromv_ctx], 2);
+        aom_write_symbol(ec_writer, mode != GLOBALMV, frameContext->zeromv_cdf[zeromv_ctx], 2);
 
         if (mode != GLOBALMV) {
             int16_t refmv_ctx = (mode_ctx >> REFMV_OFFSET) & REFMV_CTX_MASK;
             ASSERT(refmv_ctx<REFMV_MODE_CONTEXTS);            
-            aom_write_symbol(ecWriter, mode != NEARESTMV, frameContext->refmv_cdf[refmv_ctx], 2);
+            aom_write_symbol(ec_writer, mode != NEARESTMV, frameContext->refmv_cdf[refmv_ctx], 2);
         }
     }
 }
@@ -1640,7 +1640,7 @@ extern uint8_t av1_drl_ctx(const CandidateMv *ref_mv_stack, int32_t ref_idx);
 
 void WriteDrlIdx(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ecWriter,
+    aom_writer          *ec_writer,
     CodingUnit_t        *cu_ptr) {
 
     //uint8_t ref_frame_type = av1_ref_frame_type(mbmi->ref_frame);
@@ -1658,7 +1658,7 @@ void WriteDrlIdx(
                 uint8_t drl_ctx =
                     av1_drl_ctx(xd->final_ref_mv_stack, idx);
 
-                aom_write_symbol(ecWriter, cu_ptr->drl_index != idx, frameContext->drl_cdf[drl_ctx],
+                aom_write_symbol(ec_writer, cu_ptr->drl_index != idx, frameContext->drl_cdf[drl_ctx],
                     2);
 
                 if (cu_ptr->drl_index == idx) return;
@@ -1675,7 +1675,7 @@ void WriteDrlIdx(
                 uint8_t drl_ctx =
                     av1_drl_ctx(xd->final_ref_mv_stack, idx);
     
-                aom_write_symbol(ecWriter, cu_ptr->drl_index != (idx - 1),
+                aom_write_symbol(ec_writer, cu_ptr->drl_index != (idx - 1),
                     frameContext->drl_cdf[drl_ctx], 2);
 
                 if (cu_ptr->drl_index == (idx - 1)) return;
@@ -1746,7 +1746,7 @@ static INLINE int32_t is_mv_valid(const MV *mv) {
 
 void av1_encode_mv(
     PictureParentControlSet   *pcsPtr,
-    aom_writer                  *ecWriter,
+    aom_writer                  *ec_writer,
     const MV *mv,
     const MV *ref,
     nmv_context *mvctx,
@@ -1764,12 +1764,12 @@ void av1_encode_mv(
     if (pcsPtr->cur_frame_force_integer_mv) {
         usehp = MV_SUBPEL_NONE;
     }
-    aom_write_symbol(ecWriter, j, mvctx->joints_cdf, MV_JOINTS);
+    aom_write_symbol(ec_writer, j, mvctx->joints_cdf, MV_JOINTS);
     if (mv_joint_vertical(j))
-        encode_mv_component(ecWriter, diff[0], &mvctx->comps[0], (MvSubpelPrecision)usehp);
+        encode_mv_component(ec_writer, diff[0], &mvctx->comps[0], (MvSubpelPrecision)usehp);
 
     if (mv_joint_horizontal(j))
-        encode_mv_component(ecWriter, diff[1], &mvctx->comps[1], (MvSubpelPrecision)usehp);
+        encode_mv_component(ec_writer, diff[1], &mvctx->comps[1], (MvSubpelPrecision)usehp);
 
     // If auto_mv_step_size is enabled then keep track of the largest
     // motion vector component used.
@@ -1912,9 +1912,9 @@ void write_mb_interp_filter(
     MvReferenceFrame rf0,
     MvReferenceFrame rf1,
     PictureParentControlSet   *pcsPtr,
-    aom_writer                  *ecWriter,
+    aom_writer                  *ec_writer,
     CodingUnit_t             *cu_ptr,
-    EntropyCoder_t *entropy_coder_ptr,
+    EntropyCoder *entropy_coder_ptr,
     NeighborArrayUnit32     *interpolation_type_neighbor_array,
     uint32_t blkOriginX,
     uint32_t blkOriginY)
@@ -1933,7 +1933,7 @@ void write_mb_interp_filter(
     if (cm->interp_filter == SWITCHABLE) {
         int32_t dir;
         for (dir = 0; dir < 2; ++dir) {
-            // printf("\nP:%d\tX: %d\tY:%d\t %d",(pcsPtr)->picture_number,blkOriginX,blkOriginY ,((ecWriter)->ec).rng);
+            // printf("\nP:%d\tX: %d\tY:%d\t %d",(pcsPtr)->picture_number,blkOriginX,blkOriginY ,((ec_writer)->ec).rng);
             const int32_t ctx = av1_get_pred_context_switchable_interp(
                 ref_frame_type_neighbor_array,
 
@@ -1948,7 +1948,7 @@ void write_mb_interp_filter(
             );
             InterpFilter filter = av1_extract_interp_filter(cu_ptr->interp_filters, dir);
             ASSERT(ctx < SWITCHABLE_FILTER_CONTEXTS);
-            aom_write_symbol(ecWriter, filter, /*ec_ctx*/entropy_coder_ptr->fc->switchable_interp_cdf[ctx],
+            aom_write_symbol(ec_writer, filter, /*ec_ctx*/entropy_coder_ptr->fc->switchable_interp_cdf[ctx],
                 SWITCHABLE_FILTERS);
 
             // ++pcsPtr->interp_filter_selected[0][filter];
@@ -1959,11 +1959,11 @@ void write_mb_interp_filter(
 
 static void WriteInterCompoundMode(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ecWriter,
+    aom_writer          *ec_writer,
     PredictionMode     mode,
     const int16_t       mode_ctx) {
     assert(is_inter_compound_mode(mode));
-    aom_write_symbol(ecWriter, INTER_COMPOUND_OFFSET(mode),
+    aom_write_symbol(ec_writer, INTER_COMPOUND_OFFSET(mode),
         frameContext->inter_compound_mode_cdf[mode_ctx],
         INTER_COMPOUND_MODES);
 
@@ -2227,7 +2227,7 @@ void Av1CollectNeighborsRefCounts(
 }
 
 #define WRITE_REF_BIT(bname, pname) \
-  aom_write_symbol(ecWriter, bname, av1_get_pred_cdf_##pname(), 2)
+  aom_write_symbol(ec_writer, bname, av1_get_pred_cdf_##pname(), 2)
 /***************************************************************************************/
 
 // == Common context functions for both comp and single ref ==
@@ -2409,7 +2409,7 @@ int32_t av1_get_pred_context_single_ref_p6(const MacroBlockD *xd) {
 // This function encodes the reference frame
 static void WriteRefFrames(
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ecWriter,
+    aom_writer                  *ec_writer,
     PictureParentControlSet   *pcsPtr,
     CodingUnit_t                *cu_ptr,
     block_size                   bsize,
@@ -2446,7 +2446,7 @@ static void WriteRefFrames(
                     cu_origin_y,
                     mode_type_neighbor_array,
                     inter_pred_dir_neighbor_array);
-                aom_write_symbol(ecWriter, is_compound, frameContext->comp_inter_cdf[context], 2);
+                aom_write_symbol(ec_writer, is_compound, frameContext->comp_inter_cdf[context], 2);
 
 
             }
@@ -2471,7 +2471,7 @@ static void WriteRefFrames(
                 mode_type_neighbor_array,
                 inter_pred_dir_neighbor_array);
 
-            aom_write_symbol(ecWriter, comp_ref_type, frameContext->comp_ref_type_cdf[context],
+            aom_write_symbol(ec_writer, comp_ref_type, frameContext->comp_ref_type_cdf[context],
                 2);
 
             if (comp_ref_type == UNIDIR_COMP_REFERENCE) {
@@ -2502,7 +2502,7 @@ static void WriteRefFrames(
                 refType[0] == LAST3_FRAME);
 
             context = av1_get_pred_context_comp_ref_p(cu_ptr->av1xd);
-            aom_write_symbol(ecWriter, bit, frameContext->comp_ref_cdf[context][0],
+            aom_write_symbol(ec_writer, bit, frameContext->comp_ref_cdf[context][0],
                 2);
             //            WRITE_REF_BIT(bit, comp_ref_p);
 
@@ -2510,14 +2510,14 @@ static void WriteRefFrames(
             if (!bit) {
                 const int32_t bit1 = (refType[0] == LAST2_FRAME);
                 context = av1_get_pred_context_comp_ref_p1(cu_ptr->av1xd);
-                aom_write_symbol(ecWriter, bit1, frameContext->comp_ref_cdf[context][1],
+                aom_write_symbol(ec_writer, bit1, frameContext->comp_ref_cdf[context][1],
                     2);
                 //WRITE_REF_BIT(bit1, comp_ref_p1);
             }
             else {
                 const int32_t bit2 = (refType[0] == GOLDEN_FRAME);
                 context = av1_get_pred_context_comp_ref_p2(cu_ptr->av1xd);
-                aom_write_symbol(ecWriter, bit2, frameContext->comp_ref_cdf[context][2],
+                aom_write_symbol(ec_writer, bit2, frameContext->comp_ref_cdf[context][2],
                     2);
 
                 //WRITE_REF_BIT(bit2, comp_ref_p2);
@@ -2525,13 +2525,13 @@ static void WriteRefFrames(
 
             const int32_t bit_bwd = (refType[1] == ALTREF_FRAME);
             context = av1_get_pred_context_comp_bwdref_p(cu_ptr->av1xd);
-            aom_write_symbol(ecWriter, bit_bwd, frameContext->comp_bwdref_cdf[context][0],
+            aom_write_symbol(ec_writer, bit_bwd, frameContext->comp_bwdref_cdf[context][0],
                 2);
             //WRITE_REF_BIT(bit_bwd, comp_bwdref_p);
 
             if (!bit_bwd) {
                 context = av1_get_pred_context_comp_bwdref_p1(cu_ptr->av1xd);
-                aom_write_symbol(ecWriter, refType[1] == ALTREF2_FRAME, frameContext->comp_bwdref_cdf[context][1],
+                aom_write_symbol(ec_writer, refType[1] == ALTREF2_FRAME, frameContext->comp_bwdref_cdf[context][1],
                     2);
                 //WRITE_REF_BIT(mbmi->ref_frame[1] == ALTREF2_FRAME, comp_bwdref_p1);
             }
@@ -2542,20 +2542,20 @@ static void WriteRefFrames(
                 cu_ptr->prediction_unit_array[0].ref_frame_type >= BWDREF_FRAME);//0
 
             context = av1_get_pred_context_single_ref_p1(cu_ptr->av1xd);
-            aom_write_symbol(ecWriter, bit0, frameContext->single_ref_cdf[context][0],
+            aom_write_symbol(ec_writer, bit0, frameContext->single_ref_cdf[context][0],
                 2);
             //WRITE_REF_BIT(bit0, single_ref_p1);
 
             if (bit0) {
                 const int32_t bit1 = (cu_ptr->prediction_unit_array[0].ref_frame_type == ALTREF_FRAME);
                 context = av1_get_pred_context_single_ref_p2(cu_ptr->av1xd);
-                aom_write_symbol(ecWriter, bit1, frameContext->single_ref_cdf[context][1],
+                aom_write_symbol(ec_writer, bit1, frameContext->single_ref_cdf[context][1],
                     2);
                 //WRITE_REF_BIT(bit1, single_ref_p2);
 
                 if (!bit1) {
                     context = av1_get_pred_context_single_ref_p6(cu_ptr->av1xd);
-                    aom_write_symbol(ecWriter, cu_ptr->prediction_unit_array[0].ref_frame_type == ALTREF2_FRAME, frameContext->single_ref_cdf[context][5],
+                    aom_write_symbol(ec_writer, cu_ptr->prediction_unit_array[0].ref_frame_type == ALTREF2_FRAME, frameContext->single_ref_cdf[context][5],
                         2);
                     //WRITE_REF_BIT(mbmi->ref_frame[0] == ALTREF2_FRAME, single_ref_p6);
                 }
@@ -2564,21 +2564,21 @@ static void WriteRefFrames(
                 const int32_t bit2 = (cu_ptr->prediction_unit_array[0].ref_frame_type == LAST3_FRAME ||
                     cu_ptr->prediction_unit_array[0].ref_frame_type == GOLDEN_FRAME); //0
                 context = av1_get_pred_context_single_ref_p3(cu_ptr->av1xd);
-                aom_write_symbol(ecWriter, bit2, frameContext->single_ref_cdf[context][2],
+                aom_write_symbol(ec_writer, bit2, frameContext->single_ref_cdf[context][2],
                     2);
                 //WRITE_REF_BIT(bit2, single_ref_p3);
                 if (!bit2) {
                     const int32_t bit3 = (cu_ptr->prediction_unit_array[0].ref_frame_type != LAST_FRAME); //0;
                     context = av1_get_pred_context_single_ref_p4(cu_ptr->av1xd);
 
-                    aom_write_symbol(ecWriter, bit3, frameContext->single_ref_cdf[context][3],
+                    aom_write_symbol(ec_writer, bit3, frameContext->single_ref_cdf[context][3],
                         2);
                     //WRITE_REF_BIT(bit3, single_ref_p4);
                 }
                 else {
                     const int32_t bit4 = (cu_ptr->prediction_unit_array[0].ref_frame_type != LAST3_FRAME);
                     context = av1_get_pred_context_single_ref_p5(cu_ptr->av1xd);
-                    aom_write_symbol(ecWriter, bit4, frameContext->single_ref_cdf[context][4],
+                    aom_write_symbol(ec_writer, bit4, frameContext->single_ref_cdf[context][4],
                         2);
                     //WRITE_REF_BIT(bit4, single_ref_p5);
                 }
@@ -4242,15 +4242,15 @@ static uint32_t WriteFrameHeaderObu(
 * EncodeFrameHeaderHeader
 **************************************************/
 EbErrorType WriteFrameHeaderAv1(
-    Bitstream_t *bitstreamPtr,
+    Bitstream *bitstreamPtr,
     SequenceControlSet *scsPtr,
     PictureControlSet *pcsPtr,
     uint8_t showExisting)
 {
     EbErrorType                 return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t       *outputBitstreamPtr = (OutputBitstreamUnit_t*)bitstreamPtr->outputBitstreamPtr;
+    OutputBitstreamUnit_t       *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstreamPtr->output_bitstream_ptr;
     PictureParentControlSet   *parent_pcs_ptr = pcsPtr->parent_pcs_ptr;
-    uint8_t                     *data = outputBitstreamPtr->bufferAv1;
+    uint8_t                     *data = output_bitstream_ptr->bufferAv1;
     uint32_t obuHeaderSize = 0;
 
     int32_t currDataSize = 0;
@@ -4275,12 +4275,12 @@ EbErrorType WriteFrameHeaderAv1(
 
     if (!showExisting) {
         // Add data from EC stream to Picture Stream.
-        int32_t frameSize = parent_pcs_ptr->av1_cm->tile_cols*parent_pcs_ptr->av1_cm->tile_rows==1 ? pcsPtr->entropy_coder_ptr->ecWriter.pos : pcsPtr->entropy_coder_ptr->ec_frame_size;
+        int32_t frameSize = parent_pcs_ptr->av1_cm->tile_cols*parent_pcs_ptr->av1_cm->tile_rows==1 ? pcsPtr->entropy_coder_ptr->ec_writer.pos : pcsPtr->entropy_coder_ptr->ec_frame_size;
 
-        OutputBitstreamUnit_t *ecOutputBitstreamPtr = (OutputBitstreamUnit_t*)pcsPtr->entropy_coder_ptr->ecOutputBitstreamPtr;
+        OutputBitstreamUnit_t *ec_output_bitstream_ptr = (OutputBitstreamUnit_t*)pcsPtr->entropy_coder_ptr->ec_output_bitstream_ptr;
         //****************************************************************//
         // Copy from EC stream to frame stream
-        memcpy(data + currDataSize, ecOutputBitstreamPtr->bufferBeginAv1, frameSize);
+        memcpy(data + currDataSize, ec_output_bitstream_ptr->bufferBeginAv1, frameSize);
         currDataSize += (frameSize);
     }
     const uint32_t obuPayloadSize = currDataSize - obuHeaderSize;
@@ -4293,7 +4293,7 @@ EbErrorType WriteFrameHeaderAv1(
     currDataSize += (int32_t)lengthFieldSize;
     data += currDataSize;
 
-    outputBitstreamPtr->bufferAv1 = data;
+    output_bitstream_ptr->bufferAv1 = data;
     return return_error;
 }
 
@@ -4301,12 +4301,12 @@ EbErrorType WriteFrameHeaderAv1(
 * EncodeSPSAv1
 **************************************************/
 EbErrorType EncodeSPSAv1(
-    Bitstream_t *bitstreamPtr,
+    Bitstream *bitstreamPtr,
     SequenceControlSet *scsPtr)
 {
     EbErrorType            return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t  *outputBitstreamPtr = (OutputBitstreamUnit_t*)bitstreamPtr->outputBitstreamPtr;
-    uint8_t                *data = outputBitstreamPtr->bufferAv1;
+    OutputBitstreamUnit_t  *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstreamPtr->output_bitstream_ptr;
+    uint8_t                *data = output_bitstream_ptr->bufferAv1;
     uint32_t                obuHeaderSize = 0;
     uint32_t                obuPayloadSize = 0;
     const uint8_t enhancementLayersCnt = 0;// cm->enhancementLayersCnt;
@@ -4324,7 +4324,7 @@ EbErrorType EncodeSPSAv1(
     }
 
     data += obuHeaderSize + obuPayloadSize + lengthFieldSize;
-    outputBitstreamPtr->bufferAv1 = data;
+    output_bitstream_ptr->bufferAv1 = data;
     return return_error;
 }
 /**************************************************
@@ -4334,7 +4334,7 @@ EbErrorType encode_td_av1(
     uint8_t *output_bitstream_ptr)
 {
     EbErrorType              return_error = EB_ErrorNone;
-    //OutputBitstreamUnit_t   *outputBitstreamPtr = (OutputBitstreamUnit_t*)bitstreamPtr->outputBitstreamPtr;
+    //OutputBitstreamUnit_t   *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstreamPtr->output_bitstream_ptr;
     ASSERT(output_bitstream_ptr != NULL);
 
     uint8_t                 *data = output_bitstream_ptr;
@@ -4585,7 +4585,7 @@ static void loop_restoration_write_sb_coeffs(PictureControlSet     *piCSetPtr, F
 
 EbErrorType ec_update_neighbors(
     PictureControlSet     *picture_control_set_ptr,
-    EntropyCodingContext_t  *context_ptr,
+    EntropyCodingContext  *context_ptr,
     uint32_t                 blkOriginX,
     uint32_t                 blkOriginY,
     CodingUnit_t            *cu_ptr,
@@ -4847,8 +4847,8 @@ static void write_intrabc_info(
 
 EbErrorType write_modes_b(
     PictureControlSet     *picture_control_set_ptr,
-    EntropyCodingContext_t  *context_ptr,
-    EntropyCoder_t          *entropy_coder_ptr,
+    EntropyCodingContext  *context_ptr,
+    EntropyCoder          *entropy_coder_ptr,
     LargestCodingUnit_t     *tbPtr,
     CodingUnit_t            *cu_ptr,
     EbPictureBufferDesc   *coeffPtr)
@@ -4856,7 +4856,7 @@ EbErrorType write_modes_b(
     UNUSED(tbPtr);
     EbErrorType return_error = EB_ErrorNone;
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;
-    aom_writer              *ecWriter = &entropy_coder_ptr->ecWriter;
+    aom_writer              *ec_writer = &entropy_coder_ptr->ec_writer;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     NeighborArrayUnit     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
@@ -4881,7 +4881,7 @@ EbErrorType write_modes_b(
         //const int32_t skip = write_skip(cm, xd, mbmi->segment_id, mi, w);
         EncodeSkipCoeffAv1(
             frameContext,
-            ecWriter,
+            ec_writer,
             skipCoeff,
             blkOriginX,
             blkOriginY,
@@ -4891,7 +4891,7 @@ EbErrorType write_modes_b(
             sequence_control_set_ptr,
             picture_control_set_ptr,
             cu_ptr->av1xd,
-            ecWriter,
+            ec_writer,
             skipCoeff,
             blkOriginX >> MI_SIZE_LOG2,
             blkOriginY >> MI_SIZE_LOG2);
@@ -4916,7 +4916,7 @@ EbErrorType write_modes_b(
                 Av1writeDeltaQindex(
                     frameContext,
                     reduced_delta_qindex,
-                    ecWriter);
+                    ec_writer);
                 /*if (picture_control_set_ptr->picture_number == 0){
                 printf("%d\t%d\t%d\t%d\n",
                 blkOriginX,
@@ -4936,12 +4936,12 @@ EbErrorType write_modes_b(
             uint32_t intra_chroma_mode = cu_ptr->prediction_unit_array->intra_chroma_mode;
 
             if (av1_allow_intrabc(picture_control_set_ptr->parent_pcs_ptr->av1_cm))
-                write_intrabc_info(frameContext, cu_ptr, ecWriter);
+                write_intrabc_info(frameContext, cu_ptr, ec_writer);
 
             if (cu_ptr->av1xd->use_intrabc == 0)
             EncodeIntraLumaModeAv1(
                 frameContext,
-                ecWriter,
+                ec_writer,
                 cu_ptr,
                 blkOriginX,
                 blkOriginY,
@@ -4962,7 +4962,7 @@ EbErrorType write_modes_b(
                 if (blk_geom->has_uv)
                     EncodeIntraChromaModeAv1(
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         cu_ptr,
                         intra_luma_mode,
                         intra_chroma_mode,
@@ -4975,14 +4975,14 @@ EbErrorType write_modes_b(
                     blk_geom->bsize,
                     blkOriginY >> MI_SIZE_LOG2,
                     blkOriginX >> MI_SIZE_LOG2,
-                    ecWriter);
+                    ec_writer);
 
             if (!skipCoeff) {
                 Av1EncodeCoeff1D(
                     picture_control_set_ptr,
                     context_ptr,
                     frameContext,
-                    ecWriter,
+                    ec_writer,
                     cu_ptr,
                     blkOriginX,
                     blkOriginY,
@@ -4999,7 +4999,7 @@ EbErrorType write_modes_b(
         if (picture_control_set_ptr->parent_pcs_ptr->skip_mode_flag && is_comp_ref_allowed(bsize)) {
             EncodeSkipModeAv1(
                 frameContext,
-                ecWriter,
+                ec_writer,
                 cu_ptr->skip_flag,
                 blkOriginX,
                 blkOriginY,
@@ -5013,7 +5013,7 @@ EbErrorType write_modes_b(
             //const int32_t skip = write_skip(cm, xd, mbmi->segment_id, mi, w);
             EncodeSkipCoeffAv1(
                 frameContext,
-                ecWriter,
+                ec_writer,
                 skipCoeff,
                 blkOriginX,
                 blkOriginY,
@@ -5024,7 +5024,7 @@ EbErrorType write_modes_b(
             sequence_control_set_ptr,
             picture_control_set_ptr, /*cm,*/
             cu_ptr->av1xd,
-            ecWriter,
+            ec_writer,
             cu_ptr->skip_flag ? 1 : skipCoeff,
             blkOriginX >> MI_SIZE_LOG2,
             blkOriginY >> MI_SIZE_LOG2);
@@ -5050,7 +5050,7 @@ EbErrorType write_modes_b(
                 Av1writeDeltaQindex(
                     frameContext,
                     reduced_delta_qindex,
-                    ecWriter);
+                    ec_writer);
 
                 picture_control_set_ptr->parent_pcs_ptr->prev_qindex = current_q_index;
             }
@@ -5063,7 +5063,7 @@ EbErrorType write_modes_b(
             //write_is_inter(cm, xd, mbmi->segment_id, w, is_inter)
             EncodePredModeAv1(
                 frameContext,
-                ecWriter,
+                ec_writer,
                 cu_ptr->prediction_mode_flag,
                 blkOriginX,
                 blkOriginY,
@@ -5076,7 +5076,7 @@ EbErrorType write_modes_b(
 
                 EncodeIntraLumaModeNonKeyAv1(
                     frameContext,
-                    ecWriter,
+                    ec_writer,
                     cu_ptr,
                     bsize,
                     intra_luma_mode);
@@ -5094,7 +5094,7 @@ EbErrorType write_modes_b(
                 if (blk_geom->has_uv)
                     EncodeIntraChromaModeAv1(
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         cu_ptr,
                         intra_luma_mode,
                         intra_chroma_mode,
@@ -5113,7 +5113,7 @@ EbErrorType write_modes_b(
 
                 WriteRefFrames(
                     frameContext,
-                    ecWriter,
+                    ec_writer,
                     picture_control_set_ptr->parent_pcs_ptr,
                     cu_ptr,
                     bsize,
@@ -5133,14 +5133,14 @@ EbErrorType write_modes_b(
                     if (cu_ptr->prediction_unit_array[0].is_compound) {
                         WriteInterCompoundMode(
                             frameContext,
-                            ecWriter,
+                            ec_writer,
                             inter_mode,
                             mode_ctx);
                     }
                     else /*if (is_inter_singleref_mode(mode))*/
                         WriteInterMode(
                             frameContext,
-                            ecWriter,
+                            ec_writer,
                             inter_mode,
                             mode_ctx,
                             blkOriginX,
@@ -5150,7 +5150,7 @@ EbErrorType write_modes_b(
                     if (inter_mode == NEWMV || inter_mode == NEW_NEWMV || have_nearmv_in_inter_mode(inter_mode)) {
                         WriteDrlIdx(
                             frameContext,
-                            ecWriter,
+                            ec_writer,
                             cu_ptr);
 
                     }
@@ -5174,7 +5174,7 @@ EbErrorType write_modes_b(
 
                         av1_encode_mv(
                             picture_control_set_ptr->parent_pcs_ptr,
-                            ecWriter,
+                            ec_writer,
                             &mv,
                             &ref_mv.as_mv,
                             nmvc,
@@ -5191,7 +5191,7 @@ EbErrorType write_modes_b(
 
                     av1_encode_mv(
                         picture_control_set_ptr->parent_pcs_ptr,
-                        ecWriter,
+                        ec_writer,
                         &mv,
                         &ref_mv.as_mv,
                         nmvc,
@@ -5208,7 +5208,7 @@ EbErrorType write_modes_b(
 
                     av1_encode_mv(
                         picture_control_set_ptr->parent_pcs_ptr,
-                        ecWriter,
+                        ec_writer,
                         &mv,
                         &ref_mv.as_mv,
                         nmvc,
@@ -5220,7 +5220,7 @@ EbErrorType write_modes_b(
                     && rf[1] != INTRA_FRAME) {
                     write_motion_mode(  
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         bsize,
                         cu_ptr->prediction_unit_array[0].motion_mode,
                         rf[0],
@@ -5239,7 +5239,7 @@ EbErrorType write_modes_b(
                     rf[0],
                     rf[1],
                     picture_control_set_ptr->parent_pcs_ptr,
-                    ecWriter,
+                    ec_writer,
                     cu_ptr,
                     entropy_coder_ptr,
                     interpolation_type_neighbor_array,
@@ -5259,7 +5259,7 @@ EbErrorType write_modes_b(
                         picture_control_set_ptr,
                         context_ptr,
                         frameContext,
-                        ecWriter,
+                        ec_writer,
                         cu_ptr,
                         blkOriginX,
                         blkOriginY,
@@ -5292,15 +5292,15 @@ EbErrorType write_modes_b(
 * Write sb
 **********************************************/
 EB_EXTERN EbErrorType write_sb(
-    EntropyCodingContext_t  *context_ptr,
+    EntropyCodingContext  *context_ptr,
     LargestCodingUnit_t     *tbPtr,
     PictureControlSet     *picture_control_set_ptr,
-    EntropyCoder_t          *entropy_coder_ptr,
+    EntropyCoder          *entropy_coder_ptr,
     EbPictureBufferDesc   *coeffPtr)
 {
     EbErrorType return_error = EB_ErrorNone;
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;
-    aom_writer              *ecWriter = &entropy_coder_ptr->ecWriter;
+    aom_writer              *ec_writer = &entropy_coder_ptr->ec_writer;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     NeighborArrayUnit     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
 
@@ -5368,7 +5368,7 @@ EB_EXTERN EbErrorType write_sb(
                                 const int32_t runit_idx = tile_tl_idx + rcol + rrow * rstride;
                                 const RestorationUnitInfo *rui =
                                     &cm->rst_info[plane].unit_info[runit_idx];
-                                loop_restoration_write_sb_coeffs(picture_control_set_ptr, frameContext, cm, /*xd,*/ rui, ecWriter, plane);
+                                loop_restoration_write_sb_coeffs(picture_control_set_ptr, frameContext, cm, /*xd,*/ rui, ec_writer, plane);
                             }
                         }
                     }
@@ -5379,7 +5379,7 @@ EB_EXTERN EbErrorType write_sb(
                 EncodePartitionAv1(
                     sequence_control_set_ptr,
                     frameContext,
-                    ecWriter,
+                    ec_writer,
                     bsize,
                     tbPtr->cu_partition_array[cu_index],
                     blkOriginX,

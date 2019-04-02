@@ -11,19 +11,19 @@
 extern "C" {
 #endif
 
-    void FullLoop_R(
+    void full_loop_r(
         LargestCodingUnit_t            *sb_ptr,
         ModeDecisionCandidateBuffer  *candidateBuffer,
         ModeDecisionContext          *context_ptr,
         EbPictureBufferDesc          *input_picture_ptr,
         PictureControlSet            *picture_control_set_ptr,
         uint32_t                          component_mask,
-        uint32_t                          cbQp,
-        uint32_t                          crQp,
+        uint32_t                          cb_qp,
+        uint32_t                          cr_qp,
         uint32_t                          *cb_count_non_zero_coeffs,
         uint32_t                          *cr_count_non_zero_coeffs);
 
-    void CuFullDistortionFastTuMode_R(
+    void cu_full_distortion_fast_tu_mode_r(
         LargestCodingUnit_t            *sb_ptr,
         ModeDecisionCandidateBuffer  *candidateBuffer,
         ModeDecisionContext            *context_ptr,
@@ -39,7 +39,7 @@ extern "C" {
         uint64_t                         *cr_coeff_bits,
         EbAsm                            asm_type);
 
-    void ProductFullLoop(
+    void product_full_loop(
         ModeDecisionCandidateBuffer  *candidateBuffer,
         ModeDecisionContext          *context_ptr,
         PictureControlSet            *picture_control_set_ptr,
@@ -49,7 +49,7 @@ extern "C" {
         uint64_t                         *y_full_distortion);
 
 
-    void ProductFullLoopTxSearch(
+    void product_full_loop_tx_search(
         ModeDecisionCandidateBuffer  *candidateBuffer,
         ModeDecisionContext          *context_ptr,
         PictureControlSet            *picture_control_set_ptr);

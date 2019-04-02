@@ -1424,8 +1424,8 @@ void AV1CostCalcCfl(
     uint32_t                            chroma_height = context_ptr->blk_geom->bheight_uv;
     // FullLoop and TU search
     int32_t                             alpha_q3;
-    uint8_t                             cbQp = context_ptr->qp;
-    uint8_t                             crQp = context_ptr->qp;
+    uint8_t                             cb_qp = context_ptr->qp;
+    uint8_t                             cr_qp = context_ptr->qp;
 
     full_distortion[DIST_CALC_RESIDUAL] = 0;
     full_distortion[DIST_CALC_PREDICTION] = 0;
@@ -1471,21 +1471,21 @@ void AV1CostCalcCfl(
             chroma_width,
             chroma_height);
 
-        FullLoop_R(
+        full_loop_r(
             sb_ptr,
             candidateBuffer,
             context_ptr,
             input_picture_ptr,
             picture_control_set_ptr,
             PICTURE_BUFFER_DESC_Cb_FLAG,
-            cbQp,
-            crQp,
+            cb_qp,
+            cr_qp,
             &(*count_non_zero_coeffs[1]),
             &(*count_non_zero_coeffs[2]));
 
 
         // Create new function
-        CuFullDistortionFastTuMode_R(
+        cu_full_distortion_fast_tu_mode_r(
             sb_ptr,
             candidateBuffer,
             context_ptr,
@@ -1546,21 +1546,21 @@ void AV1CostCalcCfl(
             chroma_width,
             chroma_height);
 
-        FullLoop_R(
+        full_loop_r(
             sb_ptr,
             candidateBuffer,
             context_ptr,
             input_picture_ptr,
             picture_control_set_ptr,
             PICTURE_BUFFER_DESC_Cr_FLAG,
-            cbQp,
-            crQp,
+            cb_qp,
+            cr_qp,
             &(*count_non_zero_coeffs[1]),
             &(*count_non_zero_coeffs[2]));
         candidate_ptr->v_has_coeff = *count_non_zero_coeffs[2] ? EB_TRUE : EB_FALSE;
 
         // Create new function
-        CuFullDistortionFastTuMode_R(
+        cu_full_distortion_fast_tu_mode_r(
             sb_ptr,
             candidateBuffer,
             context_ptr,
@@ -2027,7 +2027,7 @@ void AV1PerformFullLoop(
         tx_search_skip_fag = ( picture_control_set_ptr->parent_pcs_ptr->skip_tx_search && best_fastLoop_candidate_index > NFL_TX_TH) ? 1 : tx_search_skip_fag;
         if (!tx_search_skip_fag){
 
-                ProductFullLoopTxSearch(
+                product_full_loop_tx_search(
                     candidateBuffer,
                     context_ptr,
                     picture_control_set_ptr);
@@ -2042,7 +2042,7 @@ void AV1PerformFullLoop(
             candidate_ptr->y_has_coeff = 0;
         }
 
-        ProductFullLoop(
+        product_full_loop(
             candidateBuffer,
             context_ptr,
             picture_control_set_ptr,
@@ -2086,20 +2086,20 @@ void AV1PerformFullLoop(
         cr_coeff_bits = 0;
 
         // FullLoop and TU search
-        uint8_t cbQp = context_ptr->qp;
-        uint8_t crQp = context_ptr->qp;
+        uint8_t cb_qp = context_ptr->qp;
+        uint8_t cr_qp = context_ptr->qp;
 
         if (context_ptr->blk_geom->has_uv && context_ptr->chroma_level == CHROMA_MODE_0) {
 
-            FullLoop_R(
+            full_loop_r(
                 sb_ptr,
                 candidateBuffer,
                 context_ptr,
                 input_picture_ptr,
                 picture_control_set_ptr,
                 PICTURE_BUFFER_DESC_CHROMA_MASK,
-                cbQp,
-                crQp,
+                cb_qp,
+                cr_qp,
                 &(*count_non_zero_coeffs[1]),
                 &(*count_non_zero_coeffs[2]));
 
@@ -2107,7 +2107,7 @@ void AV1PerformFullLoop(
 
 
 
-            CuFullDistortionFastTuMode_R(
+            cu_full_distortion_fast_tu_mode_r(
                 sb_ptr,
                 candidateBuffer,
                 context_ptr,
@@ -2394,7 +2394,7 @@ void inter_depth_tx_search(
             count_non_zero_coeffs);
 
 
-        ProductFullLoopTxSearch(
+        product_full_loop_tx_search(
             candidateBuffer,
             context_ptr,
             picture_control_set_ptr
@@ -2409,7 +2409,7 @@ void inter_depth_tx_search(
         //re-init
         candidate_ptr->y_has_coeff = 0;
 
-        ProductFullLoop(
+        product_full_loop(
             candidateBuffer,
             context_ptr,
             picture_control_set_ptr,
@@ -2432,22 +2432,22 @@ void inter_depth_tx_search(
         cr_coeff_bits = 0;
 
         // FullLoop and TU search
-        uint8_t cbQp = context_ptr->qp;
-        uint8_t crQp = context_ptr->qp;
+        uint8_t cb_qp = context_ptr->qp;
+        uint8_t cr_qp = context_ptr->qp;
         if (context_ptr->blk_geom->has_uv && context_ptr->chroma_level == CHROMA_MODE_0) {
-            FullLoop_R(
+            full_loop_r(
                 context_ptr->sb_ptr,
                 candidateBuffer,
                 context_ptr,
                 input_picture_ptr,
                 picture_control_set_ptr,
                 PICTURE_BUFFER_DESC_CHROMA_MASK,
-                cbQp,
-                crQp,
+                cb_qp,
+                cr_qp,
                 &(*count_non_zero_coeffs[1]),
                 &(*count_non_zero_coeffs[2]));
 
-            CuFullDistortionFastTuMode_R(
+            cu_full_distortion_fast_tu_mode_r(
                 context_ptr->sb_ptr,
                 candidateBuffer,
                 context_ptr,

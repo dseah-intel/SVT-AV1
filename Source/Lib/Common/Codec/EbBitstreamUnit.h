@@ -31,7 +31,7 @@ extern "C" {
      **********************************/
     extern EbErrorType output_bitstream_unit_ctor(
         OutputBitstreamUnit_t   *bitstreamPtr,
-        uint32_t                   bufferSize);
+        uint32_t                   buffer_size);
 
 
     extern EbErrorType output_bitstream_reset(OutputBitstreamUnit_t *bitstreamPtr);

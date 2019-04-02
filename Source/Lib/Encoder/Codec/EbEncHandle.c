@@ -1440,7 +1440,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     //DLF results
     {
-        EntropyCodingResultsInitData_t dlfResultInitData;
+        EntropyCodingResultsInitData dlfResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->dlfResultsResourcePtr,
@@ -1458,7 +1458,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
     //CDEF results
     {
-        EntropyCodingResultsInitData_t cdefResultInitData;
+        EntropyCodingResultsInitData cdefResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->cdefResultsResourcePtr,
@@ -1477,7 +1477,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     }
     //REST results
     {
-        EntropyCodingResultsInitData_t restResultInitData;
+        EntropyCodingResultsInitData restResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->restResultsResourcePtr,
@@ -1497,7 +1497,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     // Entropy Coding Results
     {
-        EntropyCodingResultsInitData_t entropyCodingResultInitData;
+        EntropyCodingResultsInitData entropyCodingResultInitData;
 
         return_error = eb_system_resource_ctor(
             &encHandlePtr->entropyCodingResultsResourcePtr,
@@ -1507,7 +1507,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
             &encHandlePtr->entropyCodingResultsProducerFifoPtrArray,
             &encHandlePtr->entropyCodingResultsConsumerFifoPtrArray,
             EB_TRUE,
-            EntropyCodingResultsCtor,
+            entropy_coding_results_ctor,
             &entropyCodingResultInitData);
         if (return_error == EB_ErrorInsufficientResources) {
             return EB_ErrorInsufficientResources;
@@ -1763,7 +1763,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->entropy_coding_process_init_count; ++processIndex) {
         return_error = entropy_coding_context_ctor(
-            (EntropyCodingContext_t**)&encHandlePtr->entropyCodingContextPtrArray[processIndex],
+            (EntropyCodingContext**)&encHandlePtr->entropyCodingContextPtrArray[processIndex],
             encHandlePtr->restResultsConsumerFifoPtrArray[processIndex],
             encHandlePtr->entropyCodingResultsProducerFifoPtrArray[processIndex],
             encHandlePtr->rateControlTasksProducerFifoPtrArray[RateControlPortLookup(RATE_CONTROL_INPUT_PORT_ENTROPY_CODING, processIndex)],
@@ -1865,7 +1865,7 @@ EB_API EbErrorType eb_init_encoder(EbComponentType *svt_enc_component)
     EB_MALLOC(EbHandle*, encHandlePtr->entropyCodingThreadHandleArray, sizeof(EbHandle) * encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->entropy_coding_process_init_count, EB_N_PTR);
 
     for (processIndex = 0; processIndex < encHandlePtr->sequence_control_set_instance_array[0]->sequence_control_set_ptr->entropy_coding_process_init_count; ++processIndex) {
-        EB_CREATETHREAD(EbHandle, encHandlePtr->entropyCodingThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, EntropyCodingKernel, encHandlePtr->entropyCodingContextPtrArray[processIndex]);
+        EB_CREATETHREAD(EbHandle, encHandlePtr->entropyCodingThreadHandleArray[processIndex], sizeof(EbHandle), EB_THREAD, entropy_coding_kernel, encHandlePtr->entropyCodingContextPtrArray[processIndex]);
     }
 
     // Packetization

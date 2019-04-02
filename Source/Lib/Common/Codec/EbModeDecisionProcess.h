@@ -150,7 +150,7 @@ extern "C" {
         MvUnit                        mv_unit;
 
         // Entropy Coder
-        EntropyCoder_t                 *coeff_est_entropy_coder_ptr;
+        EntropyCoder                 *coeff_est_entropy_coder_ptr;
         MdEncPassCuData               md_ep_pipe_sb[BLOCK_MAX_COUNT_SB_128];
 
         uint8_t                         group_of8x8_blocks_count;

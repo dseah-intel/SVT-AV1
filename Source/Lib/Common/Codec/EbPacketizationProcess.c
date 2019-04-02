@@ -252,7 +252,7 @@ void* packetization_kernel(void *input_ptr)
 
     // Input
     EbObjectWrapper              *entropyCodingResultsWrapperPtr;
-    EntropyCodingResults_t         *entropyCodingResultsPtr;
+    EntropyCodingResults         *entropyCodingResultsPtr;
 
     // Output
     EbObjectWrapper              *output_stream_wrapper_ptr;
@@ -274,7 +274,7 @@ void* packetization_kernel(void *input_ptr)
         eb_get_full_object(
             context_ptr->entropy_coding_input_fifo_ptr,
             &entropyCodingResultsWrapperPtr);
-        entropyCodingResultsPtr = (EntropyCodingResults_t*)entropyCodingResultsWrapperPtr->object_ptr;
+        entropyCodingResultsPtr = (EntropyCodingResults*)entropyCodingResultsWrapperPtr->object_ptr;
         picture_control_set_ptr = (PictureControlSet*)entropyCodingResultsPtr->picture_control_set_wrapper_ptr->object_ptr;
         sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
         encode_context_ptr = (EncodeContext_t*)sequence_control_set_ptr->encode_context_ptr;
@@ -314,7 +314,7 @@ void* packetization_kernel(void *input_ptr)
         // slice_type = picture_control_set_ptr->slice_type;
          // Reset the bitstream before writing to it
         ResetBitstream(
-            picture_control_set_ptr->bitstreamPtr->outputBitstreamPtr);
+            picture_control_set_ptr->bitstreamPtr->output_bitstream_ptr);
 
         // Code the SPS
         if (picture_control_set_ptr->parent_pcs_ptr->av1_frame_type == KEY_FRAME) {
@@ -339,7 +339,7 @@ void* packetization_kernel(void *input_ptr)
         if (picture_control_set_ptr->parent_pcs_ptr->has_show_existing) {
             // Reset the bitstream before writing to it
             ResetBitstream(
-                picture_control_set_ptr->bitstreamPtr->outputBitstreamPtr);
+                picture_control_set_ptr->bitstreamPtr->output_bitstream_ptr);
             WriteFrameHeaderAv1(
                 picture_control_set_ptr->bitstreamPtr,
                 sequence_control_set_ptr,

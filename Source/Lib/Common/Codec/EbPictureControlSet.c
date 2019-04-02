@@ -171,7 +171,7 @@ EbErrorType picture_control_set_ctor(
 
 
     // Entropy Coder
-    return_error = EntropyCoderCtor(
+    return_error = entropy_coder_ctor(
         &object_ptr->entropy_coder_ptr,
         SEGMENT_ENTROPY_BUFFER_SIZE);
 
@@ -180,7 +180,7 @@ EbErrorType picture_control_set_ctor(
     }
 
     // Packetization process Bitstream
-    return_error = BitstreamCtor(
+    return_error = bitstream_ctor(
         &object_ptr->bitstreamPtr,
         PACKETIZATION_PROCESS_BUFFER_SIZE);
 
@@ -188,7 +188,7 @@ EbErrorType picture_control_set_ctor(
         return EB_ErrorInsufficientResources;
     }
     // Rate estimation entropy coder
-    return_error = EntropyCoderCtor(
+    return_error = entropy_coder_ctor(
         &object_ptr->coeff_est_entropy_coder_ptr,
         SEGMENT_ENTROPY_BUFFER_SIZE);
     if (return_error == EB_ErrorInsufficientResources) {
