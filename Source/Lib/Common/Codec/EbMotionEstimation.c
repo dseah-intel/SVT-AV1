@@ -152,25 +152,25 @@ static EB_COMPUTE8X4SAD_TYPE FUNC_TABLE compute8x4SAD_funcPtrArray[ASM_TYPE_TOTA
 /***************************************
 * Function Tables
 ***************************************/
-static EB_EXTSADCALCULATION8X8AND16X16_TYPE ExtSadCalculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbExtSadCalculation8x8and16x16Type ExtSadCalculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     ext_sad_calculation_8x8_16x16,
     // AVX2
     ext_sad_calculation_8x8_16x16_avx2_intrin
 };
-static EB_EXTSADCALCULATION32X32AND64X64_TYPE ExtSadCalculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbExtSadCalculation32x32and64x64Type ExtSadCalculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     ext_sad_calculation_32x32_64x64,
     // AVX2
     ext_sad_calculation_32x32_64x64_sse4_intrin
 };
-static EB_SADCALCULATION8X8AND16X16_TYPE SadCalculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbSadCalculation8x8and16x16Type SadCalculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     sad_calculation_8x8_16x16_sse2_intrin,
     // AVX2
     sad_calculation_8x8_16x16_sse2_intrin,
 };
-static EB_SADCALCULATION32X32AND64X64_TYPE SadCalculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbSadCalculation32x32and64x64Type SadCalculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     sad_calculation_32x32_64x64_sse2_intrin,
     // AVX2
@@ -178,21 +178,21 @@ static EB_SADCALCULATION32X32AND64X64_TYPE SadCalculation_32x32_64x64_funcPtrArr
 };
 
 #if NSQ_ME_OPT
-static EB_EXT_ALL_SAD_CALCULATION_8x8_16x16_TYPE Ext_ext_all_sad_calculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbExtAllSadCalculation8x816x16Type Ext_ext_all_sad_calculation_8x8_16x16_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     ext_all_sad_calculation_8x8_16x16_c,
     // AVX2
     ext_all_sad_calculation_8x8_16x16_avx2,
 };
 
-static EB_EIGHTSADCALCULATIONNSQ_TYPE Ext_eigth_sad_calculation_nsq_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbEightSadCalculationNsqType Ext_eigth_sad_calculation_nsq_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     ext_eigth_sad_calculation_nsq_c,
     // AVX2
     ext_eigth_sad_calculation_nsq_avx2,
 };
 
-static EB_EXT_EIGHT_SAD_CALCULATION_32x32_64x64_TYPE Ext_ext_eight_sad_calculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbExtEightSadCalculation32x3264x64Type Ext_ext_eight_sad_calculation_32x32_64x64_funcPtrArray[ASM_TYPE_TOTAL] = {
     // NON_AVX2
     ext_eight_sad_calculation_32x32_64x64_c,
     // AVX2
@@ -1440,7 +1440,7 @@ void ExtSadCalculation(
     }
 
 }
-static EB_EXTSADCALCULATION_TYPE ExtSadCalculation_funcPtrArray[ASM_TYPE_TOTAL] = {
+static EbExtSadCalculationType ExtSadCalculation_funcPtrArray[ASM_TYPE_TOTAL] = {
     // Should be written in Assembly
     // C_DEFAULT
     ExtSadCalculation,
@@ -8062,7 +8062,7 @@ EbErrorType motion_estimate_lcu(
 #endif
                         uint8_t refPicIndex = 0;
 
-                        InitializeBuffer_32bits_funcPtrArray[asm_type](context_ptr->p_sb_best_sad[listIndex][refPicIndex], 52, 1, MAX_SAD_VALUE);
+                        initialize_buffer32bits_func_ptr_array[asm_type](context_ptr->p_sb_best_sad[listIndex][refPicIndex], 52, 1, MAX_SAD_VALUE);
 
                         context_ptr->p_best_sad64x64 = &(context_ptr->p_sb_best_sad[listIndex][refPicIndex][ME_TIER_ZERO_PU_64x64]);
                         context_ptr->p_best_sad32x32 = &(context_ptr->p_sb_best_sad[listIndex][refPicIndex][ME_TIER_ZERO_PU_32x32_0]);
@@ -8126,7 +8126,7 @@ EbErrorType motion_estimate_lcu(
                     else {
 
 
-                        InitializeBuffer_32bits_funcPtrArray[asm_type](context_ptr->p_sb_best_sad[listIndex][0], 21, 1, MAX_SAD_VALUE);
+                        initialize_buffer32bits_func_ptr_array[asm_type](context_ptr->p_sb_best_sad[listIndex][0], 21, 1, MAX_SAD_VALUE);
                         context_ptr->p_best_sad64x64 = &(context_ptr->p_sb_best_sad[listIndex][0][ME_TIER_ZERO_PU_64x64]);
                         context_ptr->p_best_sad32x32 = &(context_ptr->p_sb_best_sad[listIndex][0][ME_TIER_ZERO_PU_32x32_0]);
                         context_ptr->p_best_sad16x16 = &(context_ptr->p_sb_best_sad[listIndex][0][ME_TIER_ZERO_PU_16x16_0]);
