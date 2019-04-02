@@ -76,15 +76,15 @@ static void EntropyCodingResetNeighborArrays(PictureControlSet *picture_control_
 
 void av1_get_syntax_rate_from_cdf(
     int32_t                      *costs,
-    const aom_cdf_prob       *cdf,
+    const AomCdfProb       *cdf,
     const int32_t                *inv_map);
 
-void av1_cost_tokens_from_cdf(int32_t *costs, const aom_cdf_prob *cdf,
+void av1_cost_tokens_from_cdf(int32_t *costs, const AomCdfProb *cdf,
     const int32_t *inv_map) {
     // int32_t i;
-    // aom_cdf_prob prev_cdf = 0;
+    // AomCdfProb prev_cdf = 0;
     // for (i = 0;; ++i) {
-    //     aom_cdf_prob p15 = AOM_ICDF(cdf[i]) - prev_cdf;
+    //     AomCdfProb p15 = AOM_ICDF(cdf[i]) - prev_cdf;
     //     p15 = (p15 < EC_MIN_PROB) ? EC_MIN_PROB : p15;
     //     prev_cdf = AOM_ICDF(cdf[i]);
     //
@@ -102,7 +102,7 @@ void av1_cost_tokens_from_cdf(int32_t *costs, const aom_cdf_prob *cdf,
 }
 
 static void build_nmv_component_cost_table(int32_t *mvcost,
-    const nmv_component *const mvcomp,
+    const NmvComponent *const mvcomp,
     MvSubpelPrecision precision) {
     int32_t i, v;
     int32_t sign_cost[2], class_cost[MV_CLASSES], class0_cost[CLASS0_SIZE];
@@ -162,7 +162,7 @@ static void build_nmv_component_cost_table(int32_t *mvcost,
     }
 }
 void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
-    const nmv_context *ctx,
+    const NmvContext *ctx,
     MvSubpelPrecision precision) {
     av1_cost_tokens_from_cdf(mvjoint, ctx->joints_cdf, NULL);
     build_nmv_component_cost_table(mvcost[0], &ctx->comps[0], precision);

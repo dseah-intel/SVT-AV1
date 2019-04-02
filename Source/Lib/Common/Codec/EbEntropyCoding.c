@@ -513,7 +513,7 @@ int32_t  Av1WriteCoeffsTxb1D(
     (void)coeff_stride;
     const TxSize txs_ctx = (TxSize)((txsize_sqr_map[txSize] + txsize_sqr_up_map[txSize] + 1) >> 1);
     TxType txType = cu_ptr->transform_unit_array[tu_index].transform_type[component_type];
-    const SCAN_ORDER *const scan_order = &av1_scan_orders[txSize][txType];
+    const ScanOrder *const scan_order = &av1_scan_orders[txSize][txType];
     const int16_t *const scan = scan_order->scan;
     int32_t c;
     const int16_t bwl = (const uint16_t)get_txb_bwl(txSize);
@@ -898,13 +898,13 @@ static INLINE int32_t partition_cdf_length(BlockSize bsize) {
     else
         return EXT_PARTITION_TYPES;
 }
-static int32_t cdf_element_prob(const aom_cdf_prob *const cdf,
+static int32_t cdf_element_prob(const AomCdfProb *const cdf,
     size_t element) {
     assert(cdf != NULL);
     return (element > 0 ? cdf[element - 1] : CDF_PROB_TOP) - cdf[element];
 }
-static void partition_gather_horz_alike(aom_cdf_prob *out,
-    const aom_cdf_prob *const in,
+static void partition_gather_horz_alike(AomCdfProb *out,
+    const AomCdfProb *const in,
     BlockSize bsize) {
 
 
@@ -918,8 +918,8 @@ static void partition_gather_horz_alike(aom_cdf_prob *out,
     out[0] = AOM_ICDF(out[0]);
     out[1] = AOM_ICDF(CDF_PROB_TOP);
 }
-static void partition_gather_vert_alike(aom_cdf_prob *out,
-    const aom_cdf_prob *const in,
+static void partition_gather_vert_alike(AomCdfProb *out,
+    const AomCdfProb *const in,
     BlockSize bsize) {
     out[0] = CDF_PROB_TOP;
     out[0] -= cdf_element_prob(in, PARTITION_VERT);
@@ -987,7 +987,7 @@ static void EncodePartitionAv1(
 
     }
     else if (!hasRows && hasCols) {
-        aom_cdf_prob cdf[CDF_SIZE(2)];
+        AomCdfProb cdf[CDF_SIZE(2)];
         partition_gather_vert_alike(cdf, frameContext->partition_cdf[contextIndex], bsize);
         aom_write_symbol(
             ec_writer,
@@ -996,7 +996,7 @@ static void EncodePartitionAv1(
             2);
     }
     else {
-        aom_cdf_prob cdf[CDF_SIZE(2)];
+        AomCdfProb cdf[CDF_SIZE(2)];
         partition_gather_horz_alike(cdf, frameContext->partition_cdf[contextIndex], bsize);
         aom_write_symbol(
             ec_writer,
@@ -1142,11 +1142,11 @@ static void write_cfl_alphas(FRAME_CONTEXT *const ec_ctx, int32_t idx,
     aom_write_symbol(w, joint_sign, ec_ctx->cfl_sign_cdf, CFL_JOINT_SIGNS);
     // Magnitudes are only signaled for nonzero codes.
     if (CFL_SIGN_U(joint_sign) != CFL_SIGN_ZERO) {
-        aom_cdf_prob *cdf_u = ec_ctx->cfl_alpha_cdf[CFL_CONTEXT_U(joint_sign)];
+        AomCdfProb *cdf_u = ec_ctx->cfl_alpha_cdf[CFL_CONTEXT_U(joint_sign)];
         aom_write_symbol(w, CFL_IDX_U(idx), cdf_u, CFL_ALPHABET_SIZE);
     }
     if (CFL_SIGN_V(joint_sign) != CFL_SIGN_ZERO) {
-        aom_cdf_prob *cdf_v = ec_ctx->cfl_alpha_cdf[CFL_CONTEXT_V(joint_sign)];
+        AomCdfProb *cdf_v = ec_ctx->cfl_alpha_cdf[CFL_CONTEXT_V(joint_sign)];
         aom_write_symbol(w, CFL_IDX_V(idx), cdf_v, CFL_ALPHABET_SIZE);
     }
 }
@@ -1685,8 +1685,8 @@ void WriteDrlIdx(
     }
 }
 
-extern MV_JOINT_TYPE av1_get_mv_joint(int32_t diff[2]);
-static void encode_mv_component(aom_writer *w, int32_t comp, nmv_component *mvcomp,
+extern MvJointType av1_get_mv_joint(int32_t diff[2]);
+static void encode_mv_component(aom_writer *w, int32_t comp, NmvComponent *mvcomp,
     MvSubpelPrecision precision) {
     int32_t offset;
     const int32_t sign = comp < 0;
@@ -1729,7 +1729,7 @@ static void encode_mv_component(aom_writer *w, int32_t comp, nmv_component *mvco
             2);
 }
 
-MV_JOINT_TYPE av1_get_mv_joint_diff(int32_t diff[2]) {
+MvJointType av1_get_mv_joint_diff(int32_t diff[2]) {
     if (diff[0] == 0) {
         return diff[1] == 0 ? MV_JOINT_ZERO : MV_JOINT_HNZVZ;
     }
@@ -1749,7 +1749,7 @@ void av1_encode_mv(
     aom_writer                  *ec_writer,
     const MV *mv,
     const MV *ref,
-    nmv_context *mvctx,
+    NmvContext *mvctx,
     int32_t usehp) {
 
 
@@ -1759,7 +1759,7 @@ void av1_encode_mv(
 
 
     int32_t diff[2] = { mv->row - ref->row, mv->col - ref->col };
-    const MV_JOINT_TYPE j = av1_get_mv_joint_diff(diff);
+    const MvJointType j = av1_get_mv_joint_diff(diff);
 
     if (pcs_ptr->cur_frame_force_integer_mv) {
         usehp = MV_SUBPEL_NONE;
@@ -4802,14 +4802,14 @@ static void write_palette_mode_info(
     }
 }
 void av1_encode_dv(aom_writer *w, const MV *mv, const MV *ref,
-    nmv_context *mvctx) {
+    NmvContext *mvctx) {
     // DV and ref DV should not have sub-pel.
     assert((mv->col & 7) == 0);
     assert((mv->row & 7) == 0);
     assert((ref->col & 7) == 0);
     assert((ref->row & 7) == 0);
     const MV diff = { mv->row - ref->row, mv->col - ref->col };
-    const MV_JOINT_TYPE j = av1_get_mv_joint((int32_t*)&diff);
+    const MvJointType j = av1_get_mv_joint((int32_t*)&diff);
 
     aom_write_symbol(w, j, mvctx->joints_cdf, MV_JOINTS);
     if (mv_joint_vertical(j))
@@ -5160,7 +5160,7 @@ EbErrorType write_modes_b(
                     IntMv ref_mv;
 
                     for (uint8_t ref = 0; ref < 1 + is_compound; ++ref) {
-                        nmv_context *nmvc = &frameContext->nmvc;
+                        NmvContext *nmvc = &frameContext->nmvc;
                         ref_mv = cu_ptr->predmv[ref];
 
                         MV mv;
@@ -5182,7 +5182,7 @@ EbErrorType write_modes_b(
                     }
                 }
                 else if (inter_mode == NEAREST_NEWMV || inter_mode == NEAR_NEWMV) {
-                    nmv_context *nmvc = &frameContext->nmvc;
+                    NmvContext *nmvc = &frameContext->nmvc;
                     IntMv ref_mv = cu_ptr->predmv[1];
 
                     MV mv;
@@ -5199,7 +5199,7 @@ EbErrorType write_modes_b(
 
                 }
                 else if (inter_mode == NEW_NEARESTMV || inter_mode == NEW_NEARMV) {
-                    nmv_context *nmvc = &frameContext->nmvc;
+                    NmvContext *nmvc = &frameContext->nmvc;
                     IntMv ref_mv = cu_ptr->predmv[0];
 
                     MV mv;

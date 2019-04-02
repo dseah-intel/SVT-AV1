@@ -3346,7 +3346,7 @@ extern "C" {
         748, 792, 793, 833, 834, 870, 871, 903, 904, 932, 933, 957, 958,
         978, 979, 995, 996, 1008, 1009, 1017, 1018, 1022, 1023
     };
-    static const SCAN_ORDER av1_scan_orders[TX_SIZES_ALL][TX_TYPES] = {
+    static const ScanOrder av1_scan_orders[TX_SIZES_ALL][TX_TYPES] = {
         {
             // TX_4X4
             { default_scan_4x4, av1_default_iscan_4x4, default_scan_4x4_neighbors },

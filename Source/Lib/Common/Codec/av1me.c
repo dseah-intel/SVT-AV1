@@ -167,7 +167,7 @@ void av1_set_mv_search_range(MvLimits *mv_limits, const MV *mv) {
 
 
 
-MV_JOINT_TYPE av1_get_mv_joint(const MV *mv);
+MvJointType av1_get_mv_joint(const MV *mv);
 
 static INLINE int mv_cost(const MV *mv, const int *joint_cost,
                           int *const comp_cost[2]) {

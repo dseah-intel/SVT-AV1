@@ -33,7 +33,7 @@ static INLINE int32_t get_interinter_wedge_bits(BlockSize sb_type) {
 * Calculate the cost of a symbol with
 * probability p15 / 2^15
 ***************************************************************/
-static INLINE int32_t av1_cost_symbol(aom_cdf_prob p15) {
+static INLINE int32_t av1_cost_symbol(AomCdfProb p15) {
     assert(0 < p15 && p15 < CDF_PROB_TOP);
     const int32_t shift = CDF_PROB_BITS - 1 - get_msb(p15);
     const int32_t prob = get_prob(p15 << shift, CDF_PROB_TOP);
@@ -47,13 +47,13 @@ static INLINE int32_t av1_cost_symbol(aom_cdf_prob p15) {
 **************************************************************/
 void av1_get_syntax_rate_from_cdf(
     int32_t                      *costs,
-    const aom_cdf_prob       *cdf,
+    const AomCdfProb       *cdf,
     const int32_t                *inv_map)
 {
     int32_t i;
-    aom_cdf_prob prev_cdf = 0;
+    AomCdfProb prev_cdf = 0;
     for (i = 0;; ++i) {
-        aom_cdf_prob p15 = AOM_ICDF(cdf[i]) - prev_cdf;
+        AomCdfProb p15 = AOM_ICDF(cdf[i]) - prev_cdf;
         p15 = (p15 < EC_MIN_PROB) ? EC_MIN_PROB : p15;
         prev_cdf = AOM_ICDF(cdf[i]);
 
@@ -150,7 +150,7 @@ void av1_estimate_syntax_rate(
             memset(FacBits_u, 0, CFL_ALPHABET_SIZE * sizeof(*FacBits_u));
         }
         else {
-            const aom_cdf_prob *cdf_u = fc->cfl_alpha_cdf[CFL_CONTEXT_U(joint_sign)];
+            const AomCdfProb *cdf_u = fc->cfl_alpha_cdf[CFL_CONTEXT_U(joint_sign)];
             av1_get_syntax_rate_from_cdf(FacBits_u, cdf_u, NULL);
         }
         if (CFL_SIGN_V(joint_sign) == CFL_SIGN_ZERO) {
@@ -158,7 +158,7 @@ void av1_estimate_syntax_rate(
         }
         else {
             ASSERT((CFL_CONTEXT_V(joint_sign) < CFL_ALPHA_CONTEXTS) && (CFL_CONTEXT_V(joint_sign) >= 0));
-            const aom_cdf_prob *cdf_v = fc->cfl_alpha_cdf[CFL_CONTEXT_V(joint_sign)];
+            const AomCdfProb *cdf_v = fc->cfl_alpha_cdf[CFL_CONTEXT_V(joint_sign)];
             av1_get_syntax_rate_from_cdf(FacBits_v, cdf_v, NULL);
         }
         for (int32_t u = 0; u < CFL_ALPHABET_SIZE; u++)
@@ -326,24 +326,24 @@ static const uint8_t log_in_base_2[] = {
     9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10
 };
 
-static INLINE int32_t mv_class_base(MV_CLASS_TYPE c) {
+static INLINE int32_t mv_class_base(MvClassType c) {
     return c ? CLASS0_SIZE << (c + 2) : 0;
 }
 
-MV_CLASS_TYPE av1_get_mv_class(int32_t z, int32_t *offset) {
-    const MV_CLASS_TYPE c = (z >= CLASS0_SIZE * 4096)
+MvClassType av1_get_mv_class(int32_t z, int32_t *offset) {
+    const MvClassType c = (z >= CLASS0_SIZE * 4096)
         ? MV_CLASS_10
-        : (MV_CLASS_TYPE)log_in_base_2[z >> 3];
+        : (MvClassType)log_in_base_2[z >> 3];
     if (offset) *offset = z - mv_class_base(c);
     return c;
 }
 
 //void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
-//    const nmv_context *ctx,
+//    const NmvContext *ctx,
 //    MvSubpelPrecision precision)
 
 void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
-    const nmv_context *ctx,
+    const NmvContext *ctx,
     MvSubpelPrecision precision);
 
 /**************************************************************************
@@ -354,7 +354,7 @@ void av1_build_nmv_cost_table(int32_t *mvjoint, int32_t *mvcost[2],
 void av1_estimate_mv_rate(
     PictureControlSet     *picture_control_set_ptr,
     MdRateEstimationContext  *md_rate_estimation_array,
-    nmv_context                *nmv_ctx)
+    NmvContext                *nmv_ctx)
 {
 
     int32_t *nmvcost[2];
@@ -402,7 +402,7 @@ void av1_estimate_coefficients_rate(
         for (plane = 0; plane < nplanes; ++plane) {
             LvMapEobCost *pcost = &md_rate_estimation_array->eob_frac_bits[eob_multi_size][plane];
             for (ctx = 0; ctx < 2; ++ctx) {
-                aom_cdf_prob *pcdf;
+                AomCdfProb *pcdf;
                 switch (eob_multi_size) {
                 case 0: pcdf = fc->eob_flag_cdf16[plane][ctx]; break;
                 case 1: pcdf = fc->eob_flag_cdf32[plane][ctx]; break;

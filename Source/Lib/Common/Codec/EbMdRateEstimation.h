@@ -301,7 +301,7 @@ extern "C" {
     ***************************************************************************/
     extern void av1_get_syntax_rate_from_cdf(
         int32_t                        *costs,
-        const aom_cdf_prob             *cdf,
+        const AomCdfProb             *cdf,
         const int32_t                  *inv_map);
     /**************************************************************************
     * Estimate the rate for each syntax elements and for
@@ -326,7 +326,7 @@ extern "C" {
     extern void av1_estimate_mv_rate(
         struct PictureControlSet     *picture_control_set_ptr,
         MdRateEstimationContext  *md_rate_estimation_array,
-        nmv_context                *nmv_ctx);
+        NmvContext                *nmv_ctx);
 
 
 #ifdef __cplusplus

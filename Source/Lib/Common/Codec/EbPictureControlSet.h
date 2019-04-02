@@ -13553,8 +13553,8 @@ extern "C" {
         struct Buf2d dst;
         int32_t is16Bit;
         //struct Buf2d pre[2];
-        //ENTROPY_CONTEXT *above_context;
-        //ENTROPY_CONTEXT *left_context;
+        //EntropyContext *above_context;
+        //EntropyContext *left_context;
         // The dequantizers below are true dequntizers used only in the
         // dequantization process.  They have the same coefficient
         // shift/scale as TX.

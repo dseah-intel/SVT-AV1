@@ -336,7 +336,7 @@ void av1_highbd_quantize_b_facade(const TranLow *coeff_ptr,
     intptr_t n_coeffs, const MacroblockPlane *p,
     TranLow *qcoeff_ptr,
     TranLow *dqcoeff_ptr, uint16_t *eob_ptr,
-    const SCAN_ORDER *sc,
+    const ScanOrder *sc,
     const QuantParam *qparam) {
     // obsolete skip_block
     const int32_t skip_block = 0;
@@ -429,7 +429,7 @@ void av1_quantize_b_facade_II(
     TranLow *qcoeff_ptr,
     TranLow *dqcoeff_ptr,
     uint16_t *eob_ptr,
-    const SCAN_ORDER *sc,
+    const ScanOrder *sc,
     const QuantParam *qparam)
 {
     // obsolete skip_block
@@ -612,7 +612,7 @@ void av1_quantize_inv_quantize_ii(
         }
     }
 
-    const SCAN_ORDER *const scan_order = &av1_scan_orders[transform_size][tx_type];  //get_scan(tx_size, tx_type);
+    const ScanOrder *const scan_order = &av1_scan_orders[transform_size][tx_type];  //get_scan(tx_size, tx_type);
 
     const int32_t n_coeffs = av1_get_max_eob(transform_size);
 

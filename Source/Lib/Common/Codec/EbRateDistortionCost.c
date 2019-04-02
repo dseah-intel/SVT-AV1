@@ -65,11 +65,11 @@ uint8_t av1_drl_ctx(const CandidateMv *ref_mv_stack,
 //    MV_JOINT_HNZVZ = 1,  /* Vert zero, hor nonzero */
 //    MV_JOINT_HZVNZ = 2,  /* Hor zero, vert nonzero */
 //    MV_JOINT_HNZVNZ = 3, /* Both components nonzero */
-//} MV_JOINT_TYPE;
+//} MvJointType;
 
 
 
-MV_JOINT_TYPE av1_get_mv_joint(const MV *mv) {
+MvJointType av1_get_mv_joint(const MV *mv) {
     if (mv->row == 0) {
         return mv->col == 0 ? MV_JOINT_ZERO : MV_JOINT_HNZVZ;
     }
@@ -433,7 +433,7 @@ uint64_t av1_cost_coeffs_txb(
     const int32_t bwl = get_txb_bwl(transform_size);
     const int32_t width = get_txb_wide(transform_size);
     const int32_t height = get_txb_high(transform_size);
-    const SCAN_ORDER *const scan_order = &av1_scan_orders[transform_size][transform_type]; // get_scan(tx_size, tx_type);
+    const ScanOrder *const scan_order = &av1_scan_orders[transform_size][transform_type]; // get_scan(tx_size, tx_type);
     const int16_t *const scan = scan_order->scan;
     uint8_t levels_buf[TX_PAD_2D];
     uint8_t *const levels = set_levels(levels_buf, width);

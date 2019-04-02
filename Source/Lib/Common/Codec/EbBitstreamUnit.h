@@ -257,7 +257,7 @@ on a larger type, you can speed up the decoder by using it here.*/
     static INLINE void aom_daala_write(daala_writer *w, int32_t bit, int32_t prob) {
         int32_t p = (0x7FFFFF - (prob << 15) + prob) >> 8;
 #if CONFIG_BITSTREAM_DEBUG
-        aom_cdf_prob cdf[2] = { (aom_cdf_prob)p, 32767 };
+        AomCdfProb cdf[2] = { (AomCdfProb)p, 32767 };
         /*int32_t queue_r = 0;
         int32_t frame_idx_r = 0;
         int32_t queue_w = bitstream_queue_get_write();
@@ -273,7 +273,7 @@ on a larger type, you can speed up the decoder by using it here.*/
     }
 
     static INLINE void daala_write_symbol(daala_writer *w, int32_t symb,
-        const aom_cdf_prob *cdf, int32_t nsymbs) {
+        const AomCdfProb *cdf, int32_t nsymbs) {
 #if CONFIG_BITSTREAM_DEBUG
         /*int32_t queue_r = 0;
         int32_t frame_idx_r = 0;
@@ -335,11 +335,11 @@ on a larger type, you can speed up the decoder by using it here.*/
     }
 
     static INLINE void aom_write_cdf(aom_writer *w, int32_t symb,
-        const aom_cdf_prob *cdf, int32_t nsymbs) {
+        const AomCdfProb *cdf, int32_t nsymbs) {
         daala_write_symbol(w, symb, cdf, nsymbs);
     }
 
-    static INLINE void aom_write_symbol(aom_writer *w, int32_t symb, aom_cdf_prob *cdf,
+    static INLINE void aom_write_symbol(aom_writer *w, int32_t symb, AomCdfProb *cdf,
         int32_t nsymbs) {
         aom_write_cdf(w, symb, cdf, nsymbs);
         if (w->allow_update_cdf) update_cdf(cdf, symb, nsymbs);
