@@ -53,7 +53,7 @@ extern "C" {
         EbReferenceObject                   *reference_object_write_ptr;
 
         // MCP Context
-        MotionCompensationPredictionContext_t *mcp_context;
+        MotionCompensationPredictionContext *mcp_context;
         SsMeContext                         *ss_mecontext;
 
         // Intra Reference Samples

@@ -24,14 +24,14 @@
 #endif
 
 EbErrorType motion_compensation_prediction_context_ctor(
-    MotionCompensationPredictionContext_t **context_dbl_ptr,
+    MotionCompensationPredictionContext **context_dbl_ptr,
     uint16_t                                  max_cu_width,
     uint16_t                                  max_cu_height)
 
 {
     EbErrorType return_error = EB_ErrorNone;
-    MotionCompensationPredictionContext_t *context_ptr;
-    EB_MALLOC(MotionCompensationPredictionContext_t *, context_ptr, sizeof(MotionCompensationPredictionContext_t), EB_N_PTR);
+    MotionCompensationPredictionContext *context_ptr;
+    EB_MALLOC(MotionCompensationPredictionContext *, context_ptr, sizeof(MotionCompensationPredictionContext), EB_N_PTR);
     *(context_dbl_ptr) = context_ptr;
 #if !EXTRA_ALLOCATION
     EB_MALLOC(EbByte, context_ptr->avc_style_mcp_intermediate_result_buf0, sizeof(uint8_t)*max_cu_width*max_cu_height * 6 * 3 / 2 + 16, EB_N_PTR);        //Y + U + V;
@@ -125,7 +125,7 @@ void encode_uni_pred_interpolation(
     frac_pos_x = posX & 0x03;
     frac_pos_y = posY & 0x03;
 
-    uniPredLumaIFFunctionPtrArrayNew[asm_type][frac_pos_x + (frac_pos_y << 2)](
+    uni_pred_luma_if_function_ptr_array_new[asm_type][frac_pos_x + (frac_pos_y << 2)](
         ref_pic->buffer_y + integPosx + integPosy * ref_pic->stride_y,
         ref_pic->stride_y,
         dst->buffer_y + dstLumaIndex,
@@ -142,7 +142,7 @@ void encode_uni_pred_interpolation(
     frac_pos_y = posY & 0x07;
 
 
-    uniPredChromaIFFunctionPtrArrayNew[asm_type][frac_pos_x + (frac_pos_y << 3)](
+    uni_pred_chroma_if_function_ptr_array_new[asm_type][frac_pos_x + (frac_pos_y << 3)](
         ref_pic->buffer_cb + integPosx + integPosy * ref_pic->stride_cb,
         ref_pic->stride_cb,
         dst->buffer_cb + dstChromaIndex,
@@ -154,7 +154,7 @@ void encode_uni_pred_interpolation(
         frac_pos_y);
 
     //doing the chroma Cr interpolation
-    uniPredChromaIFFunctionPtrArrayNew[asm_type][frac_pos_x + (frac_pos_y << 3)](
+    uni_pred_chroma_if_function_ptr_array_new[asm_type][frac_pos_x + (frac_pos_y << 3)](
         ref_pic->buffer_cr + integPosx + integPosy * ref_pic->stride_cr,
         ref_pic->stride_cr,
         dst->buffer_cr + dstChromaIndex,

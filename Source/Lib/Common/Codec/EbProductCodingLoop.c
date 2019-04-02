@@ -1088,18 +1088,18 @@ uint64_t ProductGenerateChromaWeight(
     uint64_t weight;
 
     if (picture_control_set_ptr->slice_type == I_SLICE) {
-        weight = ChromaWeightFactorLd[qp];
+        weight = chroma_weight_factor_ld[qp];
     }
     else {
         // Random Access
         if (picture_control_set_ptr->temporal_layer_index == 0) {
-            weight = ChromaWeightFactorRa[qp];
+            weight = chroma_weight_factor_ra[qp];
         }
         else if (picture_control_set_ptr->temporal_layer_index < 3) {
-            weight = ChromaWeightFactorRaQpScalingL1[qp];
+            weight = chroma_weight_factor_ra_qp_scaling_l1[qp];
         }
         else {
-            weight = ChromaWeightFactorRaQpScalingL3[qp];
+            weight = chroma_weight_factor_ra_qp_scaling_l3[qp];
         }
     }
     return (weight << 1);

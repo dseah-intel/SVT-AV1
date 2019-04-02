@@ -21,7 +21,7 @@ extern "C" {
 #endif
 #define USE_PRE_COMPUTE             0
 
-    typedef struct MotionCompensationPredictionContext_s
+    typedef struct MotionCompensationPredictionContext
     {
         EbByte                   avc_style_mcp_intermediate_result_buf0;                    // For short filter in MD
         EbByte                   avc_style_mcp_intermediate_result_buf1;                    // For short filter in MD
@@ -32,7 +32,7 @@ extern "C" {
         EbPictureBufferDesc   *local_reference_block_l1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
         EbPictureBufferDesc   *local_reference_block8_bitl0;                //used to pre-load reference L0 full pel block in local memory in 16bit mode
         EbPictureBufferDesc   *local_reference_block8_bitl1;                //used to pre-load reference L1 full pel block in local memory in 16bit mode
-    }MotionCompensationPredictionContext_t;
+    } MotionCompensationPredictionContext;
 
     /** InterpolationFilter()
             is generally defined interpolation filter function.
@@ -100,7 +100,7 @@ extern "C" {
         uint32_t           frac_pos_y);
 
     extern EbErrorType motion_compensation_prediction_context_ctor(
-        MotionCompensationPredictionContext_t **context_dbl_ptr,
+        MotionCompensationPredictionContext **context_dbl_ptr,
         uint16_t                                max_cu_width,
         uint16_t                                max_cu_height);
 
@@ -132,10 +132,10 @@ extern "C" {
         uint32_t            pad_bottom);
 
     // Function Tables (Super-long, declared in EbMcpTables.c)
-    extern const InterpolationFilterNew     uniPredLumaIFFunctionPtrArrayNew[ASM_TYPE_TOTAL][16];
-    extern const InterpolationFilterOutRaw  biPredLumaIFFunctionPtrArrayNew[ASM_TYPE_TOTAL][16];
-    extern const ChromaFilterNew            uniPredChromaIFFunctionPtrArrayNew[ASM_TYPE_TOTAL][64];
-    extern const ChromaFilterOutRaw         biPredChromaIFFunctionPtrArrayNew[ASM_TYPE_TOTAL][64];
+    extern const InterpolationFilterNew     uni_pred_luma_if_function_ptr_array_new[ASM_TYPE_TOTAL][16];
+    extern const InterpolationFilterOutRaw  bi_pred_luma_if_function_ptr_array_new[ASM_TYPE_TOTAL][16];
+    extern const ChromaFilterNew            uni_pred_chroma_if_function_ptr_array_new[ASM_TYPE_TOTAL][64];
+    extern const ChromaFilterOutRaw         bi_pred_chroma_if_function_ptr_array_new[ASM_TYPE_TOTAL][64];
 
 #ifdef __cplusplus
 }

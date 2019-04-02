@@ -214,19 +214,19 @@ extern void lambda_assign_low_delay(
 {
 
     if (qp_hierarchical_position == 0) {
-        *fast_lambda = lambdaModeDecisionLdSad[qp];
-        *fast_chroma_lambda = lambdaModeDecisionLdSad[qp];
-        *full_lambda = lambdaModeDecisionLdSse[qp];
-        *full_chroma_lambda = lambdaModeDecisionLdSse[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionLdSse[chroma_qp];
+        *fast_lambda = lambda_mode_decision_ld_sad[qp];
+        *fast_chroma_lambda = lambda_mode_decision_ld_sad[qp];
+        *full_lambda = lambda_mode_decision_ld_sse[qp];
+        *full_chroma_lambda = lambda_mode_decision_ld_sse[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_ld_sse[chroma_qp];
 
     }
     else { // Hierarchical postions 1, 2, 3, 4, 5
-        *fast_lambda = lambdaModeDecisionLdSadQpScaling[qp];
-        *fast_chroma_lambda = lambdaModeDecisionLdSadQpScaling[qp];
-        *full_lambda = lambdaModeDecisionLdSseQpScaling[qp];
-        *full_chroma_lambda = lambdaModeDecisionLdSseQpScaling[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionLdSseQpScaling[chroma_qp];
+        *fast_lambda = lambda_mode_decision_ld_sad_qp_scaling[qp];
+        *fast_chroma_lambda = lambda_mode_decision_ld_sad_qp_scaling[qp];
+        *full_lambda = lambda_mode_decision_ld_sse_qp_scaling[qp];
+        *full_chroma_lambda = lambda_mode_decision_ld_sse_qp_scaling[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_ld_sse_qp_scaling[chroma_qp];
     }
 
 }
@@ -244,27 +244,27 @@ void lambda_assign_random_access(
 {
 
     if (qp_hierarchical_position == 0) {
-        *fast_lambda = lambdaModeDecisionRaSad[qp];
-        *fast_chroma_lambda = lambdaModeDecisionRaSad[qp];
-        *full_lambda = lambdaModeDecisionRaSse[qp];
-        *full_chroma_lambda = lambdaModeDecisionRaSse[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionRaSse[chroma_qp];
+        *fast_lambda = lambda_mode_decision_ra_sad[qp];
+        *fast_chroma_lambda = lambda_mode_decision_ra_sad[qp];
+        *full_lambda = lambda_mode_decision_ra_sse[qp];
+        *full_chroma_lambda = lambda_mode_decision_ra_sse[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_ra_sse[chroma_qp];
 
     }
     else if (qp_hierarchical_position < 3) { // Hierarchical postions 1, 2
 
-        *fast_lambda = lambdaModeDecisionRaSadQpScalingL1[qp];
-        *fast_chroma_lambda = lambdaModeDecisionRaSadQpScalingL1[qp];
-        *full_lambda = lambdaModeDecisionRaSseQpScalingL1[qp];
-        *full_chroma_lambda = lambdaModeDecisionRaSseQpScalingL1[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionRaSseQpScalingL1[chroma_qp];
+        *fast_lambda = lambda_mode_decision_ra_sad_qp_scaling_l1[qp];
+        *fast_chroma_lambda = lambda_mode_decision_ra_sad_qp_scaling_l1[qp];
+        *full_lambda = lambda_mode_decision_ra_sse_qp_scaling_l1[qp];
+        *full_chroma_lambda = lambda_mode_decision_ra_sse_qp_scaling_l1[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_ra_sse_qp_scaling_l1[chroma_qp];
     }
     else { // Hierarchical postions 3, 4, 5
-        *fast_lambda = lambdaModeDecisionRaSadQpScalingL3[qp];
-        *fast_chroma_lambda = lambdaModeDecisionRaSadQpScalingL3[qp];
-        *full_lambda = lambdaModeDecisionRaSseQpScalingL3[qp];
-        *full_chroma_lambda = lambdaModeDecisionRaSseQpScalingL3[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionRaSseQpScalingL3[chroma_qp];
+        *fast_lambda = lambda_mode_decision_ra_sad_qp_scaling_l3[qp];
+        *fast_chroma_lambda = lambda_mode_decision_ra_sad_qp_scaling_l3[qp];
+        *full_lambda = lambda_mode_decision_ra_sse_qp_scaling_l3[qp];
+        *full_chroma_lambda = lambda_mode_decision_ra_sse_qp_scaling_l3[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_ra_sse_qp_scaling_l3[chroma_qp];
     }
 
 }
@@ -282,11 +282,11 @@ void lambdaAssignISlice(
 {
 
     if (qp_hierarchical_position == 0) {
-        *fast_lambda = lambdaModeDecisionISliceSad[qp];
-        *fast_chroma_lambda = lambdaModeDecisionISliceSad[qp];
-        *full_lambda = lambdaModeDecisionISliceSse[qp];
-        *full_chroma_lambda = lambdaModeDecisionISliceSse[qp];
-        *full_chroma_lambda_sao = lambdaModeDecisionISliceSse[chroma_qp];
+        *fast_lambda = lambda_mode_decision_i_slice_sad[qp];
+        *fast_chroma_lambda = lambda_mode_decision_i_slice_sad[qp];
+        *full_lambda = lambda_mode_decision_i_slice_sse[qp];
+        *full_chroma_lambda = lambda_mode_decision_i_slice_sse[qp];
+        *full_chroma_lambda_sao = lambda_mode_decision_i_slice_sse[chroma_qp];
 
     }
     else {
@@ -313,18 +313,18 @@ void Av1lambdaAssign(
 
     if (bit_depth == 8) {
 
-        *full_lambda = Av1lambdaModeDecision8BitSse[qp_index];
-        *fast_lambda = Av1lambdaModeDecision8BitSad[qp_index];
+        *full_lambda = av1_lambda_mode_decision8_bit_sse[qp_index];
+        *fast_lambda = av1_lambda_mode_decision8_bit_sad[qp_index];
 
     }
     else if (bit_depth == 10) {
-        *full_lambda = Av1lambdaModeDecision10BitSse[qp_index];
-        *fast_lambda = Av1lambdaModeDecision10BitSad[qp_index];
+        *full_lambda = av1lambda_mode_decision10_bit_sse[qp_index];
+        *fast_lambda = av1lambda_mode_decision10_bit_sad[qp_index];
 
     }
     else if (bit_depth == 12) {
-        *full_lambda = Av1lambdaModeDecision12BitSse[qp_index];
-        *fast_lambda = Av1lambdaModeDecision12BitSad[qp_index];
+        *full_lambda = av1lambda_mode_decision12_bit_sse[qp_index];
+        *fast_lambda = av1lambda_mode_decision12_bit_sad[qp_index];
 
     }
     else {

@@ -456,7 +456,7 @@ void* motion_estimation_kernel(void *input_ptr)
         md_rate_estimation_array += picture_control_set_ptr->slice_type * TOTAL_NUMBER_OF_QP_VALUES + picture_control_set_ptr->picture_qp;
         // Reset MD rate Estimation table to initial values by copying from md_rate_estimation_array
         EB_MEMCPY(&(context_ptr->me_context_ptr->mvd_bits_array[0]), &(md_rate_estimation_array->mvd_bits[0]), sizeof(EbBitFraction)*NUMBER_OF_MVD_CASES);
-        ///context_ptr->me_context_ptr->lambda = lambdaModeDecisionLdSadQpScaling[picture_control_set_ptr->picture_qp];
+        ///context_ptr->me_context_ptr->lambda = lambda_mode_decision_ld_sad_qp_scaling[picture_control_set_ptr->picture_qp];
         
         // ME Kernel Signal(s) derivation
         signal_derivation_me_kernel_oq(
@@ -468,21 +468,21 @@ void* motion_estimation_kernel(void *input_ptr)
         if (sequence_control_set_ptr->static_config.pred_structure == EB_PRED_RANDOM_ACCESS) {
 
             if (picture_control_set_ptr->temporal_layer_index == 0) {
-                context_ptr->me_context_ptr->lambda = lambdaModeDecisionRaSad[picture_control_set_ptr->picture_qp];
+                context_ptr->me_context_ptr->lambda = lambda_mode_decision_ra_sad[picture_control_set_ptr->picture_qp];
             }
             else if (picture_control_set_ptr->temporal_layer_index < 3) {
-                context_ptr->me_context_ptr->lambda = lambdaModeDecisionRaSadQpScalingL1[picture_control_set_ptr->picture_qp];
+                context_ptr->me_context_ptr->lambda = lambda_mode_decision_ra_sad_qp_scaling_l1[picture_control_set_ptr->picture_qp];
             }
             else {
-                context_ptr->me_context_ptr->lambda = lambdaModeDecisionRaSadQpScalingL3[picture_control_set_ptr->picture_qp];
+                context_ptr->me_context_ptr->lambda = lambda_mode_decision_ra_sad_qp_scaling_l3[picture_control_set_ptr->picture_qp];
             }
         }
         else {
             if (picture_control_set_ptr->temporal_layer_index == 0) {
-                context_ptr->me_context_ptr->lambda = lambdaModeDecisionLdSad[picture_control_set_ptr->picture_qp];
+                context_ptr->me_context_ptr->lambda = lambda_mode_decision_ld_sad[picture_control_set_ptr->picture_qp];
             }
             else {
-                context_ptr->me_context_ptr->lambda = lambdaModeDecisionLdSadQpScaling[picture_control_set_ptr->picture_qp];
+                context_ptr->me_context_ptr->lambda = lambda_mode_decision_ld_sad_qp_scaling[picture_control_set_ptr->picture_qp];
             }
         }
 

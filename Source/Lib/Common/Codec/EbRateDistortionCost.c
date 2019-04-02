@@ -1516,7 +1516,7 @@ EbErrorType Av1FullCost(
 
     // *Note - As in JCTVC-G1102, the JCT-VC uses the Mode Decision forumula where the chromaSse has been weighted
     //  CostMode = (luma_sse + wchroma * chromaSse) + lambdaSse * rateMode
-    //chromaSse = (((chromaSse * ChromaWeightFactorLd[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT); // Low delay and Random access have the same value of chroma weight
+    //chromaSse = (((chromaSse * chroma_weight_factor_ld[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT); // Low delay and Random access have the same value of chroma weight
 
     chromaSse = (chromaSse << AV1_COST_PRECISION);
 
@@ -1607,22 +1607,22 @@ EbErrorType  Av1MergeSkipFullCost(
     //if (picture_control_set_ptr->parent_pcs_ptr->pred_structure == EB_PRED_RANDOM_ACCESS) {
     //    // Random Access
     //    if (picture_control_set_ptr->temporal_layer_index == 0) {
-    //        mergeChromaSse = (((mergeChromaSse * ChromaWeightFactorRa[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        mergeChromaSse = (((mergeChromaSse * chroma_weight_factor_ra[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else if (picture_control_set_ptr->temporal_layer_index < 3) {
-    //        mergeChromaSse = (((mergeChromaSse * ChromaWeightFactorRaQpScalingL1[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        mergeChromaSse = (((mergeChromaSse * chroma_weight_factor_ra_qp_scaling_l1[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else {
-    //        mergeChromaSse = (((mergeChromaSse * ChromaWeightFactorRaQpScalingL3[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        mergeChromaSse = (((mergeChromaSse * chroma_weight_factor_ra_qp_scaling_l3[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //}
     //else {
     //    // Low delay
     //    if (picture_control_set_ptr->temporal_layer_index == 0) {
-    //        mergeChromaSse = (((mergeChromaSse * ChromaWeightFactorLd[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        mergeChromaSse = (((mergeChromaSse * chroma_weight_factor_ld[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else {
-    //        mergeChromaSse = (((mergeChromaSse * ChromaWeightFactorLdQpScaling[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        mergeChromaSse = (((mergeChromaSse * chroma_weight_factor_ld_qp_scaling[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //}
 
@@ -1647,22 +1647,22 @@ EbErrorType  Av1MergeSkipFullCost(
     //if (picture_control_set_ptr->parent_pcs_ptr->pred_structure == EB_PRED_RANDOM_ACCESS) {
 
     //    if (picture_control_set_ptr->temporal_layer_index == 0) {
-    //        skipChromaSse = (((skipChromaSse * ChromaWeightFactorRa[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        skipChromaSse = (((skipChromaSse * chroma_weight_factor_ra[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else if (picture_control_set_ptr->temporal_layer_index < 3) {
-    //        skipChromaSse = (((skipChromaSse * ChromaWeightFactorRaQpScalingL1[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        skipChromaSse = (((skipChromaSse * chroma_weight_factor_ra_qp_scaling_l1[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else {
-    //        skipChromaSse = (((skipChromaSse * ChromaWeightFactorRaQpScalingL3[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        skipChromaSse = (((skipChromaSse * chroma_weight_factor_ra_qp_scaling_l3[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //}
     //else {
     //    // Low Delay
     //    if (picture_control_set_ptr->temporal_layer_index == 0) {
-    //        skipChromaSse = (((skipChromaSse * ChromaWeightFactorLd[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        skipChromaSse = (((skipChromaSse * chroma_weight_factor_ld[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //    else {
-    //        skipChromaSse = (((skipChromaSse * ChromaWeightFactorLdQpScaling[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
+    //        skipChromaSse = (((skipChromaSse * chroma_weight_factor_ld_qp_scaling[qp]) + CHROMA_WEIGHT_OFFSET) >> CHROMA_WEIGHT_SHIFT);
     //    }
     //}
 

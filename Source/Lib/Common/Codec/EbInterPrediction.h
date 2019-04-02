@@ -21,7 +21,7 @@ extern "C" {
     struct ModeDecisionContext;
     typedef struct InterPredictionContext_s {
         // mcp context
-        MotionCompensationPredictionContext_t  *mcp_context;
+        MotionCompensationPredictionContext  *mcp_context;
     } InterPredictionContext_t;
 
     extern EbErrorType inter_prediction_context_ctor(
