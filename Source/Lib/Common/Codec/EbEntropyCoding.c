@@ -186,7 +186,7 @@ static void SetBitstreamLevelTier(SequenceControlSet *scs_ptr) {
 
 const uint8_t KEobOffsetBits[12] = { 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-static void WriteGolomb(aom_writer *w, int32_t level) {
+static void WriteGolomb(AomWriter *w, int32_t level) {
     int32_t x = level + 1;
     int32_t i = x;
     int32_t length = 0;
@@ -448,7 +448,7 @@ void get_txb_ctx(
 void Av1WriteTxType(
     PictureParentControlSet   *pcs_ptr,
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ec_writer,
+    AomWriter                  *ec_writer,
     CodingUnit                *cu_ptr,
     uint32_t                      intraDir,
     TxType                     txType,
@@ -496,7 +496,7 @@ static INLINE void set_dc_sign(int32_t *cul_level, int32_t dc_val) {
 int32_t  Av1WriteCoeffsTxb1D(
     PictureParentControlSet   *parent_pcs_ptr,
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ec_writer,
+    AomWriter                  *ec_writer,
     CodingUnit                *cu_ptr,
     TxSize                     txSize,
     uint32_t                       pu_index,
@@ -687,7 +687,7 @@ static EbErrorType Av1EncodeCoeff1D(
     PictureControlSet     *pcs_ptr,
     EntropyCodingContext  *context_ptr,
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     CodingUnit           *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -934,7 +934,7 @@ static void partition_gather_vert_alike(AomCdfProb *out,
 static void EncodePartitionAv1(
     SequenceControlSet    *sequence_control_set_ptr,
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     BlockSize              bsize,
     PartitionType          p,
     uint32_t                  cu_origin_x,
@@ -1014,7 +1014,7 @@ static void EncodePartitionAv1(
 *********************************************************************/
 static void EncodeSkipCoeffAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     EbBool                 skipCoeffFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1053,7 +1053,7 @@ static void EncodeSkipCoeffAv1(
 *********************************************************************/
 static void EncodeIntraLumaModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     CodingUnit            *cu_ptr,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1112,7 +1112,7 @@ static void EncodeIntraLumaModeAv1(
 *********************************************************************/
 static void EncodeIntraLumaModeNonKeyAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     CodingUnit            *cu_ptr,
 
     BlockSize                bsize,
@@ -1138,7 +1138,7 @@ static void EncodeIntraLumaModeNonKeyAv1(
 }
 
 static void write_cfl_alphas(FRAME_CONTEXT *const ec_ctx, int32_t idx,
-    int32_t joint_sign, aom_writer *w) {
+    int32_t joint_sign, AomWriter *w) {
     aom_write_symbol(w, joint_sign, ec_ctx->cfl_sign_cdf, CFL_JOINT_SIGNS);
     // Magnitudes are only signaled for nonzero codes.
     if (CFL_SIGN_U(joint_sign) != CFL_SIGN_ZERO) {
@@ -1158,7 +1158,7 @@ static void write_cfl_alphas(FRAME_CONTEXT *const ec_ctx, int32_t idx,
 *********************************************************************/
 static void EncodeIntraChromaModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     CodingUnit            *cu_ptr,
     uint32_t                  luma_mode,
     uint32_t                  chroma_mode,
@@ -1191,7 +1191,7 @@ static void EncodeIntraChromaModeAv1(
 *********************************************************************/
 static void EncodeSkipModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     EbBool                 skipModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1230,7 +1230,7 @@ static void EncodeSkipModeAv1(
 *********************************************************************/
 static void EncodePredModeAv1(
     FRAME_CONTEXT           *frameContext,
-    aom_writer              *ec_writer,
+    AomWriter              *ec_writer,
     EbBool                 predModeFlag,
     uint32_t                  cu_origin_x,
     uint32_t                  cu_origin_y,
@@ -1336,7 +1336,7 @@ MotionMode motion_mode_allowed(
 *********************************************************************/
 static void write_motion_mode(
     FRAME_CONTEXT            *frame_context,
-    aom_writer               *ec_writer,
+    AomWriter               *ec_writer,
     BlockSize                 bsize,
     MotionMode               motion_mode,
     MvReferenceFrame          rf0,
@@ -1408,7 +1408,7 @@ EbErrorType reset_bitstream(
     EbPtr bitstream_ptr)
 {
     EbErrorType return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstream_ptr;
+    OutputBitstreamUnit *output_bitstream_ptr = (OutputBitstreamUnit*)bitstream_ptr;
 
     output_bitstream_reset(
         output_bitstream_ptr);
@@ -1441,11 +1441,11 @@ EbErrorType copy_rbsp_bitstream_to_payload(
     EncodeContext         *encode_context_ptr)
 {
     EbErrorType return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstream_ptr->output_bitstream_ptr;
+    OutputBitstreamUnit *output_bitstream_ptr = (OutputBitstreamUnit*)bitstream_ptr->output_bitstream_ptr;
 
 
     CHECK_REPORT_ERROR(
-        ((output_bitstream_ptr->writtenBitsCount >> 3) + (*output_buffer_index) < (*output_buffer_size)),
+        ((output_bitstream_ptr->written_bits_count >> 3) + (*output_buffer_index) < (*output_buffer_size)),
         encode_context_ptr->app_callback_ptr,
         EB_ENC_EC_ERROR2);
 
@@ -1469,10 +1469,10 @@ EbErrorType bitstream_ctor(
     EbErrorType return_error = EB_ErrorNone;
     EB_MALLOC(Bitstream*, *bitstream_dbl_ptr, sizeof(Bitstream), EB_N_PTR);
 
-    EB_MALLOC(EbPtr, (*bitstream_dbl_ptr)->output_bitstream_ptr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
+    EB_MALLOC(EbPtr, (*bitstream_dbl_ptr)->output_bitstream_ptr, sizeof(OutputBitstreamUnit), EB_N_PTR);
 
     return_error = output_bitstream_unit_ctor(
-        (OutputBitstreamUnit_t *)(*bitstream_dbl_ptr)->output_bitstream_ptr,
+        (OutputBitstreamUnit *)(*bitstream_dbl_ptr)->output_bitstream_ptr,
         buffer_size);
 
     return return_error;
@@ -1492,10 +1492,10 @@ EbErrorType entropy_coder_ctor(
 
     EB_MALLOC(FRAME_CONTEXT*, (*entropy_coder_dbl_ptr)->fc, sizeof(FRAME_CONTEXT), EB_N_PTR);
 
-    EB_MALLOC(EbPtr, (*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr, sizeof(OutputBitstreamUnit_t), EB_N_PTR);
+    EB_MALLOC(EbPtr, (*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr, sizeof(OutputBitstreamUnit), EB_N_PTR);
 
     return_error = output_bitstream_unit_ctor(
-        (OutputBitstreamUnit_t *)(*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr,
+        (OutputBitstreamUnit *)(*entropy_coder_dbl_ptr)->ec_output_bitstream_ptr,
         buffer_size);
 
     CabacCtor(
@@ -1608,7 +1608,7 @@ void aom_wb_write_inv_signed_literal(struct AomWriteBitBuffer *wb, int32_t data,
 
 static void WriteInterMode(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ec_writer,
+    AomWriter          *ec_writer,
     PredictionMode     mode,
     const int16_t       mode_ctx,
     uint32_t                  cu_origin_x,
@@ -1640,7 +1640,7 @@ extern uint8_t av1_drl_ctx(const CandidateMv *ref_mv_stack, int32_t ref_idx);
 
 void WriteDrlIdx(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ec_writer,
+    AomWriter          *ec_writer,
     CodingUnit        *cu_ptr) {
 
     //uint8_t ref_frame_type = av1_ref_frame_type(mbmi->ref_frame);
@@ -1686,7 +1686,7 @@ void WriteDrlIdx(
 }
 
 extern MvJointType av1_get_mv_joint(int32_t diff[2]);
-static void encode_mv_component(aom_writer *w, int32_t comp, NmvComponent *mvcomp,
+static void encode_mv_component(AomWriter *w, int32_t comp, NmvComponent *mvcomp,
     MvSubpelPrecision precision) {
     int32_t offset;
     const int32_t sign = comp < 0;
@@ -1746,7 +1746,7 @@ static INLINE int32_t is_mv_valid(const MV *mv) {
 
 void av1_encode_mv(
     PictureParentControlSet   *pcs_ptr,
-    aom_writer                  *ec_writer,
+    AomWriter                  *ec_writer,
     const MV *mv,
     const MV *ref,
     NmvContext *mvctx,
@@ -1912,7 +1912,7 @@ void write_mb_interp_filter(
     MvReferenceFrame rf0,
     MvReferenceFrame rf1,
     PictureParentControlSet   *pcs_ptr,
-    aom_writer                  *ec_writer,
+    AomWriter                  *ec_writer,
     CodingUnit             *cu_ptr,
     EntropyCoder *entropy_coder_ptr,
     NeighborArrayUnit32     *interpolation_type_neighbor_array,
@@ -1959,7 +1959,7 @@ void write_mb_interp_filter(
 
 static void WriteInterCompoundMode(
     FRAME_CONTEXT       *frameContext,
-    aom_writer          *ec_writer,
+    AomWriter          *ec_writer,
     PredictionMode     mode,
     const int16_t       mode_ctx) {
     assert(is_inter_compound_mode(mode));
@@ -2409,7 +2409,7 @@ int32_t av1_get_pred_context_single_ref_p6(const MacroBlockD *xd) {
 // This function encodes the reference frame
 static void WriteRefFrames(
     FRAME_CONTEXT               *frameContext,
-    aom_writer                  *ec_writer,
+    AomWriter                  *ec_writer,
     PictureParentControlSet   *pcs_ptr,
     CodingUnit                *cu_ptr,
     BlockSize                   bsize,
@@ -3315,7 +3315,7 @@ int32_t aom_count_primitive_symmetric(int16_t v, uint32_t abs_bits) {
 }
 
 // Encodes a value v in [0, n-1] quasi-uniformly
-void aom_write_primitive_quniform(aom_writer *w, uint16_t n, uint16_t v) {
+void aom_write_primitive_quniform(AomWriter *w, uint16_t n, uint16_t v) {
     if (n <= 1) return;
     const int32_t l = get_msb(n - 1) + 1;
     const int32_t m = (1 << l) - n;
@@ -3350,7 +3350,7 @@ int32_t aom_count_primitive_quniform(uint16_t n, uint16_t v) {
 }
 
 // Finite subexponential code that codes a symbol v in [0, n-1] with parameter k
-void aom_write_primitive_subexpfin(aom_writer *w, uint16_t n, uint16_t k,
+void aom_write_primitive_subexpfin(AomWriter *w, uint16_t n, uint16_t k,
     uint16_t v) {
     int32_t i = 0;
     int32_t mk = 0;
@@ -3432,7 +3432,7 @@ int32_t aom_count_primitive_subexpfin(uint16_t n, uint16_t k, uint16_t v) {
 // Finite subexponential code that codes a symbol v in[0, n - 1] with parameter k
 // based on a reference ref also in [0, n-1].
 // Recenters symbol around r first and then uses a finite subexponential code.
-void aom_write_primitive_refsubexpfin(aom_writer *w, uint16_t n, uint16_t k,
+void aom_write_primitive_refsubexpfin(AomWriter *w, uint16_t n, uint16_t k,
     uint16_t ref, uint16_t v) {
     aom_write_primitive_subexpfin(w, n, k, recenter_finite_nonneg(n, ref, v));
 }
@@ -4248,9 +4248,9 @@ EbErrorType write_frame_header_av1(
     uint8_t showExisting)
 {
     EbErrorType                 return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t       *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstream_ptr->output_bitstream_ptr;
+    OutputBitstreamUnit       *output_bitstream_ptr = (OutputBitstreamUnit*)bitstream_ptr->output_bitstream_ptr;
     PictureParentControlSet   *parent_pcs_ptr = pcs_ptr->parent_pcs_ptr;
-    uint8_t                     *data = output_bitstream_ptr->bufferAv1;
+    uint8_t                     *data = output_bitstream_ptr->buffer_av1;
     uint32_t obuHeaderSize = 0;
 
     int32_t currDataSize = 0;
@@ -4277,10 +4277,10 @@ EbErrorType write_frame_header_av1(
         // Add data from EC stream to Picture Stream.
         int32_t frameSize = parent_pcs_ptr->av1_cm->tile_cols*parent_pcs_ptr->av1_cm->tile_rows==1 ? pcs_ptr->entropy_coder_ptr->ec_writer.pos : pcs_ptr->entropy_coder_ptr->ec_frame_size;
 
-        OutputBitstreamUnit_t *ec_output_bitstream_ptr = (OutputBitstreamUnit_t*)pcs_ptr->entropy_coder_ptr->ec_output_bitstream_ptr;
+        OutputBitstreamUnit *ec_output_bitstream_ptr = (OutputBitstreamUnit*)pcs_ptr->entropy_coder_ptr->ec_output_bitstream_ptr;
         //****************************************************************//
         // Copy from EC stream to frame stream
-        memcpy(data + currDataSize, ec_output_bitstream_ptr->bufferBeginAv1, frameSize);
+        memcpy(data + currDataSize, ec_output_bitstream_ptr->buffer_begin_av1, frameSize);
         currDataSize += (frameSize);
     }
     const uint32_t obuPayloadSize = currDataSize - obuHeaderSize;
@@ -4293,7 +4293,7 @@ EbErrorType write_frame_header_av1(
     currDataSize += (int32_t)lengthFieldSize;
     data += currDataSize;
 
-    output_bitstream_ptr->bufferAv1 = data;
+    output_bitstream_ptr->buffer_av1 = data;
     return return_error;
 }
 
@@ -4305,8 +4305,8 @@ EbErrorType encode_sps_av1(
     SequenceControlSet *scs_ptr)
 {
     EbErrorType            return_error = EB_ErrorNone;
-    OutputBitstreamUnit_t  *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstream_ptr->output_bitstream_ptr;
-    uint8_t                *data = output_bitstream_ptr->bufferAv1;
+    OutputBitstreamUnit  *output_bitstream_ptr = (OutputBitstreamUnit*)bitstream_ptr->output_bitstream_ptr;
+    uint8_t                *data = output_bitstream_ptr->buffer_av1;
     uint32_t                obuHeaderSize = 0;
     uint32_t                obuPayloadSize = 0;
     const uint8_t enhancementLayersCnt = 0;// cm->enhancementLayersCnt;
@@ -4324,7 +4324,7 @@ EbErrorType encode_sps_av1(
     }
 
     data += obuHeaderSize + obuPayloadSize + lengthFieldSize;
-    output_bitstream_ptr->bufferAv1 = data;
+    output_bitstream_ptr->buffer_av1 = data;
     return return_error;
 }
 /**************************************************
@@ -4334,7 +4334,7 @@ EbErrorType encode_td_av1(
     uint8_t *output_bitstream_ptr)
 {
     EbErrorType              return_error = EB_ErrorNone;
-    //OutputBitstreamUnit_t   *output_bitstream_ptr = (OutputBitstreamUnit_t*)bitstream_ptr->output_bitstream_ptr;
+    //OutputBitstreamUnit   *output_bitstream_ptr = (OutputBitstreamUnit*)bitstream_ptr->output_bitstream_ptr;
     ASSERT(output_bitstream_ptr != NULL);
 
     uint8_t                 *data = output_bitstream_ptr;
@@ -4361,7 +4361,7 @@ EbErrorType encode_td_av1(
 static void Av1writeDeltaQindex(
     FRAME_CONTEXT *frameContext,
     int32_t           delta_qindex,
-    aom_writer    *w)
+    AomWriter    *w)
 {
     int32_t sign = delta_qindex < 0;
     int32_t abs = sign ? -delta_qindex : delta_qindex;
@@ -4390,7 +4390,7 @@ static void write_cdef(
     PictureControlSet     *p_pcs_ptr,
     //Av1Common *cm,
     MacroBlockD *const xd,
-    aom_writer *w,
+    AomWriter *w,
     int32_t skip, int32_t mi_col, int32_t mi_row)
 {
 
@@ -4442,7 +4442,7 @@ void av1_reset_loop_restoration(PictureControlSet     *piCSetPtr) {
     }
 }
 static void write_wiener_filter(int32_t wiener_win, const WienerInfo *wiener_info,
-    WienerInfo *ref_wiener_info, aom_writer *wb) {
+    WienerInfo *ref_wiener_info, AomWriter *wb) {
     if (wiener_win == WIENER_WIN)
         aom_write_primitive_refsubexpfin(
             wb, WIENER_FILT_TAP0_MAXV - WIENER_FILT_TAP0_MINV + 1,
@@ -4486,7 +4486,7 @@ static void write_wiener_filter(int32_t wiener_win, const WienerInfo *wiener_inf
 
 static void write_sgrproj_filter(const SgrprojInfo *sgrproj_info,
     SgrprojInfo *ref_sgrproj_info,
-    aom_writer *wb) {
+    AomWriter *wb) {
     aom_write_literal(wb, sgrproj_info->ep, SGRPROJ_PARAMS_BITS);
     const SgrParamsType *params = &sgr_params[sgrproj_info->ep];
 
@@ -4519,7 +4519,7 @@ static void write_sgrproj_filter(const SgrprojInfo *sgrproj_info,
 static void loop_restoration_write_sb_coeffs(PictureControlSet     *piCSetPtr, FRAME_CONTEXT           *frameContext, const Av1Common *const cm,
     //MacroBlockD *xd,
     const RestorationUnitInfo *rui,
-    aom_writer *const w, int32_t plane/*,
+    AomWriter *const w, int32_t plane/*,
     FRAME_COUNTS *counts*/)
 {
     const RestorationInfo *rsi = cm->rst_info + plane;
@@ -4760,7 +4760,7 @@ static void write_palette_mode_info(
     CodingUnit            *cu_ptr,
     BlockSize bsize,
     int mi_row,
-    int mi_col, aom_writer *w)
+    int mi_col, AomWriter *w)
 {
     const uint32_t intra_luma_mode = cu_ptr->pred_mode;
     uint32_t intra_chroma_mode = cu_ptr->prediction_unit_array->intra_chroma_mode;
@@ -4801,7 +4801,7 @@ static void write_palette_mode_info(
         }
     }
 }
-void av1_encode_dv(aom_writer *w, const MV *mv, const MV *ref,
+void av1_encode_dv(AomWriter *w, const MV *mv, const MV *ref,
     NmvContext *mvctx) {
     // DV and ref DV should not have sub-pel.
     assert((mv->col & 7) == 0);
@@ -4827,7 +4827,7 @@ int av1_allow_intrabc(const Av1Common *const cm) {
 static void write_intrabc_info(
     FRAME_CONTEXT           *ec_ctx,
     CodingUnit            *cu_ptr,
-    aom_writer *w) {
+    AomWriter *w) {
 
 
     int use_intrabc = cu_ptr->av1xd->use_intrabc;
@@ -4856,7 +4856,7 @@ EbErrorType write_modes_b(
     UNUSED(tb_ptr);
     EbErrorType return_error = EB_ErrorNone;
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;
-    aom_writer              *ec_writer = &entropy_coder_ptr->ec_writer;
+    AomWriter              *ec_writer = &entropy_coder_ptr->ec_writer;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
 
     NeighborArrayUnit     *mode_type_neighbor_array = picture_control_set_ptr->mode_type_neighbor_array;
@@ -5300,7 +5300,7 @@ EB_EXTERN EbErrorType write_sb(
 {
     EbErrorType return_error = EB_ErrorNone;
     FRAME_CONTEXT           *frameContext = entropy_coder_ptr->fc;
-    aom_writer              *ec_writer = &entropy_coder_ptr->ec_writer;
+    AomWriter              *ec_writer = &entropy_coder_ptr->ec_writer;
     SequenceControlSet     *sequence_control_set_ptr = (SequenceControlSet*)picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr;
     NeighborArrayUnit     *partition_context_neighbor_array = picture_control_set_ptr->partition_context_neighbor_array;
 

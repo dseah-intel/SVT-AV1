@@ -225,10 +225,10 @@ static void ResetEntropyCodingPicture(
 #endif
 
     // pass the ent
-    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
+    OutputBitstreamUnit *output_bitstream_ptr = (OutputBitstreamUnit*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
     //****************************************************************//
 
-    uint8_t *data = output_bitstream_ptr->bufferAv1;
+    uint8_t *data = output_bitstream_ptr->buffer_av1;
     picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf = !picture_control_set_ptr->parent_pcs_ptr->large_scale_tile;
     picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf =
         picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf && !picture_control_set_ptr->parent_pcs_ptr->disable_cdf_update;
@@ -302,10 +302,10 @@ static void reset_ec_tile(
 #endif
 
     // pass the ent
-    OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
+    OutputBitstreamUnit *output_bitstream_ptr = (OutputBitstreamUnit*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
     //****************************************************************//
 
-    uint8_t *data = output_bitstream_ptr->bufferAv1 + total_size;
+    uint8_t *data = output_bitstream_ptr->buffer_av1 + total_size;
     picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf = !picture_control_set_ptr->parent_pcs_ptr->large_scale_tile;
     picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf =
         picture_control_set_ptr->entropy_coder_ptr->ec_writer.allow_update_cdf && !picture_control_set_ptr->parent_pcs_ptr->disable_cdf_update;
@@ -383,7 +383,7 @@ static void EntropyCodingLcu(
     // + 32  - bits remaining in interval Low value
     // + number of buffered byte * 8
     // This should be only for coeffs not any flag
-    writtenBitsBeforeQuantizedCoeff = ((OutputBitstreamUnit_t*)entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr))->writtenBitsCount;
+    writtenBitsBeforeQuantizedCoeff = ((OutputBitstreamUnit*)entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr))->written_bits_count;
 
     (void)pictureOriginX;
     (void)pictureOriginY;
@@ -400,7 +400,7 @@ static void EntropyCodingLcu(
     // number of written bits
     // + 32  - bits remaining in interval Low value
     // + number of buffered byte * 8
-    writtenBitsAfterQuantizedCoeff = ((OutputBitstreamUnit_t*)entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr))->writtenBitsCount;
+    writtenBitsAfterQuantizedCoeff = ((OutputBitstreamUnit*)entropy_coder_get_bitstream_ptr(picture_control_set_ptr->entropy_coder_ptr))->written_bits_count;
 
     sb_ptr->total_bits = writtenBitsAfterQuantizedCoeff - writtenBitsBeforeQuantizedCoeff;
 
@@ -781,8 +781,8 @@ void* entropy_coding_kernel(void *input_ptr)
                     
                      if (!is_last_tile_in_tg) {
                          
-                         OutputBitstreamUnit_t *output_bitstream_ptr = (OutputBitstreamUnit_t*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
-                         uint8_t *buf_data = output_bitstream_ptr->bufferAv1 + total_size;
+                         OutputBitstreamUnit *output_bitstream_ptr = (OutputBitstreamUnit*)(picture_control_set_ptr->entropy_coder_ptr->ec_output_bitstream_ptr);
+                         uint8_t *buf_data = output_bitstream_ptr->buffer_av1 + total_size;
                          mem_put_le32(buf_data, tile_size - AV1_MIN_TILE_SIZE_BYTES);
                      }                   
 
