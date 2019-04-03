@@ -4774,6 +4774,7 @@ static void write_palette_mode_info(
     if (intra_luma_mode == DC_PRED) {
         const int n = 0;// pmi->palette_size[0];
         const int palette_y_mode_ctx = 0;// av1_get_palette_mode_ctx(xd);
+        ASSERT(bsize_ctx >= 0 && bsize_ctx < PALATTE_BSIZE_CTXS);
         aom_write_symbol(
             w, n > 0,
             ec_ctx->palette_y_mode_cdf[bsize_ctx][palette_y_mode_ctx], 2);
@@ -5218,15 +5219,20 @@ EbErrorType write_modes_b(
 
                 if (picture_control_set_ptr->parent_pcs_ptr->switchable_motion_mode
                     && rf[1] != INTRA_FRAME) {
-                    write_motion_mode(  
-                        frameContext,
-                        ec_writer,
-                        bsize,
-                        cu_ptr->prediction_unit_array[0].motion_mode,
-                        rf[0],
-                        rf[1],
-                        cu_ptr,
-                        picture_control_set_ptr);
+                    if (bsize < BlockSizeS_ALL) {
+                        write_motion_mode(
+                            frameContext,
+                            ec_writer,
+                            bsize,
+                            cu_ptr->prediction_unit_array[0].motion_mode,
+                            rf[0],
+                            rf[1],
+                            cu_ptr,
+                            picture_control_set_ptr);
+                    }
+                    else {
+                        return EB_ErrorInsufficientResources;
+                    }
                 }
 
                 if (sequence_control_set_ptr->enable_masked_compound || sequence_control_set_ptr->enable_jnt_comp)

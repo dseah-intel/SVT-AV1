@@ -1438,7 +1438,9 @@ void finish_cdef_search(
     int32_t mid_gi;
     int32_t start_gi;
     int32_t end_gi;
-
+    ASSERT(sb_index != NULL);
+    ASSERT(selected_strength != NULL);
+    
     gi_step = get_cdef_gi_step(pPcs->cdef_filter_mode);
 
     mid_gi = pPcs->cdf_ref_frame_strenght;

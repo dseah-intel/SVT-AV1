@@ -187,6 +187,7 @@ void av1_convolve_y_sr_c(const uint8_t *src, int32_t src_stride, uint8_t *dst,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params)
 {
+    ASSERT(filter_params_y != NULL);
     const int32_t fo_vert = filter_params_y->taps / 2 - 1;
     (void)filter_params_x;
     (void)subpel_x_q4;
@@ -544,6 +545,7 @@ void av1_highbd_convolve_y_sr_c(const uint16_t *src, int32_t src_stride,
     const InterpFilterParams *filter_params_y,
     const int32_t subpel_x_q4, const int32_t subpel_y_q4,
     ConvolveParams *conv_params, int32_t bd) {
+    ASSERT(filter_params_y != NULL);
     const int32_t fo_vert = filter_params_y->taps / 2 - 1;
     (void)filter_params_x;
     (void)subpel_x_q4;
@@ -4276,10 +4278,14 @@ EbErrorType inter_pu_prediction_av1(
 
     MvUnit mv_unit;
     mv_unit.pred_direction = candidate_buffer_ptr->candidate_ptr->prediction_direction[md_context_ptr->pu_itr];
-    mv_unit.mv[0].x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl0;
-    mv_unit.mv[0].y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl0;
-    mv_unit.mv[1].x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl1;
-    mv_unit.mv[1].y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl1;
+    Mv mv_l0;
+    Mv mv_l1;
+    mv_l0.x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl0;
+    mv_l0.y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl0;
+    mv_l1.x = candidate_buffer_ptr->candidate_ptr->motion_vector_xl1;
+    mv_l1.y = candidate_buffer_ptr->candidate_ptr->motion_vector_yl1;
+    mv_unit.mv[0] = mv_l0;
+    mv_unit.mv[1] = mv_l1;
 
     SequenceControlSet* sequence_control_set_ptr = ((SequenceControlSet*)(picture_control_set_ptr->sequence_control_set_wrapper_ptr->object_ptr));
     EbBool  is16bit = (EbBool)(sequence_control_set_ptr->static_config.encoder_bit_depth > EB_8BIT);
