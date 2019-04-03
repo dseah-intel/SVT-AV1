@@ -139,11 +139,7 @@ extern "C" {
         conv_params.dst_stride = dst_stride;
         // conv_params.plane = plane;
         conv_params.use_jnt_comp_avg = 0;
-        // initialization
-        conv_params.bck_offset = 0;
-        conv_params.ref = 0;
-        conv_params.fwd_offset = 0;
-        conv_params.plane = 0;
+
         return conv_params;
     }
 
@@ -169,10 +165,6 @@ extern "C" {
         conv_params.dst = NULL;
         conv_params.dst_stride = 0;
         conv_params.plane = 0;
-        // initialization
-        conv_params.bck_offset = 0;
-        conv_params.fwd_offset = 0;
-        conv_params.use_jnt_comp_avg = 0;
         return conv_params;
     }
 
