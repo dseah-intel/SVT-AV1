@@ -22,8 +22,8 @@
 void *aom_memalign(size_t align, size_t size);
 void aom_free(void *memblk);
 
-float aom_noise_psd_get_default_value(int32_t BlockSize, float factor) {
-    return (factor * factor / 10000) * BlockSize * BlockSize / 8;
+float aom_noise_psd_get_default_value(int32_t block_size, float factor) {
+    return (factor * factor / 10000) * block_size * block_size / 8;
 }
 
 // Internal representation of noise transform. It keeps track of the
@@ -32,17 +32,17 @@ float aom_noise_psd_get_default_value(int32_t BlockSize, float factor) {
 struct aom_noise_tx_t {
     DECLARE_ALIGNED(32, float, *tx_block);
     DECLARE_ALIGNED(32, float, *temp);
-    int32_t BlockSize;
+    int32_t block_size;
     void(*fft)(const float *, float *, float *);
     void(*ifft)(const float *, float *, float *);
 };
 
-struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t BlockSize) {
+struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t block_size) {
     struct aom_noise_tx_t *noise_tx =
         (struct aom_noise_tx_t *)malloc(sizeof(struct aom_noise_tx_t));
     if (!noise_tx) return NULL;
     memset(noise_tx, 0, sizeof(*noise_tx));
-    switch (BlockSize) {
+    switch (block_size) {
     case 2:
         noise_tx->fft = aom_fft2x2_float;
         noise_tx->ifft = aom_ifft2x2_float;
@@ -65,14 +65,14 @@ struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t BlockSize) {
         break;
     default:
         free(noise_tx);
-        fprintf(stderr, "Unsupported block size %d\n", BlockSize);
+        fprintf(stderr, "Unsupported block size %d\n", block_size);
         return NULL;
     }
-    noise_tx->BlockSize = BlockSize;
+    noise_tx->block_size = block_size;
     noise_tx->tx_block = (float *)aom_memalign(
-        32, 2 * sizeof(*noise_tx->tx_block) * BlockSize * BlockSize);
+        32, 2 * sizeof(*noise_tx->tx_block) * block_size * block_size);
     noise_tx->temp = (float *)aom_memalign(
-        32, 2 * sizeof(*noise_tx->temp) * BlockSize * BlockSize);
+        32, 2 * sizeof(*noise_tx->temp) * block_size * block_size);
     if (!noise_tx->tx_block || !noise_tx->temp) {
         aom_noise_tx_free(noise_tx);
         return NULL;
@@ -80,9 +80,9 @@ struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t BlockSize) {
     // Clear the buffers up front. Some outputs of the forward transform are
     // real only (the imaginary component will never be touched)
     memset(noise_tx->tx_block, 0,
-        2 * sizeof(*noise_tx->tx_block) * BlockSize * BlockSize);
+        2 * sizeof(*noise_tx->tx_block) * block_size * block_size);
     memset(noise_tx->temp, 0,
-        2 * sizeof(*noise_tx->temp) * BlockSize * BlockSize);
+        2 * sizeof(*noise_tx->temp) * block_size * block_size);
     return noise_tx;
 }
 
@@ -91,12 +91,12 @@ void aom_noise_tx_forward(struct aom_noise_tx_t *noise_tx, const float *data) {
 }
 
 void aom_noise_tx_filter(struct aom_noise_tx_t *noise_tx, const float *psd) {
-    const int32_t BlockSize = noise_tx->BlockSize;
+    const int32_t block_size = noise_tx->block_size;
     const float kBeta = 1.1f;
     const float kEps = 1e-6f;
-    for (int32_t y = 0; y < BlockSize; ++y) {
-        for (int32_t x = 0; x < BlockSize; ++x) {
-            int32_t i = y * BlockSize + x;
+    for (int32_t y = 0; y < block_size; ++y) {
+        for (int32_t x = 0; x < block_size; ++x) {
+            int32_t i = y * block_size + x;
             float *c = noise_tx->tx_block + 2 * i;
             const float p = c[0] * c[0] + c[1] * c[1];
             if (p > kBeta * psd[i] && p > 1e-6) {
@@ -112,7 +112,7 @@ void aom_noise_tx_filter(struct aom_noise_tx_t *noise_tx, const float *psd) {
 }
 
 void aom_noise_tx_inverse(struct aom_noise_tx_t *noise_tx, float *data) {
-    const int32_t n = noise_tx->BlockSize * noise_tx->BlockSize;
+    const int32_t n = noise_tx->block_size * noise_tx->block_size;
     noise_tx->ifft(noise_tx->tx_block, noise_tx->temp, data);
     for (int32_t i = 0; i < n; ++i) {
         data[i] /= n;

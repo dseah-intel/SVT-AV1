@@ -93,8 +93,8 @@ static int is_block16_2x2_col_same_value(uint16_t *p) {
 // the hash value (hash_value1 consists two parts, the first 3 bits relate to
 // the block size and the remaining 16 bits are the crc values. This fuction
 // is used to get the first 3 bits.
-static int hash_block_size_to_index(int BlockSize) {
-  switch (BlockSize) {
+static int hash_block_size_to_index(int block_size) {
+  switch (block_size) {
     case 4: return 0;
     case 8: return 1;
     case 16: return 2;
@@ -237,18 +237,18 @@ void av1_generate_block_2x2_hash_value(const Yv12BufferConfig *picture,
 }
 
 void av1_generate_block_hash_value(const Yv12BufferConfig *picture,
-                                   int BlockSize,
+                                   int block_size,
                                    uint32_t *src_pic_block_hash[2],
                                    uint32_t *dst_pic_block_hash[2],
                                    int8_t *src_pic_block_same_info[3],
                                    int8_t *dst_pic_block_same_info[3],
                                    PictureControlSet * pcs  ) {
   const int pic_width = picture->y_crop_width;
-  const int x_end = picture->y_crop_width - BlockSize + 1;
-  const int y_end = picture->y_crop_height - BlockSize + 1;
+  const int x_end = picture->y_crop_width - block_size + 1;
+  const int y_end = picture->y_crop_height - block_size + 1;
 
-  const int src_size = BlockSize >> 1;
-  const int quad_size = BlockSize >> 2;
+  const int src_size = block_size >> 1;
+  const int quad_size = block_size >> 2;
 
   uint32_t p[4];
   const int length = sizeof(p);
@@ -287,11 +287,11 @@ void av1_generate_block_hash_value(const Yv12BufferConfig *picture,
           src_pic_block_same_info[1][pos + src_size * pic_width + src_size];
       pos++;
     }
-    pos += BlockSize - 1;
+    pos += block_size - 1;
   }
 
-  if (BlockSize >= 4) {
-    const int size_minus_1 = BlockSize - 1;
+  if (block_size >= 4) {
+    const int size_minus_1 = block_size - 1;
     pos = 0;
     for (int y_pos = 0; y_pos < y_end; y_pos++) {
       for (int x_pos = 0; x_pos < x_end; x_pos++) {
@@ -301,7 +301,7 @@ void av1_generate_block_hash_value(const Yv12BufferConfig *picture,
             (((x_pos & size_minus_1) == 0) && ((y_pos & size_minus_1) == 0));
         pos++;
       }
-      pos += BlockSize - 1;
+      pos += block_size - 1;
     }
   }
 }
@@ -310,14 +310,14 @@ void av1_add_to_hash_map_by_row_with_precal_data(hash_table *p_hash_table,
                                                  uint32_t *pic_hash[2],
                                                  int8_t *pic_is_same,
                                                  int pic_width, int pic_height,
-                                                 int BlockSize) {
-  const int x_end = pic_width - BlockSize + 1;
-  const int y_end = pic_height - BlockSize + 1;
+                                                 int block_size) {
+  const int x_end = pic_width - block_size + 1;
+  const int y_end = pic_height - block_size + 1;
 
   const int8_t *src_is_added = pic_is_same;
   const uint32_t *src_hash[2] = { pic_hash[0], pic_hash[1] };
 
-  int add_value = hash_block_size_to_index(BlockSize);
+  int add_value = hash_block_size_to_index(block_size);
   assert(add_value >= 0);
   add_value <<= crc_bits;
   const int crc_mask = (1 << crc_bits) - 1;
@@ -341,14 +341,14 @@ void av1_add_to_hash_map_by_row_with_precal_data(hash_table *p_hash_table,
 }
 
 int av1_hash_is_horizontal_perfect(const Yv12BufferConfig *picture,
-                                   int BlockSize, int x_start, int y_start) {
+                                   int block_size, int x_start, int y_start) {
   const int stride = picture->y_stride;
   const uint8_t *p = picture->y_buffer + y_start * stride + x_start;
 
   if (picture->flags & YV12_FLAG_HIGHBITDEPTH) {
     const uint16_t *p16 = CONVERT_TO_SHORTPTR(p);
-    for (int i = 0; i < BlockSize; i++) {
-      for (int j = 1; j < BlockSize; j++) {
+    for (int i = 0; i < block_size; i++) {
+      for (int j = 1; j < block_size; j++) {
         if (p16[j] != p16[0]) {
           return 0;
         }
@@ -356,8 +356,8 @@ int av1_hash_is_horizontal_perfect(const Yv12BufferConfig *picture,
       p16 += stride;
     }
   } else {
-    for (int i = 0; i < BlockSize; i++) {
-      for (int j = 1; j < BlockSize; j++) {
+    for (int i = 0; i < block_size; i++) {
+      for (int j = 1; j < block_size; j++) {
         if (p[j] != p[0]) {
           return 0;
         }
@@ -370,22 +370,22 @@ int av1_hash_is_horizontal_perfect(const Yv12BufferConfig *picture,
 }
 
 int av1_hash_is_vertical_perfect(const Yv12BufferConfig *picture,
-                                 int BlockSize, int x_start, int y_start) {
+                                 int block_size, int x_start, int y_start) {
   const int stride = picture->y_stride;
   const uint8_t *p = picture->y_buffer + y_start * stride + x_start;
 
   if (picture->flags & YV12_FLAG_HIGHBITDEPTH) {
     const uint16_t *p16 = CONVERT_TO_SHORTPTR(p);
-    for (int i = 0; i < BlockSize; i++) {
-      for (int j = 1; j < BlockSize; j++) {
+    for (int i = 0; i < block_size; i++) {
+      for (int j = 1; j < block_size; j++) {
         if (p16[j * stride + i] != p16[i]) {
           return 0;
         }
       }
     }
   } else {
-    for (int i = 0; i < BlockSize; i++) {
-      for (int j = 1; j < BlockSize; j++) {
+    for (int i = 0; i < block_size; i++) {
+      for (int j = 1; j < block_size; j++) {
         if (p[j * stride + i] != p[i]) {
           return 0;
         }
@@ -395,22 +395,22 @@ int av1_hash_is_vertical_perfect(const Yv12BufferConfig *picture,
   return 1;
 }
 
-void av1_get_block_hash_value(uint8_t *y_src, int stride, int BlockSize,
+void av1_get_block_hash_value(uint8_t *y_src, int stride, int block_size,
                               uint32_t *hash_value1, uint32_t *hash_value2,
                               int use_highbitdepth, struct PictureControlSet * pcs, IntraBcContext  *x) {
   UNUSED (pcs);
   uint32_t to_hash[4];
-  const int add_value = hash_block_size_to_index(BlockSize) << crc_bits;
+  const int add_value = hash_block_size_to_index(block_size) << crc_bits;
   assert(add_value >= 0);
   const int crc_mask = (1 << crc_bits) - 1;
 
   // 2x2 subblock hash values in current CU
-  int sub_block_in_width = (BlockSize >> 1);
+  int sub_block_in_width = (block_size >> 1);
   if (use_highbitdepth) {
     uint16_t pixel_to_hash[4];
     uint16_t *y16_src = CONVERT_TO_SHORTPTR(y_src);
-    for (int y_pos = 0; y_pos < BlockSize; y_pos += 2) {
-      for (int x_pos = 0; x_pos < BlockSize; x_pos += 2) {
+    for (int y_pos = 0; y_pos < block_size; y_pos += 2) {
+      for (int x_pos = 0; x_pos < block_size; x_pos += 2) {
         int pos = (y_pos >> 1) * sub_block_in_width + (x_pos >> 1);
         get_pixels_in_1D_short_array_by_block_2x2(
             y16_src + y_pos * stride + x_pos, stride, pixel_to_hash);
@@ -425,8 +425,8 @@ void av1_get_block_hash_value(uint8_t *y_src, int stride, int BlockSize,
     }
   } else {
     uint8_t pixel_to_hash[4];
-    for (int y_pos = 0; y_pos < BlockSize; y_pos += 2) {
-      for (int x_pos = 0; x_pos < BlockSize; x_pos += 2) {
+    for (int y_pos = 0; y_pos < block_size; y_pos += 2) {
+      for (int x_pos = 0; x_pos < block_size; x_pos += 2) {
         int pos = (y_pos >> 1) * sub_block_in_width + (x_pos >> 1);
         get_pixels_in_1D_char_array_by_block_2x2(y_src + y_pos * stride + x_pos,
                                                  stride, pixel_to_hash);
@@ -446,7 +446,7 @@ void av1_get_block_hash_value(uint8_t *y_src, int stride, int BlockSize,
   int dst_idx = 0;
 
   // 4x4 subblock hash values to current block hash values
-  for (int sub_width = 4; sub_width <= BlockSize; sub_width *= 2) {
+  for (int sub_width = 4; sub_width <= block_size; sub_width *= 2) {
     src_idx = 1 - src_idx;
     dst_idx = 1 - dst_idx;
 
