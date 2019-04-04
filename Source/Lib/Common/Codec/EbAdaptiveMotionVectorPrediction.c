@@ -1543,7 +1543,7 @@ int select_samples(
     for (k = 0; k < l - ret; k++) {
         while (pts_mvd[i] != -1)
             i++;
-        while (pts_mvd[j] == -1)
+        while (j > 0 && pts_mvd[j] == -1)
             j--;
         if (i > j)
             break;
