@@ -33,14 +33,14 @@ extern "C" {
 static void highbd_8_variance_sse2(const uint16_t *src, int32_t src_stride,
     const uint16_t *ref, int32_t ref_stride, int32_t w,
     int32_t h, uint32_t *sse, int32_t *sum,
-    high_variance_fn_t var_fn, int32_t BlockSize) {
+    high_variance_fn_t var_fn, int32_t block_size) {
     int32_t i, j;
 
     *sse = 0;
     *sum = 0;
 
-    for (i = 0; i < h; i += BlockSize) {
-        for (j = 0; j < w; j += BlockSize) {
+    for (i = 0; i < h; i += block_size) {
+        for (j = 0; j < w; j += block_size) {
             uint32_t sse0;
             int32_t sum0;
             var_fn(src + src_stride * i + j, src_stride, ref + ref_stride * i + j,
@@ -54,13 +54,13 @@ static void highbd_8_variance_sse2(const uint16_t *src, int32_t src_stride,
 static void highbd_10_variance_sse2(const uint16_t *src, int32_t src_stride,
     const uint16_t *ref, int32_t ref_stride, int32_t w,
     int32_t h, uint32_t *sse, int32_t *sum,
-    high_variance_fn_t var_fn, int32_t BlockSize) {
+    high_variance_fn_t var_fn, int32_t block_size) {
     int32_t i, j;
     uint64_t sse_long = 0;
     int32_t sum_long = 0;
 
-    for (i = 0; i < h; i += BlockSize) {
-        for (j = 0; j < w; j += BlockSize) {
+    for (i = 0; i < h; i += block_size) {
+        for (j = 0; j < w; j += block_size) {
             uint32_t sse0;
             int32_t sum0;
             var_fn(src + src_stride * i + j, src_stride, ref + ref_stride * i + j,
@@ -76,13 +76,13 @@ static void highbd_10_variance_sse2(const uint16_t *src, int32_t src_stride,
 static void highbd_12_variance_sse2(const uint16_t *src, int32_t src_stride,
     const uint16_t *ref, int32_t ref_stride, int32_t w,
     int32_t h, uint32_t *sse, int32_t *sum,
-    high_variance_fn_t var_fn, int32_t BlockSize) {
+    high_variance_fn_t var_fn, int32_t block_size) {
     int32_t i, j;
     uint64_t sse_long = 0;
     int32_t sum_long = 0;
 
-    for (i = 0; i < h; i += BlockSize) {
-        for (j = 0; j < w; j += BlockSize) {
+    for (i = 0; i < h; i += block_size) {
+        for (j = 0; j < w; j += block_size) {
             uint32_t sse0;
             int32_t sum0;
             var_fn(src + src_stride * i + j, src_stride, ref + ref_stride * i + j,
@@ -132,7 +132,7 @@ HIGH_GET_VAR(8);
 
 #undef HIGH_GET_VAR
 
-#define VAR_FN(w, h, BlockSize, shift)                                    \
+#define VAR_FN(w, h, block_size, shift)                                    \
   uint32_t aom_highbd_8_variance##w##x##h##_sse2(                          \
       const uint8_t *src8, int32_t src_stride, const uint8_t *ref8,            \
       int32_t ref_stride, uint32_t *sse) {                                     \
@@ -141,7 +141,7 @@ HIGH_GET_VAR(8);
     uint16_t *ref = CONVERT_TO_SHORTPTR(ref8);                             \
     highbd_8_variance_sse2(                                                \
         src, src_stride, ref, ref_stride, w, h, sse, &sum,                 \
-        aom_highbd_calc##BlockSize##x##BlockSize##var_sse2, BlockSize); \
+        aom_highbd_calc##block_size##x##block_size##var_sse2, block_size); \
     return *sse - (uint32_t)(((int64_t)sum * sum) >> shift);               \
   }                                                                        \
                                                                            \
@@ -154,7 +154,7 @@ HIGH_GET_VAR(8);
     uint16_t *ref = CONVERT_TO_SHORTPTR(ref8);                             \
     highbd_10_variance_sse2(                                               \
         src, src_stride, ref, ref_stride, w, h, sse, &sum,                 \
-        aom_highbd_calc##BlockSize##x##BlockSize##var_sse2, BlockSize); \
+        aom_highbd_calc##block_size##x##block_size##var_sse2, block_size); \
     var = (int64_t)(*sse) - (((int64_t)sum * sum) >> shift);               \
     return (var >= 0) ? (uint32_t)var : 0;                                 \
   }                                                                        \
@@ -168,7 +168,7 @@ HIGH_GET_VAR(8);
     uint16_t *ref = CONVERT_TO_SHORTPTR(ref8);                             \
     highbd_12_variance_sse2(                                               \
         src, src_stride, ref, ref_stride, w, h, sse, &sum,                 \
-        aom_highbd_calc##BlockSize##x##BlockSize##var_sse2, BlockSize); \
+        aom_highbd_calc##block_size##x##block_size##var_sse2, block_size); \
     var = (int64_t)(*sse) - (((int64_t)sum * sum) >> shift);               \
     return (var >= 0) ? (uint32_t)var : 0;                                 \
   }

@@ -130,14 +130,14 @@ extern "C" {
         double *AtA_inv;
         double *A;
         int32_t num_params;  // The number of parameters used for internal low-order model
-        int32_t BlockSize;  // The block size the finder was initialized with
+        int32_t block_size;  // The block size the finder was initialized with
         double normalization;  // Normalization factor (1 / (2^(bit_depth) - 1))
         int32_t use_highbd;        // Whether input data should be interpreted as uint16
     } aom_flat_block_finder_t;
 
     /*!\brief Init the block_finder with the given block size, bit_depth */
     int32_t aom_flat_block_finder_init(aom_flat_block_finder_t *block_finder,
-        int32_t BlockSize, int32_t bit_depth, int32_t use_highbd);
+        int32_t block_size, int32_t bit_depth, int32_t use_highbd);
     void aom_flat_block_finder_free(aom_flat_block_finder_t *block_finder);
 
     /*!\brief Helper to extract a block and low order "planar" model. */
@@ -258,12 +258,12 @@ extern "C" {
      * \param[in]     strides         Stride of the planes
      * \param[in]     chroma_sub_log2 Chroma subsampling for planes != 0.
      * \param[in]     flat_blocks     A map to blocks that have been determined flat
-     * \param[in]     BlockSize      The size of blocks.
+     * \param[in]     block_size      The size of blocks.
      */
     aom_noise_status_t aom_noise_model_update(
         aom_noise_model_t *const noise_model, const uint8_t *const data[3],
         const uint8_t *const denoised[3], int32_t w, int32_t h, int32_t strides[3],
-        int32_t chroma_sub_log2[2], const uint8_t *const flat_blocks, int32_t BlockSize);
+        int32_t chroma_sub_log2[2], const uint8_t *const flat_blocks, int32_t block_size);
 
     /*\brief Save the "latest" estimate into the "combined" estimate.
      *
@@ -292,7 +292,7 @@ extern "C" {
      * \param[in]     stride          Stride of the planes
      * \param[in]     chroma_sub_log2 Chroma subsampling for planes != 0.
      * \param[in]     noise_psd       The power spectral density of the noise
-     * \param[in]     BlockSize      The size of blocks
+     * \param[in]     block_size      The size of blocks
      * \param[in]     bit_depth       Bit depth of the image
      * \param[in]     use_highbd      If true, uint8 pointers are interpreted as
      *                                uint16 and stride is measured in uint16.
@@ -300,7 +300,7 @@ extern "C" {
      */
     int32_t aom_wiener_denoise_2d(const uint8_t *const data[3], uint8_t *denoised[3],
         int32_t w, int32_t h, int32_t stride[3], int32_t chroma_sub_log2[2],
-        float *noise_psd[3], int32_t BlockSize, int32_t bit_depth,
+        float *noise_psd[3], int32_t block_size, int32_t bit_depth,
         int32_t use_highbd);
 
     struct aom_denoise_and_model_t;
@@ -328,7 +328,7 @@ extern "C" {
     /*!\brief Allocates a context that can be used for denoising and noise modeling.
      *
      * \param[in]  bit_depth   Bit depth of buffers this will be run on.
-     * \param[in]  BlockSize  Block size for noise modeling and flat block
+     * \param[in]  block_size  Block size for noise modeling and flat block
      *                         estimation
      * \param[in]  noise_level The noise_level (2.5 for moderate noise, and 5 for
      *                         higher levels of noise)

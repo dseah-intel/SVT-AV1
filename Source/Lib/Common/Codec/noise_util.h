@@ -22,9 +22,9 @@ extern "C" {
     struct aom_noise_tx_t;
 
     // Allocates and returns a aom_noise_tx_t useful for denoising the given
-    // BlockSize. The resulting aom_noise_tx_t should be free'd with
+    // block_size. The resulting aom_noise_tx_t should be free'd with
     // aom_noise_tx_free.
-    struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t BlockSize);
+    struct aom_noise_tx_t *aom_noise_tx_malloc(int32_t block_size);
     void aom_noise_tx_free(struct aom_noise_tx_t *aom_noise_tx);
 
     // Transforms the internal data and holds it in the aom_noise_tx's internal
@@ -48,7 +48,7 @@ extern "C" {
     // BlockSize. The noise "factor" determines the strength of the noise to
     // be removed. A value of about 2.5 can be used for moderate denoising,
     // where a value of 5.0 can be used for a high level of denoising.
-    float aom_noise_psd_get_default_value(int32_t BlockSize, float factor);
+    float aom_noise_psd_get_default_value(int32_t block_size, float factor);
 
     // Computes normalized cross correlation of two vectors a and b of length n.
     double aom_normalized_cross_correlation(const double *a, const double *b,

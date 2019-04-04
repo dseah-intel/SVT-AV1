@@ -82,8 +82,8 @@ extern "C" {
         uint32_t                                conformance_window_flag;
 
         // Bitdepth
-        EbBitDepth                             input_bitdepth;
-        EbBitDepth                             output_bitdepth;
+        EbBitDepthEnum                             input_bitdepth;
+        EbBitDepthEnum                             output_bitdepth;
 
         // Group of Pictures (GOP) Structure
         uint32_t                                max_ref_count;            // Maximum number of reference pictures, however each pred

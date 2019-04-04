@@ -273,8 +273,8 @@ EbErrorType copy_sequence_control_set(
     dst->cropping_bottom_offset = src->cropping_bottom_offset;                    writeCount += sizeof(int32_t);
     dst->conformance_window_flag = src->conformance_window_flag;                   writeCount += sizeof(uint32_t);
     dst->frame_rate = src->frame_rate;                               writeCount += sizeof(uint32_t);
-    dst->input_bitdepth = src->input_bitdepth;                           writeCount += sizeof(EbBitDepth);
-    dst->output_bitdepth = src->output_bitdepth;                          writeCount += sizeof(EbBitDepth);
+    dst->input_bitdepth = src->input_bitdepth;                           writeCount += sizeof(EbBitDepthEnum);
+    dst->output_bitdepth = src->output_bitdepth;                          writeCount += sizeof(EbBitDepthEnum);
     dst->pred_struct_ptr = src->pred_struct_ptr;                           writeCount += sizeof(PredictionStructure*);
     dst->intra_period_length = src->intra_period_length;                       writeCount += sizeof(int32_t);
     dst->intra_refresh_type = src->intra_refresh_type;                        writeCount += sizeof(uint32_t);

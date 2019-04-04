@@ -1189,7 +1189,7 @@ EbErrorType UpdateNeighborSamplesArrayOpenLoop(
     uint32_t                           stride,
     uint32_t                           src_origin_x,
     uint32_t                           src_origin_y,
-    uint32_t                           BlockSize)
+    uint32_t                           block_size)
 {
 
     EbErrorType    return_error = EB_ErrorNone;
@@ -1207,7 +1207,7 @@ EbErrorType UpdateNeighborSamplesArrayOpenLoop(
 
     uint32_t width = inputPtr->width;
     uint32_t height = inputPtr->height;
-    uint32_t blockSizeHalf = BlockSize << 1;
+    uint32_t blockSizeHalf = block_size << 1;
 
     // Adjust the Source ptr to start at the origin of the block being updated
     src_ptr = inputPtr->buffer_y + (((src_origin_y + inputPtr->origin_y) * stride) + (src_origin_x + inputPtr->origin_x));
@@ -1216,7 +1216,7 @@ EbErrorType UpdateNeighborSamplesArrayOpenLoop(
     dst_ptr = yBorderReverse;
 
     //Initialise the Luma Intra Reference Array to the mid range value 128 (for CUs at the picture boundaries)
-    EB_MEMSET(dst_ptr, MIDRANGE_VALUE_8BIT, (BlockSize << 2) + 1);
+    EB_MEMSET(dst_ptr, MIDRANGE_VALUE_8BIT, (block_size << 2) + 1);
 
     // Get the left-column
     count = blockSizeHalf;
