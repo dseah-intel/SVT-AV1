@@ -1957,7 +1957,7 @@ void  inject_intra_candidates_ois(
 
         intra_mode = ois_blk_ptr[can_total_cnt].intra_mode;
 
-        ASSERT(intra_mode < INTRA_MODES);
+        assert(intra_mode < INTRA_MODES);
 
         if (av1_is_directional_mode((PredictionMode)intra_mode)) {
 

@@ -157,7 +157,7 @@ void av1_estimate_syntax_rate(
             memset(FacBits_v, 0, CFL_ALPHABET_SIZE * sizeof(*FacBits_v));
         }
         else {
-            ASSERT((CFL_CONTEXT_V(joint_sign) < CFL_ALPHA_CONTEXTS) && (CFL_CONTEXT_V(joint_sign) >= 0));
+            assert((CFL_CONTEXT_V(joint_sign) < CFL_ALPHA_CONTEXTS) && (CFL_CONTEXT_V(joint_sign) >= 0));
             const AomCdfProb *cdf_v = fc->cfl_alpha_cdf[CFL_CONTEXT_V(joint_sign)];
             av1_get_syntax_rate_from_cdf(FacBits_v, cdf_v, NULL);
         }

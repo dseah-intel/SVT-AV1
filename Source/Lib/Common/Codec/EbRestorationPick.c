@@ -1571,8 +1571,8 @@ static void search_switchable(const RestorationTileLimits *limits,
 static void copy_unit_info(RestorationType frame_rtype,
     const RestUnitSearchInfo *rusi,
     RestorationUnitInfo *rui) {
-    assert(frame_rtype > 0);
-    rui->restoration_type = rusi->best_rtype[frame_rtype - 1];
+    if(frame_rtype >= 1)
+        rui->restoration_type = rusi->best_rtype[frame_rtype - 1];
     if (rui->restoration_type == RESTORE_WIENER)
         rui->wiener_info = rusi->wiener;
     else

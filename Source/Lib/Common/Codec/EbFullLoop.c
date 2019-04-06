@@ -945,6 +945,7 @@ void product_full_loop_tx_search(
     TxType                         tx_type;
     int32_t                        txb_itr = 0;
     TxSize                         txSize = context_ptr->blk_geom->txsize[txb_itr];
+    assert(txSize < TX_SIZES_ALL);
     const TxSetType                tx_set_type =
         get_ext_tx_set_type(txSize, is_inter, picture_control_set_ptr->parent_pcs_ptr->reduced_tx_set_used);
 
@@ -1165,6 +1166,7 @@ void encode_pass_tx_search(
     TxType                 txk_end = TX_TYPES;
     TxType                 tx_type;
     TxSize                 txSize = context_ptr->blk_geom->txsize[context_ptr->txb_itr];
+    assert(txSize < TX_SIZES_ALL);
     const TxSetType        tx_set_type =
         get_ext_tx_set_type(txSize, is_inter, picture_control_set_ptr->parent_pcs_ptr->reduced_tx_set_used);
 
@@ -1365,6 +1367,7 @@ void encode_pass_tx_search_hbd(
     TxType                      txk_end = TX_TYPES;
     TxType                      tx_type;
     TxSize                      txSize = context_ptr->blk_geom->txsize[context_ptr->txb_itr];
+    assert(txSize < TX_SIZES_ALL);
     const TxSetType             tx_set_type =
         get_ext_tx_set_type(txSize, is_inter, picture_control_set_ptr->parent_pcs_ptr->reduced_tx_set_used);
 

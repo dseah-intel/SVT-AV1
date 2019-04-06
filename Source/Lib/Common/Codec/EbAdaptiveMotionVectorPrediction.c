@@ -439,7 +439,7 @@ static void scan_row_mbmi(const Av1Common *cm, const MacroBlockD *xd,
         const ModeInfo *const candidate_mi = candidate_mi0[col_offset + i];
         const MbModeInfo *const candidate = &candidate_mi->mbmi;
         const int32_t candidate_bsize = candidate->sb_type;
-        ASSERT(candidate_bsize < BlockSizeS_ALL);
+        assert(candidate_bsize < BlockSizeS_ALL);
         const int32_t n8_w = mi_size_wide[candidate_bsize];
         int32_t len = AOMMIN(xd->n8_w, n8_w);
         if (use_step_16)
@@ -498,7 +498,7 @@ static void scan_col_mbmi(const Av1Common *cm, const MacroBlockD *xd,
             xd->mi[(row_offset + i) * xd->mi_stride + col_offset];
         const MbModeInfo *const candidate = &candidate_mi->mbmi;
         const int32_t candidate_bsize = candidate->sb_type;
-        ASSERT(candidate_bsize < BlockSizeS_ALL);
+        assert(candidate_bsize < BlockSizeS_ALL);
         const int32_t n8_h = mi_size_high[candidate_bsize];
         int32_t len = AOMMIN(xd->n8_h, n8_h);
         if (use_step_16)
@@ -1255,7 +1255,7 @@ void get_av1_mv_pred_drl(
     IntMv              ref_mv[2])
 {
     MacroBlockD*  xd = cu_ptr->av1xd;
-
+    
     if (!is_compound &&  mode != GLOBALMV) {
 
         //av1_find_best_ref_mvs(allow_hp, ref_mvs[mbmi->ref_frame[0]], &nearestmv[0], &nearmv[0], cm->cur_frame_force_integer_mv);
@@ -1272,7 +1272,7 @@ void get_av1_mv_pred_drl(
         nearmv[1]    = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].ed_ref_mv_stack[ref_frame][ref_mv_idx].comp_mv;
     }
     else if (drl_index > 0 && mode == NEARMV) {
-        ASSERT((1 + drl_index) < MAX_REF_MV_STACK_SIZE);
+        assert((1 + drl_index) < MAX_REF_MV_STACK_SIZE);
         IntMv cur_mv = context_ptr->md_local_cu_unit[cu_ptr->mds_idx].ed_ref_mv_stack[ref_frame][1 + drl_index].this_mv;
         nearmv[0] = cur_mv;
     }
