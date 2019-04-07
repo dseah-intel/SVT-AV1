@@ -89,39 +89,21 @@ extern "C" {
 
     extern void neighbor_array_unit_reset32(NeighborArrayUnit32 *na_unit_ptr);
 
-    /*************************************************
-     * Neighbor Array Unit Get Left Index
-     *************************************************/
-    static INLINE uint32_t get_neighbor_array_unit_left_index32(
-        NeighborArrayUnit32_t *na_unit_ptr,
-        uint32_t               loc_y)
-    {
-        return (loc_y >> na_unit_ptr->granularityNormalLog2);
-    }
+    extern uint32_t get_neighbor_array_unit_left_index32(
+        NeighborArrayUnit32 *na_unit_ptr,
+        uint32_t               loc_y);
 
-    static INLINE uint32_t get_neighbor_array_unit_left_index(
-        NeighborArrayUnit_t *na_unit_ptr,
-        uint32_t               loc_y)
-    {
-        return (loc_y >> na_unit_ptr->granularityNormalLog2);
-    }
+    extern uint32_t get_neighbor_array_unit_top_index32(
+        NeighborArrayUnit32 *na_unit_ptr,
+        uint32_t               loc_x);
 
-    /*************************************************
-     * Neighbor Array Unit Get Top Index
-     *************************************************/
-    static INLINE uint32_t get_neighbor_array_unit_top_index32(
-        NeighborArrayUnit32_t *na_unit_ptr,
-        uint32_t               loc_x)
-    {
-        return (loc_x >> na_unit_ptr->granularityNormalLog2);
-    }
+    extern uint32_t get_neighbor_array_unit_left_index(
+        NeighborArrayUnit *na_unit_ptr,
+        uint32_t             loc_y);
 
-    static INLINE uint32_t get_neighbor_array_unit_top_index(
-        NeighborArrayUnit_t *na_unit_ptr,
-        uint32_t               loc_x)
-    {
-        return (loc_x >> na_unit_ptr->granularityNormalLog2);
-    }
+    extern uint32_t get_neighbor_array_unit_top_index(
+        NeighborArrayUnit *na_unit_ptr,
+        uint32_t             loc_x);
 
     extern uint32_t get_neighbor_array_unit_top_left_index(
         NeighborArrayUnit *na_unit_ptr,

@@ -167,7 +167,7 @@ int32_t Av1TransformTypeRateEstimation(
 
     uint8_t filterIntraMode = 0; // NM- hardcoded to zero for the moment until we support different intra filtering modes.
     const TxSize square_tx_size = txsize_sqr_map[transform_size];
-    assert(square_tx_size < EXT_TX_SIZES);
+    //assert(square_tx_size < EXT_TX_SIZES);
     //const MbModeInfo *mbmi = &xd->mi[0]->mbmi;
     //const int32_t is_inter = is_inter_block(mbmi);
 
