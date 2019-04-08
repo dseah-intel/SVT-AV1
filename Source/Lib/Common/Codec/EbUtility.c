@@ -762,7 +762,7 @@ static INLINE TxSize av1_get_max_uv_txsize(BlockSize bsize, int32_t subsampling_
     const BlockSize plane_bsize =
         get_plane_block_size(bsize, subsampling_x, subsampling_y);
     assert(plane_bsize < BlockSizeS_ALL);
-    const TxSize uv_tx = max_txsize_rect_lookup[plane_bsize];
+    TxSize uv_tx = max_txsize_rect_lookup[plane_bsize];
     return av1_get_adjusted_tx_size(uv_tx);
 }
 static INLINE TxSize av1_get_tx_size(
