@@ -77,7 +77,7 @@ EbHandle eb_create_thread(
     pthread_attr_setinheritsched(&attr, PTHREAD_EXPLICIT_SCHED);
 
     thread_handle = (pthread_t*)malloc(sizeof(pthread_t));
-    if (threadHandle != NULL) {
+    if (thread_handle != NULL) {
         int32_t ret = pthread_create(
             (pthread_t*)thread_handle,      // Thread handle
             &attr,                       // attributes
@@ -91,7 +91,7 @@ EbHandle eb_create_thread(
                 free(thread_handle);
 
                 thread_handle = (pthread_t*)malloc(sizeof(pthread_t));
-                if (threadHandle != NULL) {
+                if (thread_handle != NULL) {
                     pthread_create(
                         (pthread_t*)thread_handle,      // Thread handle
                         (const pthread_attr_t*)EB_NULL,                        // attributes
@@ -295,7 +295,7 @@ EbHandle eb_create_mutex(
 
     mutex_handle = (EbHandle)malloc(sizeof(pthread_mutex_t));
 
-    if (mutexHandle != NULL) {
+    if (mutex_handle != NULL) {
         pthread_mutex_init(
             (pthread_mutex_t*)mutex_handle,
             NULL);                  // default attributes
