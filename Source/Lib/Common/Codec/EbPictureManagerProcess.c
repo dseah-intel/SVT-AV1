@@ -753,6 +753,7 @@ void* picture_manager_kernel(void *input_ptr)
                                     for (x_lcu_index = cm->tile_col_start_sb[tile_col]; x_lcu_index < (uint32_t)cm->tile_col_start_sb[tile_col + 1]; ++x_lcu_index)
                                     {
                                         int sb_index = (uint16_t)(x_lcu_index + y_lcu_index * picture_width_in_sb);
+                                        tile_info.tg_horz_boundary = 0;
                                         ChildPictureControlSetPtr->sb_ptr_array[sb_index]->tile_info = tile_info;                                       
                                     }
                                 }                               
