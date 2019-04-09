@@ -3271,9 +3271,10 @@ EbErrorType DetectInputPictureNoise(
 
     }
 
-    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
-
-    picNoiseVariance = picNoiseVariance / totLcuCount;
+    if (totLcuCount > 0) {
+        context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
+        picNoiseVariance = picNoiseVariance / totLcuCount;
+    }
 
 
     //the variance of a 64x64 noise area tends to be bigger for small resolutions.
@@ -3697,9 +3698,10 @@ EbErrorType QuarterSampleDetectNoise(
     }
 
 
-    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
-
-    picNoiseVariance = picNoiseVariance / totLcuCount;
+    if (totLcuCount > 0) {
+        context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
+        picNoiseVariance = picNoiseVariance / totLcuCount;
+    }
 
 
     //the variance of a 64x64 noise area tends to be bigger for small resolutions.
@@ -3838,9 +3840,10 @@ EbErrorType SubSampleDetectNoise(
     }
 
 
-    context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
-
-    picNoiseVariance = picNoiseVariance / totLcuCount;
+    if (totLcuCount > 0) {
+        context_ptr->pic_noise_variance_float = (double)picNoiseVariance / (double)totLcuCount;
+        picNoiseVariance = picNoiseVariance / totLcuCount;
+    }
 
 
     //the variance of a 64x64 noise area tends to be bigger for small resolutions.
@@ -4526,12 +4529,12 @@ void DetermineHomogeneousRegionInPicture(
         }
     }
     picture_control_set_ptr->very_low_var_pic_flag = EB_FALSE;
-    if (((veryLowVarCnt * 100) / varLcuCnt) > PIC_LOW_VAR_PERCENTAGE_TH) {
+    if ((varLcuCnt > 0) && (((veryLowVarCnt * 100) / varLcuCnt) > PIC_LOW_VAR_PERCENTAGE_TH)) {
         picture_control_set_ptr->very_low_var_pic_flag = EB_TRUE;
     }
 
     picture_control_set_ptr->logo_pic_flag = EB_FALSE;
-    if (((veryLowVarCnt * 100) / varLcuCnt) > 80) {
+    if ((varLcuCnt > 0) && (((veryLowVarCnt * 100) / varLcuCnt) > 80)) {
         picture_control_set_ptr->logo_pic_flag = EB_TRUE;
     }
 
