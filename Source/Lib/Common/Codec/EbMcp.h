@@ -100,7 +100,8 @@ extern "C" {
         uint32_t           frac_pos_y);
 
     extern EbErrorType motion_compensation_prediction_context_ctor(
-        MotionCompensationPredictionContext **context_dbl_ptr,
+        MotionCompensationPredictionContext   **context_dbl_ptr,
+        EbColorFormat                           color_format,
         uint16_t                                max_cu_width,
         uint16_t                                max_cu_height);
 
