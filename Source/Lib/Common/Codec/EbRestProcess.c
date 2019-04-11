@@ -63,6 +63,7 @@ EbErrorType rest_context_ctor(
     EbFifo                *rest_output_fifo_ptr ,
     EbFifo                *picture_demux_fifo_ptr,
     EbBool                  is16bit,
+    EbColorFormat           color_format,
     uint32_t                max_input_luma_width,
     uint32_t                max_input_luma_height
    )
@@ -85,6 +86,7 @@ EbErrorType rest_context_ctor(
         initData.max_width = (uint16_t)max_input_luma_width;
         initData.max_height = (uint16_t)max_input_luma_height;
         initData.bit_depth = is16bit ? EB_16BIT : EB_8BIT;
+        initData.color_format = color_format;
         initData.left_padding = AOM_BORDER_IN_PIXELS;
         initData.right_padding = AOM_BORDER_IN_PIXELS;
         initData.top_padding = AOM_BORDER_IN_PIXELS;
@@ -121,6 +123,7 @@ EbErrorType rest_context_ctor(
     tempLfReconDescInitData.bot_padding = PAD_VALUE;
 
     tempLfReconDescInitData.split_mode = EB_FALSE;
+    tempLfReconDescInitData.color_format = color_format;
 
     if (is16bit) {
         tempLfReconDescInitData.bit_depth = EB_16BIT;

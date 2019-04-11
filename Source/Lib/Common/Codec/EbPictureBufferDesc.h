@@ -52,7 +52,8 @@ extern "C" {
         uint16_t          height;           // Luma picture height which excludes the padding
         uint16_t          max_width;         // input Luma picture width
         uint16_t          max_height;        // input Luma picture height
-        EbBitDepthEnum       bit_depth;        // Pixel Bit Depth
+        EbBitDepthEnum    bit_depth;        // Pixel Bit Depth
+        EbColorFormat     color_format;     // Chroma Subsumpling
 
         // Buffer Parameters
         uint32_t          luma_size;         // Size of the luma buffer
@@ -294,6 +295,7 @@ extern "C" {
         uint16_t          max_width;
         uint16_t          max_height;
         EbBitDepthEnum    bit_depth;
+        EbColorFormat     color_format;
         uint32_t          buffer_enable_mask;
         uint16_t          left_padding;
         uint16_t          right_padding;

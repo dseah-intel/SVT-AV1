@@ -150,6 +150,7 @@ EbErrorType mode_decision_candidate_buffer_ctor(
     pictureBufferDescInitData.max_width = MAX_SB_SIZE;
     pictureBufferDescInitData.max_height = MAX_SB_SIZE;
     pictureBufferDescInitData.bit_depth = EB_8BIT;
+    pictureBufferDescInitData.color_format = EB_YUV420;
     pictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     pictureBufferDescInitData.left_padding = 0;
     pictureBufferDescInitData.right_padding = 0;
@@ -159,6 +160,7 @@ EbErrorType mode_decision_candidate_buffer_ctor(
     doubleWidthPictureBufferDescInitData.max_width = MAX_SB_SIZE;
     doubleWidthPictureBufferDescInitData.max_height = MAX_SB_SIZE;
     doubleWidthPictureBufferDescInitData.bit_depth = EB_16BIT;
+    doubleWidthPictureBufferDescInitData.color_format = EB_YUV420;
     doubleWidthPictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     doubleWidthPictureBufferDescInitData.left_padding = 0;
     doubleWidthPictureBufferDescInitData.right_padding = 0;
@@ -169,6 +171,7 @@ EbErrorType mode_decision_candidate_buffer_ctor(
     ThirtyTwoWidthPictureBufferDescInitData.max_width = MAX_SB_SIZE;
     ThirtyTwoWidthPictureBufferDescInitData.max_height = MAX_SB_SIZE;
     ThirtyTwoWidthPictureBufferDescInitData.bit_depth = EB_32BIT;
+    ThirtyTwoWidthPictureBufferDescInitData.color_format = EB_YUV420;
     ThirtyTwoWidthPictureBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
     ThirtyTwoWidthPictureBufferDescInitData.left_padding = 0;
     ThirtyTwoWidthPictureBufferDescInitData.right_padding = 0;

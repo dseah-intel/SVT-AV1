@@ -33,6 +33,7 @@ EbErrorType eb_picture_buffer_desc_ctor(
     EbPictureBufferDescInitData  *pictureBufferDescInitDataPtr = (EbPictureBufferDescInitData*)object_init_data_ptr;
 
     uint32_t bytesPerPixel = (pictureBufferDescInitDataPtr->bit_depth == EB_8BIT) ? 1 : (pictureBufferDescInitDataPtr->bit_depth <= EB_16BIT) ? 2 : 4;
+    const uint16_t subsampling_x = (pictureBufferDescInitDataPtr->color_format == EB_YUV444 ? 1 : 2) - 1;
 
     if (pictureBufferDescInitDataPtr->bit_depth > EB_8BIT && pictureBufferDescInitDataPtr->bit_depth <= EB_16BIT && pictureBufferDescInitDataPtr->split_mode == EB_TRUE)
         bytesPerPixel = 1;
@@ -48,14 +49,15 @@ EbErrorType eb_picture_buffer_desc_ctor(
     pictureBufferDescPtr->width = pictureBufferDescInitDataPtr->max_width;
     pictureBufferDescPtr->height = pictureBufferDescInitDataPtr->max_height;
     pictureBufferDescPtr->bit_depth = pictureBufferDescInitDataPtr->bit_depth;
+    pictureBufferDescPtr->color_format = pictureBufferDescInitDataPtr->color_format;
     pictureBufferDescPtr->stride_y = pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding;
     pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> 1;
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 
-    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
-        (pictureBufferDescInitDataPtr->max_height + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
-    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->luma_size >> 2;
+    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->maxWidth + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
+        (pictureBufferDescInitDataPtr->maxHeight + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
+    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->lumaSize >> (3 - pictureBufferDescInitDataPtr->color_format);
     pictureBufferDescPtr->packedFlag = EB_FALSE;
 
     if (pictureBufferDescInitDataPtr->split_mode == EB_TRUE) {
@@ -137,6 +139,7 @@ EbErrorType eb_recon_picture_buffer_desc_ctor(
 {
     EbPictureBufferDesc          *pictureBufferDescPtr;
     EbPictureBufferDescInitData  *pictureBufferDescInitDataPtr = (EbPictureBufferDescInitData*)object_init_data_ptr;
+    const uint16_t subsampling_x = (pictureBufferDescInitDataPtr->color_format == EB_YUV444 ? 1 : 2) - 1;
 
     uint32_t bytesPerPixel = (pictureBufferDescInitDataPtr->bit_depth == EB_8BIT) ? 1 : 2;
 
@@ -151,14 +154,15 @@ EbErrorType eb_recon_picture_buffer_desc_ctor(
     pictureBufferDescPtr->width = pictureBufferDescInitDataPtr->max_width;
     pictureBufferDescPtr->height = pictureBufferDescInitDataPtr->max_height;
     pictureBufferDescPtr->bit_depth = pictureBufferDescInitDataPtr->bit_depth;
+    pictureBufferDescPtr->color_format = pictureBufferDescInitDataPtr->color_format;
     pictureBufferDescPtr->stride_y = pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding;
     pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> 1;
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 
-    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
-        (pictureBufferDescInitDataPtr->max_height + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
-    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->luma_size >> 2;
+    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->maxWidth + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
+        (pictureBufferDescInitDataPtr->maxHeight + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
+    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->lumaSize >> (3 - pictureBufferDescInitDataPtr->color_format);
     pictureBufferDescPtr->packedFlag = EB_FALSE;
 
     pictureBufferDescPtr->stride_bit_inc_y = 0;
@@ -233,6 +237,8 @@ void link_Eb_to_aom_buffer_desc_8bit(
     }
 }
 
+//Jing: TODO
+//Change here later
 void link_eb_to_aom_buffer_desc(
     EbPictureBufferDesc          *picBuffDsc,
     Yv12BufferConfig             *aomBuffDsc
