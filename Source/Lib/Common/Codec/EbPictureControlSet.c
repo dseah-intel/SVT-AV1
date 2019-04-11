@@ -927,17 +927,17 @@ EbErrorType picture_parent_control_set_ctor(
 
     object_ptr->enhanced_picture_ptr = (EbPictureBufferDesc *)EB_NULL;
     if (initDataPtr->color_format >= EB_YUV422) {
-        EbPictureBufferDescInitData_t input_picture_buffer_desc_init_data;
-        input_picture_buffer_desc_init_data.maxWidth     = initDataPtr->picture_width;
-        input_picture_buffer_desc_init_data.maxHeight    = initDataPtr->picture_height;
+        EbPictureBufferDescInitData input_picture_buffer_desc_init_data;
+        input_picture_buffer_desc_init_data.max_width     = initDataPtr->picture_width;
+        input_picture_buffer_desc_init_data.max_height    = initDataPtr->picture_height;
         input_picture_buffer_desc_init_data.bit_depth = 8; //Should be 8bit
-        input_picture_buffer_desc_init_data.bufferEnableMask = PICTURE_BUFFER_DESC_CHROMA_MASK;
+        input_picture_buffer_desc_init_data.buffer_enable_mask = PICTURE_BUFFER_DESC_CHROMA_MASK;
         input_picture_buffer_desc_init_data.left_padding = initDataPtr->left_padding;
         input_picture_buffer_desc_init_data.right_padding = initDataPtr->right_padding;
         input_picture_buffer_desc_init_data.top_padding = initDataPtr->top_padding;
         input_picture_buffer_desc_init_data.bot_padding = initDataPtr->bot_padding;
         input_picture_buffer_desc_init_data.color_format = EB_YUV420; //set to 420 for MD
-        input_picture_buffer_desc_init_data.splitMode    = EB_FALSE;
+        input_picture_buffer_desc_init_data.split_mode    = EB_FALSE;
         return_error = eb_picture_buffer_desc_ctor(
                 (EbPtr*) &(object_ptr->chroma_downsampled_picture_ptr),
                 (EbPtr) &input_picture_buffer_desc_init_data);

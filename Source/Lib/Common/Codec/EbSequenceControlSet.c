@@ -276,7 +276,7 @@ EbErrorType copy_sequence_control_set(
     dst->encoder_bit_depth = src->encoder_bit_depth;                      writeCount += sizeof(uint32_t);
     dst->subsampling_x = src->subsampling_x;                writeCount += sizeof(uint16_t);
     dst->subsampling_y = src->subsampling_y;                writeCount += sizeof(uint16_t);
-    dst->pred_struct_ptr = src->pred_struct_ptr;                           writeCount += sizeof(PredictionStructure_t*);
+    dst->pred_struct_ptr = src->pred_struct_ptr;                           writeCount += sizeof(PredictionStructure*);
     dst->intra_period_length = src->intra_period_length;                       writeCount += sizeof(int32_t);
     dst->intra_refresh_type = src->intra_refresh_type;                        writeCount += sizeof(uint32_t);
     dst->max_ref_count = src->max_ref_count;                             writeCount += sizeof(uint32_t);

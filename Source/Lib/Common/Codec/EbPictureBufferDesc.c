@@ -55,9 +55,9 @@ EbErrorType eb_picture_buffer_desc_ctor(
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 
-    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->maxWidth + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
-        (pictureBufferDescInitDataPtr->maxHeight + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
-    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->lumaSize >> (3 - pictureBufferDescInitDataPtr->color_format);
+    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
+        (pictureBufferDescInitDataPtr->max_height + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
+    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->luma_size >> (3 - pictureBufferDescInitDataPtr->color_format);
     pictureBufferDescPtr->packedFlag = EB_FALSE;
 
     if (pictureBufferDescInitDataPtr->split_mode == EB_TRUE) {
@@ -160,9 +160,9 @@ EbErrorType eb_recon_picture_buffer_desc_ctor(
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 
-    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->maxWidth + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
-        (pictureBufferDescInitDataPtr->maxHeight + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
-    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->lumaSize >> (3 - pictureBufferDescInitDataPtr->color_format);
+    pictureBufferDescPtr->luma_size = (pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding) *
+        (pictureBufferDescInitDataPtr->max_height + pictureBufferDescInitDataPtr->top_padding + pictureBufferDescInitDataPtr->bot_padding);
+    pictureBufferDescPtr->chroma_size = pictureBufferDescPtr->luma_size >> (3 - pictureBufferDescInitDataPtr->color_format);
     pictureBufferDescPtr->packedFlag = EB_FALSE;
 
     pictureBufferDescPtr->stride_bit_inc_y = 0;
