@@ -79,8 +79,8 @@ EbErrorType picture_control_set_ctor(
     input_picture_buffer_desc_init_data.max_width = initDataPtr->picture_width;
     input_picture_buffer_desc_init_data.max_height = initDataPtr->picture_height;
     input_picture_buffer_desc_init_data.bit_depth = initDataPtr->bit_depth;
-    input_picture_buffer_desc_init_data.color_format = initDataPtr->color_format;
     input_picture_buffer_desc_init_data.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
+    input_picture_buffer_desc_init_data.color_format = initDataPtr->color_format;
 
     input_picture_buffer_desc_init_data.left_padding = PAD_VALUE;
     input_picture_buffer_desc_init_data.right_padding = PAD_VALUE;
@@ -92,8 +92,8 @@ EbErrorType picture_control_set_ctor(
     coeffBufferDescInitData.max_width = initDataPtr->picture_width;
     coeffBufferDescInitData.max_height = initDataPtr->picture_height;
     coeffBufferDescInitData.bit_depth = EB_16BIT;
-    coeffBufferDescInitData.color_format = initDataPtr->color_format;
     coeffBufferDescInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
+    coeffBufferDescInitData.color_format = initDataPtr->color_format;
 
     coeffBufferDescInitData.left_padding = PAD_VALUE;
     coeffBufferDescInitData.right_padding = PAD_VALUE;
@@ -114,8 +114,8 @@ EbErrorType picture_control_set_ctor(
     coeffBufferDes32bitInitData.max_width = initDataPtr->picture_width;
     coeffBufferDes32bitInitData.max_height = initDataPtr->picture_height;
     coeffBufferDes32bitInitData.bit_depth = EB_32BIT;
-    coeffBufferDes32bitInitData.color_format = initDataPtr->color_format;
     coeffBufferDes32bitInitData.buffer_enable_mask = PICTURE_BUFFER_DESC_FULL_MASK;
+    coeffBufferDes32bitInitData.color_format = initDataPtr->color_format;
     coeffBufferDes32bitInitData.left_padding = 0;
     coeffBufferDes32bitInitData.right_padding = 0;
     coeffBufferDes32bitInitData.top_padding = 0;
@@ -924,8 +924,8 @@ EbErrorType picture_parent_control_set_ctor(
     object_ptr->sequence_control_set_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
     object_ptr->input_picture_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
     object_ptr->reference_picture_wrapper_ptr = (EbObjectWrapper *)EB_NULL;
-
     object_ptr->enhanced_picture_ptr = (EbPictureBufferDesc *)EB_NULL;
+
     if (initDataPtr->color_format >= EB_YUV422) {
         EbPictureBufferDescInitData input_picture_buffer_desc_init_data;
         input_picture_buffer_desc_init_data.max_width     = initDataPtr->picture_width;

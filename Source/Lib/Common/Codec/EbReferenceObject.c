@@ -201,7 +201,6 @@ EbErrorType eb_reference_object_ctor(
         bufDesc.split_mode = 0;
         bufDesc.color_format = pictureBufferDescInitDataPtr->color_format;
 
-
         return_error = eb_picture_buffer_desc_ctor((EbPtr*)&(referenceObject->ref_den_src_picture),
             (EbPtr)&bufDesc);
         if (return_error == EB_ErrorInsufficientResources)

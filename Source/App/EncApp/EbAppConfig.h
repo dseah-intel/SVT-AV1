@@ -72,7 +72,6 @@ typedef enum EbPtrType
     EB_SEMAPHORE = 3,                                   // semaphore
     EB_THREAD    = 4                                    // thread handle
 }EbPtrType;
-typedef void * EbPtr;
 typedef struct EbMemoryMapEntry
 {
     EbPtr                     ptr;                       // points to a memory pointer

@@ -50,8 +50,8 @@ extern "C" {
         uint16_t          origin_y;         // Vertical padding distance
         uint16_t          width;            // Luma picture width which excludes the padding
         uint16_t          height;           // Luma picture height which excludes the padding
-        uint16_t          max_width;         // input Luma picture width
-        uint16_t          max_height;        // input Luma picture height
+        uint16_t          max_width;        // input Luma picture width
+        uint16_t          max_height;       // input Luma picture height
         EbBitDepthEnum    bit_depth;        // Pixel Bit Depth
         EbColorFormat     color_format;     // Chroma Subsumpling
 

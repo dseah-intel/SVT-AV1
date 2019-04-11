@@ -121,7 +121,6 @@ EbErrorType rest_context_ctor(
     tempLfReconDescInitData.right_padding = PAD_VALUE;
     tempLfReconDescInitData.top_padding = PAD_VALUE;
     tempLfReconDescInitData.bot_padding = PAD_VALUE;
-
     tempLfReconDescInitData.split_mode = EB_FALSE;
     tempLfReconDescInitData.color_format = color_format;
 

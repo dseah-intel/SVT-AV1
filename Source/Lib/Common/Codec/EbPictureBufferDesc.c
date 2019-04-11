@@ -51,7 +51,7 @@ EbErrorType eb_picture_buffer_desc_ctor(
     pictureBufferDescPtr->bit_depth = pictureBufferDescInitDataPtr->bit_depth;
     pictureBufferDescPtr->color_format = pictureBufferDescInitDataPtr->color_format;
     pictureBufferDescPtr->stride_y = pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding;
-    pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> 1;
+    pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> subsampling_x;
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 
@@ -156,7 +156,7 @@ EbErrorType eb_recon_picture_buffer_desc_ctor(
     pictureBufferDescPtr->bit_depth = pictureBufferDescInitDataPtr->bit_depth;
     pictureBufferDescPtr->color_format = pictureBufferDescInitDataPtr->color_format;
     pictureBufferDescPtr->stride_y = pictureBufferDescInitDataPtr->max_width + pictureBufferDescInitDataPtr->left_padding + pictureBufferDescInitDataPtr->right_padding;
-    pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> 1;
+    pictureBufferDescPtr->stride_cb = pictureBufferDescPtr->stride_cr = pictureBufferDescPtr->stride_y >> subsampling_x;
     pictureBufferDescPtr->origin_x = pictureBufferDescInitDataPtr->left_padding;
     pictureBufferDescPtr->origin_y = pictureBufferDescInitDataPtr->top_padding;
 

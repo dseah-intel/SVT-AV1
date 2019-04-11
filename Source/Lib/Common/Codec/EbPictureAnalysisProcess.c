@@ -1518,9 +1518,11 @@ void noise_extract_chroma_weak(
 
         stride_in = input_picture_ptr->stride_cb;
         inputOriginIndex = (input_picture_ptr->origin_x >> subsampling_x) + ((input_picture_ptr->origin_y >> subsampling_y) + sb_origin_y) * input_picture_ptr->stride_cb;
+
         ptrIn = &(input_picture_ptr->buffer_cb[inputOriginIndex]);
 
         inputOriginIndexPad = (denoised_picture_ptr->origin_x >> subsampling_x) + ((denoised_picture_ptr->origin_y >> subsampling_y) + sb_origin_y) * denoised_picture_ptr->stride_cb;
+
         strideOut = denoised_picture_ptr->stride_cb;
         ptr_denoised = &(denoised_picture_ptr->buffer_cb[inputOriginIndexPad]);
 
@@ -3183,7 +3185,6 @@ EbErrorType DenoiseInputPicture(
         uint32_t inChromaOffSet = (input_picture_ptr->origin_x >> subsampling_x) + (input_picture_ptr->origin_y >> subsampling_y) * input_picture_ptr->stride_cb;
         uint32_t denLumaOffSet = denoised_picture_ptr->origin_x + denoised_picture_ptr->origin_y   * denoised_picture_ptr->stride_y;
         uint32_t denChromaOffSet = (denoised_picture_ptr->origin_x >> subsampling_x) + (denoised_picture_ptr->origin_y >> subsampling_y) * denoised_picture_ptr->stride_cb;
-
 
         for (verticalIdx = 0; verticalIdx < input_picture_ptr->height; ++verticalIdx) {
             EB_MEMCPY(input_picture_ptr->buffer_y + inLumaOffSet + verticalIdx * input_picture_ptr->stride_y,
@@ -4870,7 +4871,7 @@ void PadPictureToMultipleOfMinCuSizeDimensions(
             sequence_control_set_ptr->pad_bottom >> subsampling_y);
 
         pad_input_picture(
-            &input_picture_ptr->buffer_bit_inc_cr[(input_picture_ptr->origin_x >> subsampling_x) + ((input_picture_ptr->origin_y >> subsampling_y) * input_picture_ptr->stride_bit_inc_cr)],
+            &input_picture_ptr->buffer_bit_inc_cr[(input_picture_ptr->origin_x >> subsampling_x) + ((input_picture_ptr->origin_y >> subsampling_y) * input_picture_ptr->stride_bit_inc_cb)],
             input_picture_ptr->stride_bit_inc_cr,
             (input_picture_ptr->width - sequence_control_set_ptr->pad_right) >> subsampling_x,
             (input_picture_ptr->height - sequence_control_set_ptr->pad_bottom) >> subsampling_y,
